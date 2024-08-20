@@ -13,7 +13,7 @@ const AiTripPlanning = () => {
            <h2>itineraries in minutes, </h2>
            <h2>crafted by AI with real</h2>
            <h2>traveler insights.</h2>
-            <button>check now</button>
+            <button> Plan a Trip with AI</button>
         </div>
         <div className="tripPlanning-right">
             <img src={TripPlanning_Img} alt="" />
