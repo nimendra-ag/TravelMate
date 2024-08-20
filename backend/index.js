@@ -9,7 +9,7 @@ const cors = require("cors");
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 // Cloudinary configuration
@@ -31,7 +31,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage });
 
 // MongoDB configuration
-mongoose.connect();
+mongoose.connect("mongodb+srv://travelmate:hy6QuIubRgLzBPjm@cluster0.1pbng.mongodb.net/TravelMate");
 
 
 
