@@ -15,7 +15,7 @@ const Hero = () => {
                         <li><a href="#">Explore</a></li>
                         <li><a href="#">Packages</a></li>
                         <li><a href="#">Services</a></li>
-                        <li><a href="#">More</a></li>
+                        <li><a href="/details">More</a></li>
                         <li><SigninModal/></li>
                        
 
