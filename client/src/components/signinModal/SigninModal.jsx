@@ -1,12 +1,14 @@
 import React from 'react'
 import logo from "../../assets/TravalMateLogo2.png"
 import Form from 'react-bootstrap/Form';
-import emailIcon from "../../assets/email.png"
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import "./SigninModal.css"
 import google from "../../assets/google.png"
+import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
+import { GoogleLogin, useGoogleLogin, useGoogleOneTapLogin, googleLogout } from '@react-oauth/google';
 
 
 const SigninModal = () => {
@@ -14,19 +16,50 @@ const SigninModal = () => {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-
     const [hasAccount, setHasAccount] = useState(false);
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const signInWithGoogle = useGoogleLogin({
+        onSuccess: async (response) => {
+          try {
+            setShow(false);
+            const res = await axios.get(
+              "https://www.googleapis.com/oauth2/v3/userinfo",
+              {
+                headers: {
+                  Authorization: `Bearer ${response.access_token}`,
+                },
+              }
+            );
+            // setUser(res.data); // Set the user data
+            console.log(res.data);
+          } catch (e) {
+            console.log(e);
+          }
+        },
+      });
+
+      useGoogleOneTapLogin({
+        onSuccess: (credentialResponse) => {
+          const decoded = jwtDecode(credentialResponse.credential);
+          setUser(decoded); // Set the user data
+          console.log(decoded);
+        },
+        onError: () => {
+          console.log('Login Failed');
+        },
+      });
+    
+    const signInWithEmailAndPassword = () => {
+        setShow(false);
+        console.log("Function called");
+    }
 
     return (
         <>
             <div className="d-flex justify-content-center">
-
                 <a className='nav-signin' onClick={handleShow}>SignUp</a>
-
             </div>
 
             <Modal show={show} onHide={handleClose} centered>
@@ -55,8 +88,6 @@ const SigninModal = () => {
                             />
                         </Form.Group>
 
-
-
                         <Form.Group className="mb-3" controlId="formPassword">
                             <Form.Label>Password</Form.Label>
                             <Form.Control
@@ -67,10 +98,6 @@ const SigninModal = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </Form.Group>
-
-
-
-
                     </Form>
                     <p>{hasAccount ? "Already have an account?  " : "Don't have an account ?  "} <span onClick={() => setHasAccount(!hasAccount)} style={{ fontWeight: "bold", color: "rgba(16, 77, 108,1)" }}>{hasAccount ? " SignIn" : " SignUp"}</span></p>
 
@@ -80,9 +107,8 @@ const SigninModal = () => {
                             variant="outline-dark"
                             className="d-flex align-items-center justify-content-start"
                             style={{ borderRadius: '50px', marginBottom: "7px", width: "250px", height: "50px", borderWidth: "2px" }}
-
+                            onClick={signInWithEmailAndPassword}
                         >
-
                             <span className="text-center flex-grow-1">{!hasAccount ? "Sign up" : "Sign in"}</span>
                         </Button>
 
@@ -98,6 +124,7 @@ const SigninModal = () => {
                             variant="outline-dark"
                             className="d-flex align-items-center justify-content-start"
                             style={{ borderRadius: '50px', marginBottom: "25px", marginTop: "7px", width: "250px", height: "50px", borderWidth: "2px" }}
+                            onClick={signInWithGoogle}
                         >
                             <img src={google} style={{ width: "30px", marginLeft: "15px" }} />
                             <span className="text-center flex-grow-1">Continue with Google</span>
