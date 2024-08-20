@@ -1,8 +1,8 @@
 import React from 'react'
 import './Hero.css';
 import logo from '../../assets/TravalMate Logo.png'
-import SignupModal from '../signupModal/SignupModal';
 import SearchBar from '../searchBar/SearchBar';
+import SigninModal from '../signinModal/SigninModal';
 const Hero = () => {
     return (
         <>
@@ -16,7 +16,7 @@ const Hero = () => {
                         <li><a href="#">Packages</a></li>
                         <li><a href="#">Services</a></li>
                         <li><a href="#">More</a></li>
-                        <li><SignupModal/></li>
+                        <li><SigninModal/></li>
                        
 
 
