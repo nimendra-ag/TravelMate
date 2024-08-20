@@ -6,8 +6,10 @@
     margin: auto;
     padding: 20px 140px;
     margin-bottom: 150px;
-    background: linear-gradient(45deg, #C0EBFE -100%, white 80%);
+    background: linear-gradient(45deg, white -30%, #C0EBFE  200%);
+
     border-radius: 15px;
+    
 }
 .tripPlanning-left{
     flex: 1;
