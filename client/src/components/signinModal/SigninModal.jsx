@@ -16,7 +16,7 @@ const SigninModal = () => {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
-    const [hasAccount, setHasAccount] = useState(false);
+    const [hasAccount, setHasAccount] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -53,7 +53,12 @@ const SigninModal = () => {
     
     const signInWithEmailAndPassword = () => {
         setShow(false);
-        console.log("Function called");
+        console.log("Sign in function called");
+    }
+
+    const signUpWithEmailAndPassword = () =>{
+        setShow(false);
+        console.log("Sign up function called");
     }
 
     return (
@@ -99,7 +104,7 @@ const SigninModal = () => {
                             />
                         </Form.Group>
                     </Form>
-                    <p>{hasAccount ? "Already have an account?  " : "Don't have an account ?  "} <span onClick={() => setHasAccount(!hasAccount)} style={{ fontWeight: "bold", color: "rgba(16, 77, 108,1)" }}>{hasAccount ? " SignIn" : " SignUp"}</span></p>
+                    <p>{hasAccount ? "Don't have an account ?" : "Already have an account ?"} <span onClick={() => setHasAccount(!hasAccount)} style={{ fontWeight: "bold", color: "rgba(16, 77, 108,1)" }}>{hasAccount ? " SignUp" : " SignIn"}</span></p>
 
 
                     <div className="d-flex justify-content-center">
@@ -107,18 +112,18 @@ const SigninModal = () => {
                             variant="outline-dark"
                             className="d-flex align-items-center justify-content-start"
                             style={{ borderRadius: '50px', marginBottom: "7px", width: "250px", height: "50px", borderWidth: "2px" }}
-                            onClick={signInWithEmailAndPassword}
+                            onClick={hasAccount ? signInWithEmailAndPassword : signUpWithEmailAndPassword}
                         >
-                            <span className="text-center flex-grow-1">{!hasAccount ? "Sign up" : "Sign in"}</span>
+                            <span className="text-center flex-grow-1">{hasAccount ? "Sign in" : "Sign up"}</span>
                         </Button>
-
                     </div>
+
                     <div className="d-flex align-items-center justify-content-center">
                         <hr className="flex-grow-1" />
                         <span className="mx-2">or</span>
                         <hr className="flex-grow-1" />
                     </div>
-
+                    
                     <div className="d-flex justify-content-center">
                         <Button
                             variant="outline-dark"
@@ -132,11 +137,6 @@ const SigninModal = () => {
 
                     </div>
 
-
-
-
-
-
                     <p className="text-center" style={{ fontSize: '0.8em', color: "rgba(159, 184, 196, 1)", marginTop: "20px" }}>
                         By proceeding, you agree to our <a href="#" style={{ color: "rgba(159, 184, 196, 1)" }}>Terms of Use</a> and confirm you have read our <a href="#" style={{ color: "rgba(159, 184, 196, 1)" }}>Privacy and Cookie Statement</a>.
                     </p>
@@ -144,16 +144,8 @@ const SigninModal = () => {
                         This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" style={{ color: "rgba(159, 184, 196, 1)" }}>Privacy Policy</a> and <a href="https://policies.google.com/terms" style={{ color: "rgba(159, 184, 196, 1)" }}>Terms of Service</a> apply.
                     </p>
 
-
-
-
-
                 </Modal.Body>
             </Modal>
-
-
-
-
 
         </>
     )
