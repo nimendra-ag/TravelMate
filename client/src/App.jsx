@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import GetDetails from './pages/details/GetDetails'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Activities from './components/activities/Activities'
+import Footer from './components/footer/Footer'
 
 
 function App() {
@@ -21,6 +22,9 @@ function App() {
           <Route path="/details" element={<GetDetails/>} />
           <Route path="/" element={<Home/>} />
           <Route path="/activities" element={<Activities/>} />
+          <Route path="/footer" element={<Footer/>} />
+
+
 
 
         </Routes>
