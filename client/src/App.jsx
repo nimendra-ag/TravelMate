@@ -7,6 +7,8 @@ import Destination from './pages/Destination/Destination'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GetDetails from './pages/details/GetDetails'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Activities from './components/activities/Activities'
+import Footer from './components/footer/Footer'
 
 
 function App() {
@@ -20,8 +22,6 @@ function App() {
         <Routes>
           <Route path="/details" element={<GetDetails/>} />
           <Route path="/" element={<Home/>} />
-          <Route path="/destination" element={<Destination/>} />
-          
 
 
         </Routes>
