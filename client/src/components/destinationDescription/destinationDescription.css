@@ -1,0 +1,122 @@
+.destinationDescription {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .content {
+    display: flex;
+    max-width: 80%;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-direction: column; /* Default to column for smaller screens */
+  }
+  
+  .text-section {
+    flex: 1;
+    padding: 40px;
+    color: #7094A7;
+  }
+  
+  .text-section h1 {
+    font-size: 64px;
+    margin-bottom: 50px;
+    color: #0A2E41;
+    font-weight: 800;
+  }
+  
+  .text-section h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #0A2E41;
+    font-weight: 700;
+  }
+  
+  .text-section p {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #0A2E41;
+    font-weight: 600;
+  }
+  
+  .info img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image-section img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    border-radius: 15px;
+  }
+  
+  /* Media Queries */
+  @media (min-width: 768px) {
+    .content {
+      flex-direction: row; /* Change to row for larger screens */
+    }
+  
+    .text-section h1 {
+      font-size: 48px; /* Adjust font size for larger screens */
+    }
+  
+    .text-section h2 {
+      font-size: 20px; /* Adjust font size for larger screens */
+    }
+  
+    .text-section p {
+      font-size: 20px; /* Adjust font size for larger screens */
+    }
+  
+    .image-section img {
+      height: 400px; /* Adjust image height for larger screens */
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .text-section h1 {
+      font-size: 64px; /* Adjust font size for even larger screens */
+    }
+  
+    .text-section h2 {
+      font-size: 36px; /* Adjust font size for even larger screens */
+    }
+  
+    .text-section p {
+      font-size: 20px; /* Adjust font size for even larger screens */
+    }
+  
+    .image-section img {
+      height: 500px; /* Adjust image height for even larger screens */
+    }
+  }
+  
+  /* New Media Query for Half Screen Size */
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .content {
+      flex-direction: column; /* Switch to column for half screen size */
+    }
+  }
+  
