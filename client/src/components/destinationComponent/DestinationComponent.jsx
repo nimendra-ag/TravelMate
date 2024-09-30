@@ -1,8 +1,8 @@
 import React from 'react';
-import './destinationDescription.css';
+import './DestinationComponent.css';
 import sigiriyaImage from '../../assets/sigiriyaImage.jpg'
 
-const DestinationDescription = () => {
+const DestinationComponent = () => {
   return (
     <div className='destinationDescription'>
       <div className="content">
@@ -35,4 +35,4 @@ const DestinationDescription = () => {
   );
 }
 
-export default DestinationDescription;
+export default DestinationComponent;

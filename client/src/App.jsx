@@ -20,8 +20,11 @@ function App() {
 
       <Router>
         <Routes>
-          <Route path="/details" element={<GetDetails/>} />
+        <Route path="/details" element={<GetDetails/>} />
           <Route path="/" element={<Home/>} />
+          <Route path="/activities" element={<Activities/>} />
+          <Route path="/footer" element={<Footer/>} />
+          <Route path="/destination" element={<Destination/>} />
 
 
         </Routes>

@@ -1,11 +1,12 @@
 import React from 'react'
 import './Destination.css'
-import DestinationDescription from '../../components/destinationDescription/destinationDescription';
+import DestinationComponent from '../../components/destinationComponent/DestinationComponent'
+
 
 const Destination = () => {
   return (
     <div>
-        <DestinationDescription/>
+        <DestinationComponent/>
     </div>
   )
 }
