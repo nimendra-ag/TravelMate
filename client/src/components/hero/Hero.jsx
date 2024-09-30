@@ -18,9 +18,6 @@ const Hero = () => {
                         <li><a href="/details">More</a></li>
                         <li><SigninModal/></li>
                        
-
-
-                      
                     </ul>
                 </div>
                 <div className="banner-text">
