@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import logo from "../../assets/TravalMateLogo2.png"
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
@@ -9,9 +9,15 @@ import google from "../../assets/google.png"
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import { GoogleLogin, useGoogleLogin, useGoogleOneTapLogin, googleLogout } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 
 const SigninModal = () => {
+
+    const navigate = useNavigate()
 
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
@@ -20,6 +26,14 @@ const SigninModal = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [details, setDetails] = useState(
+        {
+            email: '',
+            firstName: '',
+            lastName: '',
+            profilePicture: '',
+        }
+    );
     const signInWithGoogle = useGoogleLogin({
         onSuccess: async (response) => {
           try {
@@ -32,13 +46,56 @@ const SigninModal = () => {
                 },
               }
             );
-            // setUser(res.data); // Set the user data
-            console.log(res.data);
+            setDetails({
+              email: res.data.email,
+              firstName: res.data.given_name,
+              lastName: res.data.family_name,
+              profilePicture: res.data.picture,
+            });
+            // Logging res.data to ensure the data is correct
+            console.log("User data:", res.data);
+            console.log("Details:", details);
+            
+      
+            try{
+                console.log("inside handle submit",res.data);
+                
+                const response = await axios
+                .post("http://localhost:3000/travelmate/signinwithgoogle", res.data, {
+                  headers: {
+                    "Content-Type": "application/json", // Ensure JSON is sent
+                  }
+    
+                })
+    
+                if (response.data.success) {
+                    navigate(`/details/${response.data.id}`);
+                  }
+            
+                  if (!response.data.success) {
+                        localStorage.setItem('auth-token', response.data.token);
+                        console.log(response.data.token);
+                        
+                    
+      
+                    navigate("/");
+                  }
+    
+                
+            }
+            catch(e){
+                console.log(e);
+    
+            }
           } catch (e) {
             console.log(e);
           }
         },
       });
+
+
+      
+  
 
       useGoogleOneTapLogin({
         onSuccess: (credentialResponse) => {
@@ -51,7 +108,7 @@ const SigninModal = () => {
         },
       });
     
-    const signInWithEmailAndPassword = () => {
+      const signInWithEmailAndPassword = () => {
         setShow(false);
         console.log("Sign in function called");
     }
@@ -61,12 +118,15 @@ const SigninModal = () => {
         console.log("Sign up function called");
     }
 
+    
+
     return (
         <>
             <div className="d-flex justify-content-center">
-                <a className='nav-signin' onClick={handleShow}>SignUp</a>
+                {localStorage.getItem('auth-token')?<a className='nav-signin' onClick={() => { localStorage.removeItem('auth-token')}}>Log out</a>
+                :<a className='nav-signin' onClick={handleShow} >SignUp</a>}
             </div>
-
+            
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton></Modal.Header>
 
@@ -81,7 +141,7 @@ const SigninModal = () => {
                     <h2 className='fw-bold' style={{ paddingBottom: "25px" }}>Hello, adventurer!</h2>
 
 
-                    <Form >
+                    <Form  >
                         <Form.Group className="mb-3" controlId="formEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control

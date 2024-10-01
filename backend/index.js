@@ -1,16 +1,20 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const multer = require('multer');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('cloudinary').v2;
-const dotenv = require('dotenv');
-const cors = require("cors");
+import express from 'express';
+import mongoose from 'mongoose';
+import multer from 'multer';
+import pkg from 'cloudinary';
+const { v2: cloudinary } = pkg;
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import {Router} from './routes/routes.js'
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
+app.use(express.json());
+
 
 // Cloudinary configuration
 cloudinary.config({
@@ -32,6 +36,9 @@ const upload = multer({ storage });
 
 // MongoDB configuration
 mongoose.connect("mongodb+srv://travelmate:hy6QuIubRgLzBPjm@cluster0.1pbng.mongodb.net/TravelMate");
+
+app.use("/travelmate",Router)
+
 
 
 

@@ -9,6 +9,7 @@ import GetDetails from './pages/details/GetDetails'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Activities from './components/activities/Activities'
 import Footer from './components/footer/Footer'
+import Exist from './components/Exist'
 
 
 function App() {
@@ -20,11 +21,12 @@ function App() {
 
       <Router>
         <Routes>
-        <Route path="/details" element={<GetDetails/>} />
+        <Route path="/details/:id" element={<GetDetails/>} />
           <Route path="/" element={<Home/>} />
           <Route path="/activities" element={<Activities/>} />
           <Route path="/footer" element={<Footer/>} />
           <Route path="/destination" element={<Destination/>} />
+          <Route path="/ex" element={<Exist/>} />
 
 
         </Routes>
