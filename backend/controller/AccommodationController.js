@@ -4,11 +4,8 @@ dotenv.config({ path: "../.env" })
 
 const AddAccommodation = async (req, res) => {
 
-
     console.log(req.body.hotel_name);
     
-
-
     try {
 
         let hotels = await AccommodationModel.find({});
@@ -30,28 +27,30 @@ const AddAccommodation = async (req, res) => {
             message: 'Hotel added successfully',
             hotel_name: req.body.hotel_name,
         });
-
-
-
-
     }
-
-
     catch(error) {
 
         console.error("Error saving hotel:", error);
         res.status(500).json({ success: false, error: 'Server Error' });
     }
 
-
-
-
-
-
 }
 
+const getAllAccomodations = async (req, res) => {
+    try {
+        let hotels = await AccommodationModel.find({});
+        console.log("All Movies Fetched");
+        console.log(hotels);
+        res.send(hotels);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
 
-export { AddAccommodation}
+    }
+}
+
+export { AddAccommodation, getAllAccomodations}
 
 
 

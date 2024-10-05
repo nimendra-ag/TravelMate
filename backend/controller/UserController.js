@@ -4,15 +4,12 @@ import dotenv from "dotenv"
 dotenv.config({ path: "../.env" })
 
 
-
-
 const RegWithGoogle = async (req, res) => {
   
     const { email, given_name, family_name, picture } = req.body;
 
     console.log(email, given_name, family_name, picture);
     
-  
     try {
       // Check if the user already exists
       const userExist = await UserModel.findOne({ email });
@@ -26,8 +23,6 @@ const RegWithGoogle = async (req, res) => {
           process.env.JWT_SECRET_KEY,
           { expiresIn: "3d" }
 
-     
-          
         );
 
         console.log(token);
@@ -44,10 +39,7 @@ const RegWithGoogle = async (req, res) => {
             profilePicture: picture
         });
         const result = await newUser.save();
-  
-      
-        
-  
+
         return res.status(201).json({ success: true , id: result._id });
       }
     } catch (err) {
@@ -55,7 +47,6 @@ const RegWithGoogle = async (req, res) => {
       return res.status(500).json({ error: err.message });
     }
   };
-
 
 
   const GetProfile = async (req, res) => {
@@ -78,9 +69,7 @@ const RegWithGoogle = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ error: err.message })
     }
-
 }
-
 
 const UpdateProfile = async (req, res) => {
     try {
@@ -100,9 +89,5 @@ const UpdateProfile = async (req, res) => {
     }
 
 }
-
-
-
-
 
 export { RegWithGoogle , GetProfile ,UpdateProfile} 
