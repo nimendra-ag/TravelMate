@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import {AccomodationContext} from '../../context/AccomodationContext';
+import { AdminContext } from '../../context/AdminContext';
 
 const Hotels = () => {
-  const {allAccomodations} = useContext(AccomodationContext);
+  const {allAccomodations} = useContext(AdminContext);
   console.log(allAccomodations)
   return (
     <div>
