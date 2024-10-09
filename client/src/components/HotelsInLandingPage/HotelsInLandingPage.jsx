@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import HotelCard from '../HotelCard/HotelCard'
+import { ClientContext } from '../../context/ClientContext';
 
 const HotelsInLandingPage = () => {
+  const {allAccomodations} = useContext(ClientContext);
+  console.log(allAccomodations)
     const hotelData = [
       {
         id: 1,
@@ -66,13 +69,13 @@ const HotelsInLandingPage = () => {
     return (
       <Container>
         <Row className="gy-4">
-          {hotelData.map((hotel) => (
-            <Col key={hotel.id} xs={12} md={6} lg={4}>
+          {allAccomodations.map((accommodation) => (
+            <Col key={accommodation.id} xs={12} md={6} lg={4}>
               <HotelCard
-                name={hotel.name}
-                description={hotel.description}
-                price={hotel.price}
-                imageSrc={hotel.imageSrc}
+                name={accommodation.hotel_name}
+                description={accommodation.description}
+                price={accommodation.perPerson_price}
+                imageSrc='https://picsum.photos/400/200'
               />
             </Col>
           ))}
