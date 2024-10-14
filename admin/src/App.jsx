@@ -20,8 +20,8 @@ function App() {
             <Route path="/guides" element={<Guides />} />
             <Route path="/hotels" element={<Hotels />} />
             <Route path="/home" element={<Admin />} />
-            <Route path='add-new-guide' element={<AddGuide />} />
-            <Route path='add-new-hotel' element={<AddHotel />} />
+            <Route path='/add-new-guide' element={<AddGuide />} />
+            <Route path='/add-new-hotel' element={<AddHotel />} />
           </Routes>
         </div>
       </BrowserRouter>
