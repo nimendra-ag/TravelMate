@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Activities from './components/activities/Activities'
 import Footer from './components/footer/Footer'
 import Exist from './components/Exist'
+import SearchResult from './components/searchResult/SearchResult'
 
 
 function App() {
@@ -27,6 +28,8 @@ function App() {
           <Route path="/footer" element={<Footer/>} />
           <Route path="/destination" element={<Destination/>} />
           <Route path="/ex" element={<Exist/>} />
+          <Route path="/sr" element={<SearchResult/>} />
+
 
 
         </Routes>

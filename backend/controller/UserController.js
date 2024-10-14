@@ -60,7 +60,6 @@ const RegWithGoogle = async (req, res) => {
 
   const GetProfile = async (req, res) => {
     const { id } = req.params;
-    console.log("ingetprofile");
     
 
     if (!id) {
