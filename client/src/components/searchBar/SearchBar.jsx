@@ -1,10 +1,20 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { Form } from 'react-bootstrap';
+import './SearchBar.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 
 const SearchBar = () => {
+    
+
+
+
     const [cities, setCities] = React.useState([]);
     const [search, setSearch] = React.useState('');
+    const navigate = useNavigate(); // Initialize useNavigate
+
+    
 
     useEffect(() => {
         axios.get("http://localhost:3000/travelmate/getcities")
@@ -22,6 +32,15 @@ const SearchBar = () => {
     const filteredCities = cities.filter((city) => 
         city.name.toLowerCase().includes(search.toLowerCase())
     );
+
+    const handleClick = (cityId) => {
+
+
+        navigate(`/city/${cityId}`)
+        
+        // Navigate to the next page with cityId in URL
+    };
+    
 
     return (
         <div className="container">
@@ -44,26 +63,27 @@ const SearchBar = () => {
                 {search && filteredCities.length > 0 ? (
                     filteredCities.map((city) => (
                         <div 
-                            key={city.id} // Ensure you have a unique key, `city.id` is assumed here
-                            className="my-3 mx-3 px-2 py-3 rounded-pill"
-                            style={{ width: "90%", border: '2px solid #000', cursor: 'pointer' }}
-                        >
-                            <div className="d-flex">
-                                <div style={{ width: "30%" }} className="mx-3 my-auto">
-                                    <img
-                                        src={city.image}
-                                        alt={city.name}
-                                        className="rounded-pill"
-                                        style={{ width: '100%', height: "100px" }}
-                                    />
-                                </div>
-
-                                <div>
-                                    <h3>{city.name}</h3>
-                                    <p>{city.discription}</p> {/* Check spelling of 'description' */}
-                                </div>
+                        key={city.id} // Ensure you have a unique key, `city.id` is assumed here
+                        className="city-card my-3 mx-3 px-2 py-3 rounded-pill"
+                        // Add click handler
+                    >
+                        <div className="d-flex" onClick={() => handleClick(city._id)}>
+                            <div style={{ width: "30%" }} className="mx-3 my-auto">
+                                <img
+                                    src={city.image}
+                                    alt={city.name}
+                                    className="rounded-pill"
+                                    style={{ width: '100%', height: "100px" }}
+                                />
+                            </div>
+                    
+                            <div>
+                                <h3>{city.name}</h3>
+                                <p>{city.discription}</p> {/* Corrected spelling of 'description' */}
                             </div>
                         </div>
+                    </div>
+                    
                     ))
                 ) : search && filteredCities.length === 0 ? (
                     <p>No results found</p> // Display message if no matches

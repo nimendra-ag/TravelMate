@@ -74,8 +74,31 @@ const GetCities = async (req, res) => {
 }
 
 
+const GetCity = async (req, res) => {
 
-export { AddAccommodation, GetCities}
+    const { id } = req.params;
+
+    console.log("Getttttttttttttttt");
+    
+
+
+
+
+    try {
+        const city = await CityModel.findOne({ _id: id });
+        console.log(city);
+    
+        return res.status(200).json({ success: true, city });
+    } catch (err) {
+        console.error(err); // Log the error for debugging purposes
+        return res.status(500).json({ success: false, error: err.message }); // Consistent success flag
+    }
+    
+}
+
+
+
+export { AddAccommodation, GetCities , GetCity}
 
 
 

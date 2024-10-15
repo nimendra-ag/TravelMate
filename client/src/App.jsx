@@ -11,6 +11,7 @@ import Activities from './components/activities/Activities'
 import Footer from './components/footer/Footer'
 import Exist from './components/Exist'
 import SearchResult from './components/searchResult/SearchResult'
+import CityResults from './pages/cityResults/CityResults'
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/destination" element={<Destination/>} />
           <Route path="/ex" element={<Exist/>} />
           <Route path="/sr" element={<SearchResult/>} />
+          <Route path="/city/:id" element={<CityResults/>} />
 
 
 

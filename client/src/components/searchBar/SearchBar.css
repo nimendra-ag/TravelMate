@@ -5,3 +5,16 @@
     height: "50px";
     border-width: "2px";
 }
+
+
+.city-card {
+    width: 90%;
+    border: 2px solid #000;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.city-card:hover {
+    background-color: #00c3ff5f; /* Light blue background on hover */
+}
+
