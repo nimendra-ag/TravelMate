@@ -31,6 +31,7 @@ const SigninModal = () => {
             profilePicture: '',
         }
     );
+    
     const signInWithGoogle = useGoogleLogin({
         onSuccess: async (response) => {
           try {
@@ -97,17 +98,48 @@ const SigninModal = () => {
         },
       });
     
-      const signInWithEmailAndPassword = () => {
+      const signInWithEmailAndPassword = async () => {
         setShow(false);
+        console.log(email, password);
         console.log("Sign in function called");
+
+        try {
+          const response = await axios.post('http://localhost:3000/travelmate/signinwithemailandpassword', {email, password});
+          
+          if(response.data.success){
+            localStorage.setItem('auth-token', response.data.token);
+            navigate('/');
+          }
+          else{
+            console.log(response.data.error);
+            alert(response.data.error);
+          }
+        
+        } catch (error) {
+          console.log(error);
+        }
     }
 
-    const signUpWithEmailAndPassword = () =>{
-        setShow(false);
-        console.log("Sign up function called");
-    }
+    const signUpWithEmailAndPassword = async () =>{
+      setShow(false);
+      console.log(email, password);
+      try {
+        const response = await axios.post('http://localhost:3000/travelmate/signupwithemailandpassword', {email, password});
 
-    
+        if(response.data.success){
+          console.log(response.data.id);
+          navigate(`/details/${response.data.id}`);
+        }
+        else{
+          console.log(response.data.error);
+          alert(response.data.error)
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+      console.log("Sign up function called");
+  }
 
     return (
         <>
