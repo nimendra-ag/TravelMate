@@ -77,9 +77,10 @@ const SignUpWithEmailAndPassword = async (req, res) => {
 
 const SignInWithEmailAndPassword = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
   let user = await UserModel.findOne({ email: email });
   if (user) {
-    const passwordCompare = req.body.password === password;
+    const passwordCompare = password === user.password;
 
     if (passwordCompare) {
       // Generate token for the existing user
