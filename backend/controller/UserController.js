@@ -27,7 +27,7 @@ const RegWithGoogle = async (req, res) => {
 
         console.log(token);
         
-        return res.status(201).json({ success: false, token });
+        return res.status(201).json({ registered: true, token });
       } else {
         console.log("Creating new user");
         
@@ -40,7 +40,7 @@ const RegWithGoogle = async (req, res) => {
         });
         const result = await newUser.save();
 
-        return res.status(201).json({ success: true , id: result._id });
+        return res.status(201).json({ registered: false , id: result._id });
       }
     } catch (err) {
       console.log(err);

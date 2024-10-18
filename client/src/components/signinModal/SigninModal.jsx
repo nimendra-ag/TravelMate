@@ -12,9 +12,6 @@ import { GoogleLogin, useGoogleLogin, useGoogleOneTapLogin, googleLogout } from 
 import { useNavigate } from 'react-router-dom';
 
 
-
-
-
 const SigninModal = () => {
 
     const navigate = useNavigate()
@@ -68,20 +65,16 @@ const SigninModal = () => {
     
                 })
     
-                if (response.data.success) {
+                if (!response.data.registered) {
                     navigate(`/details/${response.data.id}`);
                   }
             
-                  if (!response.data.success) {
+                  if (response.data.registered) {
                         localStorage.setItem('auth-token', response.data.token);
                         console.log(response.data.token);
-                        
-                    
-      
+                              
                     navigate("/");
                   }
-    
-                
             }
             catch(e){
                 console.log(e);
@@ -92,10 +85,6 @@ const SigninModal = () => {
           }
         },
       });
-
-
-      
-  
 
       useGoogleOneTapLogin({
         onSuccess: (credentialResponse) => {
