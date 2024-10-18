@@ -18,6 +18,7 @@ const SearchBar = () => {
 
     useEffect(() => {
         axios.get("http://localhost:3000/travelmate/getcities")
+        
             .then((res) => {
                 if (res.data.success) {
                     const cities = res.data.cities;
@@ -34,6 +35,9 @@ const SearchBar = () => {
     );
 
     const handleClick = (cityId) => {
+
+
+
 
 
         navigate(`/city/${cityId}`)

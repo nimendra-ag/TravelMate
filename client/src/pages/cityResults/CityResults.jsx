@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import CityHero from '../../components/cityHero/CityHero';
 
 const CityResults = () => {
 
@@ -31,7 +32,7 @@ const CityResults = () => {
 
 
 
-                                                      <h1>City Results</h1>
+          <CityHero name={city.name} discription={city.discription} image={city.image} />
 
 
 
