@@ -1,88 +1,50 @@
 import React, { useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import HotelCard from '../HotelCard/HotelCard'
+import HotelCard from '../HotelCard/HotelCard';
 import { ClientContext } from '../../context/ClientContext';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import './HotelsInLandingPage.css';
 
 const HotelsInLandingPage = () => {
-  const {allAccomodations} = useContext(ClientContext);
-  console.log(allAccomodations)
-    const hotelData = [
-      {
-        id: 1,
-        name: 'Hotel One',
-        description: 'Description: Line1\nLine2',
-        price: 'From 4000 LKR',
-        imageSrc: 'https://picsum.photos/400/200', 
-      },
-      {
-        id: 2,
-        name: 'Hotel Two',
-        description: 'Description: Line1\nLine2',
-        price: 'From 4500 LKR',
-        imageSrc: 'https://picsum.photos/400/200', 
-      },
-      {
-        id: 3,
-        name: 'Hotel Two',
-        description: 'Description: Line1\nLine2',
-        price: 'From 4500 LKR',
-        imageSrc: 'https://picsum.photos/400/200', 
-      },
-      {
-        id: 4,
-        name: 'Hotel Two',
-        description: 'Description: Line1\nLine2',
-        price: 'From 4500 LKR',
-        imageSrc: 'https://picsum.photos/400/200', 
-      },
-      {
-        id: 5,
-        name: 'Hotel Two',
-        description: 'Description: Line1\nLine2',
-        price: 'From 4500 LKR',
-        imageSrc: 'https://picsum.photos/400/200', 
-      },
-      {
-        id: 6,
-        name: 'Hotel Two',
-        description: 'Description: Line1\nLine2',
-        price: 'From 4500 LKR',
-        imageSrc: 'https://picsum.photos/400/200', 
-      },
-      {
-        id: 7,
-        name: 'Hotel Two',
-        description: 'Description: Line1\nLine2',
-        price: 'From 4500 LKR',
-        imageSrc: 'https://picsum.photos/400/200', 
-      },
-      {
-        id: 8,
-        name: 'Hotel Two',
-        description: 'Description: Line1\nLine2',
-        price: 'From 4500 LKR',
-        imageSrc: 'https://picsum.photos/400/200', 
-      },
- 
-    ];
-  
-    return (
-      <Container>
-        <Row className="gy-4">
-          {allAccomodations.map((accommodation) => (
-            <Col key={accommodation.id} xs={12} md={6} lg={4}>
-              <HotelCard
-                name={accommodation.hotel_name}
-                description={accommodation.description}
-                price={accommodation.perPerson_price}
-                imageSrc='https://picsum.photos/400/200'
-              />
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    );
-  };
-  
+  const { allAccomodations } = useContext(ClientContext);
 
-export default HotelsInLandingPage
+  return (
+    <Container fluid className="hotels-section" style={{ padding: '2rem' }}>
+      <Row>
+        <Col>
+          <h2 className="hotels-heading" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+            Hotels
+          </h2>
+        </Col>
+      </Row>
+
+      <Swiper
+        spaceBetween={30} 
+        slidesPerView={3}
+        modules={[Autoplay, Pagination]}
+        loop={true}
+        autoplay={{ delay: 3000 }}
+        // pagination={{ clickable: true }}
+        style={{ paddingBottom: '2rem' }} 
+      >
+        {allAccomodations.map((accommodation) => (
+          <SwiperSlide key={accommodation.id}>
+            <HotelCard
+              name={accommodation.hotel_name}
+              description={accommodation.description}
+              price={accommodation.perPerson_price}
+              imageSrc='https://picsum.photos/400/200'
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+    </Container>
+  );
+};
+
+export default HotelsInLandingPage;
