@@ -38,6 +38,7 @@ const HotelsInLandingPage = () => {
               description={accommodation.description}
               price={accommodation.perPerson_price}
               imageSrc='https://picsum.photos/400/200'
+              id={accommodation.id}
             />
           </SwiperSlide>
         ))}
