@@ -4,7 +4,7 @@ import logo from '../../assets/TravalMateLogo2.png';
 
 const HotelCard = ({ name, description, price, imageSrc }) => {
   return (
-    <Card style={{ width: '25rem', borderRadius: '10px', overflow: 'hidden', boxShadow: '1px 1px 0px 1px rgba(0, 0, 0, .2' }}>
+    <Card style={{ width: '22rem', height:'26rem', borderRadius: '10px', overflow: 'hidden', boxShadow: '1px 1px 0px 1px rgba(0, 0, 0, .2' }}>
       <Card.Img 
         variant="top" 
         src={imageSrc || "https://picsum.photos/400/200"} 
