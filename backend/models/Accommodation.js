@@ -17,7 +17,7 @@ const AccommodationModel = model('Accommodations',{
         type: String,
         required: true,
     },
-    image: {
+    cardImage: {
         type: String
         
     },

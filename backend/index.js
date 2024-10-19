@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import multer from 'multer';
 import pkg from 'cloudinary';
+import path from 'path';
 const { v2: cloudinary } = pkg;
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -34,13 +35,20 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
+//image uploading api
+app.post('/upload',upload.single('image'), (req, res)=>{  
+  console.log(req.file)
+  res.json({
+      success:true,
+      image_url: req.file.path
+  })
+})
+
 // MongoDB configuration
 mongoose.connect("mongodb+srv://travelmate:hy6QuIubRgLzBPjm@cluster0.1pbng.mongodb.net/TravelMate");
 
+//router
 app.use("/travelmate",Router)
-
-
-
 
 // Start the server
 app.listen(PORT, () => {
