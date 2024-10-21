@@ -1,6 +1,12 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import GuideCard from '../GuideCard/GuideCard';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import './GuideList.css';
 
 const GuideList = () => {
   const guides = [
@@ -12,7 +18,7 @@ const GuideList = () => {
       area: 'UHDIJ',
       languages: 'UHDIJ',
       chargesPerDay: '5000',
-      profileImg: 'https://picsum.photos/150', 
+      profileImg: 'https://picsum.photos/150',
     },
     {
       id: 2,
@@ -22,7 +28,7 @@ const GuideList = () => {
       area: 'UHDIJ',
       languages: 'UHDIJ',
       chargesPerDay: '5000',
-      profileImg: 'https://picsum.photos/150', 
+      profileImg: 'https://picsum.photos/150',
     },
     {
       id: 3,
@@ -32,7 +38,7 @@ const GuideList = () => {
       area: 'UHDIJ',
       languages: 'UHDIJ',
       chargesPerDay: '5000',
-      profileImg: 'https://picsum.photos/150', 
+      profileImg: 'https://picsum.photos/150',
     },
     {
       id: 4,
@@ -67,23 +73,42 @@ const GuideList = () => {
   ];
 
   return (
-    <Container>
-      <Row className="gy-4">
-        {guides.map((guide) => (
-          <Col key={guide.id} xs={12} sm={6} md={6} lg={4}>
-            <GuideCard
-              name={guide.name}
-              age={guide.age}
-              description={guide.description}
-              area={guide.area}
-              languages={guide.languages}
-              chargesPerDay={guide.chargesPerDay}
-              profileImg={guide.profileImg}
-            />
+    <div className="guides-section">
+      <Container>
+        <Row>
+          <Col>
+            <h2 className="guides-heading" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+              Guides
+            </h2>
           </Col>
-        ))}
-      </Row>
-    </Container>
+        </Row>
+        <Swiper
+          spaceBetween={30}
+          slidesPerView={3}
+          modules={[Autoplay, Pagination]}
+          loop={true}
+          autoplay={{ delay: 3000 }}
+          // pagination={{ clickable: true }}
+          style={{ paddingBottom: '2rem' }}
+        >
+
+          {guides.map((guide) => (
+            <SwiperSlide key={guide.id}>
+              <GuideCard
+                name={guide.name}
+                age={guide.age}
+                description={guide.description}
+                area={guide.area}
+                languages={guide.languages}
+                chargesPerDay={guide.chargesPerDay}
+                profileImg={guide.profileImg}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+      </Container>
+    </div>
   );
 };
 
