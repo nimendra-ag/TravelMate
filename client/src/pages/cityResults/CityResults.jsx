@@ -2,7 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import CityHero from '../../components/cityHero/CityHero';
-
+import kandy from "../../assets/kandy.jpeg"
+import ThingsToDo from '../../components/thinsToDo/ThingsToDo';
+import BestNearby from '../../components/bestNearby/BestNearby';
+import GetYourGuid from '../../components/getYourGuid/GetYourGuid';
+import EmbeddedMap from '../../components/map/EmbeddedMap';
 const CityResults = () => {
 
   const [city, setCity] = useState("");
@@ -13,6 +17,8 @@ const CityResults = () => {
 
   useEffect(() => {
     axios.get(`http://localhost:3000/travelmate/getcity/${id}`)
+    
+    
         .then((res) => {
             if (res.data.success) {
                 const city = res.data.city;
@@ -32,7 +38,32 @@ const CityResults = () => {
 
 
 
-          <CityHero name={city.name} discription={city.discription} image={city.image} />
+          <CityHero name={city.name} description={city.description} image={kandy} />
+
+
+          
+           
+                    
+
+                  
+            
+
+            <div style={{paddingInline:'60px'}}>
+
+            <ThingsToDo/>
+
+
+            <BestNearby/>
+
+
+            <GetYourGuid/>
+
+            <EmbeddedMap/>
+
+            </div>
+
+          
+      
 
 
 

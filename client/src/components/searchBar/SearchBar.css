@@ -9,7 +9,7 @@
 
 .city-card {
     width: 90%;
-    border: 2px solid #000;
+    background-color: rgba(155, 161, 229, 0.089);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }

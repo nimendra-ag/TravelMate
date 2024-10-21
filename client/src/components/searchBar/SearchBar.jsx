@@ -1,28 +1,36 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import './SearchBar.css';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 
 const SearchBar = () => {
-    
 
 
 
-    const [cities, setCities] = React.useState([]);
-    const [search, setSearch] = React.useState('');
+
+    const [data, setData] = useState([]);
+    const [search, setSearch] = useState('');
     const navigate = useNavigate(); // Initialize useNavigate
 
-    
+
 
     useEffect(() => {
-        axios.get("http://localhost:3000/travelmate/getcities")
-        
+        axios.get("http://localhost:3000/travelmate/getdata")
+
             .then((res) => {
                 if (res.data.success) {
                     const cities = res.data.cities;
-                    setCities(cities);
+
+                    const acc = res.data.accommodations;
+
+
+
+                    setData([...cities, ...acc]);
+                    console.log([...cities, ...acc]); // Log the new data right after setting
+
+
                 }
             })
             .catch((err) => {
@@ -30,21 +38,34 @@ const SearchBar = () => {
             });
     }, []);
 
-    const filteredCities = cities.filter((city) => 
-        city.name.toLowerCase().includes(search.toLowerCase())
+    // const filteredData = data.filter((data) =>
+    //     data.name.toLowerCase().includes(search.toLowerCase())
+    // );
+
+
+    const filteredData = data.filter((data) =>
+        data.name && data.name.toLowerCase().includes(search.toLowerCase())
     );
 
-    const handleClick = (cityId) => {
+    const handleClick = (dataId, type) => {
 
 
+        console.log(dataId);
+        console.log(type);
 
+        if (type === "city") {
+            navigate(`/city/${dataId}`)
+        }
+        else if (type === "accommodation") {
+            navigate(`/accommodation/${dataId}`)
+        }
 
+     
 
-        navigate(`/city/${cityId}`)
-        
         // Navigate to the next page with cityId in URL
     };
-    
+
+
 
     return (
         <div className="container">
@@ -54,7 +75,7 @@ const SearchBar = () => {
                         <Form.Control
                             type="text"
                             style={{ borderRadius: '50px', marginBottom: "25px", width: "700px", height: "50px", borderWidth: "2px" }}
-                            placeholder="Search for a city..."
+                            placeholder="Search for a anything..."
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </Form.Group>
@@ -64,32 +85,31 @@ const SearchBar = () => {
             {/* Change to vertical direction flex */}
             <div className="d-flex flex-column align-items-center">
                 {/* Only render results if search is not empty */}
-                {search && filteredCities.length > 0 ? (
-                    filteredCities.map((city) => (
-                        <div 
-                        key={city.id} // Ensure you have a unique key, `city.id` is assumed here
-                        className="city-card my-3 mx-3 px-2 py-3 rounded-pill"
+                {search && filteredData.length > 0 ? (
+                    filteredData.map((data) => (
+                        <div
+                            key={data.id} // Ensure you have a unique key, `city.id` is assumed here
+                            className="city-card  rounded-pill"
                         // Add click handler
-                    >
-                        <div className="d-flex" onClick={() => handleClick(city._id)}>
-                            <div style={{ width: "30%" }} className="mx-3 my-auto">
-                                <img
-                                    src={city.image}
-                                    alt={city.name}
-                                    className="rounded-pill"
-                                    style={{ width: '100%', height: "100px" }}
-                                />
-                            </div>
-                    
-                            <div>
-                                <h3>{city.name}</h3>
-                                <p>{city.discription}</p> {/* Corrected spelling of 'description' */}
+                        >
+                            <div style={{ display: "flex" }} onClick={() => handleClick(data._id, data.type)}>
+                                <div style={{ width: "30%" }} >
+
+                                </div>
+
+                                <div style={{ display: "flex" }}>
+
+                                    <p style={{ margin: 0 }}>{data.name}</p>
+                                    <span style={{ margin: '0 5px' }}>—</span>
+                                    <p style={{ margin: 0 }}>{data.minidescription}</p>
+                                </div>
+
+
                             </div>
                         </div>
-                    </div>
-                    
+
                     ))
-                ) : search && filteredCities.length === 0 ? (
+                ) : search && filteredData.length === 0 ? (
                     <p>No results found</p> // Display message if no matches
                 ) : null /* If search is empty, render nothing */}
             </div>

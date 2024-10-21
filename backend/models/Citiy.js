@@ -8,10 +8,20 @@ const CityModel = model('cities',{
         type:String,
     
     },
-    discription:{
+    description:{
         type: String,
         
-    }
+    },
+    type:{
+        type:String,
+        
+    },
+    minidescription:{
+        type:String,
+        
+    },
+
+
 })
 
 

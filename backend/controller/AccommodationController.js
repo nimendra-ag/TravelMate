@@ -52,7 +52,7 @@ const AddAccommodation = async (req, res) => {
 }
 
 
-const GetCities = async (req, res) => {
+const GetData = async (req, res) => {
 
 
     console.log("Getttttttttttttttt");
@@ -63,9 +63,11 @@ const GetCities = async (req, res) => {
 
     try {
         const cities = await CityModel.find();
+        const accommodations = await AccommodationModel.find(); 
         console.log(cities);
+        console.log(accommodations);
     
-        return res.status(200).json({ success: true, cities });
+        return res.status(200).json({ success: true, cities,accommodations  });
     } catch (err) {
         console.error(err); // Log the error for debugging purposes
         return res.status(500).json({ success: false, error: err.message }); // Consistent success flag
@@ -98,7 +100,7 @@ const GetCity = async (req, res) => {
 
 
 
-export { AddAccommodation, GetCities , GetCity}
+export { AddAccommodation, GetData , GetCity}
 
 
 

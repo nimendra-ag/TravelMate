@@ -12,6 +12,7 @@ import Footer from './components/footer/Footer'
 import Exist from './components/Exist'
 import SearchResult from './components/searchResult/SearchResult'
 import CityResults from './pages/cityResults/CityResults'
+import AccomodationResult from './pages/accomodationResult/AccomodationResult'
 
 
 function App() {
@@ -23,20 +24,24 @@ function App() {
 
       <Router>
         <Routes>
-        <Route path="/details/:id" element={<GetDetails/>} />
-          <Route path="/" element={<Home/>} />
-          <Route path="/activities" element={<Activities/>} />
-          <Route path="/footer" element={<Footer/>} />
-          <Route path="/destination" element={<Destination/>} />
-          <Route path="/ex" element={<Exist/>} />
-          <Route path="/sr" element={<SearchResult/>} />
-          <Route path="/city/:id" element={<CityResults/>} />
+          <Route path="/details/:id" element={<GetDetails />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/activities" element={<Activities />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/destination" element={<Destination />} />
+          <Route path="/ex" element={<Exist />} />
+          <Route path="/sr" element={<SearchResult />} />
+          <Route path="/city/:id" element={<CityResults />} />
+
+          <Route path="/accommodation/:id" element={<AccomodationResult />} />
+
+
 
 
 
         </Routes>
       </Router>
-     
+
     </>
   )
 }
