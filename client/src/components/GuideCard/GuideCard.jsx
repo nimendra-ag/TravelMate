@@ -4,7 +4,7 @@ import contactIcon from '../../assets/phone-call.png';
 
 const GuideCard = ({ name, age, description, area, languages, chargesPerDay, profileImg }) => {
   return (
-    <Card style={{ width: '25rem', borderRadius: '10px', overflow: 'hidden', boxShadow: '1px 1px 0px 1px rgba(0, 0, 0, .2' }}>
+    <Card style={{ width: '25rem', borderRadius: '10px', overflow: 'hidden', boxShadow: '1px 1px 0px 1px rgba(0, 0, 0, .2)' }}>
       <Card.Body className="text-center">
         <Image 
           src={profileImg || "https://picsum.photos/150"} // Replace with actual profile image URL

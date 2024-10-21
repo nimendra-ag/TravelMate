@@ -13,7 +13,8 @@ const HotelsInLandingPage = () => {
   const { allAccomodations } = useContext(ClientContext);
 
   return (
-    <Container fluid className="hotels-section" style={{ padding: '2rem' }}>
+    <div className="hotels-section" >
+    <Container style={{ padding: '2rem' }}>
       <Row>
         <Col>
           <h2 className="hotels-heading" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
@@ -39,12 +40,14 @@ const HotelsInLandingPage = () => {
               price={accommodation.perPerson_price}
               imageSrc='https://picsum.photos/400/200'
               id={accommodation.id}
+              minidescription={accommodation.minidescription}
             />
           </SwiperSlide>
         ))}
       </Swiper>
 
     </Container>
+    </div>
   );
 };
 
