@@ -28,8 +28,8 @@ function App() {
           <Route path="/footer" element={<Footer/>} />
           <Route path="/destination" element={<Destination/>} />
           <Route path="/ex" element={<Exist/>} />
-          <Route path='/accomodations' element={<HotelPage/>}>
-            <Route path=':accomodationID' element={<HotelPage/>}/>
+          <Route path='/accommodations' element={<HotelPage/>}>
+            <Route path=':accommodationID' element={<HotelPage/>}/>
           </Route>
         </Routes>
       </Router>

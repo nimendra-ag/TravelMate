@@ -6,6 +6,7 @@ import GuideList from '../../components/GuideList/GuideList'
 import Activities from '../../components/activities/Activities'
 import Footer from '../../components/footer/Footer'
 import FeedbackForm from '../../components/FeedbackForm/FeedbackForm'
+import FeedbackSection from '../../components/FeedbackSection/FeedbackSection'
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
     <HotelsInLandingPage/>
     <GuideList/>
     <Activities/>
+    <FeedbackSection/>
     <FeedbackForm/>
     <Footer/>
     </>
