@@ -1,35 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HotelDataTable from './pages/HotelDataTable/HotelDataTable';
+import TransportModeDataTable from './pages/TransportModeDataTable/TransportModeDataTable';
+import ResturantDataTable from './pages/RasturantDataTable/ResturantDataTable';
+import GuideDataTable from './pages/GuidesDataTable/GuideDataTable';
+import DestinationsDataTable from './pages/DestinationsDataTable/DestinationsDataTable';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
+    <BrowserRouter>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <Routes>
+          <Route path="/hotel" element={<HotelDataTable />} />
+          <Route path="/transportmode" element={<TransportModeDataTable />} />
+          <Route path="/resturant" element={<ResturantDataTable />} />
+          <Route path="/guide" element={<GuideDataTable />} />
+          <Route path="/destinations" element={<DestinationsDataTable />} />
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
