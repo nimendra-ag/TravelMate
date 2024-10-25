@@ -1,8 +1,6 @@
 import express from 'express';
-import { GetProfile, RegWithGoogle, UpdateProfile } from '../controller/UserController.js';
-import { AddAccommodation, GetData, GetCity } from '../controller/AccommodationController.js';
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
-import { AddAccommodation, getAllAccomodations } from '../controller/AccommodationController.js';
+import { AddAccommodation, getAllAccomodations, GetData, GetCity } from '../controller/AccommodationController.js';
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
 const router = express.Router()
 
