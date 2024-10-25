@@ -41,7 +41,7 @@ const AddAccommodation = async (req, res) => {
 const getAllAccomodations = async (req, res) => {
     try {
         let hotels = await AccommodationModel.find({});
-        console.log("All Movies Fetched");
+        console.log("All Accomodations Fetched");
         console.log(hotels);
         res.send(hotels);
         

@@ -1,4 +1,6 @@
 import express from 'express';
+import { GetProfile, RegWithGoogle, UpdateProfile } from '../controller/UserController.js';
+import { AddGuide, getAllGuides } from '../controller/GuideController.js';
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
 import { AddAccommodation, getAllAccomodations, GetData, GetCity } from '../controller/AccommodationController.js';
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
@@ -18,6 +20,12 @@ router.get("/getcity/:id",GetCity)
 
 
 router.get("/allAccomodations", getAllAccomodations)
+
+router.post("/addGuide",AddGuide)
+
+router.get("/allGuides", getAllGuides)
+
+
 
 router.post("/signupwithemailandpassword", SignUpWithEmailAndPassword);
 
