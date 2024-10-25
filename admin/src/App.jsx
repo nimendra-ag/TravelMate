@@ -7,19 +7,16 @@ import Hotels from './components/Hotels/Hotels';
 import Admin from './pages/Admin/Admin';
 import AddGuide from './components/AddGuide/AddGuide';
 import AddHotel from './components/AddHotel/AddHotel';
-
-function App() {
-  const [count, setCount] = useState(0)
-
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HotelDataTable from './pages/HotelDataTable/HotelDataTable';
 import TransportModeDataTable from './pages/TransportModeDataTable/TransportModeDataTable';
 import ResturantDataTable from './pages/RasturantDataTable/ResturantDataTable';
 import GuideDataTable from './pages/GuidesDataTable/GuideDataTable';
 import DestinationsDataTable from './pages/DestinationsDataTable/DestinationsDataTable';
 
+
+
 const App = () => {
+  
   return (
     <>
       <BrowserRouter>
@@ -31,24 +28,18 @@ const App = () => {
             <Route path="/home" element={<Admin />} />
             <Route path='add-new-guide' element={<AddGuide />} />
             <Route path='add-new-hotel' element={<AddHotel />} />
+            <Route path="/hotel" element={<HotelDataTable />} />
+            <Route path="/transportmode" element={<TransportModeDataTable />} />
+            <Route path="/resturant" element={<ResturantDataTable />} />
+            <Route path="/guide" element={<GuideDataTable />} />
+            <Route path="/destinations" element={<DestinationsDataTable />} />
           </Routes>
         </div>
       </BrowserRouter>
     </>
 
   )
-    <BrowserRouter>
-      <div>
-        <Routes>
-          <Route path="/hotel" element={<HotelDataTable />} />
-          <Route path="/transportmode" element={<TransportModeDataTable />} />
-          <Route path="/resturant" element={<ResturantDataTable />} />
-          <Route path="/guide" element={<GuideDataTable />} />
-          <Route path="/destinations" element={<DestinationsDataTable />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
+   
 }
 
 export default App;
