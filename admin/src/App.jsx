@@ -28,6 +28,11 @@ const App = () => {
             <Route path="/home" element={<Admin />} />
             <Route path='/add-new-guide' element={<AddGuide />} />
             <Route path='/add-new-hotel' element={<AddHotel />} />
+            <Route path="/hotel-data-table" element={<HotelDataTable />} />
+            <Route path="/transport-mode-data-table" element={<TransportModeDataTable />} />
+            <Route path="/resturant-data-table" element={<ResturantDataTable />} />
+            <Route path="/guide-data-table" element={<GuideDataTable />} />
+            <Route path="/destinations-data-table" element={<DestinationsDataTable />} />
           </Routes>
         </div>
       </BrowserRouter>
