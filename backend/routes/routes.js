@@ -1,5 +1,4 @@
 import express from 'express';
-import { GetProfile, RegWithGoogle, UpdateProfile } from '../controller/UserController.js';
 import { AddGuide, getAllGuides } from '../controller/GuideController.js';
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
 import { AddAccommodation, getAllAccomodations, GetData, GetCity } from '../controller/AccommodationController.js';
