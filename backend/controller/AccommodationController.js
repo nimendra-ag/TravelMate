@@ -1,5 +1,6 @@
 import dotenv from "dotenv"
 import { AccommodationModel } from "../models/Accommodation.js"
+import { CityModel } from "../models/Citiy.js";
 dotenv.config({ path: "../.env" })
 
 const AddAccommodation = async (req, res) => {
@@ -51,7 +52,56 @@ const getAllAccomodations = async (req, res) => {
     }
 }
 
-export { AddAccommodation, getAllAccomodations}
+const GetData = async (req, res) => {
+
+
+    console.log("Getttttttttttttttt");
+    
+
+
+
+
+    try {
+        const cities = await CityModel.find();
+        const accommodations = await AccommodationModel.find(); 
+        console.log(cities);
+        console.log(accommodations);
+    
+        return res.status(200).json({ success: true, cities,accommodations  });
+    } catch (err) {
+        console.error(err); // Log the error for debugging purposes
+        return res.status(500).json({ success: false, error: err.message }); // Consistent success flag
+    }
+    
+}
+
+
+const GetCity = async (req, res) => {
+
+    const { id } = req.params;
+
+    console.log("Getttttttttttttttt");
+    
+
+
+
+
+    try {
+        const city = await CityModel.findOne({ _id: id });
+        console.log(city);
+    
+        return res.status(200).json({ success: true, city });
+    } catch (err) {
+        console.error(err); // Log the error for debugging purposes
+        return res.status(500).json({ success: false, error: err.message }); // Consistent success flag
+    }
+    
+}
+
+
+
+export { AddAccommodation, GetData , GetCity, getAllAccomodations}
+
 
 
 
