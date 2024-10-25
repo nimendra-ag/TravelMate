@@ -402,7 +402,7 @@ const Activities = () => {
                             backgroundImage: `url(${culture})`,
                             backgroundSize: 'cover', // Adjusts the background to cover the entire div
                             backgroundPosition: 'center',
-                            height: "466px", width: "662px"
+                            
 
 
                         }}>
