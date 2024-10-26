@@ -2,6 +2,9 @@ import express from 'express';
 import { GetProfile, RegWithGoogle, UpdateProfile } from '../controller/UserController.js';
 import { AddAccommodation, getAllAccomodations } from '../controller/AccommodationController.js';
 import { AddGuide, getAllGuides } from '../controller/GuideController.js';
+import { AddTransportationService, getAllTransportationServices } from '../controller/TransportationServiceController.js';
+import { AddRestaurant, getAllRestaurants } from '../controller/RestauranrController.js';
+
 const router = express.Router()
 
 router.post('/signinwithgoogle',RegWithGoogle)
@@ -17,6 +20,14 @@ router.get("/allAccomodations", getAllAccomodations)
 router.post("/addGuide",AddGuide)
 
 router.get("/allGuides", getAllGuides)
+
+router.get("/allTransportationServices", getAllTransportationServices)
+
+router.post("/add-transportation-service", AddTransportationService)
+
+router.post("/add-restaurant",AddRestaurant)
+
+router.get("/allRestaurants", getAllRestaurants)
 
 
 export default router;

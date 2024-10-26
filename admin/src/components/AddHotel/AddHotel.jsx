@@ -9,6 +9,7 @@ const AddHotel = () => {
     accommodationName: "",
     category: "Hotels", // Default category
     address: "",
+    contactNumber: "",
     distanceFromMainCity: "",
     price: "",
     description: "",
@@ -144,6 +145,29 @@ const AddHotel = () => {
                             borderWidth: "2px",
                             resize: "none", // Prevent resizing
                             height: "100px", // Fixed height for the textarea
+                          }}
+                        />
+                      </Form.Group>
+                    </Col>
+
+                    <Col md="6">
+                      <Form.Group
+                        controlId="formContactNumber"
+                        className="mb-3"
+                      >
+                        <Form.Label>Contact Number</Form.Label>
+
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter the contact number"
+                          maxLength="10"
+                          name="contactNumber"
+                          value={accommodationDetails.contactNumber}
+                          onChange={changeHandler}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
                           }}
                         />
                       </Form.Group>

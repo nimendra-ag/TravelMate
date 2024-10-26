@@ -7,6 +7,8 @@ import Hotels from './components/Hotels/Hotels';
 import Admin from './pages/Admin/Admin';
 import AddGuide from './components/AddGuide/AddGuide';
 import AddHotel from './components/AddHotel/AddHotel';
+import AddTransportationService from './components/AddTransportationService/AddTransportationService';
+import AddRestaurant from './components/AddRestaurant/AddRestaurant';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,7 +23,9 @@ function App() {
             <Route path="/hotels" element={<Hotels />} />
             <Route path="/home" element={<Admin />} />
             <Route path='/add-new-guide' element={<AddGuide />} />
+            <Route path='/add-restaurant' element={<AddRestaurant />} />
             <Route path='/add-new-hotel' element={<AddHotel />} />
+            <Route path='/add-transportation-service' element={<AddTransportationService />} />
           </Routes>
         </div>
       </BrowserRouter>
