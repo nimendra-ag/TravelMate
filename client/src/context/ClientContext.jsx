@@ -6,6 +6,7 @@ export const ClientContext = createContext(null);
 const ClientContextProvider = (props) => {
     const [allAccommodations, setAllAccommodations] = useState([]);
     const [allTravelMateFeedback, setAllTravelMateFeedback] = useState([]);
+    const [allGuides, setAllGuides] = useState([]);
 
     useEffect(() => {
         // Fetch accommodations data
@@ -28,12 +29,22 @@ const ClientContextProvider = (props) => {
                 console.log('Feedback fetch error:', error);
             });
 
+        axios.get('http://localhost:3000/travelmate/allGuides')
+            .then((response) => {
+                console.log('Guides:', response.data);
+                setAllGuides(response.data);
+            })
+            .catch((error) => {
+                console.log('Feedback fetch error:', error);
+            });
+
     }, []);
 
     // Add both data to the context value
     const contextValue = {
         allAccommodations,
         allTravelMateFeedback,
+        allGuides,
     };
 
     return (

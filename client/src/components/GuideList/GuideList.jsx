@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import GuideCard from '../GuideCard/GuideCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,8 +7,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './GuideList.css';
+import { ClientContext } from '../../context/ClientContext';
 
 const GuideList = () => {
+  const {allGuides} = useContext(ClientContext);
+
   const guides = [
     {
       id: 1,
@@ -92,16 +95,15 @@ const GuideList = () => {
           style={{ paddingBottom: '2rem' }}
         >
 
-          {guides.map((guide) => (
+          {allGuides.map((guide) => (
             <SwiperSlide key={guide.id}>
               <GuideCard
                 name={guide.name}
-                age={guide.age}
                 description={guide.description}
-                area={guide.area}
-                languages={guide.languages}
+                area={guide.area[0]}
+                languages={guide.languages[0]}
                 chargesPerDay={guide.chargesPerDay}
-                profileImg={guide.profileImg}
+                profileImg='https://picsum.photos/150'
               />
             </SwiperSlide>
           ))}
