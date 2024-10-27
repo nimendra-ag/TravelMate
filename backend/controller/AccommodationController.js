@@ -14,7 +14,7 @@ const AddAccommodation = async (req, res) => {
         console.log(req.body)
         const hotel = new AccommodationModel({
             id: id,
-            hotel_name: req.body.accommodationName,
+            name: req.body.accommodationName,
             address: req.body.address,
             description: req.body.description,
             cardImage: req.body.cardImage,

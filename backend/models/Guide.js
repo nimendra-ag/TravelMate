@@ -5,7 +5,7 @@ const GuideModel = model("Guides", {
     type: Number,
     required: true,
   },
-  guideName: {
+  name: {
     type: String,
     required: true,
   },
