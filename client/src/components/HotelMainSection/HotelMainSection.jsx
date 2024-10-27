@@ -2,18 +2,16 @@ import React from 'react';
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 import { FaClock, FaMapMarkerAlt } from 'react-icons/fa';
 
-const HotelMainSection = () => {
+const HotelMainSection = ({name, description, distance_from_city}) => {
     return (
         <Container className="mt-5">
           <Row>
             {/* Left Column - Hotel Description */}
             <Col xs={12} md={7}>
-              <h1 className="display-4">Cinnamon Life at City of Dreams</h1>
+              <h1 className="display-4">{name}</h1>
               <h5 className="mt-3 mb-3">About</h5>
               <p className="text-muted">
-                Welcome to Cinnamon Life Hotel, your gateway to luxury and unforgettable experiences in the heart of Colombo. As part of the prestigious Cinnamon Life complex, our hotel offers a unique blend of elegance, comfort, and world-class amenities.
-                <br/><br/>
-                Discover beautifully designed rooms and suites that provide panoramic views of the city, along with top-tier services to ensure an exceptional stay. Whether you're visiting for business or leisure, our hotel is the perfect destination, offering gourmet dining, a stunning rooftop pool, a state-of-the-art fitness center, and versatile event spaces.
+                {description}
               </p>
     
               <div className="mt-4">
@@ -21,7 +19,7 @@ const HotelMainSection = () => {
                   <FaClock className="me-2" /> Duration: More than 3 hours
                 </p>
                 <p className="d-flex align-items-center">
-                  <FaMapMarkerAlt className="me-2" /> Distance from Colombo: About 175 km
+                  <FaMapMarkerAlt className="me-2" /> Distance from Colombo: About {distance_from_city} km
                 </p>
               </div>
     
