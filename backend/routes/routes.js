@@ -4,6 +4,7 @@ import { AddAccommodation, getAllAccomodations } from '../controller/Accommodati
 import { AddGuide, getAllGuides } from '../controller/GuideController.js';
 import { AddTransportationService, getAllTransportationServices } from '../controller/TransportationServiceController.js';
 import { AddRestaurant, getAllRestaurants } from '../controller/RestauranrController.js';
+import { AddDestination, getAllDestinations } from '../controller/DestinationController.js';
 
 const router = express.Router()
 
@@ -28,6 +29,11 @@ router.post("/add-transportation-service", AddTransportationService)
 router.post("/add-restaurant",AddRestaurant)
 
 router.get("/allRestaurants", getAllRestaurants)
+
+router.post("/add-destination",AddDestination)
+
+router.get("/allDestinations", getAllDestinations)
+
 
 
 export default router;

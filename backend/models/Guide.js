@@ -5,6 +5,10 @@ const GuideModel = model("Guides", {
     type: Number,
     required: true,
   },
+  type:{
+    type: String,
+    default: "Guides"
+  },
   guideName: {
     type: String,
     required: true,

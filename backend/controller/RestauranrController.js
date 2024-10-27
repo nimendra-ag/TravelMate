@@ -21,6 +21,8 @@ const AddRestaurant = async (req, res) => {
             website: req.body.website,
             contactNumber: req.body.contactNumber,
             priceRange: req.body.priceRange,
+            openingHours: req.body.openingHours,
+
         });
 
         await restaurant.save();
