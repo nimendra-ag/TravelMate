@@ -5,7 +5,7 @@ const AccommodationModel = model('Accommodations',{
         type: Number,
         required: true,
     },
-    hotel_name: {
+    name: {
         type: String,
         required: true,
     },

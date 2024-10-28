@@ -35,10 +35,10 @@ const HotelsInLandingPage = () => {
         {allAccommodations.map((accommodation) => (
           <SwiperSlide key={accommodation.id}>
             <HotelCard
-              name={accommodation.hotel_name}
-              description={accommodation.description}
+              name={accommodation.name}
+              description={accommodation.minidescription}
               price={accommodation.perPerson_price}
-              imageSrc='https://picsum.photos/400/200'
+              imageSrc={accommodation.cardImage}
               id={accommodation.id}
               minidescription={accommodation.minidescription}
             />
