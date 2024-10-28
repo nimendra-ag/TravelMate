@@ -1,8 +1,11 @@
 import React from 'react'
+import ActivitiesMainArea from '../../components/activitiesMainArea/ActivitiesMainArea'
 
 const ActivitiesPage = () => {
   return (
-    <div>ActivitiesPage</div>
+    <>
+    <ActivitiesMainArea/>
+    </>
   )
 }
 
