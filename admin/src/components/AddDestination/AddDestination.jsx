@@ -60,15 +60,15 @@ const AddDestination = () => {
       [e.target.name]: e.target.value,
     });
   };
-//   //handle time change
-//   const handleTimeChange = (e, index, timeType) => {
-//     const updatedOpeningHours = [...destinationDetails.openingHours];
-//     updatedOpeningHours[index][timeType] = e.target.value;
-//     setDestinationDetails({
-//       ...destinationDetails,
-//       openingHours: updatedOpeningHours,
-//     });
-//   };
+  //handle time change
+  const handleTimeChange = (e, index, timeType) => {
+    const updatedOpeningHours = [...destinationDetails.openingHours];
+    updatedOpeningHours[index][timeType] = e.target.value;
+    setDestinationDetails({
+      ...destinationDetails,
+      openingHours: updatedOpeningHours,
+    });
+  };
 
    // Handle form submission
    const handleSubmit = async (e) => {
@@ -159,7 +159,7 @@ const AddDestination = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-                {/* <Row>
+                <Row>
                   {destinationDetails.openingHours.map((day, index) => (
                     <Col md="6" key={index} className="mb-3">
                       <Form.Group controlId={`formOpeningHours-${day.day}`}>
@@ -195,7 +195,7 @@ const AddDestination = () => {
                       </Form.Group>
                     </Col>
                   ))}
-                </Row> */}
+                </Row>
                 <Row>
                   <Col md="6">
                     <Form.Group controlId="formCategory" className="mb-3">

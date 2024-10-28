@@ -38,7 +38,7 @@ const RestaurantModel = model("Restaurants", {
     required: false, // Making it optional
   },
   openingHours: {
-    type: [String], // Array of strings for hours
+    type: [Array], // Array of strings for hours
     required: true,
   },
   priceRange: {

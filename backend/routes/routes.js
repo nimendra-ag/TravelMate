@@ -1,7 +1,7 @@
 import express from 'express';
 import { AddGuide, getAllGuides } from '../controller/GuideController.js';
 import { AddTransportationService, getAllTransportationServices } from '../controller/TransportationServiceController.js';
-import { AddRestaurant, getAllRestaurants } from '../controller/RestauranrController.js';
+import { AddRestaurant, getAllRestaurants } from '../controller/RestaurantController.js';
 import { AddDestination, getAllDestinations } from '../controller/DestinationController.js';
 
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';

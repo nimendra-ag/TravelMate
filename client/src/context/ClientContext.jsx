@@ -7,6 +7,8 @@ const ClientContextProvider = (props) => {
     const [allAccommodations, setAllAccommodations] = useState([]);
     const [allTravelMateFeedback, setAllTravelMateFeedback] = useState([]);
     const [allGuides, setAllGuides] = useState([]);
+    const [allRestaurants, setAllRestaurants] = useState([]);
+
 
     useEffect(() => {
         // Fetch accommodations data
@@ -28,7 +30,8 @@ const ClientContextProvider = (props) => {
             .catch((error) => {
                 console.log('Feedback fetch error:', error);
             });
-
+        
+        // Fetch guides data
         axios.get('http://localhost:3000/travelmate/allGuides')
             .then((response) => {
                 console.log('Guides:', response.data);
@@ -37,7 +40,18 @@ const ClientContextProvider = (props) => {
             .catch((error) => {
                 console.log('Feedback fetch error:', error);
             });
-
+        
+            //Fetch restaurants data
+            axios.get('http://localhost:3000/travelmate/allRestaurants')
+            .then((response) => {
+                console.log('Restaurants:', response.data);
+                setAllRestaurants(response.data);
+            })
+            .catch((error) => {
+                console.log('Feedback fetch error:', error);
+            });
+        
+        
     }, []);
 
     // Add both data to the context value
@@ -45,6 +59,7 @@ const ClientContextProvider = (props) => {
         allAccommodations,
         allTravelMateFeedback,
         allGuides,
+        allRestaurants,
     };
 
     return (

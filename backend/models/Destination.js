@@ -39,10 +39,10 @@ const DestinationModel = model("Destinations", {
     type: String,
     required: false,
   },
-//   openingHours: {
-//     type: [String], // Array of strings for hours
-//     required: true,
-//   },
+  openingHours: {
+    type: [Array], // Array of strings for hours
+    required: true,
+  },
   description: {
     type: String,
     required: true,
