@@ -2,29 +2,24 @@ import React from 'react'
 import beach from "../../assets/Beachactivities.png"
 import { Button } from 'react-bootstrap'
 import logo from "../../assets/TravalMateLogo2.png"
-
 import surfing from "../../assets/surfing.png"
 import tekling from "../../assets/Tekling.png"
 import Hiking from "../../assets/Hiking.png"
 import food from "../../assets/Food.png"
 import culture from "../../assets/culture.png"
 import "../activities/activities.css"
-
-
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Activities = () => {
+    const navigate = useNavigate();
     return (
         <div>
-      <div style={{ backgroundColor: '#C0EBFE' , fontSize:"36px" , fontWeight:"bold" }} className="w-full">
-    <p className="p-5 text-center m-5">See what you can do in Sri Lanka</p>
-</div>
-
-
+            <div style={{ backgroundColor: '#C0EBFE', fontSize: "36px", fontWeight: "bold" }} className="w-full">
+                <p className="p-5 text-center m-5">See what you can do in Sri Lanka</p>
+            </div>
 
             <div className="container mt-4 d-flex flex-column justify-content-center align-items-center">
-
-
 
                 {/* First Row - Beach Activities and Surfing */}
                 <div className="row d-none d-xxl-flex  justify-content-center align-items-center">
@@ -42,17 +37,19 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Button
-                                    className=" px-4 py-1 border-0 rounded-pill"
-                                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                                >
-                                    <div className="d-flex align-items-center">
-                                        <div>Discover More</div>
-                                        <div>
-                                            <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                    <Button
+                                        className=" px-4 py-1 border-0 rounded-pill"
+                                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div>Discover More</div>
+                                            <div>
+                                                <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
 
@@ -65,9 +62,6 @@ const Activities = () => {
                             backgroundImage: `url(${surfing})`,
                             backgroundSize: 'cover', // Adjusts the background to cover the entire div
                             backgroundPosition: 'center',
-                            height: "467px", width: "656px"
-
-
                         }}>
 
                             <div>
@@ -76,22 +70,22 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Button
-                                    className="px-4 py-1 border-0 rounded-pill"
-                                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                                >
-                                    <div className="d-flex align-items-center">
-                                        <div>Discover More</div>
-                                        <div>
-                                            <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+
+                                    <Button
+                                        className="px-4 py-1 border-0 rounded-pill"
+                                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div>Discover More</div>
+                                            <div>
+                                                <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
-
-
-
 
                         <div className=" mb-3 p-4 pt-5" style={{
                             display: 'flex', flexDirection: 'column', height: "467px", width: "656px",
@@ -99,9 +93,6 @@ const Activities = () => {
                             backgroundImage: `url(${tekling})`,
                             backgroundSize: 'cover', // Adjusts the background to cover the entire div
                             backgroundPosition: 'center',
-                            height: "467px", width: "656px"
-
-
                         }}>
 
                             <div>
@@ -110,32 +101,25 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Button
-                                    className="px-4 py-1 border-0 rounded-pill"
-                                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                                >
-                                    <div className="d-flex align-items-center">
-                                        <div>Discover More</div>
-                                        <div>
-                                            <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                    <Button
+                                        className="px-4 py-1 border-0 rounded-pill"
+                                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div>Discover More</div>
+                                            <div>
+                                                <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
-
-
-
 
                     </div>
 
                 </div>
-
-
-
-
-
-
 
                 <div className="  d-xxl-none justify-content-center align-items-center">
                     <div className="col-md-6 mb-4 px-4 pt-5" style={{
@@ -152,17 +136,19 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Button
-                                    className="px-4 py-1 border-0 rounded-pill"
-                                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                                >
-                                    <div className="d-flex align-items-center">
-                                        <div>Discover More</div>
-                                        <div>
-                                            <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                    <Button
+                                        className="px-4 py-1 border-0 rounded-pill"
+                                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div>Discover More</div>
+                                            <div>
+                                                <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
 
@@ -175,9 +161,6 @@ const Activities = () => {
                             backgroundImage: `url(${surfing})`,
                             backgroundSize: 'cover', // Adjusts the background to cover the entire div
                             backgroundPosition: 'center',
-                            height: "467px", width: "656px"
-
-
                         }}>
 
                             <div>
@@ -186,17 +169,20 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Button
-                                    className="px-4 py-1 border-0 rounded-pill"
-                                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                                >
-                                    <div className="d-flex align-items-center">
-                                        <div>Discover More</div>
-                                        <div>
-                                            <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+
+                                    <Button
+                                        className="px-4 py-1 border-0 rounded-pill"
+                                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div>Discover More</div>
+                                            <div>
+                                                <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
 
@@ -209,9 +195,6 @@ const Activities = () => {
                             backgroundImage: `url(${tekling})`,
                             backgroundSize: 'cover', // Adjusts the background to cover the entire div
                             backgroundPosition: 'center',
-                            height: "467px", width: "656px"
-
-
                         }}>
 
                             <div>
@@ -220,52 +203,23 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Button
-                                    className="px-4 py-1 border-0 rounded-pill"
-                                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                                >
-                                    <div className="d-flex align-items-center">
-                                        <div>Discover More</div>
-                                        <div>
-                                            <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                    <Button
+                                        className="px-4 py-1 border-0 rounded-pill"
+                                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div>Discover More</div>
+                                            <div>
+                                                <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
-
-
-
-
                     </div>
-
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 {/* Third Row - Hiking (full width) */}
 
 
@@ -276,8 +230,6 @@ const Activities = () => {
                     backgroundSize: 'cover', // Adjusts the background to cover the entire div
                     backgroundPosition: 'center'
 
-
-
                 }}>
 
                     <div>
@@ -286,35 +238,21 @@ const Activities = () => {
                     </div>
 
                     <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                        <Button
-                            className="px-4 py-1 border-0 rounded-pill"
-                            style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                        >
-                            <div className="d-flex align-items-center">
-                                <div>Discover More</div>
-                                <div>
-                                    <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                        <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                            <Button
+                                className="px-4 py-1 border-0 rounded-pill"
+                                style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                            >
+                                <div className="d-flex align-items-center">
+                                    <div>Discover More</div>
+                                    <div>
+                                        <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                    </div>
                                 </div>
-                            </div>
-                        </Button>
+                            </Button>
+                        </Link>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 <div className=" d-xxl-none mb-3 p-4 pt-5 rounded-4" style={{
                     display: 'flex', flexDirection: 'column', height: "466px", width: "656px",
@@ -322,9 +260,6 @@ const Activities = () => {
                     backgroundImage: `url(${Hiking})`,
                     backgroundSize: 'cover', // Adjusts the background to cover the entire div
                     backgroundPosition: 'center',
-                    height: "466px", width: "656px"
-
-
                 }}>
 
                     <div>
@@ -333,28 +268,23 @@ const Activities = () => {
                     </div>
 
                     <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                        <Button
-                            className="px-4 py-1 border-0 rounded-pill"
-                            style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                        >
-                            <div className="d-flex align-items-center">
-                                <div>Discover More</div>
-                                <div>
-                                    <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                        <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                            <Button
+                                className="px-4 py-1 border-0 rounded-pill"
+                                style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                            >
+                                <div className="d-flex align-items-center">
+                                    <div>Discover More</div>
+                                    <div>
+                                        <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                    </div>
                                 </div>
-                            </div>
-                        </Button>
+                            </Button>
+                        </Link>
                     </div>
                 </div>
 
-
-
-
-
-
                 {/* Fourth Row - Food and Cultural Attractions */}
-
-
 
                 <div>
 
@@ -367,34 +297,28 @@ const Activities = () => {
                             backgroundImage: `url(${food})`,
                             backgroundSize: 'cover', // Adjusts the background to cover the entire div
                             backgroundPosition: 'center',
-                            height: "466px", width: "656px"
-
-
                         }}>
-
                             <div>
                                 <h1 className="font-weight-bold text-white">
                                     Food                             </h1>
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Button
-                                    className="px-4 py-1 border-0 rounded-pill"
-                                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                                >
-                                    <div className="d-flex align-items-center">
-                                        <div>Discover More</div>
-                                        <div>
-                                            <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                    <Button
+                                        className="px-4 py-1 border-0 rounded-pill"
+                                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div>Discover More</div>
+                                            <div>
+                                                <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
-
-
-
-
 
                         <div className=" mb-3 p-4 pt-5 rounded-4" style={{
                             display: 'flex', flexDirection: 'column', height: "466px", width: "662px", marginLeft: "15px",
@@ -402,9 +326,6 @@ const Activities = () => {
                             backgroundImage: `url(${culture})`,
                             backgroundSize: 'cover', // Adjusts the background to cover the entire div
                             backgroundPosition: 'center',
-                            
-
-
                         }}>
 
                             <div>
@@ -413,52 +334,29 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Button
-                                    className="px-4 py-1 border-0 rounded-pill"
-                                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                                >
-                                    <div className="d-flex align-items-center">
-                                        <div>Discover More</div>
-                                        <div>
-                                            <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                    <Button
+                                        className="px-4 py-1 border-0 rounded-pill"
+                                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div>Discover More</div>
+                                            <div>
+                                                <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </Button>
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>
-
-
                 </div>
-
-
-
-
                 <div className="d-xxl-none mb-3 p-4 pt-5 rounded-4" style={{
                     display: 'flex', flexDirection: 'column', height: "466px", width: "656px",
 
                     backgroundImage: `url(${food})`,
                     backgroundSize: 'cover', // Adjusts the background to cover the entire div
                     backgroundPosition: 'center',
-                    height: "466px", width: "656px"
-
-
                 }}>
 
                     <div>
@@ -467,17 +365,19 @@ const Activities = () => {
                     </div>
 
                     <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                        <Button
-                            className="px-4 py-1 border-0 rounded-pill"
-                            style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                        >
-                            <div className="d-flex align-items-center">
-                                <div>Discover More</div>
-                                <div>
-                                    <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                        <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                            <Button
+                                className="px-4 py-1 border-0 rounded-pill"
+                                style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                            >
+                                <div className="d-flex align-items-center">
+                                    <div>Discover More</div>
+                                    <div>
+                                        <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                    </div>
                                 </div>
-                            </div>
-                        </Button>
+                            </Button>
+                        </Link>
                     </div>
                 </div>
 
@@ -488,9 +388,6 @@ const Activities = () => {
                     backgroundImage: `url(${culture})`,
                     backgroundSize: 'cover', // Adjusts the background to cover the entire div
                     backgroundPosition: 'center',
-                    height: "466px", width: "656px"
-
-
                 }}>
 
                     <div>
@@ -499,6 +396,7 @@ const Activities = () => {
                     </div>
 
                     <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
+                    <Link to={'/activities'} style={{ textDecoration: 'none' }}>
                         <Button
                             className="px-4 py-1 border-0 rounded-pill"
                             style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
@@ -510,13 +408,9 @@ const Activities = () => {
                                 </div>
                             </div>
                         </Button>
+                        </Link>
                     </div>
                 </div>
-
-
-
-
-
             </div>
         </div>
 
