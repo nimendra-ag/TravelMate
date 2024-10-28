@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const HotelCard = ({ name, description, price, imageSrc, id, minidescription }) => {
   return (
     <Link to={`/accommodations/${id}`} style={{ textDecoration: 'none' }}>
-      <Card style={{ width: '22rem', boxShadow: '1px 1px 0px 1px rgba(0, 0, 0, .2)' }}>
+      <Card style={{ width: '22rem',  }}>
         <Card.Img variant="top" src={imageSrc} />
         <Card.Body>
           <Card.Title>{name}</Card.Title>
