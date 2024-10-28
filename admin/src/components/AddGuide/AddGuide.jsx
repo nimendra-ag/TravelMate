@@ -101,7 +101,7 @@ const AddGuide = () => {
 
 
   return (
-    <div className="AddGuide">
+    <div className="AddGuide"  style={{marginTop:'45px'}}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
@@ -118,13 +118,7 @@ const AddGuide = () => {
                 width: "100%",
               }}
             >
-              <div className="d-flex justify-content-left align-items-left">
-                <img
-                  src={AdminLogo}
-                  alt="Icon"
-                  style={{ height: "98px", paddingBottom: "33px" }}
-                />
-              </div>
+              
               <h2 className="fw-bold" style={{ paddingBottom: "25px" }}>
                 Add Guide
               </h2>
