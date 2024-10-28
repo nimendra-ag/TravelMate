@@ -10,10 +10,6 @@ import AddHotel from './components/AddHotel/AddHotel';
 import AddTransportationService from './components/AddTransportationService/AddTransportationService';
 import AddRestaurant from './components/AddRestaurant/AddRestaurant';
 import AddDestination from './components/AddDestination/AddDestination';
-
-function App() {
-  const [count, setCount] = useState(0)
-
 import HotelDataTable from './pages/HotelDataTable/HotelDataTable';
 import TransportModeDataTable from './pages/TransportModeDataTable/TransportModeDataTable';
 import ResturantDataTable from './pages/RasturantDataTable/ResturantDataTable';
