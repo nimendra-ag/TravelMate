@@ -1,44 +1,32 @@
 import { model } from "mongoose";
 
-const GuideModel = model("Guides", {
-  id: {
-    type: Number,
-    required: true,
-  },
-  type:{
+const TransportationServiceModel = model("TransportationServices", {
+  id: { type: Number, required: true },
+  type: {
     type: String,
-    default: "Guides"
+    default: "TransportationServices",
   },
-  guideName: {
+  transportationServiceName: {
     type: String,
     required: true,
   },
-
-  area: {
+  availableVehicles: {
     type: [String],
     required: true,
   },
-  languages: {
-    type: [String],
-    required: true,
-  },
-  chargesPerDay: {
+  pricePerHour: {
     type: Number,
     required: true,
   },
-  description: {
+  address: {
     type: String,
-    required: true,
-  },
-  birthDate: {
-    type: Date,
     required: true,
   },
   contactNumber: {
     type: String,
     required: true,
   },
-  nic: {
+  description: {
     type: String,
     required: true,
   },
@@ -50,4 +38,4 @@ const GuideModel = model("Guides", {
   },
 });
 
-export { GuideModel };
+export { TransportationServiceModel };
