@@ -21,6 +21,7 @@ const AddAccommodation = async (req, res) => {
             category: req.body.category,
             distance_from_city: req.body.distanceFromMainCity,
             perPerson_price: req.body.price,
+            contactNumber: req.body.contactNumber,
         });
 
         await hotel.save();
