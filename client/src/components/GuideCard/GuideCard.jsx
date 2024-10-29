@@ -2,9 +2,9 @@ import React from 'react';
 import { Card, Button, Row, Col, Image } from 'react-bootstrap';
 import contactIcon from '../../assets/phone-call.png';
 
-const GuideCard = ({ name, age, description, area, languages, chargesPerDay, profileImg }) => {
+const GuideCard = ({ name, description, area, languages, chargesPerDay, profileImg }) => {
   return (
-    <Card style={{ width: '25rem', borderRadius: '10px', overflow: 'hidden', boxShadow: '1px 1px 0px 1px rgba(0, 0, 0, .2)' }}>
+    <Card style={{ width: '22rem', borderRadius: '10px', overflow: 'hidden', boxShadow: '1px 1px 0px 1px rgba(0, 0, 0, .2)' }}>
       <Card.Body className="text-center">
         <Image 
           src={profileImg || "https://picsum.photos/150"} // Replace with actual profile image URL
@@ -13,7 +13,7 @@ const GuideCard = ({ name, age, description, area, languages, chargesPerDay, pro
         />
 
         <Card.Title style={{ fontWeight: 'bold' }}>{name}</Card.Title>
-        <div style={{ fontSize: '0.9rem', color: '#666' }}>Age-{age}</div>
+        {/* <div style={{ fontSize: '0.9rem', color: '#666' }}>Age-{age}</div> */}
         
         <Card.Text style={{ marginTop: '5px', fontSize: '0.85rem', color: '#666' }}>
           {description}

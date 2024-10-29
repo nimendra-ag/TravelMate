@@ -9,7 +9,7 @@ const AddGuide = async (req, res) => {
     let id = guides.length > 0 ? guides[guides.length - 1].id + 1 : 1;
     const guide = new GuideModel({
       id: id,
-      guideName: req.body.guideName,
+      name: req.body.guideName,
       area: req.body.area,
       languages: req.body.languages,
       chargesPerDay: req.body.chargesPerDay,

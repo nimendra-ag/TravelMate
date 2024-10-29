@@ -11,7 +11,11 @@ const HotelPage = () => {
     return (
         <>
             {accommodation ? <>
-            <HotelMainSection/>
+            <HotelMainSection
+                name = {accommodation.name}
+                description = {accommodation.description}
+                distance_from_city = {accommodation.distance_from_city}
+            />
             </>: <></>}
          
         </>

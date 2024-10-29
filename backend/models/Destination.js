@@ -1,44 +1,49 @@
 import { model } from "mongoose";
 
-const GuideModel = model("Guides", {
+const DestinationModel = model("Destinations", {
   id: {
     type: Number,
     required: true,
   },
-  type:{
+  type: {
     type: String,
-    default: "Guides"
+    default: "Destinations",
   },
-  guideName: {
+  destinationName: {
+    type: String,
+    required: true,
+  },
+  city: {
     type: String,
     required: true,
   },
 
-  area: {
-    type: [String],
-    required: true,
-  },
-  languages: {
-    type: [String],
-    required: true,
-  },
-  chargesPerDay: {
+  distanceFromColombo: {
     type: Number,
     required: true,
   },
-  description: {
+
+  category: {
+    type: [String],
+    required: true,
+  },
+  bestTimeToVisit: {
     type: String,
     required: true,
   },
-  birthDate: {
-    type: Date,
-    required: true,
+  website: {
+    type: String,
+    required: false,
   },
   contactNumber: {
     type: String,
+    required: false,
+  },
+  openingHours: {
+    type: [Array], // Array of strings for hours
     required: true,
   },
-  nic: {
+  description: {
     type: String,
     required: true,
   },
@@ -49,5 +54,5 @@ const GuideModel = model("Guides", {
     max: 5,
   },
 });
+export { DestinationModel };
 
-export { GuideModel };
