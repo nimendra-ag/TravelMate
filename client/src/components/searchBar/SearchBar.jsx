@@ -25,9 +25,12 @@ const SearchBar = () => {
 
                     const acc = res.data.accommodations;
 
+                    const des = res.data.destinations;
+
+                    const  guids = res.data.guids;
 
 
-                    setData([...cities, ...acc]);
+                    setData([...cities, ...acc, ...des, ...guids]); // Set the data in the state
                     console.log([...cities, ...acc]); // Log the new data right after setting
 
 
@@ -59,10 +62,12 @@ const SearchBar = () => {
         else if (type === "accommodation") {
             navigate(`/accommodation/${dataId}`)
         }
+        else if (type === "Destinations"){
+            navigate(`/destinations/${dataId}`)
+        }
 
      
 
-        // Navigate to the next page with cityId in URL
     };
 
 

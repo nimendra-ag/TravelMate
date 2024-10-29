@@ -1,6 +1,8 @@
 import dotenv from "dotenv"
 import { AccommodationModel } from "../models/Accommodation.js"
 import { CityModel } from "../models/Citiy.js";
+import { DestinationModel } from "../models/Destination.js";
+import { GuideModel } from "../models/Guide.js";
 dotenv.config({ path: "../.env" })
 
 const AddAccommodation = async (req, res) => {
@@ -56,7 +58,7 @@ const getAllAccomodations = async (req, res) => {
 const GetData = async (req, res) => {
 
 
-    console.log("Getttttttttttttttt");
+    
     
 
 
@@ -65,10 +67,14 @@ const GetData = async (req, res) => {
     try {
         const cities = await CityModel.find();
         const accommodations = await AccommodationModel.find(); 
+        const destinations = await DestinationModel.find();
+        const guids = await GuideModel.find();
+
+
         console.log(cities);
         console.log(accommodations);
     
-        return res.status(200).json({ success: true, cities,accommodations  });
+        return res.status(200).json({ success: true, cities,accommodations,destinations,guids  });
     } catch (err) {
         console.error(err); // Log the error for debugging purposes
         return res.status(500).json({ success: false, error: err.message }); // Consistent success flag
@@ -81,7 +87,6 @@ const GetCity = async (req, res) => {
 
     const { id } = req.params;
 
-    console.log("Getttttttttttttttt");
     
 
 
