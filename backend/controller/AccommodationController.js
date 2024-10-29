@@ -51,7 +51,16 @@ const getAllAccomodations = async (req, res) => {
     }
 }
 
-export { AddAccommodation, getAllAccomodations}
+// API to delete a Hotels
+const deleteAccommodation = async (req, res) => {
+    await hotel.findOneAndDelete({ id: req.body.id });
+  res.json({
+      success: true,
+      p_name: req.body.hotel_name,
+  });
+}
+
+export { AddAccommodation, getAllAccomodations, deleteAccommodation }
 
 
 
