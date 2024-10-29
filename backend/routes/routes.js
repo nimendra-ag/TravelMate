@@ -24,6 +24,11 @@ router.get("/getcity/:id",GetCity)
 
 router.get("/allAccomodations", getAllAccomodations)
 
+router.post("/signupwithemailandpassword", SignUpWithEmailAndPassword);
+
+router.post("/signinwithemailandpassword", SignInWithEmailAndPassword)
+
+
 router.post("/addGuide",AddGuide)
 
 router.get("/allGuides", getAllGuides)
