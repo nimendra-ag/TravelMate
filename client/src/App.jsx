@@ -14,6 +14,7 @@ import CityResults from './pages/cityResults/CityResults'
 import AccomodationResult from './pages/accomodationResult/AccomodationResult'
 import HotelPage from './pages/HotelPage/HotelPage'
 import ActivitiesPage from './pages/activitiesPage/ActivitiesPage'
+import RestaurantPage from './pages/restaurantPage/RestaurantPage'
 
 
 function App() {
@@ -38,9 +39,13 @@ function App() {
           <Route path='/accommodations' element={<HotelPage />}>
             <Route path=':accommodationID' element={<HotelPage />} />
           </Route>
+          <Route path='/restaurants' element={<RestaurantPage />}>
+      <Route path=':id' element={<RestaurantPage />} />
+      </Route>
           <Route path='/activities' element={<ActivitiesPage/>}/>
         </Routes>
       </Router>
+      
 
     </>
   )
