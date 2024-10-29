@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faMapMarkerAlt, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import './RestaurantMainSection.css';
 
-const RestaurantMainSection = () => {
+const RestaurantMainSection = (id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating) => {
   const images = [
     'https://picsum.photos/600/600?random=1',
     'https://picsum.photos/600/600?random=2',
@@ -11,6 +11,8 @@ const RestaurantMainSection = () => {
     'https://picsum.photos/600/600?random=4',
     'https://picsum.photos/600/600?random=5',
     'https://picsum.photos/600/600?random=6',
+    'https://picsum.photos/600/600?random=6',
+
 
   ];
 
@@ -49,6 +51,8 @@ const RestaurantMainSection = () => {
           <img src={images[2]} alt="Thumbnail 3" />
           <img src={images[4]} alt="Thumbnail 4" />
           <img src={images[5]} alt="Thumbnail 5" />
+          <img src={images[6]} alt="Thumbnail 5" />
+
 
         </div>
       </div>

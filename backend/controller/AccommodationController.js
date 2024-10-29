@@ -5,7 +5,7 @@ dotenv.config({ path: "../.env" })
 
 const AddAccommodation = async (req, res) => {
 
-    // console.log(req.body.hotel_name);
+    // console.log(req.body.name);
     
     try {
 
@@ -28,7 +28,7 @@ const AddAccommodation = async (req, res) => {
         res.json({
             success: true,
             message: 'Hotel added successfully',
-            hotel_name: req.body.hotel_name,
+            name: req.body.name,
         });
     }
     catch(error) {

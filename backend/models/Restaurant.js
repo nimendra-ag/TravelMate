@@ -9,7 +9,7 @@ const RestaurantModel = model("Restaurants", {
     type: String,
     default: "Restaurants",
   },
-  restaurantName: {
+  name: {
     type: String,
     required: true,
   },
@@ -22,7 +22,7 @@ const RestaurantModel = model("Restaurants", {
     required: true,
   },
   contactNumber: {
-    type: String, // Use String for phone numbers
+    type: String, 
     required: true,
   },
   description: {
@@ -30,19 +30,19 @@ const RestaurantModel = model("Restaurants", {
     required: true,
   },
   email: {
-    type: String, // Corrected type to String
-    required: false, // Making it optional
+    type: String, 
+    required: false, 
   },
   website: {
     type: String,
-    required: false, // Making it optional
+    required: false, 
   },
   openingHours: {
     type: [Array], // Array of strings for hours
     required: true,
   },
   priceRange: {
-    type: [String], // Array of strings for hours
+    type: [String], 
     required: false,
   },
   rating: {

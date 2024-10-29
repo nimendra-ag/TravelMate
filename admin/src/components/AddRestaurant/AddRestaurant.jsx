@@ -7,7 +7,7 @@ import { InputGroup, Form, Col, Row, Container, Button, Tooltip, OverlayTrigger 
 const AddRestaurant = () => {
   const [image, setImage] = useState(null);
   const [restaurantDetails, setRestaurantDetails] = useState({
-    restaurantName: "",
+    name: "",
     category: [],
     address: "",
     contactNumber: "",
@@ -113,15 +113,15 @@ const AddRestaurant = () => {
                   <Row>
                     <Col md="6">
                       <Form.Group
-                        controlId="formRestaurantName"
+                        controlId="formName"
                         className="mb-3"
                       >
                         <Form.Label>Restaurant Name</Form.Label>
                         <Form.Control
                           type="text"
                           placeholder="Enter the new restaurant"
-                          name="restaurantName"
-                          value={restaurantDetails.restaurantName}
+                          name="name"
+                          value={restaurantDetails.name}
                           onChange={changeHandler}
                           style={{
                             borderRadius: "10px",

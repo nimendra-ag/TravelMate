@@ -37,7 +37,7 @@ const RestaurantsInLandingPage = () => {
           {allRestaurants.map((restaurant) => (
             <SwiperSlide key={restaurant.id}>
               <RestaurantCard
-                restaurantName={restaurant.restaurantName}
+                name={restaurant.name}
                 address={restaurant.address}
                 category={restaurant.category}
                 contactNumber={restaurant.contactNumber}

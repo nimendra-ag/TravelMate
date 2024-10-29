@@ -9,7 +9,7 @@ const GuideModel = model("Guides", {
     type: String,
     default: "Guides"
   },
-  guideName: {
+  name: {
     type: String,
     required: true,
   },

@@ -8,8 +8,8 @@
 
 .restaurant-details {
     text-align: center; 
-    /* margin-top: 0px; Spacing above details */
-    padding: 10px; /* Optional padding */
+    /* margin-top: 0px; */
+    padding: 10px; 
 
 }
 
@@ -18,7 +18,7 @@
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 2fr 1fr;
     gap: 20px;
-    width: 100%; /* Full width for images */
+    width: 100%; 
     margin-bottom: 0px;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .main-image {
-    height: 360px;
+    height: 370px;
     width: 100%;
     grid-column: 2 / 3;
     grid-row: 1 / 2;
@@ -77,8 +77,8 @@
     width: 100%; 
 }
 .info-item {
-    display: flex; /* Use flexbox for icons and text */
-    align-items: center; /* Center align items */
+    display: flex; 
+    align-items: center; 
 }
 
 .info-item p {
@@ -101,5 +101,5 @@
 }
 
 .fade-in {
-    opacity: 1;
+    opacity: 0.5;
 }

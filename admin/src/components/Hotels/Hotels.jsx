@@ -18,7 +18,7 @@ const Hotels = () => {
       allAccomodations.map((accomodation) => {
         return (
           <div key={accomodation.id}>
-            <h1>{accomodation.hotel_name}</h1>
+            <h1>{accomodation.name}</h1>
             <h2>{accomodation.address}</h2>
           </div>
         )
