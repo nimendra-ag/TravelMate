@@ -106,10 +106,10 @@ const ResturantDataTable = () => {
     <div
       style={{
         position: 'absolute',
-        width: '920px',
+        width: '1120px',
         height: '640px',
         top: '110px',
-        left: '585px',
+        left: '365px',
         border: '1px solid #ccc',
         padding: '20px',
         backgroundColor: '#f9f9f9',
