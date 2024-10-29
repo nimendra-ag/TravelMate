@@ -39,6 +39,8 @@ const App = () => {
             <Route path="/resturant-data-table" element={<ResturantDataTable />} />
             <Route path="/guide-data-table" element={<GuideDataTable />} />
             <Route path="/destinations-data-table" element={<DestinationsDataTable />} />
+
+            
           </Routes>
         </div>
       </BrowserRouter>

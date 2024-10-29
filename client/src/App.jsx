@@ -35,9 +35,12 @@ function App() {
           <Route path="/footer" element={<Footer />} />
           <Route path="/destination" element={<Destination />} />
           <Route path="/ex" element={<Exist />} />
-          <Route path='/accommodations' element={<HotelPage />}>
-            <Route path=':accommodationID' element={<HotelPage />} />
-          </Route>
+          <Route path='/accommodations' element={<HotelPage />}/>
+          <Route path='/' element={<ActivitiesPage/>}/>
+          <Route path="/destinations/:id" element={<Destination />} />
+
+
+          
           <Route path='/activities' element={<ActivitiesPage/>}/>
         </Routes>
       </Router>
