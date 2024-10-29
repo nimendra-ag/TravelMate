@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
+import { Link } from 'react-router-dom';
 
 const GuideDataTable = () => {
   const columns = [
@@ -25,7 +26,7 @@ const GuideDataTable = () => {
       selector: row => row.area,
     },
     {
-      name:'Charges Per day(LKR)',
+      name: 'Charges Per day(LKR)',
       selector: row => row.charges_per_day,
     },
     {
@@ -52,21 +53,21 @@ const GuideDataTable = () => {
   ];
 
   const initialData = [
-    {name: 'John Doe',language: 'English',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Jane Doe',language: 'Sinhala',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Michael Smith',language: 'Tamil',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Emily Johnson',language: 'English',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'David Wilson',language: 'Sinhala',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Sarah Thompson',language: 'Tamil',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Olivia Davis',language: 'English',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Daniel Anderson',language: 'Sinhala',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Emma Thompson',language: 'Tamil',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Matthew Johnson',language: 'English',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Avery Wilson',language: 'Sinhala',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Ethan Thompson',language: 'Tamil',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Isabella Davis',language: 'English',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Jackson Anderson',language: 'Sinhala',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
-    {name: 'Mia Thompson',language: 'Tamil',nic_no: '123456789V',contact_number: '1234567890',area: 'Colombo',charges_per_day: '5000',},
+    { name: 'John Doe', language: 'English', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Jane Doe', language: 'Sinhala', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Michael Smith', language: 'Tamil', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Emily Johnson', language: 'English', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'David Wilson', language: 'Sinhala', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Sarah Thompson', language: 'Tamil', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Olivia Davis', language: 'English', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Daniel Anderson', language: 'Sinhala', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Emma Thompson', language: 'Tamil', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Matthew Johnson', language: 'English', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Avery Wilson', language: 'Sinhala', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Ethan Thompson', language: 'Tamil', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Isabella Davis', language: 'English', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Jackson Anderson', language: 'Sinhala', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
+    { name: 'Mia Thompson', language: 'Tamil', nic_no: '123456789V', contact_number: '1234567890', area: 'Colombo', charges_per_day: '5000', },
   ];
 
   const [records, setRecords] = useState(initialData);
@@ -131,20 +132,22 @@ const GuideDataTable = () => {
           placeholder="Filter by Name"
           style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginRight: '10px' }}
         />
-        <button
-          onClick={handleAddHotel}
-          style={{
-            backgroundColor: '#0A2E41',
-            color: 'white',
-            border: 'none',
-            padding: '8px 15px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            
-          }}
-        >
-          Add a Guide
-        </button>
+
+        <Link to="/add-new-guide">
+          <button
+            onClick={handleAddHotel}
+            style={{
+              backgroundColor: '#0A2E41',
+              color: 'white',
+              border: 'none',
+              padding: '8px 15px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+
+            }}
+          >
+            Add a Guide
+          </button>      </Link>
       </div>
       <DataTable
         columns={columns}

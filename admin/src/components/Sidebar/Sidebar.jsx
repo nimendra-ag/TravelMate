@@ -48,7 +48,7 @@ const Sidebar = () => {
                 <p>Manage Users</p>
               </div>
             </Link>
-            <Link to="/transport" style={{ textDecoration: 'none' }} onClick={handleClose}>
+            <Link to="/transportmodes" style={{ textDecoration: 'none' }} onClick={handleClose}>
               <div className="sidebar-item">
                 <p>Manage Transport Modes</p>
               </div>
@@ -84,7 +84,7 @@ const Sidebar = () => {
               <p>Manage Users</p>
             </div>
           </Link>
-          <Link to="/transport" style={{ textDecoration: 'none' }}>
+          <Link to="/transportmodes" style={{ textDecoration: 'none' }}>
             <div className="sidebar-item">
               <p>Manage Transport Modes</p>
             </div>
