@@ -64,7 +64,7 @@ const GetDetails = () => {
                 localStorage.setItem('auth-token', response.data.token);
                 console.log(response.data.token);
                 
-            }
+    }
             navigate('/')
         } catch (error) {
             console.log("Error updating profile", error);

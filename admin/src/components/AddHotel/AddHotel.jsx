@@ -4,7 +4,7 @@ import axios from "axios";
 import AdminLogo from "../../assets/TravelMateAdminLogo.png";
 
 const AddHotel = () => {
-  const [image, setImage] = useState(null);
+  const [cardImage, setCardImage] = useState(null);
   const [accommodationDetails, setAccommodationDetails] = useState({
     accommodationName: "",
     category: "Hotels", // Default category
@@ -12,11 +12,12 @@ const AddHotel = () => {
     distanceFromMainCity: "",
     price: "",
     description: "",
+    cardImage: "",
   });
 
   // Handle file input for the image
-  const imageHandler = (e) => {
-    setImage(e.target.files[0]);
+  const cardImageHandler = (e) => {
+    setCardImage(e.target.files[0]);
   };
 
   // Handle change in text fields
@@ -31,16 +32,53 @@ const AddHotel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     console.log("Form submitted");
+    let responseDataCardImage;
+    let formDataCardImage = new FormData();
+
+    formDataCardImage.append('image', cardImage);
 
     try {
-        const response = await axios.post("http://localhost:3000/travelmate/addAccomodation", accommodationDetails, );
-        // console.log("Profile updated successfully", response.data);
-    
-        navigate('/')
+      const responseCardImage = await axios.post('http://localhost:3000/upload', formDataCardImage, {
+        headers: { Accept: 'application/json' },
+      });
+      responseDataCardImage = responseCardImage.data;
     } catch (error) {
-        console.log("Error updating profile", error);
+      console.error('Error uploading carousel image:', error);
     }
-};
+
+    if(responseDataCardImage.success){
+      accommodationDetails.cardImage = responseDataCardImage.image_url;
+
+      try {
+        const response = await axios.post("http://localhost:3000/travelmate/addAccomodation", accommodationDetails,);
+        // console.log("Profile updated successfully", response.data);
+
+        if(response.data.success){
+          alert("Accommodation added successfully!");
+          setAccommodationDetails({
+            accommodationName: "",
+            category: "Hotels", // Default category
+            address: "",
+            distanceFromMainCity: "",
+            price: "",
+            description: "",
+            cardImage: "",
+          });
+
+          setCardImage(null);
+          window.location.reload(); //Reload the page
+        }
+  
+        
+      } catch (error) {
+        console.log("Error updating profile", error);
+      }
+    } else{
+      alert("Faild to upload images");
+    }
+
+
+  };
 
   return (
     <div >
@@ -204,7 +242,7 @@ const AddHotel = () => {
                         <Form.Label>Upload Image</Form.Label>
                         <Form.Control
                           type="file"
-                          onChange={imageHandler}
+                          onChange={cardImageHandler}
                           style={{
                             borderRadius: "10px",
                             height: "50px",

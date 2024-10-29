@@ -4,18 +4,19 @@ dotenv.config({ path: "../.env" })
 
 const AddAccommodation = async (req, res) => {
 
-    console.log(req.body.hotel_name);
+    // console.log(req.body.hotel_name);
     
     try {
 
         let hotels = await AccommodationModel.find({});
         let id = hotels.length > 0 ? hotels[hotels.length - 1].id + 1 : 1;
+        console.log(req.body)
         const hotel = new AccommodationModel({
             id: id,
             hotel_name: req.body.accommodationName,
             address: req.body.address,
             description: req.body.description,
-            // image: req.file.path || req.file.secure_url,
+            cardImage: req.body.cardImage,
             category: req.body.category,
             distance_from_city: req.body.distanceFromMainCity,
             perPerson_price: req.body.price,
