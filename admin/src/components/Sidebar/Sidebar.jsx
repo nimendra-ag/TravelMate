@@ -59,7 +59,7 @@ const Sidebar = () => {
 
       <div className="d-none d-lg-block" style={{ backgroundColor: '#b0c4de', width: '250px', height: '100vh', position: 'fixed' }}>
         <Nav className="flex-column p-4">
-          <Link to="/hotels" style={{ textDecoration: 'none' }}>
+          <Link to="/hotels" style={{ textDecoration: 'none', marginTop:'80px'}}>
             <div className="sidebar-item">
               <p>Manage Hotels</p>
             </div>
