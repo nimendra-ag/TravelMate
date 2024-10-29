@@ -10,7 +10,7 @@ import 'swiper/css/pagination';
 import './HotelsInLandingPage.css';
 
 const HotelsInLandingPage = () => {
-  const { allAccomodations } = useContext(ClientContext);
+  const { allAccommodations } = useContext(ClientContext);
 
   return (
     <div className="hotels-section" >
@@ -32,13 +32,13 @@ const HotelsInLandingPage = () => {
         // pagination={{ clickable: true }}
         style={{ paddingBottom: '2rem' }} 
       >
-        {allAccomodations.map((accommodation) => (
+        {allAccommodations.map((accommodation) => (
           <SwiperSlide key={accommodation.id}>
             <HotelCard
-              name={accommodation.hotel_name}
-              description={accommodation.description}
+              name={accommodation.name}
+              description={accommodation.minidescription}
               price={accommodation.perPerson_price}
-              imageSrc='https://picsum.photos/400/200'
+              imageSrc={accommodation.cardImage}
               id={accommodation.id}
               minidescription={accommodation.minidescription}
             />

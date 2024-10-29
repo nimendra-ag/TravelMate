@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 const HotelCard = ({ name, description, price, imageSrc, id, minidescription }) => {
   return (
     <Link to={`/accommodations/${id}`} style={{ textDecoration: 'none' }}>
-      <Card style={{ width: '24rem', boxShadow: '1px 1px 0px 1px rgba(0, 0, 0, .2)' }}>
-        <Card.Img variant="top" src="https://picsum.photos/400/200" />
+      <Card style={{ width: '22rem',  }}>
+        <Card.Img variant="top" src={imageSrc} />
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Text>
@@ -39,8 +39,8 @@ const HotelCard = ({ name, description, price, imageSrc, id, minidescription }) 
               alignItems: 'center',
               borderRadius: '30px',
               padding: '10px 0',
-              width: '235px',
-              height: '49px',
+              width: '230px',
+              height: '46px',
               margin: '0 auto',
             }}
           >

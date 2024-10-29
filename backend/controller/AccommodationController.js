@@ -1,5 +1,6 @@
 import dotenv from "dotenv"
 import { AccommodationModel } from "../models/Accommodation.js"
+import { CityModel } from "../models/Citiy.js";
 dotenv.config({ path: "../.env" })
 
 const AddAccommodation = async (req, res) => {
@@ -13,13 +14,14 @@ const AddAccommodation = async (req, res) => {
         console.log(req.body)
         const hotel = new AccommodationModel({
             id: id,
-            hotel_name: req.body.accommodationName,
+            name: req.body.accommodationName,
             address: req.body.address,
             description: req.body.description,
             cardImage: req.body.cardImage,
             category: req.body.category,
             distance_from_city: req.body.distanceFromMainCity,
             perPerson_price: req.body.price,
+            contactNumber: req.body.contactNumber,
         });
 
         await hotel.save();
@@ -50,6 +52,56 @@ const getAllAccomodations = async (req, res) => {
 
     }
 }
+
+const GetData = async (req, res) => {
+
+
+    console.log("Getttttttttttttttt");
+    
+
+
+
+
+    try {
+        const cities = await CityModel.find();
+        const accommodations = await AccommodationModel.find(); 
+        console.log(cities);
+        console.log(accommodations);
+    
+        return res.status(200).json({ success: true, cities,accommodations  });
+    } catch (err) {
+        console.error(err); // Log the error for debugging purposes
+        return res.status(500).json({ success: false, error: err.message }); // Consistent success flag
+    }
+    
+}
+
+
+const GetCity = async (req, res) => {
+
+    const { id } = req.params;
+
+    console.log("Getttttttttttttttt");
+    
+
+
+
+
+    try {
+        const city = await CityModel.findOne({ _id: id });
+        console.log(city);
+    
+        return res.status(200).json({ success: true, city });
+    } catch (err) {
+        console.error(err); // Log the error for debugging purposes
+        return res.status(500).json({ success: false, error: err.message }); // Consistent success flag
+    }
+    
+}
+
+
+
+export { AddAccommodation, GetData , GetCity, getAllAccomodations}
 
 // API to delete a Hotels
 const deleteAccommodation = async (req, res) => {

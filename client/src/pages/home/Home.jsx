@@ -6,6 +6,8 @@ import GuideList from '../../components/GuideList/GuideList'
 import Activities from '../../components/activities/Activities'
 import Footer from '../../components/footer/Footer'
 import FeedbackForm from '../../components/FeedbackForm/FeedbackForm'
+import FeedbackSection from '../../components/FeedbackSection/FeedbackSection'
+import RestaurantsInLandingPage from '../../components/RestaurantInLandingPage/RestaurantsInLandingPage'
 
 const Home = () => {
   return (
@@ -13,8 +15,10 @@ const Home = () => {
     <Hero/>
     <AiTripPlanning/>
     <HotelsInLandingPage/>
+    <RestaurantsInLandingPage/>
     <GuideList/>
     <Activities/>
+    <FeedbackSection/>
     <FeedbackForm/>
     <Footer/>
     </>

@@ -48,6 +48,8 @@ const RegWithGoogle = async (req, res) => {
   }
 };
 
+
+
 const SignUpWithEmailAndPassword = async (req, res) => {
   const { email, password } = req.body;
   console.log(email, password);
@@ -141,5 +143,5 @@ const UpdateProfile = async (req, res) => {
   }
 
 }
-
+  
 export { RegWithGoogle, GetProfile, UpdateProfile, SignUpWithEmailAndPassword, SignInWithEmailAndPassword } 

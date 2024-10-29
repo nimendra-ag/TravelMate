@@ -1,30 +1,72 @@
 import axios from 'axios';
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react';
 
 export const ClientContext = createContext(null);
 
 const ClientContextProvider = (props) => {
+    const [allAccommodations, setAllAccommodations] = useState([]);
+    const [allTravelMateFeedback, setAllTravelMateFeedback] = useState([]);
+    const [allGuides, setAllGuides] = useState([]);
+    const [allRestaurants, setAllRestaurants] = useState([]);
 
-    const [allAccomodations, setAllAccomodations] = useState([]);
 
     useEffect(() => {
+        // Fetch accommodations data
         axios.get('http://localhost:3000/travelmate/allAccomodations')
-        .then((response) => {
-            console.log('response.data', response.data);
-            setAllAccomodations(response.data);
-        })
-        .catch((error) => {
-            console.log('error', error);
-        })
+            .then((response) => {
+                console.log('Accommodations:', response.data);
+                setAllAccommodations(response.data);
+            })
+            .catch((error) => {
+                console.log('Accommodations fetch error:', error);
+            });
+
+        // Fetch travel mate feedback data
+        axios.get('http://localhost:3000/travelmate/gettravelmatefeedback')
+            .then((response) => {
+                console.log('Feedback:', response.data);
+                setAllTravelMateFeedback(response.data);
+            })
+            .catch((error) => {
+                console.log('Feedback fetch error:', error);
+            });
+        
+        // Fetch guides data
+        axios.get('http://localhost:3000/travelmate/allGuides')
+            .then((response) => {
+                console.log('Guides:', response.data);
+                setAllGuides(response.data);
+            })
+            .catch((error) => {
+                console.log('Feedback fetch error:', error);
+            });
+        
+            //Fetch restaurants data
+            axios.get('http://localhost:3000/travelmate/allRestaurants')
+            .then((response) => {
+                console.log('Restaurants:', response.data);
+                setAllRestaurants(response.data);
+            })
+            .catch((error) => {
+                console.log('Feedback fetch error:', error);
+            });
+        
+        
     }, []);
 
-const contextValue = {allAccomodations};
+    // Add both data to the context value
+    const contextValue = {
+        allAccommodations,
+        allTravelMateFeedback,
+        allGuides,
+        allRestaurants,
+    };
 
-  return (
-    <ClientContext.Provider value={contextValue}>
-        {props.children}
-    </ClientContext.Provider>
-  )
+    return (
+        <ClientContext.Provider value={contextValue}>
+            {props.children}
+        </ClientContext.Provider>
+    );
 }
 
 export default ClientContextProvider;

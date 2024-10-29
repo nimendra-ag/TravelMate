@@ -5,13 +5,17 @@ import HotelMainSection from '../../components/HotelMainSection/HotelMainSection
 
 
 const HotelPage = () => {
-    const { allAccomodations } = useContext(ClientContext);
-    const { accomodationID } = useParams();
-    const accomodation = allAccomodations.find((e) => e.id === parseInt(accomodationID));
+    const { allAccommodations } = useContext(ClientContext);
+    const { accommodationID } = useParams();
+    const accommodation = allAccommodations.find((e) => e.id === parseInt(accommodationID));
     return (
         <>
-            {accomodation ? <>
-            <HotelMainSection/>
+            {accommodation ? <>
+            <HotelMainSection
+                name = {accommodation.name}
+                description = {accommodation.description}
+                distance_from_city = {accommodation.distance_from_city}
+            />
             </>: <></>}
          
         </>
