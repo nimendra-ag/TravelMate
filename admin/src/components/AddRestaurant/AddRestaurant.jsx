@@ -2,13 +2,23 @@ import React, { useState } from "react";
 import axios from "axios";
 import AdminLogo from "../../assets/TravelMateAdminLogo.png";
 import Select from "react-select";
-import { InputGroup, Form, Col, Row, Container, Button, Tooltip, OverlayTrigger  } from "react-bootstrap";
+import {
+  InputGroup,
+  Form,
+  Col,
+  Row,
+  Container,
+  Button,
+  Tooltip,
+  OverlayTrigger,
+} from "react-bootstrap";
 
 const AddRestaurant = () => {
   const [image, setImage] = useState(null);
   const [restaurantDetails, setRestaurantDetails] = useState({
     name: "",
     category: [],
+    mainCategory: "",
     address: "",
     contactNumber: "",
     email: "",
@@ -31,6 +41,13 @@ const AddRestaurant = () => {
     { value: "Low", label: "Low" },
     { value: "Medium", label: "Medium" },
     { value: "High", label: "High" },
+  ];
+  const mainCategoryOptions = [
+    { value: "DateNight", label: "DateNight" },
+    { value: "Fine Dining", label: "Fine Dining" },
+    { value: "Vegan & Veg", label: "Vegan & Veg" },
+    { value: "Casual Dining", label: "Casual Dining" },
+    { value: "Outside", label: "Outside" },
   ];
 
   const handleMultiSelectChange = (selectedOptions, action) => {
@@ -80,7 +97,7 @@ const AddRestaurant = () => {
   };
 
   return (
-    <div className="AddRestaurant">
+    <div className="AddRestaurant" style={{marginTop:'200px'}}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
@@ -98,11 +115,11 @@ const AddRestaurant = () => {
               }}
             >
               <div className="d-flex justify-content-left align-items-left">
-                <img
+                {/* <img
                   src={AdminLogo}
                   alt="Icon"
                   style={{ height: "98px", paddingBottom: "33px" }}
-                />
+                /> */}
               </div>
               <h2 className="fw-bold" style={{ paddingBottom: "25px" }}>
                 Add Restaurant
@@ -112,10 +129,7 @@ const AddRestaurant = () => {
                 <Form>
                   <Row>
                     <Col md="6">
-                      <Form.Group
-                        controlId="formName"
-                        className="mb-3"
-                      >
+                      <Form.Group controlId="formName" className="mb-3">
                         <Form.Label>Restaurant Name</Form.Label>
                         <Form.Control
                           type="text"
@@ -156,18 +170,18 @@ const AddRestaurant = () => {
                         <Form.Group controlId={`formOpeningHours-${day.day}`}>
                           <Form.Label>Opening hours</Form.Label>
                           <div style={{ display: "flex", gap: "10px" }}>
-                          <OverlayTrigger
+                            <OverlayTrigger
                               placement="top"
                               overlay={<Tooltip>Opening time</Tooltip>}
                             >
-                            <Form.Control
-                              type="time"
-                              name="startTime"
-                              value={day.startTime}
-                              onChange={(e) =>
-                                handleTimeChange(e, index, "startTime")
-                              }
-                            />
+                              <Form.Control
+                                type="time"
+                                name="startTime"
+                                value={day.startTime}
+                                onChange={(e) =>
+                                  handleTimeChange(e, index, "startTime")
+                                }
+                              />
                             </OverlayTrigger>
                             <OverlayTrigger
                               placement="top"
@@ -217,6 +231,26 @@ const AddRestaurant = () => {
                         />
                       </Form.Group>
                     </Col>
+                    <Col md="6">
+                      <Form.Group controlId="formMainCategory" className="mb-3">
+                        <Form.Label>Main Category</Form.Label>
+                        <Select
+                          name="mainCategory"
+                          options={mainCategoryOptions}
+                          value={mainCategoryOptions.find(
+                            (option) =>
+                              option.value === restaurantDetails.mainCategory
+                          )}
+                          onChange={(selectedOption) =>
+                            setRestaurantDetails({
+                              ...restaurantDetails,
+                              mainCategory: selectedOption.value,
+                            })
+                          }
+                          isClearable
+                        />
+                      </Form.Group>
+                    </Col>
 
                     {/* <Col md="6">
                       <Form.Group controlId="formFile" className="mb-3">
@@ -256,47 +290,44 @@ const AddRestaurant = () => {
                       </Form.Group>
                     </Col>
                     <Col md="6">
-                    <Form.Group controlId="email" className="mb-3">
-                      <Form.Label>E-mail</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter email address"
-                        name="email"
-                        value={restaurantDetails.email}
-                        onChange={changeHandler}
-                        style={{
-                          borderRadius: "10px",
-                          height: "50px",
-                          borderWidth: "2px",
-                        }}
-                      />
-                    </Form.Group>
-                  </Col>
+                      <Form.Group controlId="email" className="mb-3">
+                        <Form.Label>E-mail</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter email address"
+                          name="email"
+                          value={restaurantDetails.email}
+                          onChange={changeHandler}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                          }}
+                        />
+                      </Form.Group>
+                    </Col>
                   </Row>
 
-                  
-                 
-
                   <Row>
-                  <Col md="12">
-                    <Form.Group controlId="formAddress" className="mb-3">
-                      <Form.Label>Address</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={5}
-                        placeholder="Enter address"
-                        name="address"
-                        value={restaurantDetails.address}
-                        onChange={changeHandler}
-                        style={{
-                          borderRadius: "10px",
-                          borderWidth: "2px",
-                          resize: "none",
-                          height: "100px",
-                        }}
-                      />
-                    </Form.Group>
-                  </Col>
+                    <Col md="12">
+                      <Form.Group controlId="formAddress" className="mb-3">
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={5}
+                          placeholder="Enter address"
+                          name="address"
+                          value={restaurantDetails.address}
+                          onChange={changeHandler}
+                          style={{
+                            borderRadius: "10px",
+                            borderWidth: "2px",
+                            resize: "none",
+                            height: "100px",
+                          }}
+                        />
+                      </Form.Group>
+                    </Col>
                     <Col md="12">
                       <Form.Group controlId="formDescription" className="mb-3">
                         <Form.Label>Description</Form.Label>

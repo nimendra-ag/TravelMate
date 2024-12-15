@@ -21,6 +21,10 @@ const RestaurantModel = model("Restaurants", {
     type: [String],
     required: true,
   },
+  mainCategory: {
+    type: String,
+    required: true,
+  },
   contactNumber: {
     type: String, 
     required: true,

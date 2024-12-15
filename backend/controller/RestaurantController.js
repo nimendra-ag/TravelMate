@@ -17,6 +17,7 @@ const AddRestaurant = async (req, res) => {
             description: req.body.description,
             // image: req.file.path || req.file.secure_url,
             category: req.body.category,
+            mainCategory: req.body.mainCategory,
             email: req.body.email,
             website: req.body.website,
             contactNumber: req.body.contactNumber,
