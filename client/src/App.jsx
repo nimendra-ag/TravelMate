@@ -47,7 +47,7 @@ function App() {
           <Route path='/restaurants/DateNight' element={<DateNightCategoryRestaurants/>}/>
           <Route path='/restaurants/Casual Dining' element={<CasualDiningCategoryRestaurants/>}/>
           <Route path='/restaurants/Fine Dining' element={<FineDiningCategoryRestaurants/>}/>
-          <Route path='/restaurants/:Outside' element={<OutsideCategoryRestaurants/>}/>
+          <Route path='/restaurants/Outside' element={<OutsideCategoryRestaurants/>}/>
           <Route path='/restaurants/Vegan & Veg' element={<VeganAndVegCategoryRestaurants/>}/>
         </Routes>
       </Router>
