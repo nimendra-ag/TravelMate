@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faMapMarkerAlt, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import './RestaurantMainSection.css';
 
-const RestaurantMainSection = (id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating) => {
+const RestaurantMainSection = ({id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating}) => {
   const images = [
     'https://picsum.photos/600/600?random=1',
     'https://picsum.photos/600/600?random=2',
@@ -32,8 +32,8 @@ const RestaurantMainSection = (id, type, name, address, category, contactNumber,
     <div className="restaurant-main-section">
       {/* Restaurant name and description */}
       <div className="restaurant-details">
-        <h2>Delicious Bites</h2>
-        <p>Your go-to place for mouth-watering dishes and a delightful dining experience.</p>
+        <h2>{name}</h2>
+        <p>{description}</p>
       </div>
 
       {/* Images Section */}
@@ -61,19 +61,19 @@ const RestaurantMainSection = (id, type, name, address, category, contactNumber,
       <div className="additional-info">
         <div className="info-item">
           <FontAwesomeIcon icon={faPhone} />
-          <p> (123) 456-7890</p>
+        <p> {contactNumber}</p>
         </div>
         <div className="info-item">
           <FontAwesomeIcon icon={faEnvelope} />
-          <p><a href=" mailto:info@deliciousbites.com">info@deliciousbites.com</a></p>
+          <p><a href=" mailto:info@deliciousbites.com">{email}</a></p>
         </div>
         <div className="info-item">
           <FontAwesomeIcon icon={faGlobe} />
-          <p><a href="https://www.deliciousbites.com" target="_blank" rel="noopener noreferrer">www.deliciousbites.com</a></p>
+          <p><a href="https://www.deliciousbites.com" target="_blank" rel="noopener noreferrer">{website}</a></p>
         </div>
         <div className="info-item">
           <FontAwesomeIcon icon={faMapMarkerAlt} />
-          <p> 123 Flavor Street, Foodie City, FC 45678</p>
+          <p> {address}</p>
         </div>
       </div>
     </div>
