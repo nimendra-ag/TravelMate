@@ -1,8 +1,10 @@
 import React from 'react'
 import './RestaurantCategoryCard.css'
+import { Link } from 'react-router-dom';
 
 const RestaurantCategoryCard = ({category}) => {
     return (
+      <Link to={`/restaurants/${category}`} style={{ textDecoration: 'none' }}>
       <div className="card-container">
         <div className="card border-0 shadow-sm">
           <img
@@ -17,6 +19,7 @@ const RestaurantCategoryCard = ({category}) => {
           </div>
         </div>
       </div>
+      </Link>
     );
   };
 
