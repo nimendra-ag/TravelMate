@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Offcanvas, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import './Sidebar.css'
+import TopNavbar from '../TopNavbar/TopNavbar';
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);
@@ -10,6 +12,7 @@ const Sidebar = () => {
 
   return (
     <>
+      <TopNavbar/>
       <button className="btn btn-primary d-lg-none" onClick={handleShow}>
         ☰ Menu
       </button>
@@ -20,43 +23,72 @@ const Sidebar = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
-            <Link to="/home" style={{ textDecoration: 'none' }} onClick={handleClose}>
+            <Link to="/hotels" style={{ textDecoration: 'none' }} onClick={handleClose}>
               <div className="sidebar-item">
-                <p>Home</p>
+                <p>Manage Hotels</p>
               </div>
             </Link>
             <Link to="/guides" style={{ textDecoration: 'none' }} onClick={handleClose}>
               <div className="sidebar-item">
-                <p>Guides</p>
+                <p>Manage Guides</p>
               </div>
             </Link>
-            <Link to="/hotels" style={{ textDecoration: 'none' }} onClick={handleClose}>
+            <Link to="/destinations" style={{ textDecoration: 'none' }} onClick={handleClose}>
               <div className="sidebar-item">
-                <p>Hotels</p>
+                <p>Manage Destinations</p>
+              </div>
+            </Link>
+            <Link to="/restaurants" style={{ textDecoration: 'none' }} onClick={handleClose}>
+              <div className="sidebar-item">
+                <p>Manage Restaurants</p>
+              </div>
+            </Link>
+            <Link to="/users" style={{ textDecoration: 'none' }} onClick={handleClose}>
+              <div className="sidebar-item">
+                <p>Manage Users</p>
+              </div>
+            </Link>
+            <Link to="/transportmodes" style={{ textDecoration: 'none' }} onClick={handleClose}>
+              <div className="sidebar-item">
+                <p>Manage Transport Modes</p>
               </div>
             </Link>
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
 
-      <div className="d-none d-lg-block bg-light border-end" style={{ width: '250px', height: '100vh', position: 'fixed' }}>
-        <Nav className="flex-column p-3">
-          <h4>Menu</h4>
-          <Link to="/home" style={{ textDecoration: 'none' }} onClick={handleClose}>
-              <div className="sidebar-item">
-                <p>Home</p>
-              </div>
-            </Link>
-            <Link to="/guides" style={{ textDecoration: 'none' }} onClick={handleClose}>
-              <div className="sidebar-item">
-                <p>Guides</p>
-              </div>
-            </Link>
-            <Link to="/hotels" style={{ textDecoration: 'none' }} onClick={handleClose}>
-              <div className="sidebar-item">
-                <p>Hotels</p>
-              </div>
-            </Link>
+      <div className="d-none d-lg-block" style={{ backgroundColor: '#b0c4de', width: '250px', height: '100vh', position: 'fixed' }}>
+        <Nav className="flex-column p-4">
+          <Link to="/hotels" style={{ textDecoration: 'none', marginTop:'80px'}}>
+            <div className="sidebar-item">
+              <p>Manage Hotels</p>
+            </div>
+          </Link>
+          <Link to="/guides" style={{ textDecoration: 'none' }}>
+            <div className="sidebar-item">
+              <p>Manage Guides</p>
+            </div>
+          </Link>
+          <Link to="/destinations" style={{ textDecoration: 'none' }}>
+            <div className="sidebar-item">
+              <p>Manage Destinations</p>
+            </div>
+          </Link>
+          <Link to="/restaurants" style={{ textDecoration: 'none' }}>
+            <div className="sidebar-item">
+              <p>Manage Restaurants</p>
+            </div>
+          </Link>
+          <Link to="/users" style={{ textDecoration: 'none' }}>
+            <div className="sidebar-item">
+              <p>Manage Users</p>
+            </div>
+          </Link>
+          <Link to="/transportmodes" style={{ textDecoration: 'none' }}>
+            <div className="sidebar-item">
+              <p>Manage Transport Modes</p>
+            </div>
+          </Link>
         </Nav>
       </div>
     </>

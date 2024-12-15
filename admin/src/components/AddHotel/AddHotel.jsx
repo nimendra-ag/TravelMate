@@ -82,7 +82,7 @@ const AddHotel = () => {
   };
 
   return (
-    <div >
+    <div style={{marginTop:'40px'}}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div

@@ -20,7 +20,6 @@ const Activities = () => {
             </div>
 
             <div className="container mt-4 d-flex flex-column justify-content-center align-items-center">
-
                 {/* First Row - Beach Activities and Surfing */}
                 <div className="row d-none d-xxl-flex  justify-content-center align-items-center">
                     <div className="col-md-6 mb-4 px-4 pt-5" style={{
@@ -116,9 +115,7 @@ const Activities = () => {
                                 </Link>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
                 <div className="  d-xxl-none justify-content-center align-items-center">
@@ -185,10 +182,6 @@ const Activities = () => {
                                 </Link>
                             </div>
                         </div>
-
-
-
-
                         <div className=" mb-3 p-4 pt-5" style={{
                             display: 'flex', flexDirection: 'column', height: "467px", width: "656px",
 
@@ -196,7 +189,6 @@ const Activities = () => {
                             backgroundSize: 'cover', // Adjusts the background to cover the entire div
                             backgroundPosition: 'center',
                         }}>
-
                             <div>
                                 <h1 className="font-weight-bold text-white">
                                     Trekking                               </h1>
@@ -392,22 +384,23 @@ const Activities = () => {
 
                     <div>
                         <h1 className="font-weight-bold text-white">
-                            Cultural Activities                              </h1>
+                            Cultural Activities
+                        </h1>
                     </div>
 
                     <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                    <Link to={'/activities'} style={{ textDecoration: 'none' }}>
-                        <Button
-                            className="px-4 py-1 border-0 rounded-pill"
-                            style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
-                        >
-                            <div className="d-flex align-items-center">
-                                <div>Discover More</div>
-                                <div>
-                                    <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                        <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                            <Button
+                                className="px-4 py-1 border-0 rounded-pill"
+                                style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
+                            >
+                                <div className="d-flex align-items-center">
+                                    <div>Discover More</div>
+                                    <div>
+                                        <img src={logo} alt="logo" style={{ width: '30px', marginLeft: '10px', marginBottom: '8px' }} />
+                                    </div>
                                 </div>
-                            </div>
-                        </Button>
+                            </Button>
                         </Link>
                     </div>
                 </div>

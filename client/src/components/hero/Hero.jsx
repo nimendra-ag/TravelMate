@@ -16,14 +16,14 @@ const Hero = () => {
                         <li><a href="#">Packages</a></li>
                         <li><a href="#">Services</a></li>
                         <li><a href="/details">More</a></li>
-                        <li><SigninModal/></li>
-                       
+                        <li><SigninModal /></li>
+
                     </ul>
                 </div>
                 <div className="banner-text">
-                    <h1> WELCOME TO <span> TRAVEL MATE </span></h1>
-                    <p>Let's Explore the Sri Lanka</p>
-                    <SearchBar/>
+                    <p>Let's Explore the Sri Lanka <br />with</p>
+                    <h1>TRAVEL MATE </h1>
+                    <SearchBar />
                 </div>
             </header>
         </>

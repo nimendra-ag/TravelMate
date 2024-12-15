@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
+import { Link } from 'react-router-dom';
 
 const TransportModeDataTable = () => {
   const columns = [
@@ -97,10 +98,10 @@ const TransportModeDataTable = () => {
     <div
       style={{
         position: 'absolute',
-        width: '920px',
+        width: '1120px',
         height: '640px',
         top: '110px',
-        left: '585px',
+        left: '365px',
         border: '1px solid #ccc',
         padding: '20px',
         backgroundColor: '#f9f9f9',
@@ -118,19 +119,24 @@ const TransportModeDataTable = () => {
           placeholder="Filter by Name"
           style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginRight: '10px' }}
         />
-        <button
-          onClick={handleAddHotel}
-          style={{
-            backgroundColor: '#0A2E41',
-            color: 'white',
-            border: 'none',
-            padding: '8px 15px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-          }}
-        >
-          Add a Transport Mode
-        </button>
+
+
+        <Link to="/add-transportation-service">
+          <button
+            onClick={handleAddHotel}
+            style={{
+              backgroundColor: '#0A2E41',
+              color: 'white',
+              border: 'none',
+              padding: '8px 15px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+          >
+            Add a Transport Mode
+          </button>
+        </Link>
+
       </div>
       <DataTable
         columns={columns}
