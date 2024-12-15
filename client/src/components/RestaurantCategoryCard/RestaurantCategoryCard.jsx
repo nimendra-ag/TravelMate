@@ -1,7 +1,7 @@
 import React from 'react'
 import './RestaurantCategoryCard.css'
 
-const RestaurantCategoryCard = () => {
+const RestaurantCategoryCard = ({category}) => {
     return (
       <div className="card-container">
         <div className="card border-0 shadow-sm">
@@ -12,7 +12,7 @@ const RestaurantCategoryCard = () => {
           />
           <div className="card-img-overlay d-flex flex-column justify-content-end">
             <div className="card-title-overlay">
-              <h5 className="text-white fw-bold">Date Night</h5>
+              <h5 className="text-white fw-bold">{category}</h5>
             </div>
           </div>
         </div>

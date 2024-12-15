@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 import RestaurantCategoryCard from '../RestaurantCategoryCard/RestaurantCategoryCard'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 
 const RestaurantCategoriesCards = () => {
 
@@ -13,27 +13,28 @@ const RestaurantCategoriesCards = () => {
         <Container style={{ padding: '2rem' }}>
             <Row>
                 <Col>
-                    <h2 className="restaurants-heading" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                        Restaurant Categories
+                    <h2 className="restaurants-heading text-start" style={{ marginBottom: '1.5rem' }}>
+                        Restaurant Categories for Every Occasion
                     </h2>
-                    <p>
-                        some sentence
-                    </p>
+                    <h6 style={{ marginBottom: '1.5rem' }}>
+                        Explore unique dining experiences across various categories, curated just for you.
+                    </h6>
                 </Col>
             </Row>
 
             <Swiper
                 spaceBetween={20}
                 slidesPerView={4}
-                modules={[Autoplay, Pagination]}
-                loop={true}
+                modules={[Autoplay]}
+                Navigation
+                // loop={true}
                 autoplay={{ delay: 4000 }}
                 // pagination={{ clickable: true }}
                 style={{ paddingBottom: '2rem' }}
             >
                 {categories.map((category) => (
                     <SwiperSlide>
-                        <RestaurantCategoryCard />
+                        <RestaurantCategoryCard category={category} />
                     </SwiperSlide>
                 ))}
 
