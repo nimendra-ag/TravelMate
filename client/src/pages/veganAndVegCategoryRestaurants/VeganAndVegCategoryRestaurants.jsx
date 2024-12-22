@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import RestaurantCategoryPageHeader from '../../components/restaurantCategoryPageHeader/RestaurantCategoryPageHeader'
-import { ClientContext } from '../../context/ClientContext'
 import TopRatedRestaurant from '../../components/topRatedRestaurant/TopRatedRestaurant';
+import RestaurantsInCategoryPage from '../../components/restaurantsInCategoryPage/RestaurantsInCategoryPage';
 
 const VeganAndVegCategoryRestaurants = () => {
-    const {allRestaurants} = useContext(ClientContext);
+   
 
     return (
         <>
@@ -13,12 +13,8 @@ const VeganAndVegCategoryRestaurants = () => {
             headerText={"From farm-fresh ingredients to creative plant-based dishes, these restaurants are a haven for those seeking healthy, sustainable, and delicious dining options."}
             />
             <TopRatedRestaurant/>
+            <RestaurantsInCategoryPage/>
 
-            {allRestaurants.map((restaurant) => (
-                <div key={restaurant.id}>
-                    <h2>{restaurant.restaurantName}</h2>
-                </div>
-            ))}
         </>
     )
 }
