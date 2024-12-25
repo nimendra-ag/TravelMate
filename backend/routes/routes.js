@@ -7,6 +7,7 @@ import { AddDestination, getAllDestinations } from '../controller/DestinationCon
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
 import { AddAccommodation, getAllAccomodations, GetData, GetCity } from '../controller/AccommodationController.js';
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
+import { AddPrePlannedTrips, getAllPrePlannedTrips } from '../controller/PrePlannedTripController.js';
 const router = express.Router()
 
 router.post('/signinwithgoogle',RegWithGoogle)
@@ -24,6 +25,11 @@ router.get("/getcity/:id",GetCity)
 
 router.get("/allAccomodations", getAllAccomodations)
 
+router.post("/signupwithemailandpassword", SignUpWithEmailAndPassword);
+
+router.post("/signinwithemailandpassword", SignInWithEmailAndPassword)
+
+
 router.post("/addGuide",AddGuide)
 
 router.get("/allGuides", getAllGuides)
@@ -40,7 +46,9 @@ router.post("/add-destination",AddDestination)
 
 router.get("/allDestinations", getAllDestinations)
 
+router.post("/addPrePlannedTrips",AddPrePlannedTrips)
 
+router.get("/allPrePlannedTrips", getAllPrePlannedTrips)
 
 
 router.post("/signupwithemailandpassword", SignUpWithEmailAndPassword);

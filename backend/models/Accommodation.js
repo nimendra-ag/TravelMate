@@ -9,7 +9,7 @@ const AccommodationModel = model("Accommodations", {
     type: String,
     default: "Accommodations"
   },
-  hotel_name: {
+  name: {
     type: String,
     required: true,
   },

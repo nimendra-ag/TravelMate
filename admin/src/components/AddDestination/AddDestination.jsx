@@ -16,7 +16,7 @@ import {
 const AddDestination = () => {
   const [image, setImage] = useState(null);
   const [destinationDetails, setDestinationDetails] = useState({
-    destinationName: "",
+    name: "",
     city: "",
     distanceFromColombo: "",
     category: [],
@@ -122,15 +122,15 @@ const AddDestination = () => {
                 <Row>
                   <Col md="6">
                     <Form.Group
-                      controlId="formDestinationName"
+                      controlId="formName"
                       className="mb-3"
                     >
                       <Form.Label>Destination Name</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Enter the new destination"
-                        name="destinationName"
-                        value={destinationDetails.destinationName}
+                        name="name"
+                        value={destinationDetails.name}
                         onChange={changeHandler}
                         style={{
                           borderRadius: "10px",

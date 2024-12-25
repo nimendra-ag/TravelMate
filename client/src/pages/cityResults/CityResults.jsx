@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import CityHero from '../../components/cityHero/CityHero';
 import kandy from "../../assets/kandy.jpeg"
@@ -7,7 +7,12 @@ import ThingsToDo from '../../components/thinsToDo/ThingsToDo';
 import BestNearby from '../../components/bestNearby/BestNearby';
 import GetYourGuid from '../../components/getYourGuid/GetYourGuid';
 import EmbeddedMap from '../../components/map/EmbeddedMap';
+import { ClientContext } from '../../context/ClientContext';
+
 const CityResults = () => {
+
+  const { allAccommodations } = useContext(ClientContext);
+
 
   const [city, setCity] = useState("");
 

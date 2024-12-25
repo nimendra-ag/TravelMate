@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import HotelCard from '../HotelCard/HotelCard';
 import "swiper/css/navigation"
+import { ClientContext } from '../../context/ClientContext'
+
+
+
+
 
 
 const ThingsToDo = () => {
+
+
+    const { allAccommodations } = useContext(ClientContext);
+
 
     const hotelData = [
         {
@@ -52,40 +61,28 @@ const ThingsToDo = () => {
                 <h5 style={{ color: "#7094A7", marginLeft: "90px", marginBottom: "50px", color: "#0A2E41", fontWeight: "bold" }}>Attractions</h5>
 
                 <div>
-                    <Swiper
-                        spaceBetween={5}
-                        modules={[Navigation]}
-                        navigation
-                        loop={true}
-                        breakpoints={{
-                            // when window width is >= 640px
-                            640: {
-                                slidesPerView: 1, // Small screens
-                            },
-                            // when window width is >= 768px
-                            850: {
-                                slidesPerView: 2, // Medium screens
-                            },
-                            // when window width is >= 1024px
-                            1500: {
-                                slidesPerView: 3, // Large screens
-                            },
-                        }}
-                        onSlideChange={() => console.log('slide change')}
-                        onSwiper={(swiper) => console.log(swiper)}
-                    >
-                        {hotelData.map((hotel, index) => (
-                            <SwiperSlide key={index}>
-                                <div className="d-flex justify-content-center">
-                                    <HotelCard
-                                        name={hotel.name}
-                                        description={hotel.description}
-                                        price={hotel.price}
-                                    />
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+                <Swiper
+        spaceBetween={30} 
+        slidesPerView={3}
+        modules={[Autoplay, Pagination]}
+        loop={true}
+        autoplay={{ delay: 3000 }}
+        // pagination={{ clickable: true }}
+        style={{ paddingBottom: '2rem' }} 
+      >
+        {allAccommodations.map((accommodation) => (
+          <SwiperSlide key={accommodation.id}>
+            <HotelCard
+              name={accommodation.name}
+              description={accommodation.minidescription}
+              price={accommodation.perPerson_price}
+              imageSrc={accommodation.cardImage}
+              id={accommodation.id}
+              minidescription={accommodation.minidescription}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
                 </div>
 
 
