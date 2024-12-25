@@ -8,6 +8,8 @@ const ClientContextProvider = (props) => {
     const [allTravelMateFeedback, setAllTravelMateFeedback] = useState([]);
     const [allGuides, setAllGuides] = useState([]);
     const [allRestaurants, setAllRestaurants] = useState([]);
+    const [allPrePlannedTrips, setAllPrePlannedTrips] = useState([]);
+
 
 
     useEffect(() => {
@@ -50,7 +52,16 @@ const ClientContextProvider = (props) => {
             .catch((error) => {
                 console.log('Feedback fetch error:', error);
             });
-        
+        //Fetch pre planned trips data
+        axios.get('http://localhost:3000/travelmate/allPrePlannedTrips')
+        .then((response) => {
+            console.log('PrePlannedTrips:', response.data);
+            setAllPrePlannedTrips(response.data);
+        })
+        .catch((error) => {
+            console.log('Feedback fetch error:', error);
+        });
+            
         
     }, []);
 
@@ -60,6 +71,7 @@ const ClientContextProvider = (props) => {
         allTravelMateFeedback,
         allGuides,
         allRestaurants,
+        allPrePlannedTrips,
     };
 
     return (
