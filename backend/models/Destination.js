@@ -9,7 +9,7 @@ const DestinationModel = model("Destinations", {
     type: String,
     default: "Destinations",
   },
-  destinationName: {
+  name: {
     type: String,
     required: true,
   },

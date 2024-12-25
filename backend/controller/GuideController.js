@@ -9,7 +9,7 @@ const AddGuide = async (req, res) => {
     let id = guides.length > 0 ? guides[guides.length - 1].id + 1 : 1;
     const guide = new GuideModel({
       id: id,
-      name: req.body.guideName,
+      name: req.body.name,
       area: req.body.area,
       languages: req.body.languages,
       chargesPerDay: req.body.chargesPerDay,
@@ -23,7 +23,7 @@ const AddGuide = async (req, res) => {
     res.json({
         success: true,
         message: 'Guide added successfully',
-        hotel_name: req.body.guideName,
+        hotel_name: req.body.name,
     });
 
   } catch (error) {

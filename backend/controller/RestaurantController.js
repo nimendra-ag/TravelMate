@@ -4,7 +4,7 @@ dotenv.config({ path: "../.env" })
 
 const AddRestaurant = async (req, res) => {
 
-    console.log(req.body.restaurantName);
+    console.log(req.body.name);
     
     try {
 
@@ -12,11 +12,12 @@ const AddRestaurant = async (req, res) => {
         let id = restaurants.length > 0 ? restaurants[restaurants.length - 1].id + 1 : 1;
         const restaurant = new RestaurantModel({
             id: id,
-            restaurantName: req.body.restaurantName,
+            name: req.body.name,
             address: req.body.address,
             description: req.body.description,
             // image: req.file.path || req.file.secure_url,
             category: req.body.category,
+            mainCategory: req.body.mainCategory,
             email: req.body.email,
             website: req.body.website,
             contactNumber: req.body.contactNumber,
@@ -29,7 +30,7 @@ const AddRestaurant = async (req, res) => {
         res.json({
             success: true,
             message: 'Restaurant added successfully',
-            restaurantName: req.body.restaurantName,
+            name: req.body.name,
         });
     }
     catch(error) {

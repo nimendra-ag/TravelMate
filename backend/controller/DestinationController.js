@@ -12,7 +12,7 @@ const AddDestination = async (req, res) => {
         : 1;
     const destination = new DestinationModel({
       id: id,
-      destinationName: req.body.destinationName,
+      name: req.body.name,
       city: req.body.city,
       distanceFromColombo: req.body.distanceFromColombo,
       bestTimeToVisit: req.body.bestTimeToVisit,
@@ -26,7 +26,7 @@ const AddDestination = async (req, res) => {
     res.json({
       success: true,
       message: "Destination added successfully",
-      hotel_name: req.body.destinationName,
+      hotel_name: req.body.name,
     });
   } catch (error) {
     console.error("Error saving destination:", error);
