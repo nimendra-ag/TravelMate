@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card, ListGroup } from "react-bootstrap";
 import "./RestaurantDetails.css"; // Add custom CSS here
+import { Link } from "react-router-dom";
 
 const RestaurantDetails = () => {
   // A helper function to render blue dots for ratings
@@ -23,6 +24,7 @@ const RestaurantDetails = () => {
   };
 
   return (
+    <>
     <Container className="my-4">
       <Row>
         <Col lg={4} md={12} className="mb-3 d-flex">
@@ -101,6 +103,9 @@ const RestaurantDetails = () => {
         </Col>
       </Row>
     </Container>
+        <Link to={`/restaurants/review`} style={{ textDecoration: 'none' }}> Add a Review</Link>
+    
+    </>
   );
 };
 
