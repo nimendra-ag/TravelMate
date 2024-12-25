@@ -74,12 +74,8 @@ const RestaurantsInCategoryPage = () => {
                             />
                         </div>
                     ))}
-
                 </div>
             </div>
-
-
-
         </>
     )
 }

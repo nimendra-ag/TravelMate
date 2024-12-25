@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faMapMarkerAlt, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import './RestaurantMainSection.css';
+import RestaurantDetails from '../restaurantDetails/RestaurantDetails';
 
 const RestaurantMainSection = ({id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating}) => {
   const images = [
@@ -57,25 +58,7 @@ const RestaurantMainSection = ({id, type, name, address, category, contactNumber
         </div>
       </div>
 
-      {/* Additional Restaurant Info with Icons */}
-      <div className="additional-info">
-        <div className="info-item">
-          <FontAwesomeIcon icon={faPhone} />
-        <p> {contactNumber}</p>
-        </div>
-        <div className="info-item">
-          <FontAwesomeIcon icon={faEnvelope} />
-          <p><a href=" mailto:info@deliciousbites.com">{email}</a></p>
-        </div>
-        <div className="info-item">
-          <FontAwesomeIcon icon={faGlobe} />
-          <p><a href="https://www.deliciousbites.com" target="_blank" rel="noopener noreferrer">{website}</a></p>
-        </div>
-        <div className="info-item">
-          <FontAwesomeIcon icon={faMapMarkerAlt} />
-          <p> {address}</p>
-        </div>
-      </div>
+      <RestaurantDetails/>
     </div>
   );
 };

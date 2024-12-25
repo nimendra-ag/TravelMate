@@ -1,0 +1,28 @@
+/* Remove borders and horizontal lines in the list */
+.ratings-list .list-group-item {
+    border: none;
+    padding: 0.5rem 0;
+  }
+  
+/* Styling the rating dots */
+.rating-dots {
+  display: flex;
+  gap: 5px; /* Spacing between dots */
+}
+
+.rating-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: lightgray; /* Default empty dot color */
+}
+
+.rating-dot.full {
+  background-color: blue; /* Full dot color */
+}
+
+.rating-dot.half {
+  background: linear-gradient(to right, blue 50%, lightgray 50%);
+}
+
+  
