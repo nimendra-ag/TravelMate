@@ -104,10 +104,6 @@ const GetCity = async (req, res) => {
     
 }
 
-
-
-export { AddAccommodation, GetData , GetCity, getAllAccomodations}
-
 // API to delete a Hotels
 const deleteAccommodation = async (req, res) => {
     await hotel.findOneAndDelete({ id: req.body.id });
@@ -117,7 +113,10 @@ const deleteAccommodation = async (req, res) => {
   });
 }
 
-export { AddAccommodation, getAllAccomodations, deleteAccommodation }
+export { AddAccommodation, GetData , GetCity, getAllAccomodations, deleteAccommodation}
+
+
+
 
 
 
