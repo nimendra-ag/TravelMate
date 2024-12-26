@@ -67,14 +67,14 @@ const ReviewRestaurant = () => {
             userName: userName, // Add userName to the review data
             title: reviewTitle,
             body: reviewBody,
-            overall_rating: overallRating,
-            food_rating: foodRating,
-            service_rating: serviceRating,
-            value_rating: valueRating,
-            atmosphere_rating: atmosphereRating,
-            family_type: selectedFamilyTypeOption,
-            visit_date: selectedVisitDate,
-            purpose: selectedPurpose
+            overallRating: overallRating,
+            foodRating: foodRating,
+            serviceRating: serviceRating,
+            valueRating: valueRating,
+            atmosphereRating: atmosphereRating,
+            familyType: selectedFamilyTypeOption,
+            visitDate: selectedVisitDate,
+            mealType: selectedPurpose
         };
 
         console.log("Review Submitted:", reviewData);

@@ -1,5 +1,6 @@
 import dotenv from "dotenv"
 import { RestaurantModel } from "../models/Restaurant.js"
+import { RestaurantReviewModel } from "../models/RestaurantReview.js";
 dotenv.config({ path: "../.env" })
 
 const AddRestaurant = async (req, res) => {
@@ -55,5 +56,34 @@ const getAllRestaurants = async (req, res) => {
     }
 }
 
-export { AddRestaurant, getAllRestaurants}
+const addRestaurantReview = async (req, res) =>{
+    try{
+    
+        let restaurantReviews = await RestaurantReviewModel.find({});
+        let id = restaurantReviews.length > 0 ? restaurantReviews[restaurantReviews.length - 1].id + 1 : 1;
+        let restaurantReview = new RestaurantReviewModel({
+            id: id,
+            userName: req.body.userName,
+            restaurantId: req.body.restaurantId,
+            overallRating: req.body.overallRating,
+            foodRating: req.body.foodRating,
+            serviceRating: req.body.serviceRating,
+            valueRating: req.body.valueRating,
+            atmosphereRating: req.body.atmosphereRating,
+            visitDate: req.body.visitDate,
+            familyType: req.body.familyType,
+            mealType: req.body.mealType,
+            reviewBody: req.body.body,
+            reviewTitle: req.body.title
+        })
+
+        console.log(restaurantReview);
+
+    } catch (error){
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+}
+
+export { AddRestaurant, getAllRestaurants, addRestaurantReview}
 
