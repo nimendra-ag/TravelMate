@@ -8,6 +8,8 @@ const ReviewRestaurant = () => {
     const { id } = useParams();
     const restaurant = allRestaurants.find((e) => e.id === parseInt(id));
 
+    // Add new state for user name
+    const [userName, setUserName] = useState("");
     const [reviewTitle, setReviewTitle] = useState("");
     const [reviewBody, setReviewBody] = useState("");
     const [overallRating, setOverallRating] = useState(0);
@@ -21,17 +23,18 @@ const ReviewRestaurant = () => {
     const [hoverValueRating, setHoverValueRating] = useState(0);
     const [hoverAtmosphereRating, setHoverAtmosphereRating] = useState(0);
 
+    const maxNameLength = 20;
     const maxTitleLength = 120;
     const maxBodyLength = 1000;
     const [selectedFamilyTypeOption, setSelectedFamilyTypeOption] = useState("");
-    const [selectedVisitDate, setSelectedVisitDate] = useState("January 2024"); // Default value
-    const [selectedPurpose, setSelectedPurpose] = useState("Select one"); // Default value
+    const [selectedVisitDate, setSelectedVisitDate] = useState("January 2024");
+    const [selectedPurpose, setSelectedPurpose] = useState("Select one");
 
     const handleFamilyTypeOptionClick = (option) => {
         setSelectedFamilyTypeOption(option);
     };
 
-    // Handle rating hover and click
+    // Handle rating hover and click functions remain the same
     const handleMouseEnter = (index, type) => {
         if (type === "overall") setHoverOverallRating(index);
         else if (type === "food") setHoverFoodRating(index);
@@ -57,11 +60,11 @@ const ReviewRestaurant = () => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
+        e.preventDefault();
 
-        // Create an object to hold all form data
         const reviewData = {
             restaurantId: parseInt(id),
+            userName: userName, // Add userName to the review data
             title: reviewTitle,
             body: reviewBody,
             overall_rating: overallRating,
@@ -75,11 +78,11 @@ const ReviewRestaurant = () => {
         };
 
         console.log("Review Submitted:", reviewData);
-
         resetForm();
     };
 
     const resetForm = () => {
+        setUserName(""); // Reset userName
         setReviewTitle("");
         setReviewBody("");
         setOverallRating(0);
@@ -94,6 +97,7 @@ const ReviewRestaurant = () => {
 
     const isFormValid = () => {
         return (
+            userName && // Add userName to form validation
             reviewTitle &&
             reviewBody &&
             overallRating > 0 &&
@@ -115,7 +119,6 @@ const ReviewRestaurant = () => {
                         Tell us your experience at {restaurant.restaurantName}
                     </h1>
                     <Row>
-                        {/* Left Column */}
                         <Col md={4} className="px-4">
                             <Card className="border border-0">
                                 <Card.Img className='pt-4 px-4' variant="top" src="https://picsum.photos/500" alt="Cafe Chill" />
@@ -126,11 +129,24 @@ const ReviewRestaurant = () => {
                             </Card>
                         </Col>
 
-                        {/* Right Column */}
                         <Col md={8}>
                             <Form onSubmit={handleSubmit}>
-
-                                {/* Overall Rating Section */}
+                                {/* New Name Field */}
+                                <Col md={6}>
+                                    <Form.Group className="mb-4">
+                                        <Form.Label>Your Name
+                                            <span className="text-muted"> ({userName.length}/{maxNameLength}) </span></Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter your name"
+                                            maxLength={maxNameLength}
+                                            value={userName}
+                                            onChange={(e) => setUserName(e.target.value)}
+                                            required
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                {/* Rest of the form groups remain the same */}
                                 <Form.Group>
                                     <Form.Label>Rate your <span className="fw-bold">Overall</span> experience</Form.Label>
                                     <div className="d-flex gap-1">
@@ -207,17 +223,17 @@ const ReviewRestaurant = () => {
                                             <Form.Label>Who did you go with?</Form.Label>
                                             <div className="d-flex gap-2">
                                                 {["Solo", "Family", "Friends", "Couple", "Business"].map((option) => (
-                                                    <Button 
-                                                    key={option} 
-                                                    onClick={() => handleFamilyTypeOptionClick(option)}
-                                                    style={{
-                                                        backgroundColor: selectedFamilyTypeOption === option ? '#00A1FF' : 'transparent',
-                                                        color: selectedFamilyTypeOption === option ? 'white' : '#00A1FF',
-                                                        border: '1px solid #00A1FF'
-                                                    }}
-                                                >
-                                                    {option}
-                                                </Button>
+                                                    <Button
+                                                        key={option}
+                                                        onClick={() => handleFamilyTypeOptionClick(option)}
+                                                        style={{
+                                                            backgroundColor: selectedFamilyTypeOption === option ? '#00A1FF' : 'transparent',
+                                                            color: selectedFamilyTypeOption === option ? 'white' : '#00A1FF',
+                                                            border: '1px solid #00A1FF'
+                                                        }}
+                                                    >
+                                                        {option}
+                                                    </Button>
                                                 ))}
                                             </div>
                                         </Form.Group>
@@ -250,19 +266,24 @@ const ReviewRestaurant = () => {
                                 </Form.Group>
 
                                 {/* Submit Button */}
-                                {/* Disable button until form is valid */}
-                                <Button variant="primary" type="submit" disabled={!isFormValid()} className="mt-4" style={{
-                                    backgroundColor: '#C1EAF8',
-                                    border: 'none',
-                                    color: '#000000'
-                                }}> Submit Review </Button>
-
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    disabled={!isFormValid()}
+                                    className="mt-4"
+                                    style={{
+                                        backgroundColor: '#C1EAF8',
+                                        border: 'none',
+                                        color: '#000000'
+                                    }}
+                                >
+                                    Submit Review
+                                </Button>
                             </Form>
                         </Col>
                     </Row>
                 </Container>
             </> : <></>}
-
         </>
     );
 };
