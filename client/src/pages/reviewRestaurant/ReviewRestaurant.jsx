@@ -87,6 +87,22 @@ const ReviewRestaurant = () => {
         setSelectedPurpose("Select one");
     };
 
+    // Check if all required fields are filled
+    const isFormValid = () => {
+        return (
+            reviewTitle &&
+            reviewBody &&
+            overallRating > 0 &&
+            foodRating > 0 &&
+            serviceRating > 0 &&
+            valueRating > 0 &&
+            atmosphereRating > 0 &&
+            selectedFamilyTypeOption &&
+            selectedVisitDate &&
+            selectedPurpose !== "Select one"
+        );
+    };
+
     return ( 
         <Container className="my-4"> 
             <Row> 
@@ -211,18 +227,19 @@ const ReviewRestaurant = () => {
                         <Form.Group className="mt-3">  
                             <Form.Label> Title your review{" "}   
                                 <span className="text-muted"> ({reviewTitle.length}/{maxTitleLength}) </span></Form.Label>
-                            <Form.Control type="text" placeholder="Give us the gist of your experience" maxLength={maxTitleLength} value={reviewTitle} onChange={(e) => setReviewTitle(e.target.value)} />
+                            <Form.Control type="text" placeholder="Add a title to your review..." maxLength={maxTitleLength} value={reviewTitle} onChange={(e) => setReviewTitle(e.target.value)} />
                         </Form.Group>
 
                         {/* Review Text Block */}  
                         <Form.Group className="mt-3">  
                             <Form.Label> Write your review{" "}   
                                 <span className="text-muted"> ({reviewBody.length}/{maxBodyLength}) </span></Form.Label>
-                            <Form.Control as="textarea" rows={4} placeholder="This spot is great for a casual night out..." maxLength={maxBodyLength} value={reviewBody} onChange={(e) => setReviewBody(e.target.value)} />
+                            <Form.Control as="textarea" rows={4} placeholder="Add your review..." maxLength={maxBodyLength} value={reviewBody} onChange={(e) => setReviewBody(e.target.value)} />
                         </Form.Group>
 
                         {/* Submit Button */}  
-                        <Button variant="primary" type="submit" className="mt-4"> Submit Review </Button>
+                        {/* Disable button until form is valid */}
+                        <Button variant="primary" type="submit" disabled={!isFormValid()} className="mt-4"> Submit Review </Button>
 
                     </Form>
                 </Col>
