@@ -58,7 +58,7 @@ function App() {
           <Route path='/pre-planned-trips' element={<PrePlannedTripsMainPage />}>
             <Route path=':id' element={<PrePlannedTripsMainPage />} />
           </Route>
-          <Route path='/restaurants/review' element={<ReviewRestaurant />} />
+          <Route path='/review/restaurants/:id' element={<ReviewRestaurant />} />
 
         </Routes>
 

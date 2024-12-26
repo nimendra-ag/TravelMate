@@ -1,7 +1,14 @@
-import React, { useState } from "react"; 
+import React, { useContext, useState } from "react"; 
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap"; 
+import { ClientContext } from "../../context/ClientContext";
+import { useParams } from "react-router-dom";
 
-const ReviewRestaurant = () => { 
+const ReviewRestaurant = () => {
+    const {allRestaurants} = useContext(ClientContext);
+    const {id} = useParams();
+    const restaurant = allRestaurants.find((e) => e.id === parseInt(id));
+
+
     const [reviewTitle, setReviewTitle] = useState(""); 
     const [reviewBody, setReviewBody] = useState(""); 
     const [overallRating, setOverallRating] = useState(0); 
@@ -55,6 +62,7 @@ const ReviewRestaurant = () => {
 
         // Create an object to hold all form data
         const reviewData = {
+            restaurantId: parseInt(id),
             title: reviewTitle,
             body: reviewBody,
             overall_rating: overallRating,
@@ -104,15 +112,17 @@ const ReviewRestaurant = () => {
     };
 
     return ( 
-        <Container className="my-4"> 
+        <>
+        {restaurant ? <>
+            <Container className="my-4"> 
             <Row> 
                 {/* Left Column */} 
                 <Col md={4}> 
                     <Card> 
                         <Card.Img variant="top" src="https://picsum.photos/300" alt="Cafe Chill" /> 
                         <Card.Body> 
-                            <Card.Title>Cafe Chill</Card.Title> 
-                            <Card.Text>Wellawaya Road, Ella, Sri Lanka</Card.Text> 
+                            <Card.Title>{restaurant.restaurantName}</Card.Title> 
+                            <Card.Text>{restaurant.address}</Card.Text> 
                         </Card.Body> 
                     </Card> 
                 </Col> 
@@ -245,6 +255,9 @@ const ReviewRestaurant = () => {
                 </Col>
             </Row>
         </Container>
+        </> : <></>}
+        
+        </>
     ); 
 }; 
 

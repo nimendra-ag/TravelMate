@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faMapMarkerAlt, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import './RestaurantMainSection.css';
 import RestaurantDetails from '../restaurantDetails/RestaurantDetails';
+import DisplayRestaurantReviews from '../displayRestaurantReviews/DisplayRestaurantReviews';
 
 const RestaurantMainSection = ({id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating}) => {
   const images = [
@@ -53,8 +54,6 @@ const RestaurantMainSection = ({id, type, name, address, category, contactNumber
           <img src={images[4]} alt="Thumbnail 4" />
           <img src={images[5]} alt="Thumbnail 5" />
           <img src={images[6]} alt="Thumbnail 5" />
-
-
         </div>
       </div>
 

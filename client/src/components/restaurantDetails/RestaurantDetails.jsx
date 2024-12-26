@@ -103,7 +103,7 @@ const RestaurantDetails = () => {
         </Col>
       </Row>
     </Container>
-        <Link to={`/restaurants/review`} style={{ textDecoration: 'none' }}> Add a Review</Link>
+        
     
     </>
   );
