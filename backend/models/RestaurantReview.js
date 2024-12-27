@@ -1,5 +1,9 @@
 import { model } from "mongoose";
 const RestaurantReviewModel = model('restaurantReviews',{
+    id:{
+        type:Number,
+        required:true
+    },
     userName:{
         type:String,
         required:true

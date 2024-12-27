@@ -95,7 +95,7 @@ const AddGuide = () => {
     
         navigate('/')
     } catch (error) {
-        console.log("Error updating profile", error);
+        console.log("Error uploading data", error);
     }
 };
 

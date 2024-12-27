@@ -78,6 +78,11 @@ const addRestaurantReview = async (req, res) =>{
         })
 
         console.log(restaurantReview);
+        await restaurantReview.save();
+        res.json({
+            success: true,
+            message: 'Restaurant review added successfully'
+        });
 
     } catch (error){
         console.log(error);

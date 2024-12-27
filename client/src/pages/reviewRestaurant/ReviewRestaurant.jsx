@@ -1,9 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Card, Modal } from "react-bootstrap";
 import { ClientContext } from "../../context/ClientContext";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const ReviewRestaurant = () => {
+    const [modalData, setModalData] = useState({ show: false, title: '', message: '' });
+
     const { allRestaurants } = useContext(ClientContext);
     const { id } = useParams();
     const restaurant = allRestaurants.find((e) => e.id === parseInt(id));
@@ -59,7 +62,7 @@ const ReviewRestaurant = () => {
         else if (type === "atmosphere") setAtmosphereRating(index);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const reviewData = {
@@ -77,7 +80,26 @@ const ReviewRestaurant = () => {
             mealType: selectedPurpose
         };
 
-        console.log("Review Submitted:", reviewData);
+        try {
+            const response = await axios.post("http://localhost:3000/travelmate/addRestaurantReview", reviewData)
+            console.log("Review Submitted:", reviewData);
+            console.log(response.data);
+            if (response.data.success) {
+                setModalData({
+                    show: true,
+                    title: 'Success!',
+                    message: 'Your review has been added successfully!',
+                });
+            }
+            else {
+                alert("Error submitting review");
+            }
+
+
+        } catch (error) {
+            console.log("Error  uploading the review", error);
+
+        }
         resetForm();
     };
 
@@ -113,6 +135,29 @@ const ReviewRestaurant = () => {
 
     return (
         <>
+            <Modal
+                show={modalData.show}
+                onHide={() => setModalData({ show: false, title: '', message: '' })}
+                centered
+            >
+                <Modal.Body style={{ textAlign: 'center', padding: '5px' }}>
+                    <p style={{ fontSize: '18px', color: '#333' }} className="pt-5">{modalData.message}</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        style={{
+                            backgroundColor: '#00A1FF',
+                            borderColor: '#00A1FF',
+                            fontSize: '16px',
+                            borderRadius: '8px',
+                        }}
+                        onClick={() => setModalData({ show: false, title: '', message: '' })}
+                        className="py-2 px-4"
+                    >
+                        Ok
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             {restaurant ? <>
                 <Container className="my-4">
                     <h1 className="text-center fw-bold mb-5 mt-4">
