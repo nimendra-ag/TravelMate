@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './DestinationComponent.css';
 import sigiriyaImage from '../../assets/sigiriyaImage.jpg'
 
 const DestinationComponent = () => {
+
+  {}
   return (
     <div className='destinationDescription'>
       <div className="content">

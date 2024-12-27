@@ -45,7 +45,7 @@ const getAllRestaurants = async (req, res) => {
     try {
         let restaurants = await RestaurantModel.find({});
         console.log("All Restaurants Fetched");
-        console.log(restaurants);
+        // console.log(restaurants);
         res.send(restaurants);
         
     } catch (error) {

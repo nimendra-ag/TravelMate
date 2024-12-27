@@ -37,7 +37,9 @@ const SigninModal = () => {
   const signInWithGoogle = useGoogleLogin({
     onSuccess: async (response) => {
       try {
-        setLoading(true)
+        setLoading(true);
+  
+        // Fetch user data from Google API
         const res = await axios.get(
           "https://www.googleapis.com/oauth2/v3/userinfo",
           {
@@ -46,48 +48,54 @@ const SigninModal = () => {
             },
           }
         );
-        setDetails({
+  
+        const userDetails = {
           email: res.data.email,
           firstName: res.data.given_name,
           lastName: res.data.family_name,
           profilePicture: res.data.picture,
-        });
-        // Logging res.data to ensure the data is correct
-        console.log("User data:", res.data);
-        console.log("Details:", details);
-
-
+        };
+  
+        // Logging to ensure the data is correct
+        console.log("Google user data:", res.data);
+  
         try {
-          console.log("inside handle submit", res.data);
-
-          const response = await axios
-            .post("http://localhost:3000/travelmate/signinwithgoogle", res.data, {
+          // Send user data to your backend
+          const backendResponse = await axios.post(
+            "http://localhost:3000/travelmate/signinwithgoogle",
+            res.data,
+            {
               headers: {
-                "Content-Type": "application/json", // Ensure JSON is sent
-              }
-
-            })
-
-          if (!response.data.registered) {
-            navigate(`/details/${response.data.id}`);
+                "Content-Type": "application/json",
+              },
+            }
+          );
+  
+          if (!backendResponse.data.registered) {
+            // Navigate to details page if user is not registered
+            navigate(`/details/${backendResponse.data.id}`);
           }
-
-          if (response.data.registered) {
-            localStorage.setItem('auth-token', response.data.token);
-            console.log(response.data.token);
+  
+          if (backendResponse.data.registered) {
+            // Save the token and user details to localStorage
+            localStorage.setItem("auth-token", backendResponse.data.token);
+            localStorage.setItem("user", JSON.stringify(userDetails)); // Save user details
+  
+            console.log("Auth Token:", backendResponse.data.token);
+            console.log("User Details Saved:", userDetails);
+  
             setShow(false);
             navigate("/");
           }
+        } catch (backendError) {
+          console.error("Error during backend request:", backendError);
         }
-        catch (e) {
-          console.log(e);
-
-        }
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.error("Error during Google sign-in:", error);
       }
     },
   });
+  
 
   useGoogleOneTapLogin({
     onSuccess: (credentialResponse) => {
@@ -156,6 +164,7 @@ const SigninModal = () => {
         {localStorage.getItem('auth-token') ? (
           <a className="nav-signin" onClick={() => {
             localStorage.removeItem('auth-token');
+            localStorage.removeItem('user');
             window.location.reload(); // Refresh the page after logout
           }}>
             Log out

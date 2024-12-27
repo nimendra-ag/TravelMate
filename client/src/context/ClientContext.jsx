@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { all } from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 
 export const ClientContext = createContext(null);
@@ -9,10 +9,45 @@ const ClientContextProvider = (props) => {
     const [allGuides, setAllGuides] = useState([]);
     const [allRestaurants, setAllRestaurants] = useState([]);
     const [allPrePlannedTrips, setAllPrePlannedTrips] = useState([]);
+    const [allDetails,setAllDetails] = useState([]);
+    const [allCities,setAllCities] = useState([]);
+    
+
+
+
+
 
 
 
     useEffect(() => {
+
+
+        axios.get("http://localhost:3000/cities/getCities")
+        .then((res)=>{
+            setAllCities(res.data);
+            
+            
+
+        }).catch((err)=>{
+            console.log("Error is",err);
+        })
+
+
+
+
+
+        // Fetch all details data
+        axios.get('http://localhost:3000/travelmate/getdata')
+            .then((response) => {
+                console.log('All Details:', response.data);
+                setAllDetails(response.data);
+            })
+            .catch((error) => {
+                console.log('All Details fetch error:', error);
+            });
+
+
+
         // Fetch accommodations data
         axios.get('http://localhost:3000/travelmate/allAccomodations')
             .then((response) => {
@@ -72,6 +107,8 @@ const ClientContextProvider = (props) => {
         allGuides,
         allRestaurants,
         allPrePlannedTrips,
+        allDetails,
+        allCities
     };
 
     return (

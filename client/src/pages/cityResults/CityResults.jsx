@@ -11,31 +11,36 @@ import { ClientContext } from '../../context/ClientContext';
 
 const CityResults = () => {
 
-  const { allAccommodations } = useContext(ClientContext);
+  const { allCities } = useContext(ClientContext);
 
 
-  const [city, setCity] = useState("");
 
   const { id } = useParams(); // Get the ID from the URL
 
+  const city = allCities.find((e) => e.id === parseInt(id));
 
 
-  useEffect(() => {
-    axios.get(`http://localhost:3000/travelmate/getcity/${id}`)
+  
+
+
+
+
+//   useEffect(() => {
+//     axios.get(`http://localhost:3000/travelmate/getcity/${id}`)
     
     
-        .then((res) => {
-            if (res.data.success) {
-                const city = res.data.city;
-                setCity(city);
-                console.log(city);
+//         .then((res) => {
+//             if (res.data.success) {
+//                 const city = res.data.city;
+//                 setCity(city);
+//                 console.log(city);
                 
-            }
-        })
-        .catch((err) => {
-            console.log("Error is", err);
-        });
-}, []);
+//             }
+//         })
+//         .catch((err) => {
+//             console.log("Error is", err);
+//         });
+// }, []);
   return (
     <div>
 

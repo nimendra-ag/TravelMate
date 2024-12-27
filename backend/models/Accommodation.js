@@ -54,6 +54,10 @@ const AccommodationModel = model("Accommodations", {
     min: 0,
     max: 5,
   },
+  rooms: {
+    type: Object,
+   
+  },
 });
 
 export { AccommodationModel };

@@ -15,6 +15,7 @@ const HotelPage = () => {
                 name = {accommodation.name}
                 description = {accommodation.description}
                 distance_from_city = {accommodation.distance_from_city}
+                id = {accommodationID}
             />
             </>: <></>}
          

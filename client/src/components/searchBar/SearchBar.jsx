@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import './SearchBar.css';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { ClientContext } from '../../context/ClientContext';
 
 
 const SearchBar = () => {
@@ -14,66 +15,83 @@ const SearchBar = () => {
     const [search, setSearch] = useState('');
     const navigate = useNavigate(); // Initialize useNavigate
 
+    const {allDetails} = useContext(ClientContext);
 
 
+   
+    
     useEffect(() => {
-        axios.get("http://localhost:3000/travelmate/getdata")
-
-            .then((res) => {
-                if (res.data.success) {
-                    const cities = res.data.cities;
-
-                    const acc = res.data.accommodations;
-
-                    const des = res.data.destinations;
-
-                    const  guids = res.data.guids;
-
-
-                    setData([...cities, ...acc, ...des, ...guids]); // Set the data in the state
-                    console.log([...cities, ...acc]); // Log the new data right after setting
+        if (allDetails) {
+            const acc = allDetails.accommodations || [];
+            const des = allDetails.destinations || [];
+            const guids = allDetails.guids || [];
+            const cities = allDetails.cities || [];
+            setData([...cities, ...acc, ...des, ...guids]);
+            // console.log([...cities, ...acc]);
+        }
+    }, [allDetails]);
+    
 
 
-                }
-            })
-            .catch((err) => {
-                console.log("Error is", err);
-            });
-    }, []);
+
+                    
+
+
+
+    
+
+    // useEffect(() => {
+    //     axios.get("http://localhost:3000/travelmate/getdata")
+
+    //         .then((res) => {
+    //             if (res.data.success) {
+    //                 const cities = res.data.cities;
+
+    
+
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log("Error is", err);
+    //         });
+    // }, []);
+
+
+
 
     // const filteredData = data.filter((data) =>
     //     data.name.toLowerCase().includes(search.toLowerCase())
     // );
 
 
-    const filteredData = data.filter((data) =>
-        data.name && data.name.toLowerCase().includes(search.toLowerCase())
-    );
+    const filteredData = data
+    .filter((data) => data.name && data.name.toLowerCase().includes(search.toLowerCase()))
+    .slice(0, 6); // This limits the results to 6 items
 
     const handleClick = (dataId, type) => {
 
 
-        console.log(dataId);
-        console.log(type);
+        // console.log(dataId);
+        // console.log(type);
 
         if (type === "city") {
             navigate(`/city/${dataId}`)
         }
         else if (type === "accommodation") {
-            navigate(`/accommodation/${dataId}`)
+            navigate(`/accommodations/${dataId}`)
         }
-        else if (type === "Destinations"){
+        else if (type === "Destinations") {
             navigate(`/destinations/${dataId}`)
         }
 
-     
+
 
     };
 
 
 
     return (
-        <div className="container">
+        <div >
             <div className="d-flex justify-content-center mt-5">
                 <Form>
                     <Form.Group className="mb-3">
@@ -88,7 +106,7 @@ const SearchBar = () => {
             </div>
 
             {/* Change to vertical direction flex */}
-            <div className="d-flex flex-column align-items-center">
+            <div className=" flex-column">
                 {/* Only render results if search is not empty */}
                 {search && filteredData.length > 0 ? (
                     filteredData.map((data) => (
@@ -97,19 +115,18 @@ const SearchBar = () => {
                             className="city-card  rounded-pill"
                         // Add click handler
                         >
-                            <div style={{ display: "flex" }} onClick={() => handleClick(data._id, data.type)}>
-                                <div style={{ width: "30%" }} >
+                            <div className="m-2" style={{ display: "flex" }} onClick={() => handleClick(data.id, data.type)}>
+                                <div style={{ width: "100%" }} >
 
-                                </div>
+                                
 
-                                <div style={{ display: "flex" }}>
-
+                                <div className="d-flex p-2 " >
                                     <p style={{ margin: 0 }}>{data.name}</p>
                                     <span style={{ margin: '0 5px' }}>—</span>
                                     <p style={{ margin: 0 }}>{data.minidescription}</p>
                                 </div>
-
-
+                                </div>
+                               
                             </div>
                         </div>
 

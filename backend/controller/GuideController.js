@@ -36,7 +36,7 @@ const getAllGuides = async (req, res) => {
   try {
       let guides = await GuideModel.find({});
       console.log("All Guides Fetched");
-      console.log(guides);
+      // console.log(guides);
       res.send(guides);
       
   } catch (error) {
