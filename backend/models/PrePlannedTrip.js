@@ -21,6 +21,10 @@ const PrePlannedTripModel = model("PrePlannedTrips", {
     type: [String],
     required: true,
   },
+  mainActivities: {
+    type: [String],
+    required: true,
+  },
   price: {
     type: Number,
     required: true,
@@ -66,6 +70,26 @@ const PrePlannedTripModel = model("PrePlannedTrips", {
     default: 0,
     min: 0,
     max: 5,
+  },
+  whatsExpected: {
+    type: String,
+    required: true,
+  },
+  whatsIncluded: {
+    type: String,
+    required: false,
+  },
+  additionalInfo: {
+    type: String,
+    required: false,
+  },
+  cancellationPolicy: {
+    type: String,
+    required: false,
+  },
+  help: {
+    type: String,
+    required: false,
   },
 });
 

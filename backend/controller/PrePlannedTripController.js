@@ -12,6 +12,7 @@ const AddPrePlannedTrips = async (req, res) => {
         name: req.body.name,
         mainDestinations: req.body.mainDestinations,
         guides: req.body.guides,
+        mainActivities: req.body.mainActivities,
         price: req.body.price,
         description: req.body.description,
         duration: req.body.duration,
@@ -22,6 +23,11 @@ const AddPrePlannedTrips = async (req, res) => {
         endTime: req.body.endTime,
         endLocation: req.body.endLocation,
         availableDates: req.body.availableDates,
+        whatsExpected: req.body.whatsExpected,
+        whatsIncluded: req.body.whatsIncluded,
+        additionalInfo: req.body.additionalInfo,
+        cancellationPolicy: req.body.cancellationPolicy,
+        help: req.body.help,
 
 
   

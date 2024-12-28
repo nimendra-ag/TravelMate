@@ -48,6 +48,7 @@ function App() {
       <Route path=':id' element={<PrePlannedTripsMainPage />} />
       </Route>
       
+      
         </Routes>
         
       </Router>
