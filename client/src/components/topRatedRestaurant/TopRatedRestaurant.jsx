@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import { Container, Row, Col, Carousel, Card, ProgressBar, Collapse } from "react-bootstrap";
 import './TopRatedRestaurant.css';
+import { ClientContext } from '../../context/ClientContext';
 
 
 const TopRatedRestaurant = () => {
+    const {allRestaurants} = useContext(ClientContext);
+
+    const randomRestaurant = allRestaurants[Math.floor(Math.random() * allRestaurants.length)];
+    console.log(randomRestaurant);
+    
     const [open, setOpen] = useState(false);
     return (
-        <>
-            <div className="bg-light">
+        <> {randomRestaurant ? <>
+        <div className="bg-light">
                 <Container>
                     {/* Carousel Section */}
                     <Row className="mb-4">
@@ -42,7 +48,7 @@ const TopRatedRestaurant = () => {
                     {/* Details Section */}
                     <Row className="mb-4">
                         <Col md={8}>
-                            <h2>Restaurant Name</h2>
+                            <h2>{randomRestaurant.restaurantName}</h2>
                             <p>
                                 <strong>Location:</strong> 123 Main St, City, Country
                             </p>
@@ -123,6 +129,8 @@ const TopRatedRestaurant = () => {
                     </Row>
                 </Container>
             </div>
+        </> : <></>}
+            
         </>
     );
 };
