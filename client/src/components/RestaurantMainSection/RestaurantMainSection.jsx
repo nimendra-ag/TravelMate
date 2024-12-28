@@ -57,7 +57,7 @@ const RestaurantMainSection = ({ id, type, name, address, category, contactNumbe
           </Col>
         </Row>
         <hr style={{ border: '2px solid #00AA6C', marginTop: '1rem' }} />
-        
+
       </Container>
       <div className="images-section">
         <div className="left-image">
@@ -76,7 +76,9 @@ const RestaurantMainSection = ({ id, type, name, address, category, contactNumbe
           <img src={images[6]} alt="Thumbnail 5" />
         </div>
       </div>
-      <RestaurantDetails />
+      <RestaurantDetails 
+      id={id}
+      />
     </div>
   );
 };
