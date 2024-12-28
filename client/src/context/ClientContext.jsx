@@ -9,6 +9,7 @@ const ClientContextProvider = (props) => {
     const [allGuides, setAllGuides] = useState([]);
     const [allRestaurants, setAllRestaurants] = useState([]);
     const [allPrePlannedTrips, setAllPrePlannedTrips] = useState([]);
+    const [allRestaurantReviews, setAllRestaurantReviews] = useState([]);
 
 
 
@@ -32,7 +33,7 @@ const ClientContextProvider = (props) => {
             .catch((error) => {
                 console.log('Feedback fetch error:', error);
             });
-        
+
         // Fetch guides data
         axios.get('http://localhost:3000/travelmate/allGuides')
             .then((response) => {
@@ -42,9 +43,9 @@ const ClientContextProvider = (props) => {
             .catch((error) => {
                 console.log('Feedback fetch error:', error);
             });
-        
-            //Fetch restaurants data
-            axios.get('http://localhost:3000/travelmate/allRestaurants')
+
+        //Fetch restaurants data
+        axios.get('http://localhost:3000/travelmate/allRestaurants')
             .then((response) => {
                 console.log('Restaurants:', response.data);
                 setAllRestaurants(response.data);
@@ -54,15 +55,24 @@ const ClientContextProvider = (props) => {
             });
         //Fetch pre planned trips data
         axios.get('http://localhost:3000/travelmate/allPrePlannedTrips')
-        .then((response) => {
-            console.log('PrePlannedTrips:', response.data);
-            setAllPrePlannedTrips(response.data);
-        })
-        .catch((error) => {
-            console.log('Feedback fetch error:', error);
-        });
-            
-        
+            .then((response) => {
+                console.log('PrePlannedTrips:', response.data);
+                setAllPrePlannedTrips(response.data);
+            })
+            .catch((error) => {
+                console.log('Feedback fetch error:', error);
+            });
+
+        axios.get('http://localhost:3000/travelmate/getAllRestaurantReviews')
+            .then((response) => {
+                console.log('Restaurant Reviews:', response.data);
+                setAllRestaurantReviews(response.data);
+            })
+            .catch((error) => {
+                console.log('Restaurant Review fetch error:', error);
+            })
+
+
     }, []);
 
     // Add both data to the context value
@@ -72,6 +82,7 @@ const ClientContextProvider = (props) => {
         allGuides,
         allRestaurants,
         allPrePlannedTrips,
+        allRestaurantReviews
     };
 
     return (
