@@ -90,5 +90,21 @@ const addRestaurantReview = async (req, res) =>{
     }
 }
 
-export { AddRestaurant, getAllRestaurants, addRestaurantReview}
+
+const getAllRestaurantReviews = async (req, res) => {
+    try{
+        let allRestaurantReviews = await RestaurantReviewModel.find({});
+        console.log("All Restaurant Reviews Fetched");
+        console.log(allRestaurantReviews);
+        res.send(allRestaurantReviews);
+
+    } catch(error){
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+}
+
+
+
+export { AddRestaurant, getAllRestaurants, addRestaurantReview, getAllRestaurantReviews}
 

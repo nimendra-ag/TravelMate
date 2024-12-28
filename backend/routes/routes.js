@@ -1,7 +1,7 @@
 import express from 'express';
 import { AddGuide, getAllGuides } from '../controller/GuideController.js';
 import { AddTransportationService, getAllTransportationServices } from '../controller/TransportationServiceController.js';
-import { AddRestaurant, addRestaurantReview, getAllRestaurants } from '../controller/RestaurantController.js';
+import { AddRestaurant, addRestaurantReview, getAllRestaurantReviews, getAllRestaurants } from '../controller/RestaurantController.js';
 import { AddDestination, getAllDestinations } from '../controller/DestinationController.js';
 
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
@@ -60,6 +60,8 @@ router.post("/addtravelmatefeedback", AddTravelMateFeedback)
 router.get("/gettravelmatefeedback", GetTravelMateFeedback)
 
 router.post("/addRestaurantReview", addRestaurantReview)
+
+router.get("/getAllRestaurantReviews", getAllRestaurantReviews)
 
 export default router;
 
