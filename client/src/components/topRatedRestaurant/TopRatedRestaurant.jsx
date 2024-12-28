@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Container, Row, Col, Carousel, Card, ProgressBar, Collapse } from "react-bootstrap";
 import './TopRatedRestaurant.css';
 import { ClientContext } from '../../context/ClientContext';
-
+import { Link } from 'react-router-dom';
 
 const TopRatedRestaurant = () => {
     const { allRestaurants } = useContext(ClientContext);
@@ -22,7 +22,7 @@ const TopRatedRestaurant = () => {
         const totalServiceRating = reviews.reduce((sum, review) => sum + review.serviceRating, 0);
         const totalValueRating = reviews.reduce((sum, review) => sum + review.valueRating, 0);
         const totalAtmosphereRating = reviews.reduce((sum, review) => sum + review.atmosphereRating, 0);
-        const averageRatings = {"overall": (totalOverallRating / reviews.length).toFixed(2), "food": (totalFoodRating / reviews.length).toFixed(2), "service": (totalServiceRating / reviews.length).toFixed(2), "value" : (totalValueRating / reviews.length).toFixed(2), "atmosphere": (totalAtmosphereRating / reviews.length).toFixed(2)};
+        const averageRatings = { "overall": (totalOverallRating / reviews.length).toFixed(2), "food": (totalFoodRating / reviews.length).toFixed(2), "service": (totalServiceRating / reviews.length).toFixed(2), "value": (totalValueRating / reviews.length).toFixed(2), "atmosphere": (totalAtmosphereRating / reviews.length).toFixed(2) };
         return averageRatings;
     };
 
@@ -64,31 +64,146 @@ const TopRatedRestaurant = () => {
                     </Row>
 
                     {/* Details Section */}
-                    <Row className="mb-4">
+                    <Row className="pb-4">
                         <Col md={8}>
-                            <h2>{randomRestaurant.restaurantName}</h2>
-                            <p>
-                                <strong>Location:</strong> {randomRestaurant.address}
-                            </p>
-                            <Col md={4}>
-                                <p>{restaurantReviews.length} Ratings</p>
-                                <p>Overall Rating: <ProgressBar now={averageRatings['food']*(100/5)} label={averageRatings['food']} /></p></Col>
-
-                            <p>
-                                {randomRestaurant.description}
-                            </p>
+                            <div
+                                style={{
+                                    backgroundColor: "#f9f9f9",
+                                    borderRadius: "8px",
+                                    padding: "20px",
+                                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                                }}
+                            >
+                                <Link to={`/restaurants/${randomRestaurantId}`} style={{ textDecoration: "none" }}>
+                                    <h2 style={{ color: "#000" }}>{randomRestaurant.restaurantName}</h2>
+                                </Link>
+                                <p style={{ color: "#6c757d", fontSize: "0.9rem" }}>
+                                    <strong>
+                                        <i className="fas fa-map-marker-alt me-2"></i>Location:
+                                    </strong>{" "}
+                                    {randomRestaurant.address}
+                                </p>
+                                <p style={{ color: "#6c757d" }}>{restaurantReviews.length} Ratings</p>
+                                <Col md={4}>
+                                    <p>
+                                        <strong>Overall Rating:</strong>
+                                        <ProgressBar
+                                            now={averageRatings["food"] * (100 / 5)}
+                                            label={`${averageRatings["food"]}`}
+                                            style={{ margin: "0.5rem 0" }}
+                                        />
+                                    </p>
+                                </Col>
+                                <p style={{ marginTop: "1rem", color: "#212529" }}>
+                                    {randomRestaurant.description}
+                                </p>
+                            </div>
                         </Col>
-                        <Col md={3}>
-                            <h4>Ratings</h4>
-                            <p>Food: <ProgressBar now={averageRatings['food']*(100/5)} label={averageRatings['food']} /></p>
-                            <p>Service: <ProgressBar now={averageRatings['service']*(100/5)} label={averageRatings['service']} /></p>
-                            <p>Value: <ProgressBar now={averageRatings['value']*(100/5)} label={averageRatings['value']} /></p>
-                            <p>Atmosphere: <ProgressBar now={averageRatings['atmosphere']*(100/5)} label={averageRatings['atmosphere']} /></p>
+                        <Col md={4}>
+                            <div
+                                style={{
+                                    backgroundColor: "#ffffff",
+                                    borderRadius: "8px",
+                                    padding: "20px",
+                                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                                }}
+                            >
+                                {/* <h4 style={{ color: "#007bff", marginBottom: "1rem" }}>
+                                    Ratings Breakdown
+                                </h4> */}
+                                <p>
+                                    <strong>Food:</strong>
+                                    <ProgressBar
+                                        now={averageRatings["food"] * (100 / 5)}
+                                        label={`${averageRatings["food"]}/5`}
+                                        style={{
+                                            margin: "0.5rem 0",
+                                            height: "20px", // Optional: control height
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                backgroundColor: "#03A0FE",
+                                                width: `${averageRatings["food"] * (100 / 5)}%`,
+                                                height: "100%",
+                                            }}
+                                        />
+                                    </ProgressBar>
+
+                                </p>
+                                <p>
+                                    <strong>Service:</strong>
+                                    <ProgressBar
+                                        now={averageRatings["food"] * (100 / 5)}
+                                        label={`${averageRatings["service"]}/5`}
+                                        style={{
+                                            margin: "0.5rem 0",
+                                            height: "20px", // Optional: control height
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                backgroundColor: "#03A0FE",
+                                                width: `${averageRatings["service"] * (100 / 5)}%`,
+                                                height: "100%",
+                                            }}
+                                        />
+                                    </ProgressBar>
+                                </p>
+                                <p>
+                                    <strong>Value:</strong>
+                                    <ProgressBar
+                                        now={averageRatings["food"] * (100 / 5)}
+                                        label={`${averageRatings["value"]}/5`}
+                                        style={{
+                                            margin: "0.5rem 0",
+                                            height: "20px", // Optional: control height
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                backgroundColor: "#03A0FE",
+                                                width: `${averageRatings["value"] * (100 / 5)}%`,
+                                                height: "100%",
+                                            }}
+                                        />
+                                    </ProgressBar>
+                                </p>
+                                <p>
+                                    <strong>Atmosphere:</strong>
+                                    <ProgressBar
+  now={averageRatings["food"] * (100 / 5)}
+  label={`${averageRatings["food"]}/5`} // This sets the visible label
+  style={{
+    margin: "0.5rem 0",
+    height: "20px", // Adjust the height if needed
+    backgroundColor: "#E9F7FB", // Optional: lighter background for the track
+  }}
+>
+  <div
+    style={{
+      backgroundColor: "#C1EAF8", // Custom bar color
+      width: `${averageRatings["food"] * (100 / 5)}%`,
+      height: "100%",
+      display: "flex", // Ensure label alignment
+      alignItems: "center",
+      justifyContent: "center",
+      color: "#000", // Label text color
+      fontWeight: "bold", // Label font style
+    }}
+  >
+    {`${averageRatings["food"]}/5`} {/* Ensure label is rendered here */}
+  </div>
+</ProgressBar>
+
+                                </p>
+                            </div>
                         </Col>
                     </Row>
 
+
                     {/* Reviews Section */}
-                    <Row>
+                    {/* <Row>
                         <Col>
                             <h3>Customer Reviews</h3>
                             <Row>
@@ -147,7 +262,7 @@ const TopRatedRestaurant = () => {
                                 </Col>
                             </Row>
                         </Col>
-                    </Row>
+                    </Row> */}
                 </Container>
             </div>
         </> : <></>}
