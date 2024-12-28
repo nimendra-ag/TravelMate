@@ -6,15 +6,28 @@ import { ClientContext } from '../../context/ClientContext';
 
 
 const TopRatedRestaurant = () => {
-    const {allRestaurants} = useContext(ClientContext);
-
+    const { allRestaurants } = useContext(ClientContext);
+    const { allRestaurantReviews } = useContext(ClientContext);
     const randomRestaurant = allRestaurants[Math.floor(Math.random() * allRestaurants.length)];
-    console.log(randomRestaurant);
-    
+    const randomRestaurantId = randomRestaurant ? randomRestaurant.id : 0;
+    console.log("random restauran id", randomRestaurantId, randomRestaurant);
+    const restaurantReviews = allRestaurantReviews.filter(review => review.restaurantId === randomRestaurantId);
+    console.log("random restaurant reviews", restaurantReviews);
+
+
+    const calculateAverageRating = (reviews) => {
+        if (reviews.length === 0) return 0; // Avoid division by zero
+        const totalRating = reviews.reduce((sum, review) => sum + review.overallRating, 0);
+        return (totalRating / reviews.length).toFixed(2); // Round to 2 decimal places
+    };
+
+    const averageRating = calculateAverageRating(restaurantReviews);
+    console.log("Average Overall Rating:", averageRating);
+
     const [open, setOpen] = useState(false);
     return (
         <> {randomRestaurant ? <>
-        <div className="bg-light">
+            <div className="bg-light">
                 <Container>
                     {/* Carousel Section */}
                     <Row className="mb-4">
@@ -130,7 +143,7 @@ const TopRatedRestaurant = () => {
                 </Container>
             </div>
         </> : <></>}
-            
+
         </>
     );
 };
