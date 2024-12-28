@@ -16,6 +16,7 @@ import GuideDataTable from './pages/GuidesDataTable/GuideDataTable';
 import DestinationsDataTable from './pages/DestinationsDataTable/DestinationsDataTable';
 import TranspotationServices from './components/TranspotationServices/TranspotationServices';
 import Restaurants from './components/Restaurants/Restaurants';
+import ViewHotel from './components/ViewHotel/ViewHotel';
 
 
 const App = () => {
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/destinations-data-table" element={<DestinationsDataTable />} />
             <Route path='/transportmodes' element={<TranspotationServices/>}/>
             <Route path='/restaurants' element={<Restaurants/>}/>
+            <Route path="/view-hotel/:id" element={<ViewHotel />} />
           </Routes>
         </div>
       </BrowserRouter>

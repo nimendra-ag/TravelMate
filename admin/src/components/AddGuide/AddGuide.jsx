@@ -66,7 +66,7 @@ const AddGuide = () => {
   const handleMultiSelectChange = (selectedOptions, action) => {
     setGuideDetails({
       ...guideDetails,
-      [action.name]: selectedOptions.map(option => option.value),
+      [action.guideName]: selectedOptions.map(option => option.value),
     });
   };
   

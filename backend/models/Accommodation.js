@@ -1,15 +1,15 @@
-import { model } from "mongoose";
+import mongoose from 'mongoose'; // Change this line
 
-const AccommodationModel = model("Accommodations", {
+const AccommodationModel = mongoose.model("Accommodations", {
   id: {
     type: Number,
     required: true,
   },
-  type:{
+  type: {
     type: String,
     default: "Accommodations"
   },
-  hotel_name: {
+  name: {
     type: String,
     required: true,
   },
@@ -27,6 +27,7 @@ const AccommodationModel = model("Accommodations", {
   },
   image: {
     type: String,
+    required: true,
   },
   category: {
     type: String,

@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HotelDataTable = () => {
+  const navigate = useNavigate(); // Initialize navigate function
+
+  // Columns should match the model fields
   const columns = [
     {
       name: 'Name',
-      selector: row => row.name,
+      selector: row => row.name, // Mapping hotel_name from model
       sortable: true,
     },
     {
       name: 'Description',
-      selector: row => row.description,
+      selector: row => row.description, // Mapping description from model
     },
     {
       name: 'Availability',
-      selector: row => row.availability,
+      selector: row => row.available ? 'Available' : 'Not Available', // Mapping available field from model
     },
     {
       name: 'Rate',
-      selector: row => row.rate,
+      selector: row => row.rating, // Mapping rating from model
     },
     {
       name: 'Area',
-      selector: row => row.area,
+      selector: row => row.address, // Mapping address from model
     },
     {
       name: 'View More',
@@ -48,56 +51,79 @@ const HotelDataTable = () => {
     },
   ];
 
-  const initialData = [
-    { name: 'Hotel 1', description: 'Description 1', availability: 'Available', rate: 'Rate 1', area: 'Area 1' },
-    { name: 'Hotel 2', description: 'Description 2', availability: 'Full', rate: 'Rate 2', area: 'Area 2' },
-    { name: 'Hotel 3', description: 'Description 3', availability: 'Available', rate: 'Rate 3', area: 'Area 3' },
-    { name: 'Hotel 4', description: 'Description 4', availability: 'Full', rate: 'Rate 4', area: 'Area 4' },
-    { name: 'Hotel 5', description: 'Description 5', availability: 'Available', rate: 'Rate 5', area: 'Area 5' },
-    { name: 'Hotel 6', description: 'Description 6', availability: 'Full', rate: 'Rate 6', area: 'Area 6' },
-    { name: 'Hotel 7', description: 'Description 7', availability: 'Available', rate: 'Rate 7', area: 'Area 7' },
-    { name: 'Hotel 8', description: 'Description 8', availability: 'Full', rate: 'Rate 8', area: 'Area 8' },
-    { name: 'Hotel 9', description: 'Description 9', availability: 'Available', rate: 'Rate 9', area: 'Area 9' },
-    { name: 'Hotel 10', description: 'Description 10', availability: 'Full', rate: 'Rate 10', area: 'Area 10' },
-    { name: 'Hotel 11', description: 'Description 11', availability: 'Available', rate: 'Rate 11', area: 'Area 11' },
-    { name: 'Hotel 12', description: 'Description 12', availability: 'Full', rate: 'Rate 12', area: 'Area 12' },
-    { name: 'Hotel 13', description: 'Description 13', availability: 'Available', rate: 'Rate 13', area: 'Area 13' },
-  ];
+  const [records, setRecords] = useState([]); // Stores all the hotel records
+  const [filteredRecords, setFilteredRecords] = useState([]); // Stores filtered hotel records
+  const [selectedRows, setSelectedRows] = useState([]); 
 
-  const [records, setRecords] = useState(initialData);
-  const [selectedRows, setSelectedRows] = useState([]);
+  // Fetch accommodations data from the API
+  useEffect(() => {
+    const fetchAccommodations = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/travelmate/allAccomodations'); 
+        const data = await response.json();
+        setRecords(data); // Set the fetched data to records state
+        setFilteredRecords(data); // Initially set filtered records to all fetched data
+      } catch (error) {
+        console.error("Error fetching accommodations data:", error);
+      }
+    };
 
+    fetchAccommodations();
+  }, []); // Empty dependency array to fetch data once on component mount
+
+  // Handle filter input
   function handleFilter(event) {
-    const newData = initialData.filter(row => {
+    const filteredData = records.filter(row => {
       return row.name.toLowerCase().includes(event.target.value.toLowerCase());
     });
 
-    setRecords(newData);
+    setFilteredRecords(filteredData); // Set the filtered data to filteredRecords state
   }
 
+  // Handle the "View More" button click
   function handleViewMore(row) {
-    alert(`View more details for ${row.name}`);
+    navigate(`/view-hotel/${row.id}`);
   }
 
+  // Handle adding a new hotel (optional functionality)
   function handleAddHotel() {
     const newHotel = {
       name: `Hotel ${records.length + 1}`,
       description: `Description ${records.length + 1}`,
-      availability: 'Available', // Default availability
-      rate: `Rate ${records.length + 1}`,
-      area: `Area ${records.length + 1}`,
+      available: true,
+      rating: 3, // Default rating
+      address: `Area ${records.length + 1}`,
     };
 
     setRecords([...records, newHotel]);
+    setFilteredRecords([...filteredRecords, newHotel]); // Add new hotel to filtered records as well
   }
 
+  // Handle row selection
   function handleRowSelected(state) {
     setSelectedRows(state.selectedRows);
   }
 
-  function handleDeleteSelected() {
-    const updatedRecords = records.filter(row => !selectedRows.includes(row));
-    setRecords(updatedRecords);
+  // Handle deleting selected rows
+  async function handleDeleteSelected() {
+    try {
+      for (let row of selectedRows) {
+        await fetch("http://localhost:3000/travelmate/deleteAccommodation", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: row.id }),
+        });
+      }
+      // Update local state after successful deletion
+      const updatedRecords = records.filter(row => !selectedRows.includes(row));
+      setRecords(updatedRecords);
+      setFilteredRecords(updatedRecords); // Update filtered records
+      setSelectedRows([]); 
+    } catch (error) {
+      console.error("Error deleting hotels:", error);
+    }
   }
 
   return (
@@ -123,7 +149,12 @@ const HotelDataTable = () => {
           type="text"
           onChange={handleFilter}
           placeholder="Filter by Name"
-          style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginRight: '10px' }}
+          style={{
+            padding: '8px',
+            borderRadius: '5px',
+            border: '1px solid #ccc',
+            marginRight: '10px',
+          }}
         />
         <Link to="/add-new-hotel">
           <button
@@ -143,7 +174,7 @@ const HotelDataTable = () => {
       </div>
       <DataTable
         columns={columns}
-        data={records}
+        data={filteredRecords} // Use filtered records for data
         fixedHeader
         pagination
         selectableRows

@@ -1,11 +1,11 @@
 import express from 'express';
-import { AddGuide, getAllGuides } from '../controller/GuideController.js';
+import { AddOrUpdateGuide, getAllGuides } from '../controller/GuideController.js';
 import { AddTransportationService, getAllTransportationServices } from '../controller/TransportationServiceController.js';
 import { AddRestaurant, getAllRestaurants } from '../controller/RestaurantController.js';
 import { AddDestination, getAllDestinations } from '../controller/DestinationController.js';
 
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
-import { AddAccommodation, getAllAccomodations, GetData, GetCity } from '../controller/AccommodationController.js';
+import { AddOrUpdateAccommodation, getAllAccomodations, GetData, GetCity, deleteAccommodation , viewAccommodation} from '../controller/AccommodationController.js';
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
 const router = express.Router()
 
@@ -15,7 +15,9 @@ router.get("/getprofile/:id",GetProfile)
 
 router.post("/updateprofile/:id",UpdateProfile)
 
-router.post("/addAccomodation",AddAccommodation)
+router.post("/addAccomodation",AddOrUpdateAccommodation)
+
+router.put("/updateAccommodation/:id",AddOrUpdateAccommodation)
 
 router.get("/getdata",GetData)
 
@@ -24,12 +26,18 @@ router.get("/getcity/:id",GetCity)
 
 router.get("/allAccomodations", getAllAccomodations)
 
+router.delete("/deleteAccommodation", deleteAccommodation)
+
+router.get('/viewAccommodation/:id', viewAccommodation)
+
 router.post("/signupwithemailandpassword", SignUpWithEmailAndPassword);
 
 router.post("/signinwithemailandpassword", SignInWithEmailAndPassword)
 
 
-router.post("/addGuide",AddGuide)
+router.post("/addGuide",AddOrUpdateGuide)
+
+router.post("/updateGuide/:id",AddOrUpdateGuide)
 
 router.get("/allGuides", getAllGuides)
 
