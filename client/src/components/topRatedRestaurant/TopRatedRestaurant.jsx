@@ -17,12 +17,17 @@ const TopRatedRestaurant = () => {
 
     const calculateAverageRating = (reviews) => {
         if (reviews.length === 0) return 0; // Avoid division by zero
-        const totalRating = reviews.reduce((sum, review) => sum + review.overallRating, 0);
-        return (totalRating / reviews.length).toFixed(2); // Round to 2 decimal places
+        const totalOverallRating = reviews.reduce((sum, review) => sum + review.overallRating, 0);
+        const totalFoodRating = reviews.reduce((sum, review) => sum + review.foodRating, 0);
+        const totalServiceRating = reviews.reduce((sum, review) => sum + review.serviceRating, 0);
+        const totalValueRating = reviews.reduce((sum, review) => sum + review.valueRating, 0);
+        const totalAtmosphereRating = reviews.reduce((sum, review) => sum + review.atmosphereRating, 0);
+        const averageRatings = {"overall": (totalOverallRating / reviews.length).toFixed(2), "food": (totalFoodRating / reviews.length).toFixed(2), "service": (totalServiceRating / reviews.length).toFixed(2), "value" : (totalValueRating / reviews.length).toFixed(2), "atmosphere": (totalAtmosphereRating / reviews.length).toFixed(2)};
+        return averageRatings;
     };
 
-    const averageRating = calculateAverageRating(restaurantReviews);
-    console.log("Average Overall Rating:", averageRating);
+    const averageRatings = calculateAverageRating(restaurantReviews);
+    console.log("Average Overall Rating:", averageRatings);
 
     const [open, setOpen] = useState(false);
     return (
@@ -63,19 +68,22 @@ const TopRatedRestaurant = () => {
                         <Col md={8}>
                             <h2>{randomRestaurant.restaurantName}</h2>
                             <p>
-                                <strong>Location:</strong> 123 Main St, City, Country
+                                <strong>Location:</strong> {randomRestaurant.address}
                             </p>
+                            <Col md={4}>
+                                <p>{restaurantReviews.length} Ratings</p>
+                                <p>Overall Rating: <ProgressBar now={averageRatings['food']*(100/5)} label={averageRatings['food']} /></p></Col>
+
                             <p>
-                                A delightful restaurant offering a variety of dishes to satisfy your
-                                taste buds. Known for its excellent service and vibrant atmosphere.
+                                {randomRestaurant.description}
                             </p>
                         </Col>
                         <Col md={3}>
                             <h4>Ratings</h4>
-                            <p>Food: <ProgressBar now={90} label="9.0" /></p>
-                            <p>Service: <ProgressBar now={85} label="8.5" /></p>
-                            <p>Value: <ProgressBar now={80} label="8.0" /></p>
-                            <p>Atmosphere: <ProgressBar now={75} label="7.5" /></p>
+                            <p>Food: <ProgressBar now={averageRatings['food']*(100/5)} label={averageRatings['food']} /></p>
+                            <p>Service: <ProgressBar now={averageRatings['service']*(100/5)} label={averageRatings['service']} /></p>
+                            <p>Value: <ProgressBar now={averageRatings['value']*(100/5)} label={averageRatings['value']} /></p>
+                            <p>Atmosphere: <ProgressBar now={averageRatings['atmosphere']*(100/5)} label={averageRatings['atmosphere']} /></p>
                         </Col>
                     </Row>
 
