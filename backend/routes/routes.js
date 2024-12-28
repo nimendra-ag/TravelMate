@@ -7,6 +7,7 @@ import { AddDestination, getAllDestinations } from '../controller/DestinationCon
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
 import { AddOrUpdateAccommodation, getAllAccomodations, GetData, GetCity, deleteAccommodation , viewAccommodation} from '../controller/AccommodationController.js';
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
+import { AddPrePlannedTrips, getAllPrePlannedTrips } from '../controller/PrePlannedTripController.js';
 const router = express.Router()
 
 router.post('/signinwithgoogle',RegWithGoogle)
@@ -53,7 +54,9 @@ router.post("/add-destination",AddDestination)
 
 router.get("/allDestinations", getAllDestinations)
 
+router.post("/addPrePlannedTrips",AddPrePlannedTrips)
 
+router.get("/allPrePlannedTrips", getAllPrePlannedTrips)
 
 
 router.post("/signupwithemailandpassword", SignUpWithEmailAndPassword);

@@ -8,11 +8,15 @@ import Footer from '../../components/footer/Footer'
 import FeedbackForm from '../../components/FeedbackForm/FeedbackForm'
 import FeedbackSection from '../../components/FeedbackSection/FeedbackSection'
 import RestaurantsInLandingPage from '../../components/RestaurantInLandingPage/RestaurantsInLandingPage'
+import RestaurantCategoriesCards from '../../components/RestaurantCategoriesCards/RestaurantCategoriesCards'
+import PrePlannedTripsInLandingPage from '../../components/prePlannedTripsInLandingPage/PrePlannedTripsInLandingPage'
 
 const Home = () => {
   return (
     <>
     <Hero/>
+    <RestaurantCategoriesCards/>
+    <PrePlannedTripsInLandingPage/>
     <AiTripPlanning/>
     <HotelsInLandingPage/>
     <RestaurantsInLandingPage/>
