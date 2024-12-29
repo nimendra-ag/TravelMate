@@ -5,10 +5,11 @@ import './TopRatedRestaurant.css';
 import { ClientContext } from '../../context/ClientContext';
 import { Link } from 'react-router-dom';
 
-const TopRatedRestaurant = () => {
+const TopRatedRestaurant = ({restaurantType}) => {
     const { allRestaurants } = useContext(ClientContext);
+    const allRestaurantsInCategory = allRestaurants.filter(restaurant => restaurant.mainCategory === restaurantType);
     const { allRestaurantReviews } = useContext(ClientContext);
-    const randomRestaurant = allRestaurants[Math.floor(Math.random() * allRestaurants.length)];
+    const randomRestaurant = allRestaurantsInCategory[Math.floor(Math.random() * allRestaurantsInCategory.length)];
     const randomRestaurantId = randomRestaurant ? randomRestaurant.id : 0;
     console.log("random restauran id", randomRestaurantId, randomRestaurant);
     const restaurantReviews = allRestaurantReviews.filter(review => review.restaurantId === randomRestaurantId);

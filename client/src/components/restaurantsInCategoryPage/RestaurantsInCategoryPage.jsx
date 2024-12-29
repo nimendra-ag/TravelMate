@@ -53,14 +53,15 @@ const RestaurantCard = ({
 };
 
 
-const RestaurantsInCategoryPage = () => {
+const RestaurantsInCategoryPage = ({restaurantType}) => {
     const { allRestaurants } = useContext(ClientContext);
+    const allRestaurantsInCategory = allRestaurants.filter(restaurant => restaurant.mainCategory === restaurantType);
     console.log("Test", allRestaurants)
     return (
         <>
             <div className='bg-light'>
                 <div className="container pt-4">
-                    {allRestaurants.map((restaurant) => (
+                    {allRestaurantsInCategory.map((restaurant) => (
                         <div key={restaurant.id}>
                             <RestaurantCard
                                 name={restaurant.restaurantName}
