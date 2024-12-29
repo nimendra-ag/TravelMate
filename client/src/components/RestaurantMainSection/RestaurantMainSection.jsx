@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './RestaurantMainSection.css';
 import RestaurantDetails from '../restaurantDetails/RestaurantDetails';
 import { Container, Row, Col, Badge } from 'react-bootstrap';
-import { FaGlobe } from 'react-icons/fa';
+import { FaLaptop  } from 'react-icons/fa';
 
 
 const RestaurantMainSection = ({ id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating, mainCategory }) => {
@@ -49,8 +49,8 @@ const RestaurantMainSection = ({ id, type, name, address, category, contactNumbe
             #21 of 10,275 Restaurants in Sri Lanka | $ - {priceRange}
           </Col>
           <Col md="6" className="text-md-end text-muted">
-            <FaGlobe className="me-2 text-dark" />
-            <a href={website} className="text-decoration-none text-dark">Visit Us</a> <br />
+            <FaLaptop  className="me-2 text-dark" />
+            <a href={website} className="text-decoration-none text-dark">Visit Out Website</a> <br />
             <a href={`tel:${contactNumber}`} className="text-decoration-none">{contactNumber}</a> | <a href="https://maps.google.com/?q=Carrer Nou de Sant Francesc, 7, 08002 Barcelona Spain" className="text-decoration-none">
               {address}
             </a>
