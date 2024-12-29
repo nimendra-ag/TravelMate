@@ -23,7 +23,7 @@ const RestaurantDetails = ({ id }) => {
 
   const averageRatings = calculateAverageRating(restaurantReviews);
   console.log("Average Rating:", averageRatings);
-
+  
   const renderRatingDots = (rating) => {
     const maxDots = 5; // Maximum number of dots
 
