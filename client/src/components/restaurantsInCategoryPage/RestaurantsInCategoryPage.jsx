@@ -27,7 +27,7 @@ const RestaurantCard = ({
                                     <h5>{name}</h5>
                                     <small className="text-muted">{location}</small>
                                 </div>
-                                <Badge bg="success">{reviews} Reviews</Badge>
+                                <Badge bg="success">Top Rated</Badge>
                             </Card.Title>
                             <Card.Text className="mt-3">{description}</Card.Text>
                             <div>
