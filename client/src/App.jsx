@@ -19,6 +19,7 @@ import PrePlannedTripsMainPage from './pages/prePlannedTripsMainPage/PrePlannedT
 import BookHotel from './pages/bookHotel/BookHotel'
 import HotelRoom from './pages/bookHotel/HotelRoom'
 import ConBookHotel from './pages/bookHotel/ConBookHotel'
+import MyBookings from './pages/bookHotel/MyBookings'
 
 
 function App() {
@@ -57,6 +58,9 @@ function App() {
       <Route path='/room' element={<HotelRoom />} />
 
       <Route path='/conhotelbook/:from/:to/:id/:hid' element={<ConBookHotel/>} />
+
+      <Route path='/mybookings' element={<MyBookings/>} />
+
 
         </Routes>
         

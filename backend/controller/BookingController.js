@@ -3,7 +3,6 @@ import { BookingsModel } from "../models/Bookings.js";
 
 export async function AddBooking(req, res) {
     try {
-        console.log(req.body);
 
         const data = req.body;
         let bookings = await BookingsModel.find({});
@@ -38,7 +37,6 @@ export async function AddBooking(req, res) {
             return res.status(400).json({ error: "Accommodation update failed" }); // Send error response if accommodation is not found
         }
         
-        console.log("Accommodation availability updated:", acc);
         
 
         // Send a success response after both operations succeed
@@ -52,3 +50,59 @@ export async function AddBooking(req, res) {
         res.status(500).json({ error: "Booking Failed" }); // Handle any errors
     }
 }
+
+export function getBookings(req, res) {
+
+    const userEmail = req.query.email;
+    console.log(userEmail);
+
+
+    
+
+
+    
+    BookingsModel.find( 
+        { "user.email": userEmail }
+    ).then((data) => {
+        
+        res.status(200).json(data)
+
+
+
+
+    
+    }).catch((err) => {
+        
+        
+        
+        console.log(err); })
+}
+
+
+export function deleteBooking(req, res) {
+
+
+    console.log("Delete Booking");
+    
+    
+    const bookingId = req.query.id;
+    console.log(bookingId);
+
+    BookingsModel.findByIdAndDelete(bookingId).then((data) => {
+        res.status(200).json(data);
+    }).then(
+
+
+
+
+
+
+        
+    )
+    
+    
+    
+    
+    .catch((err) => {
+        console.log(err);
+    })}

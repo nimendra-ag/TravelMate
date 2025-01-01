@@ -10,6 +10,7 @@ import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import {Router} from './routes/routes.js'
 import cityRouter from './routes/cityRouter.js';
 import bookingRouter from './routes/bookingRote.js';
+import bookingScheduler from './schedulers/bookingScheduler.js';
 
 dotenv.config();
 
@@ -51,10 +52,11 @@ mongoose.connect("mongodb+srv://travelmate:hy6QuIubRgLzBPjm@cluster0.1pbng.mongo
 
 //router
 app.use("/travelmate",Router)
-
 app.use("/cities",cityRouter);
 
 app.use("/booking",bookingRouter);
+
+bookingScheduler.updateExpiredBookings();
 
 // Start the server
 app.listen(PORT, () => {

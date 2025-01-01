@@ -7,13 +7,11 @@ dotenv.config({ path: "../.env" })
 
 const AddAccommodation = async (req, res) => {
 
-    // console.log(req.body.name);
     
     try {
 
         let hotels = await AccommodationModel.find({});
         let id = hotels.length > 0 ? hotels[hotels.length - 1].id + 1 : 1;
-        console.log(req.body)
         const hotel = new AccommodationModel({
             id: id,
             name: req.body.accommodationName,
@@ -44,12 +42,9 @@ const AddAccommodation = async (req, res) => {
 const getAllAccomodations = async (req, res) => {
     try {
         let hotels = await AccommodationModel.find({});
-        console.log("All Accomodations Fetched");
-        console.log(hotels);
         res.send(hotels);
         
     } catch (error) {
-        console.log(error);
         res.status(500).json({ success: false, error: 'Server Error' });
 
     }
@@ -71,8 +66,7 @@ const GetData = async (req, res) => {
         const guids = await GuideModel.find();
 
 
-        console.log(cities);
-        console.log(accommodations);
+    
     
         return res.status(200).json({ success: true, cities,accommodations,destinations,guids  });
     } catch (err) {

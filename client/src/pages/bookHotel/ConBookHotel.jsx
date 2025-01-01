@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ClientContext } from '../../context/ClientContext';
 import moment from 'moment';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const ConBookHotel = () => {
 
@@ -27,57 +29,111 @@ const ConBookHotel = () => {
 
     const toDate = moment(to, "DD-MM-YYYY")
 
-    const totaldays = moment.duration((toDate).diff(fromDate)).asDays()+1
+    const totaldays = moment.duration((toDate).diff(fromDate)).asDays() + 1
 
-    const handleBook = () =>{
-        const user = JSON.parse(localStorage.getItem("user"))
+    const navigator = useNavigate()
+
+    const handleBook = () => {
+
+        const mySwal = withReactContent(Swal)
+        mySwal.fire({
+            title: "Are you sure?",
+            text: "Do you want to Confirm Booking ?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, I Want !"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+
+
+                const user = JSON.parse(localStorage.getItem("user"))
         const data = {
-            user:user,
-            room:room,
-            accommodation:accommodation,
-            from:from,
-            to:to,
-            totaldays:totaldays,
-            totalprice:price,
-            roomcount:parseInt(selectedValue)
+            user: user,
+            room: room,
+            accommodation: accommodation,
+            from: from,
+            to: to,
+            totaldays: totaldays,
+            totalprice: price,
+            roomcount: parseInt(selectedValue)
         }
         console.log(data)
 
-        axios.post("http://localhost:3000/booking/bookhotel",data)
-        .then(
-            
-            (res)=>{
-            console.log(res.data)
-        }
-    
-    
-    
-    )
-        .catch(
-            
-            
-            
-            (err)=>{
-            console.log(err)
+        axios.post("http://localhost:3000/booking/bookhotel", data)
+            .then(
+
+                (res) => {
+                    console.log(res.data)
+                },
+
+                mySwal.fire("Booking Confirmed", "Your Booking is Confirmed :)", "success")
+    .then(() => {
+        setTimeout(() => {
+            // Navigate to the home page after 5 seconds
+            navigator("/");
+
+            // Reload the page after navigation
+            window.location.reload();
+        }, 2000); // Delay of 5 seconds (5000 milliseconds)
+    })
+
+
+
+                
+
+
+
+
+
+
+
+
+
+            )
+            .catch(
+
+
+
+                (err) => {
+                    console.log(err)
+                }
+
+
+            )
+
+
+
+
+
+
+
+
+
+            } else {
+                mySwal.fire("Cancelled", "Your Booking is Cancelled :)", "error");
+            }
+        });
+
+
+
+
+        
+
     }
-    
-
-)
-
-
-
-}
 
 
 
 
 
 
-        
-        
-    
 
-    const price = selectedValue * room?.price*totaldays;
+
+
+
+    const price = selectedValue * room?.price * totaldays;
 
     const user = JSON.parse(localStorage.getItem("user"))
 
@@ -134,7 +190,7 @@ const ConBookHotel = () => {
 
 
 
-                    <button className="btn btn-primary px-3  py-2" onClick={()=>handleBook(price,selectedValue,)}>Pay Now !</button>
+                    <button className="btn btn-primary px-3  py-2" onClick={() => handleBook(price, selectedValue,)}>Pay Now !</button>
 
 
 

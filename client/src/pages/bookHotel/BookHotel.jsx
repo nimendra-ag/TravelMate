@@ -5,9 +5,15 @@ import { DatePicker, Space } from 'antd';
 const { RangePicker } = DatePicker;
 import moment from 'moment';
 import HotelRoom from './HotelRoom';
+import './bookHotel.css'
+import { use } from 'react';
 
 
 const BookHotel = () => {
+
+
+
+
 
     const { allAccommodations } = useContext(ClientContext)
     const { id } = useParams()
@@ -65,6 +71,12 @@ const BookHotel = () => {
 
                 <RangePicker format={"DD-MM-YYYY"} onChange={filterByDate} />
 
+                {fromDate && toDate ? null : (
+    <p className="bold-red-text py-2">Please select Dates to Book Hotels</p>
+)}
+
+
+
 
 
 
@@ -85,8 +97,7 @@ const BookHotel = () => {
 
 <div>
 
-<button className="btn btn-primary mt-3" onClick={()=>console.log(fromDate)
-}>Book Now !</button>
+
 
 
     {
