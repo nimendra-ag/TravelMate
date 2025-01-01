@@ -25,17 +25,6 @@ const Home = () => {
       <FeedbackSection />
       <FeedbackForm />
       <Footer />
-    <Hero/>
-    <RestaurantCategoriesCards/>
-    <PrePlannedTripsInLandingPage/>
-    <AiTripPlanning/>
-    <HotelsInLandingPage/>
-    <RestaurantsInLandingPage/>
-    {/* <GuideList/> */}
-    <Activities/>
-    <FeedbackSection/>
-    <FeedbackForm/>
-    <Footer/>
     </>
   );
 };
