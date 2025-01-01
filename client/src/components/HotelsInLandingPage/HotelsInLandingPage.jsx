@@ -37,9 +37,8 @@ const HotelsInLandingPage = () => {
           <SwiperSlide key={accommodation.id}>
             <HotelCard
               name={accommodation.name}
-              description={accommodation.minidescription}
               price={accommodation.perPerson_price}
-              imageSrc={accommodation.cardImage}
+              imageSrc={accommodation.image}
               id={accommodation.id}
               minidescription={accommodation.minidescription}
             />
