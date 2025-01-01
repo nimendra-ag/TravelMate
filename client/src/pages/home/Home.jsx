@@ -20,7 +20,7 @@ const Home = () => {
     <AiTripPlanning/>
     <HotelsInLandingPage/>
     <RestaurantsInLandingPage/>
-    <GuideList/>
+    {/* <GuideList/> */}
     <Activities/>
     <FeedbackSection/>
     <FeedbackForm/>

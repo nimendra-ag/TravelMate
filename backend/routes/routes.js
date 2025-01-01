@@ -1,5 +1,5 @@
 import express from 'express';
-import { AddOrUpdateGuide, getAllGuides } from '../controller/GuideController.js';
+import {  getAllGuides } from '../controller/GuideController.js';
 import { AddTransportationService, getAllTransportationServices } from '../controller/TransportationServiceController.js';
 import { AddRestaurant, addRestaurantReview, getAllRestaurantReviews, getAllRestaurants } from '../controller/RestaurantController.js';
 import { AddDestination, getAllDestinations } from '../controller/DestinationController.js';
@@ -16,9 +16,9 @@ router.get("/getprofile/:id",GetProfile)
 
 router.post("/updateprofile/:id",UpdateProfile)
 
-router.post("/addAccomodation",AddOrUpdateAccommodation)
+// router.post("/addAccomodation",AddOrUpdateAccommodation)
 
-router.put("/updateAccommodation/:id",AddOrUpdateAccommodation)
+// router.put("/updateAccommodation/:id",AddOrUpdateAccommodation)
 
 router.get("/getdata",GetData)
 
@@ -36,9 +36,9 @@ router.post("/signupwithemailandpassword", SignUpWithEmailAndPassword);
 router.post("/signinwithemailandpassword", SignInWithEmailAndPassword)
 
 
-router.post("/addGuide",AddOrUpdateGuide)
+// router.post("/addGuide",AddOrUpdateGuide)
 
-router.post("/updateGuide/:id",AddOrUpdateGuide)
+// router.post("/updateGuide/:id",AddOrUpdateGuide)
 
 router.get("/allGuides", getAllGuides)
 
