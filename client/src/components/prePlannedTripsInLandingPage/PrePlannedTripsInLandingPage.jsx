@@ -10,8 +10,9 @@ import RestaurantCard from "../prePlannedTripCard/PrePlannedTripCard.jsx";
 import "./PrePlannedTripsInLandingPage.css";
 import PrePlannedTripCard from "../prePlannedTripCard/PrePlannedTripCard.jsx";
 
-const PrePlannedTripsInLandingPage = () => {
+const PrePlannedTripsInLandingPage = ({header}) => {
   const { allPrePlannedTrips } = useContext(ClientContext);
+  
 
   return (
     <div className="pre-planned-trips-section">
@@ -22,7 +23,7 @@ const PrePlannedTripsInLandingPage = () => {
               className="pre-planned-trips-heading"
               style={{ textAlign: "center", marginBottom: "1.5rem" }}
             >
-              Curated Journeys for You
+              {header}
             </h2>
           </Col>
         </Row>

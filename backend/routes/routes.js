@@ -8,6 +8,7 @@ import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailA
 import {  getAllAccomodations, GetData, GetCity, deleteAccommodation , viewAccommodation} from '../controller/AccommodationController.js';
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
 import { AddPrePlannedTrips, getAllPrePlannedTrips } from '../controller/PrePlannedTripController.js';
+import { AddPrePlannedTripBooking, getAllPrePlannedTripBookings } from '../controller/PrePlannedTripBookingController.js';
 const router = express.Router()
 
 router.post('/signinwithgoogle',RegWithGoogle)
@@ -58,6 +59,9 @@ router.post("/addPrePlannedTrips",AddPrePlannedTrips)
 
 router.get("/allPrePlannedTrips", getAllPrePlannedTrips)
 
+router.get("/all-pre-planned-trip-bookings", getAllPrePlannedTripBookings)
+
+router.post("/add-pre-planned-trip-bookings", AddPrePlannedTripBooking)
 
 router.post("/signupwithemailandpassword", SignUpWithEmailAndPassword);
 

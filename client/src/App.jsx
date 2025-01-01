@@ -27,6 +27,8 @@ import OutsideCategoryRestaurants from './pages/outsideCategoryRestaurants/Outsi
 import VeganAndVegCategoryRestaurants from './pages/veganAndVegCategoryRestaurants/VeganAndVegCategoryRestaurants'
 import CasualDiningCategoryRestaurants from './pages/casualDiningCategoryRestaurants/CasualDiningCategoryRestaurants'
 import ReviewRestaurant from './pages/reviewRestaurant/ReviewRestaurant'
+import PrePlannedTripBookingForm from './components/prePlannedTripBookingForm/PrePlannedTripBookingForm'
+
 
 function App() {
   return (
@@ -67,6 +69,40 @@ function App() {
         <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />
       </Routes>
     </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/details/:id" element={<GetDetails />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/destination" element={<Destination />} />
+          <Route path="/ex" element={<Exist />} />
+          <Route path="/sr" element={<SearchResult />} />
+          <Route path="/city/:id" element={<CityResults />} />
+          <Route path="/accommodation/:id" element={<AccomodationResult />} />
+          <Route path="/details/:id" element={<GetDetails />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/destination" element={<Destination />} />
+          <Route path="/ex" element={<Exist />} />
+          <Route path='/accommodations' element={<HotelPage />}>
+            <Route path=':accommodationID' element={<HotelPage />} />
+          </Route>
+          <Route path='/restaurants' element={<RestaurantPage />}>
+      <Route path=':id' element={<RestaurantPage />} />
+      </Route>
+          <Route path='/activities' element={<ActivitiesPage/>}/>
+          <Route path='/pre-planned-trips' element={<PrePlannedTripsMainPage />}>
+      <Route path=':id' element={<PrePlannedTripsMainPage />} />
+      </Route>
+      <Route path='pre-planned-trip-booking/:tripId' element={<PrePlannedTripBookingForm/>}/>
+      
+        </Routes>
+        
+      </Router>
+      
+
+    </>
   )
 }
 

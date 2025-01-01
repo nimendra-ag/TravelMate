@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap';
-
+import './RestaurantCategoriesCards.css'
 import RestaurantCategoryCard from '../RestaurantCategoryCard/RestaurantCategoryCard'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
