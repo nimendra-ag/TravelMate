@@ -14,8 +14,14 @@ import CityResults from './pages/cityResults/CityResults'
 import AccomodationResult from './pages/accomodationResult/AccomodationResult'
 import HotelPage from './pages/HotelPage/HotelPage'
 import ActivitiesPage from './pages/activitiesPage/ActivitiesPage'
+import DateNightCategoryRestaurants from './pages/dateNightCategoryRestaurants/DateNightCategoryRestaurants'
+import FineDiningCategoryRestaurants from './pages/fineDiningCategoryRestaurants/FineDiningCategoryRestaurants'
+import OutsideCategoryRestaurants from './pages/outsideCategoryRestaurants/OutsideCategoryRestaurants'
+import VeganAndVegCategoryRestaurants from './pages/veganAndVegCategoryRestaurants/VeganAndVegCategoryRestaurants'
+import CasualDiningCategoryRestaurants from './pages/casualDiningCategoryRestaurants/CasualDiningCategoryRestaurants'
 import RestaurantPage from './pages/restaurantPage/RestaurantPage'
 import PrePlannedTripsMainPage from './pages/prePlannedTripsMainPage/PrePlannedTripsMainPage'
+import ReviewRestaurant from './pages/reviewRestaurant/ReviewRestaurant'
 
 
 function App() {
@@ -41,17 +47,23 @@ function App() {
             <Route path=':accommodationID' element={<HotelPage />} />
           </Route>
           <Route path='/restaurants' element={<RestaurantPage />}>
-      <Route path=':id' element={<RestaurantPage />} />
-      </Route>
-          <Route path='/activities' element={<ActivitiesPage/>}/>
+            <Route path=':id' element={<RestaurantPage />} />
+          </Route>
+          <Route path='/activities' element={<ActivitiesPage />} />
+          <Route path='/restaurants/DateNight' element={<DateNightCategoryRestaurants />} />
+          <Route path='/restaurants/Casual Dining' element={<CasualDiningCategoryRestaurants />} />
+          <Route path='/restaurants/Fine Dining' element={<FineDiningCategoryRestaurants />} />
+          <Route path='/restaurants/Outside' element={<OutsideCategoryRestaurants />} />
+          <Route path='/restaurants/Vegan & Veg' element={<VeganAndVegCategoryRestaurants />} />
           <Route path='/pre-planned-trips' element={<PrePlannedTripsMainPage />}>
-      <Route path=':id' element={<PrePlannedTripsMainPage />} />
-      </Route>
-      
+            <Route path=':id' element={<PrePlannedTripsMainPage />} />
+          </Route>
+          <Route path='/review/restaurants/:id' element={<ReviewRestaurant />} />
+
         </Routes>
-        
+
       </Router>
-      
+
 
     </>
   )

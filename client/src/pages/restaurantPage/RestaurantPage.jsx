@@ -5,6 +5,7 @@ import RestaurantMainSection from '../../components/RestaurantMainSection/Restau
 import Footer from '../../components/footer/Footer.jsx'
 import RestaurantsInLandingPage from '../../components/RestaurantInLandingPage/RestaurantsInLandingPage.jsx';
 import HotelsInLandingPage from '../../components/HotelsInLandingPage/HotelsInLandingPage.jsx';
+import DisplayRestaurantReviews from '../../components/displayRestaurantReviews/DisplayRestaurantReviews.jsx';
 
 
 const RestaurantPage = () => {
@@ -15,19 +16,26 @@ const RestaurantPage = () => {
     return (
         <>
             {restaurant ? <>
-            <RestaurantMainSection
-            name = {restaurant.restaurantName}
-            description={restaurant.description}
-            address={restaurant.address}
-            contactNumber={restaurant.contactNumber}
-            email={restaurant.email}
-            website={restaurant.website}
-            />
-            <RestaurantsInLandingPage/>
-            <HotelsInLandingPage/>
-            <Footer/>
-            </>: <></>}
-         
+                <RestaurantMainSection
+                    id={restaurant.id}
+                    name={restaurant.restaurantName}
+                    description={restaurant.description}
+                    address={restaurant.address}
+                    contactNumber={restaurant.contactNumber}
+                    email={restaurant.email}
+                    website={restaurant.website}
+                    mainCategory={restaurant.mainCategory}
+                    category={restaurant.category}
+                    priceRange={restaurant.priceRange}
+                />
+                <DisplayRestaurantReviews
+                    id={id}
+                />
+                <RestaurantsInLandingPage />
+                <HotelsInLandingPage />
+                <Footer />
+            </> : <></>}
+
         </>
     )
 }

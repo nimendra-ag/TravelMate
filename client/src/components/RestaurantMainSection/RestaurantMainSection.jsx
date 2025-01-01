@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faEnvelope, faMapMarkerAlt, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import './RestaurantMainSection.css';
+import RestaurantDetails from '../restaurantDetails/RestaurantDetails';
+import { Container, Row, Col, Badge } from 'react-bootstrap';
+import { FaLaptop  } from 'react-icons/fa';
 
-const RestaurantMainSection = ({id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating}) => {
+
+const RestaurantMainSection = ({ id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating, mainCategory }) => {
   const images = [
     'https://picsum.photos/600/600?random=1',
     'https://picsum.photos/600/600?random=2',
@@ -11,9 +13,7 @@ const RestaurantMainSection = ({id, type, name, address, category, contactNumber
     'https://picsum.photos/600/600?random=4',
     'https://picsum.photos/600/600?random=5',
     'https://picsum.photos/600/600?random=6',
-    'https://picsum.photos/600/600?random=6',
-
-
+    'https://picsum.photos/600/600?random=7',
   ];
 
   const [mainImage, setMainImage] = useState(images[0]);
@@ -25,18 +25,40 @@ const RestaurantMainSection = ({id, type, name, address, category, contactNumber
       setMainImage(images[index]);
     }, 4000); // Change image every 4 seconds
 
-    return () => clearInterval(interval); // Clean up on unmount
+    return () => clearInterval(interval); 
   }, []);
 
   return (
     <div className="restaurant-main-section">
-      {/* Restaurant name and description */}
-      <div className="restaurant-details">
-        <h2>{name}</h2>
-        <p>{description}</p>
+      <div className="restaurant-details pt-5">
+        <h1>{name}</h1>
       </div>
+      <Container className="py-3 border-bottom">
+        <Row className="align-items-center">
+          <Col md="6" className="d-flex align-items-center">
+            <h4 className="mb-0">{mainCategory}</h4>
+          </Col>
+          <Col md="6" className="text-md-end text-muted">
 
-      {/* Images Section */}
+          </Col>
+        </Row>
+
+        <Row className="align-items-center mt-2">
+          <Col md="6">
+            {category[0]} | {category[1]} | {category[2]}<br />
+            #21 of 10,275 Restaurants in Sri Lanka | $ - {priceRange}
+          </Col>
+          <Col md="6" className="text-md-end text-muted">
+            <FaLaptop  className="me-2 text-dark" />
+            <a href={website} className="text-decoration-none text-dark">Visit Out Website</a> <br />
+            <a href={`tel:${contactNumber}`} className="text-decoration-none">{contactNumber}</a> | <a href="https://maps.google.com/?q=Carrer Nou de Sant Francesc, 7, 08002 Barcelona Spain" className="text-decoration-none">
+              {address}
+            </a>
+          </Col>
+        </Row>
+        <hr style={{ border: '2px solid #00AA6C', marginTop: '1rem' }} />
+
+      </Container>
       <div className="images-section">
         <div className="left-image">
           <img src={images[1]} alt="Thumbnail 1" />
@@ -52,30 +74,11 @@ const RestaurantMainSection = ({id, type, name, address, category, contactNumber
           <img src={images[4]} alt="Thumbnail 4" />
           <img src={images[5]} alt="Thumbnail 5" />
           <img src={images[6]} alt="Thumbnail 5" />
-
-
         </div>
       </div>
-
-      {/* Additional Restaurant Info with Icons */}
-      <div className="additional-info">
-        <div className="info-item">
-          <FontAwesomeIcon icon={faPhone} />
-        <p> {contactNumber}</p>
-        </div>
-        <div className="info-item">
-          <FontAwesomeIcon icon={faEnvelope} />
-          <p><a href=" mailto:info@deliciousbites.com">{email}</a></p>
-        </div>
-        <div className="info-item">
-          <FontAwesomeIcon icon={faGlobe} />
-          <p><a href="https://www.deliciousbites.com" target="_blank" rel="noopener noreferrer">{website}</a></p>
-        </div>
-        <div className="info-item">
-          <FontAwesomeIcon icon={faMapMarkerAlt} />
-          <p> {address}</p>
-        </div>
-      </div>
+      <RestaurantDetails 
+      id={id}
+      />
     </div>
   );
 };
