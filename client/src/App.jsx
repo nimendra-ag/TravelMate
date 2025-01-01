@@ -73,7 +73,7 @@ function App() {
           <Route path="/destination" element={<Destination />} />
           <Route path="/ex" element={<Exist />} />
           <Route path='/accommodations' element={<HotelPage />}>
-          <Route path=':accommodationID' element={<HotelPage />} />
+            <Route path=':accommodationID' element={<HotelPage />} />
           </Route>
           <Route path='/restaurants' element={<RestaurantPage />}>
             <Route path=':id' element={<RestaurantPage />} />
@@ -85,7 +85,7 @@ function App() {
           <Route path='/restaurants/Outside' element={<OutsideCategoryRestaurants />} />
           <Route path='/restaurants/Vegan & Veg' element={<VeganAndVegCategoryRestaurants />} />
           <Route path='/pre-planned-trips' element={<PrePlannedTripsMainPage />}>
-      <Route path=':id' element={<PrePlannedTripsMainPage />} />
+            <Route path=':id' element={<PrePlannedTripsMainPage />} />
 
       </Route>
 
@@ -101,8 +101,10 @@ function App() {
             <Route path=':id' element={<PrePlannedTripsMainPage />} />
           </Route>
           <Route path='/review/restaurants/:id' element={<ReviewRestaurant />} />
-          </Routes>
-        </Router>
+
+        </Routes>
+
+      </Router>
 
      
 

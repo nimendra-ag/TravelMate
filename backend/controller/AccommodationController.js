@@ -32,7 +32,6 @@ const AddAccommodation = async (req, res) => {
                 message: 'Hotel added successfully',
                 data: hotel,
             });
-        }
     } catch (error) {
         console.error("Error saving/updating hotel:", error);
         res.status(500).json({ success: false, error: 'Server Error' });
