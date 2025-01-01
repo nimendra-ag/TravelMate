@@ -7,7 +7,12 @@ import { GuideModel } from "../models/Guide.js";
 
 dotenv.config({ path: "../.env" });
 
+
+
 const AddAccommodation = async (req, res) => {
+
+    
+
 
     
     try {
@@ -126,7 +131,7 @@ const viewAccommodation = async (req, res) => {
     }
 };  
 
-export { AddOrUpdateAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation }
+export {  GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation, AddAccommodation }
 
 
 
