@@ -35,16 +35,17 @@ const AddGuide = async (req, res) => {
 
 // Get all guides
 const getAllGuides = async (req, res) => {
-    try {
-        const guides = await GuideModel.find({});
-        console.log("All Guides Fetched");
-        res.json({ success: true, guides });
-    } catch (error) {
-        console.error("Error fetching guides:", error);
-        res.status(500).json({ success: false, error: "Server Error" });
-    }
-};
+  try {
+      let guides = await GuideModel.find({});
+      console.log("All Guides Fetched");
+      // console.log(guides);
+      res.send(guides);
+      
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, error: 'Server Error' });
 
-
+  }
+}
 
 export { AddGuide, getAllGuides };

@@ -40,7 +40,7 @@ const getAllTransportationServices = async (req, res) => {
     try {
         let transportationServices = await TransportationServiceModel.find({});
         console.log("All Transportation Services Fetched");
-        console.log(transportationServices);
+        // console.log(transportationServices);
         res.send(transportationServices);
         
     } catch (error) {

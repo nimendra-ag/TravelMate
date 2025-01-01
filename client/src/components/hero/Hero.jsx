@@ -18,6 +18,10 @@ const Hero = () => {
                         <li><a href="/details">More</a></li>
                         <li><SigninModal /></li>
 
+
+                        {localStorage.getItem("user") ? <li><a href="/mybookings">My Bookings</a></li> : null}
+
+
                     </ul>
                 </div>
                 <div className="banner-text">

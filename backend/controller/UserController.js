@@ -103,6 +103,8 @@ const SignInWithEmailAndPassword = async (req, res) => {
     res.json({success:false, error:"Wrong Email ID"});
   }
 }
+
+
 const GetProfile = async (req, res) => {
   const { id } = req.params;
   console.log("ingetprofile");

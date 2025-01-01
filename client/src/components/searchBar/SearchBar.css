@@ -8,13 +8,16 @@
 
 
 .city-card {
-    width: 90%;
+    width: 100%;
     background-color: rgba(155, 161, 229, 0.089);
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-align: left;
 }
 
 .city-card:hover {
     background-color: #00c3ff5f; /* Light blue background on hover */
 }
+
+
 

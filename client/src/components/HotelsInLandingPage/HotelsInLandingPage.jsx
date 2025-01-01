@@ -12,6 +12,7 @@ import './HotelsInLandingPage.css';
 const HotelsInLandingPage = () => {
   const { allAccommodations } = useContext(ClientContext);
 
+
   return (
     <div className="hotels-section" >
     <Container style={{ padding: '2rem' }}>
