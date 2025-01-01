@@ -14,11 +14,11 @@ const PrePlannedTripWhatsExpectedCard = ({ images, mainActivities }) => {
   }, [images]);
 
   return (
-    <div className="card-container">
+    <div className="whatsExpected-card-container">
       <div className="whatsExpected-card">
         {/* Background Image */}
         <div
-          className="card-image"
+          className="whatsExpected-card-image"
           style={{
             backgroundImage: `url(${images[currentImageIndex]})`,
             transition: "background-image 1s ease-in-out", // Smooth transition
