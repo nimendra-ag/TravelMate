@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import React from "react";
 import {
   FaCalendarAlt,
@@ -23,6 +24,7 @@ const PrePlannedTripsMainSection = ({
   availableDates,
   contactNumber,
   rating,
+  tripId,
 }) => {
   return (
     <div className="trip-section">
@@ -74,7 +76,7 @@ const PrePlannedTripsMainSection = ({
               Meals & Accommodation: Included
             </span>
           </div>
-          <button className="trip-button">Book Now</button>
+          <Link to={`/pre-planned-trip-booking/${tripId}`}><button className="trip-button">Book Now</button></Link>
         </div>
       </div>
     </div>

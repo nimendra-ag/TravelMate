@@ -5,6 +5,7 @@ const PrePlannedTripBookingModel = model("PrePlannedTripBooking", {
     type: Number,
     required: true,
   },
+  
   prePlannedTripId: {
     type: Number,
     required: true,

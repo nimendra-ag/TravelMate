@@ -16,6 +16,7 @@ import HotelPage from './pages/HotelPage/HotelPage'
 import ActivitiesPage from './pages/activitiesPage/ActivitiesPage'
 import RestaurantPage from './pages/restaurantPage/RestaurantPage'
 import PrePlannedTripsMainPage from './pages/prePlannedTripsMainPage/PrePlannedTripsMainPage'
+import PrePlannedTripBookingForm from './components/prePlannedTripBookingForm/PrePlannedTripBookingForm'
 
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
           <Route path='/pre-planned-trips' element={<PrePlannedTripsMainPage />}>
       <Route path=':id' element={<PrePlannedTripsMainPage />} />
       </Route>
-      
+      <Route path='pre-planned-trip-booking/:tripId' element={<PrePlannedTripBookingForm/>}/>
       
         </Routes>
         

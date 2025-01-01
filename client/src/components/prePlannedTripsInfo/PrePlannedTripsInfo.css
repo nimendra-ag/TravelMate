@@ -8,7 +8,7 @@
   
   .horizontal-accordion {
     width: 100%; /* Reduce the width as needed */
-    max-width: 900px; /* Max width for the accordion */
+    max-width: 1200px; /* Max width for the accordion */
     border: none; /* Remove borders */
   }
   

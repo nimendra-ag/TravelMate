@@ -37,12 +37,14 @@ const PrePlannedTripsMainPage = () => {
             additionalInfo={prePlannedTrip.additionalInfo}
             cancellationPolicy={prePlannedTrip.cancellationPolicy}
             help={prePlannedTrip.help}
+            tripId={prePlannedTrip.id}
           />
           <PrePlannedTripWhatsExpectedsection
             whatsExpected={prePlannedTrip.whatsExpected}
             mainActivities={prePlannedTrip.mainActivities}
 
-            />
+          />
+
           <PrePlannedTripsInfo
             name={prePlannedTrip.name}
             mainDestinations={prePlannedTrip.mainDestinations}
@@ -64,8 +66,9 @@ const PrePlannedTripsMainPage = () => {
             cancellationPolicy={prePlannedTrip.cancellationPolicy}
             help={prePlannedTrip.help}
           />
-          <PrePlannedTripBookingForm />
-          <PrePlannedTripsInLandingPage />
+          <PrePlannedTripsInLandingPage
+          header="Similar Experiences"
+          />
           <Footer />
         </>
       ) : (

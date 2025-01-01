@@ -38,7 +38,7 @@
   }
   .card-container {
     position: relative;
-    width: 100px; /* Slightly wider to account for overflow */
+    width: 360px; /* Slightly wider to account for overflow */
     overflow: visible; /* Allow the activity boxes to overflow */
   }
   .main-container { width: 80%;
