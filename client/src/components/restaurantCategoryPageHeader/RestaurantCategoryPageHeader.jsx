@@ -2,19 +2,21 @@ import React from 'react'
 import { Container, Row, Col, Button, Badge, Image } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
+import NavbarComponent from '../navbarComponent/NavbarComponent';
 let categories = ["DateNight", "Fine Dining", "Casual Dining", "Vegan & Veg", "Outside"];
 
 const RestaurantCategoryPageHeader = ({ category, headerText }) => {
   return (
+    <>
+    <NavbarComponent/>
     <div className="bg-light">
-      {/* Header Section */}
       <div
         className="d-flex align-items-center justify-content-center text-white"
         style={{
           backgroundImage: "url('https://picsum.photos/1920/1080')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          height: '400px',
+          height: '480px',
           color: '#fff',
         }}
       >
@@ -60,6 +62,8 @@ const RestaurantCategoryPageHeader = ({ category, headerText }) => {
         </Row>
       </Container>
     </div>
+    </>
+    
   );
 };
 

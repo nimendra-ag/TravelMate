@@ -2,7 +2,7 @@
 
 /* Background with gradient and rounded borders */
 .custom-navbar {
-    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    background: linear-gradient(90deg, #C1EAF8, #C1EAF8);
     border-radius: 0px 0px 10px 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     padding: 10px 20px;
