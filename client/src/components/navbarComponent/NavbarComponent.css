@@ -1,0 +1,25 @@
+/* NavbarComponent.css */
+
+.custom-navbar {
+    background-color: #1e3a8a; /* Blueish color for elegance */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a soft shadow for depth */
+    font-family: 'Poppins', sans-serif;
+}
+
+.custom-navbar .nav-item {
+    margin: 0 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #f0f4ff !important; /* Light text color for better contrast */
+    transition: color 0.3s ease;
+}
+
+.custom-navbar .nav-item:hover {
+    color: #60a5fa !important; /* Lighter blue for hover effect */
+}
+
+
+.signin-btn:hover {
+    background-color: #3b82f6;
+    color: #fff;
+}
