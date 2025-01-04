@@ -24,7 +24,7 @@ const Home = () => {
       <Activities />
       <FeedbackSection />
       <FeedbackForm />
-      <Footer />
+    
     </>
   );
 };

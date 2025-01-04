@@ -30,51 +30,55 @@ import PrePlannedTripBookingForm from './components/prePlannedTripBookingForm/Pr
 import AvailableBookings from './pages/bookHotel/AvailableBookings'
 import CancledBookings from './pages/bookHotel/CancledBookings'
 import CompletedBookings from './pages/bookHotel/CompletedBookings'
+import ClientLayout from './components/ClientLayout/ClientLayout'
+
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/details/:id" element={<GetDetails />} />
-        <Route path="/footer" element={<Footer />} />
-        <Route path="/destinations/:id" element={<Destination />} />
-        <Route path="/destination" element={<Destination />} />
-        <Route path="/ex" element={<Exist />} />
-        <Route path="/sr" element={<SearchResult />} />
-        <Route path="/city/:id" element={<CityResults />} />
+        <Route element={<ClientLayout/>}>
+          <Route path="/" element={<Home />} />
+          <Route path="/details/:id" element={<GetDetails />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/destinations/:id" element={<Destination />} />
+          <Route path="/destination" element={<Destination />} />
+          <Route path="/ex" element={<Exist />} />
+          <Route path="/sr" element={<SearchResult />} />
+          <Route path="/city/:id" element={<CityResults />} />
 
-        <Route path="/accommodations" element={<HotelPage />}>
-          <Route path=":accommodationID" element={<HotelPage />} />
-        </Route>
+          <Route path="/accommodations" element={<HotelPage />}>
+            <Route path=":accommodationID" element={<HotelPage />} />
+          </Route>
 
-        <Route path="/restaurants" element={<RestaurantPage />}>
-          <Route path=":id" element={<RestaurantPage />} />
-        </Route>
+          <Route path="/restaurants" element={<RestaurantPage />}>
+            <Route path=":id" element={<RestaurantPage />} />
+          </Route>
 
-        <Route path="/activities" element={<ActivitiesPage />} />
-        <Route path="/restaurants/DateNight" element={<DateNightCategoryRestaurants />} />
-        <Route path="/restaurants/Casual Dining" element={<CasualDiningCategoryRestaurants />} />
-        <Route path="/restaurants/Fine Dining" element={<FineDiningCategoryRestaurants />} />
-        <Route path="/restaurants/Outside" element={<OutsideCategoryRestaurants />} />
-        <Route path="/restaurants/Vegan & Veg" element={<VeganAndVegCategoryRestaurants />} />
+          <Route path="/activities" element={<ActivitiesPage />} />
+          <Route path="/restaurants/DateNight" element={<DateNightCategoryRestaurants />} />
+          <Route path="/restaurants/Casual Dining" element={<CasualDiningCategoryRestaurants />} />
+          <Route path="/restaurants/Fine Dining" element={<FineDiningCategoryRestaurants />} />
+          <Route path="/restaurants/Outside" element={<OutsideCategoryRestaurants />} />
+          <Route path="/restaurants/Vegan & Veg" element={<VeganAndVegCategoryRestaurants />} />
 
-        <Route path="/pre-planned-trips" element={<PrePlannedTripsMainPage />}>
-          <Route path=":id" element={<PrePlannedTripsMainPage />} />
-        </Route>
+          <Route path="/pre-planned-trips" element={<PrePlannedTripsMainPage />}>
+            <Route path=":id" element={<PrePlannedTripsMainPage />} />
+          </Route>
 
-        <Route path="/pre-planned-trip-booking/:tripId" element={<PrePlannedTripBookingForm />} />
-        <Route path="/bookHotel/:id" element={<BookHotel />} />
-        <Route path="/room" element={<HotelRoom />} />
-        <Route path="/conhotelbook/:from/:to/:id/:hid" element={<ConBookHotel />} />
-    
+          <Route path="/pre-planned-trip-booking/:tripId" element={<PrePlannedTripBookingForm />} />
+          <Route path="/bookHotel/:id" element={<BookHotel />} />
+          <Route path="/room" element={<HotelRoom />} />
+          <Route path="/conhotelbook/:from/:to/:id/:hid" element={<ConBookHotel />} />
+
           <Route path="/mybookings" element={<MyBookings />}>
             <Route path="available" element={<AvailableBookings />} />
             <Route path="cancelled" element={<CancledBookings />} />
             <Route path="completed" element={<CompletedBookings />} />
           </Route>
-       
-        <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />
+
+          <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />
+        </Route>
       </Routes>
     </Router>
   )

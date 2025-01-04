@@ -10,7 +10,7 @@
         url('../../assets/home.png') center/cover no-repeat;
     color: white;
     text-align: center;
-    margin-top: 56px; /* Adjust for fixed navbar height */
+    
 }
 
 .banner-text p {
@@ -31,5 +31,83 @@
 
     .banner-text h1 {
         font-size: 2rem;
+    }
+}
+.hero-section {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('../../assets/home.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.banner-text {
+    text-align: center;
+    color: #ffffff;
+    padding: 20px;
+    animation: fadeIn 1.5s ease-in;
+}
+
+.hero-tagline {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-title {
+    font-size: 4.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    background: linear-gradient(45deg, #2196F3, #00BCD4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.search-container {
+    margin-top: 30px;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.search-container:hover {
+    transform: scale(1.02);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .hero-tagline {
+        font-size: 2rem;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-tagline {
+        font-size: 1.5rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
     }
 }

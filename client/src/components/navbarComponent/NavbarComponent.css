@@ -44,3 +44,35 @@
     background-color: #2563eb;
     transform: scale(1.1);
 }
+.custom-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.custom-navbar.scrolled {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Add padding to the body or main content container */
+body {
+    padding-top: 70px; /* Adjust this value based on your navbar height */
+}
+
+.nav-item {
+    color: #333;
+    font-weight: 500;
+    margin: 0 10px;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #333;
+}
