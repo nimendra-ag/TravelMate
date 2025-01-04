@@ -9,6 +9,7 @@ import {  getAllAccomodations, GetData, GetCity, deleteAccommodation , viewAccom
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
 import { AddPrePlannedTrips, getAllPrePlannedTrips } from '../controller/PrePlannedTripController.js';
 import { AddPrePlannedTripBooking, getAllPrePlannedTripBookings } from '../controller/PrePlannedTripBookingController.js';
+import { AddNewsletterMail } from '../controller/NewsLetterController.js';
 const router = express.Router()
 
 router.post('/signinwithgoogle',RegWithGoogle)
@@ -75,6 +76,7 @@ router.post("/addRestaurantReview", addRestaurantReview)
 
 router.get("/getAllRestaurantReviews", getAllRestaurantReviews)
 
+router.post("/subscribetonewsletter", AddNewsletterMail)
 export default router;
 
 export{router as Router}

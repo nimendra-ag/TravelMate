@@ -1,0 +1,46 @@
+/* NavbarComponent.css */
+
+/* Background with gradient and rounded borders */
+.custom-navbar {
+    background: linear-gradient(90deg, #C1EAF8, #C1EAF8);
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+/* Add a sticky shadow effect on scroll */
+.custom-navbar.scrolled {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+}
+
+/* Adjust brand styles */
+.brand-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white !important;
+    display: flex;
+    align-items: center;
+}
+
+/* Navigation links styling */
+.nav-item {
+    margin: 0 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #f0f4ff !important;
+    transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+    color: #60a5fa !important;
+    
+}
+
+/* Add hover effect to buttons */
+.cta-btn:hover {
+    background-color: #2563eb;
+    transform: scale(1.1);
+}

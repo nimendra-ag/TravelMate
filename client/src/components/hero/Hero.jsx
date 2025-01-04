@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
 import './Hero.css';
-import logo from '../../assets/TravalMate Logo.png'
 import SearchBar from '../searchBar/SearchBar';
-import SigninModal from '../signinModal/SigninModal';
+import NavbarComponent from '../navbarComponent/NavbarComponent';
+
 const Hero = () => {
     return (
         <>
+            <NavbarComponent />
+            <header className="hero-section">
             <header>
                 <div className="wrapper">
                     <div className="logo">
@@ -25,13 +27,13 @@ const Hero = () => {
                     </ul>
                 </div>
                 <div className="banner-text">
-                    <p>Let's Explore the Sri Lanka <br />with</p>
-                    <h1>TRAVEL MATE </h1>
+                    <p>Let's Explore Sri Lanka <br /> with</p>
+                    <h1>TRAVEL MATE</h1>
                     <SearchBar />
                 </div>
             </header>
         </>
-    )
-}
+    );
+};
 
-export default Hero
+export default Hero;
