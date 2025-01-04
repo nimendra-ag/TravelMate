@@ -4,7 +4,7 @@ dotenv.config({ path: "../.env" })
 
 const AddPrePlannedTripBooking = async (req, res) => {
 
-    console.log(req.body.name);
+    // console.log(req.body.name);
     
     try {
 
@@ -39,8 +39,8 @@ const AddPrePlannedTripBooking = async (req, res) => {
 const getAllPrePlannedTripBookings = async (req, res) => {
     try {
         let prePlannedTripBookings = await PrePlannedTripBookingModel.find({});
-        console.log("All Bookings Fetched");
-        console.log(prePlannedTripBookings);
+        // console.log("All Bookings Fetched");
+        // console.log(prePlannedTripBookings);
         res.send(prePlannedTripBookings);
         
     } catch (error) {

@@ -4,7 +4,7 @@ import { GuideModel } from "../models/Guide.js";
 dotenv.config({ path: "../.env" });
 
 const AddGuide = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     let guides = await GuideModel.find({});
     let id = guides.length > 0 ? guides[guides.length - 1].id + 1 : 1;
@@ -37,7 +37,7 @@ const AddGuide = async (req, res) => {
 const getAllGuides = async (req, res) => {
   try {
       let guides = await GuideModel.find({});
-      console.log("All Guides Fetched");
+      // console.log("All Guides Fetched");
       // console.log(guides);
       res.send(guides);
       

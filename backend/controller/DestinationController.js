@@ -3,7 +3,7 @@ dotenv.config({ path: "../.env" });
 import { DestinationModel } from "../models/Destination.js";
 
 const AddDestination = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     let destinations = await DestinationModel.find({});
     let id =

@@ -10,7 +10,7 @@ import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import {Router} from './routes/routes.js'
 import cityRouter from './routes/cityRouter.js';
 import bookingRouter from './routes/bookingRote.js';
-import bookingScheduler from './schedulers/bookingScheduler.js';
+// import bookingScheduler from './schedulers/bookingScheduler.js';
 
 dotenv.config();
 
@@ -40,7 +40,7 @@ const upload = multer({ storage });
 
 //image uploading api
 app.post('/upload',upload.single('image'), (req, res)=>{  
-  console.log(req.file)
+  // console.log(req.file)
   res.json({
       success:true,
       image_url: req.file.path
@@ -56,7 +56,7 @@ app.use("/cities",cityRouter);
 
 app.use("/booking",bookingRouter);
 
-bookingScheduler.updateExpiredBookings();
+// bookingScheduler.updateExpiredBookings();
 
 // Start the server
 app.listen(PORT, () => {

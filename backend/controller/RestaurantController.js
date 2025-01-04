@@ -77,7 +77,7 @@ const addRestaurantReview = async (req, res) =>{
             reviewTitle: req.body.title
         })
 
-        console.log(restaurantReview);
+        // console.log(restaurantReview);
         await restaurantReview.save();
         res.json({
             success: true,
@@ -95,7 +95,7 @@ const getAllRestaurantReviews = async (req, res) => {
     try{
         let allRestaurantReviews = await RestaurantReviewModel.find({});
         console.log("All Restaurant Reviews Fetched");
-        console.log(allRestaurantReviews);
+        // console.log(allRestaurantReviews);
         res.send(allRestaurantReviews);
 
     } catch(error){

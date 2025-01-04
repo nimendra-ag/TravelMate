@@ -4,7 +4,7 @@ import { TransportationServiceModel } from "../models/Transportation.js"
 
 const AddTransportationService = async (req, res) => {
 
-    console.log(req.body.transportationServiceName);
+    // console.log(req.body.transportationServiceName);
     
     try {
 
@@ -39,7 +39,7 @@ const AddTransportationService = async (req, res) => {
 const getAllTransportationServices = async (req, res) => {
     try {
         let transportationServices = await TransportationServiceModel.find({});
-        console.log("All Transportation Services Fetched");
+        // console.log("All Transportation Services Fetched");
         // console.log(transportationServices);
         res.send(transportationServices);
         

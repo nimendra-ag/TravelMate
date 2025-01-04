@@ -1,64 +1,97 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import './bookHotel.css'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import './bookHotel.css';
 
 const HotelRoom = ({ name, type, price, capacity, available, id, fromDate, toDate, hid }) => {
-
-
     const navigate = useNavigate();
 
     const handleBook = (from, to, id, hid) => {
-
-        navigate(`/conhotelbook/${from}/${to}/${id}/${hid}`)
-
+        navigate(`/conhotelbook/${from}/${to}/${id}/${hid}`);
         console.log(toDate);
-
-
-
-
-
-
-
-
-
-
-    }
-
-
+    };
 
     return (
-        <div className='container w-75 mx-auto border border-dark border-3 rounded mt-5 p-2'>
-            <div className='d-flex flex-column flex-md-row'>
-                <img
-                    src="https://picsum.photos/300/200"
-                    className='rounded mb-3 mb-md-0 me-md-5'
-                    alt="room image"
-                />
-                <div className='flex-column'>
-                    <h1>{name}</h1>
-                    <h5>Type - {type}</h5>
-                    <h5>Price for one Day - {price}$</h5>
-                    <h5>Room Capcity - {capacity}</h5>
-                    <h5>Number of Available Rooms - {available}</h5>
+        <div className="container my-4">
+            <div className="card shadow-lg" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)' }}>
+                <div className="row g-0">
+                    <div className="col-md-4">
+                        <div className="position-relative h-100">
+                            <img
+                                src="https://picsum.photos/300/200"
+                                className="img-fluid rounded-start h-100 w-100 object-fit-cover"
+                                alt="room"
+                                style={{ minHeight: '300px' }}
+                            />
+                            {available > 0 && (
+                                <div className="position-absolute top-0 start-0 m-3">
+                                    <span className="badge bg-success px-3 py-2">
+                                        Available Rooms: {available}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className="col-md-8">
+                        <div className="card-body p-4">
+                            <div className="d-flex justify-content-between align-items-start">
+                                <h2 className="card-title text-primary mb-3">{name}</h2>
+                                <span className="badge bg-primary px-3 py-2">{type}</span>
+                            </div>
+                            
+                            <div className="row mb-4">
+                                <div className="col-md-6">
+                                    <div className="mb-3">
+                                        <i className="fas fa-dollar-sign text-primary me-2"></i>
+                                        <span className="fw-bold">Price per Night:</span>
+                                        <span className="ms-2">${price}</span>
+                                    </div>
+                                    <div className="mb-3">
+                                        <i className="fas fa-users text-primary me-2"></i>
+                                        <span className="fw-bold">Capacity:</span>
+                                        <span className="ms-2">{capacity} Guests</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="mb-3">
+                                        <i className="fas fa-calendar-check text-primary me-2"></i>
+                                        <span className="fw-bold">Check-in:</span>
+                                        <span className="ms-2">{fromDate || 'Not selected'}</span>
+                                    </div>
+                                    <div className="mb-3">
+                                        <i className="fas fa-calendar-times text-primary me-2"></i>
+                                        <span className="fw-bold">Check-out:</span>
+                                        <span className="ms-2">{toDate || 'Not selected'}</span>
+                                    </div>
+                                </div>
+                            </div>
 
-                    {available === 0 ? (
-                        <p className="bold-red-text py-2">Currently No Rooms Available in our Website</p>
-                    ) : null}
-                    <div className='d-flex'>
+                            {available === 0 && (
+                                <div className="alert alert-danger mb-4" role="alert">
+                                    <i className="fas fa-exclamation-circle me-2"></i>
+                                    Currently No Rooms Available
+                                </div>
+                            )}
 
-                        <button
-                            className="btn btn-primary mt-3"
-                            onClick={() => handleBook(fromDate, toDate, id, hid)}
-                            disabled={available === 0 || !fromDate || !toDate}
-                        >
-                            Book Now!
-                        </button>
-                        <button className="btn btn-primary mt-3 ms-3">More Details</button>
+                            <div className="d-flex gap-3">
+                                <button
+                                    className="btn btn-primary px-4 py-2"
+                                    onClick={() => handleBook(fromDate, toDate, id, hid)}
+                                    disabled={available === 0 || !fromDate || !toDate}
+                                >
+                                    <i className="fas fa-bookmark me-2"></i>
+                                    Book Now
+                                </button>
+                                <button className="btn btn-outline-primary px-4 py-2">
+                                    <i className="fas fa-info-circle me-2"></i>
+                                    More Details
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default HotelRoom
+export default HotelRoom;

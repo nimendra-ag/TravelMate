@@ -19,7 +19,7 @@ const Hero = () => {
                         <li><SigninModal /></li>
 
 
-                        {localStorage.getItem("user") ? <li><a href="/mybookings">My Bookings</a></li> : null}
+                        {localStorage.getItem("user") ? <li><a href="/mybookings/available">My Bookings</a></li> : null}
 
 
                     </ul>

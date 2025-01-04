@@ -3,7 +3,7 @@ import { PrePlannedTripModel } from "../models/PrePlannedTrip.js";
 dotenv.config({ path: "../.env" });
 
 const AddPrePlannedTrips = async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     try {
       let prePlannedTrips = await PrePlannedTripModel.find({});
       let id = prePlannedTrips.length > 0 ? prePlannedTrips[prePlannedTrips.length - 1].id + 1 : 1;
@@ -48,12 +48,12 @@ const AddPrePlannedTrips = async (req, res) => {
   const getAllPrePlannedTrips = async (req, res) => {
     try {
         let prePlannedTrips = await PrePlannedTripModel.find({});
-        console.log("All Trips Fetched");
-        console.log(prePlannedTrips);
+        // console.log("All Trips Fetched");
+        // console.log(prePlannedTrips);
         res.send(prePlannedTrips);
         
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(500).json({ success: false, error: 'Server Error' });
   
     }

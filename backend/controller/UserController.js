@@ -15,7 +15,7 @@ const RegWithGoogle = async (req, res) => {
     const userExist = await UserModel.findOne({ email });
 
     if (userExist) {
-      console.log("User already exists");
+      // console.log("User already exists");
 
       // Generate token for the existing user
       const token = jwt.sign(
@@ -25,11 +25,11 @@ const RegWithGoogle = async (req, res) => {
 
       );
 
-      console.log(token);
+      // console.log(token);
 
       return res.status(201).json({ registered: true, token });
     } else {
-      console.log("Creating new user");
+      // console.log("Creating new user");
 
       // Create a new user and save it to the database
       const newUser = new UserModel({
@@ -52,12 +52,12 @@ const RegWithGoogle = async (req, res) => {
 
 const SignUpWithEmailAndPassword = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
+  // console.log(email, password);
 
   try {
     const userExist = await UserModel.findOne({ email });
     if (userExist) {
-      console.log("user exist");
+      // console.log("user exist");
       return res.json({ success: false, error: "existing user found with the same email address." });
     }
     else {
@@ -67,7 +67,7 @@ const SignUpWithEmailAndPassword = async (req, res) => {
         password: password,
       });
       const result = await newUser.save();
-      console.log(result._id);
+      // console.log(result._id);
       return res.json({ success: true, id: result._id });
     }
   }
@@ -79,7 +79,7 @@ const SignUpWithEmailAndPassword = async (req, res) => {
 
 const SignInWithEmailAndPassword = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
+  // console.log(email, password);
   let user = await UserModel.findOne({ email: email });
   if (user) {
     const passwordCompare = password === user.password;
@@ -91,7 +91,7 @@ const SignInWithEmailAndPassword = async (req, res) => {
         process.env.JWT_SECRET_KEY,
         { expiresIn: "3d" }
       );
-      console.log(token);
+      // console.log(token);
       return res.status(201).json({ success: true, token });
 
     }
@@ -107,7 +107,6 @@ const SignInWithEmailAndPassword = async (req, res) => {
 
 const GetProfile = async (req, res) => {
   const { id } = req.params;
-  console.log("ingetprofile");
 
 
   if (!id) {
@@ -115,11 +114,11 @@ const GetProfile = async (req, res) => {
   }
 
   try {
-    console.log(id);
+    // console.log(id);
 
     const profile = await UserModel.findOne({ _id: id })
 
-    console.log(profile);
+    // console.log(profile);
 
     return res.status(200).json({ success: true, ...profile._doc })
   } catch (err) {
@@ -129,8 +128,8 @@ const GetProfile = async (req, res) => {
 
 const UpdateProfile = async (req, res) => {
   try {
-    console.log("in update profile");
-    console.log(req.body);
+    // console.log("in update profile");
+    // console.log(req.body);
     const result = await UserModel.findOneAndUpdate({ _id: req.body._id }, { ...req.body }, { new: true })
     const token = jwt.sign(
       { _id: result._id },
@@ -138,7 +137,7 @@ const UpdateProfile = async (req, res) => {
       { expiresIn: "3d" }
     );
 
-    console.log(token);
+    // console.log(token);
     return res.status(200).json({ success: true, ...result._doc, token })
   } catch (err) {
     return res.status(500).json({ error: err.message })

@@ -54,7 +54,7 @@ export async function AddBooking(req, res) {
 export function getBookings(req, res) {
 
     const userEmail = req.query.email;
-    console.log(userEmail);
+    // console.log(userEmail);
 
 
     
@@ -62,7 +62,9 @@ export function getBookings(req, res) {
 
     
     BookingsModel.find( 
-        { "user.email": userEmail }
+        { "user.email": userEmail ,
+        status: "Booked"
+        } 
     ).then((data) => {
         
         res.status(200).json(data)
@@ -79,18 +81,132 @@ export function getBookings(req, res) {
 }
 
 
-export function deleteBooking(req, res) {
+export function getCBookings(req, res) {
+
+    const userEmail = req.query.email;
+    // console.log(userEmail);
 
 
-    console.log("Delete Booking");
+    
+
+
+    
+    BookingsModel.find( 
+        { "user.email": userEmail ,
+        status: "Cancelled"
+        } 
+    ).then((data) => {
+        
+        res.status(200).json(data)
+
+
+
+
+    
+    }).catch((err) => {
+        
+        
+        
+        console.log(err); })
+}
+
+export function getComBookings(req, res) {
+
+    const userEmail = req.query.email;
+    // console.log(userEmail);
+
+
+    
+
+
+    
+    BookingsModel.find( 
+        { "user.email": userEmail ,
+        status: "Completed"
+        } 
+    ).then((data) => {
+        
+        res.status(200).json(data)
+
+
+
+
+    
+    }).catch((err) => {
+        
+        
+        
+        console.log(err); })
+}
+
+
+
+
+
+export async function deleteBooking(req, res) {
+
+
+    // console.log("Delete Booking");
     
     
     const bookingId = req.query.id;
-    console.log(bookingId);
+    // console.log(bookingId);
 
-    BookingsModel.findByIdAndDelete(bookingId).then((data) => {
-        res.status(200).json(data);
-    }).then(
+    const booking = await BookingsModel.findById(bookingId);
+    const bookingData = booking.toJSON();
+    // console.log(bookingData);
+
+
+    await BookingsModel.findByIdAndUpdate(
+        bookingId, 
+        {
+            $set: {
+                status: "Cancelled"
+            }
+        },
+        { new: true }
+    );
+
+    await AccommodationModel.findOneAndUpdate(
+        { id: bookingData.accommodation.id },
+        {
+            $inc: { [`rooms.${[bookingData.room.id]}.available`]: bookingData.roomcount }
+        },
+        { new: true }
+
+    )
+
+    
+    
+    
+
+
+
+ 
+    
+    
+    
+
+    // BookingsModel.findByIdAndDelete(bookingId).then((data) => {
+    //     res.status(200).json(data);
+    // }).then(
+
+
+
+
+    //     // BookingsModel.findByIdAndUpdate(bookingId,
+
+
+    //     //     $set{
+
+
+
+    //     //     }
+
+
+
+
+    //     // )
 
 
 
@@ -98,11 +214,17 @@ export function deleteBooking(req, res) {
 
 
         
-    )
+    // )
     
     
     
     
-    .catch((err) => {
-        console.log(err);
-    })}
+    // .catch((err) => {
+    //     console.log(err);
+    // })
+
+
+
+
+
+}
