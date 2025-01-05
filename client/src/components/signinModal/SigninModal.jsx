@@ -38,7 +38,7 @@ const SigninModal = () => {
     onSuccess: async (response) => {
       try {
         setLoading(true);
-  
+
         // Fetch user data from Google API
         const res = await axios.get(
           "https://www.googleapis.com/oauth2/v3/userinfo",
@@ -48,17 +48,17 @@ const SigninModal = () => {
             },
           }
         );
-  
+
         const userDetails = {
           email: res.data.email,
           firstName: res.data.given_name,
           lastName: res.data.family_name,
           profilePicture: res.data.picture,
         };
-  
+
         // Logging to ensure the data is correct
         console.log("Google user data:", res.data);
-  
+
         try {
           // Send user data to your backend
           const backendResponse = await axios.post(
@@ -70,7 +70,7 @@ const SigninModal = () => {
               },
             }
           );
-  
+
           if (!backendResponse.data.registered) {
             // Navigate to details page if user is not registered
             navigate(`/details/${backendResponse.data.id}`);
@@ -78,13 +78,13 @@ const SigninModal = () => {
             // Save the token and user details to localStorage
             localStorage.setItem("auth-token", backendResponse.data.token);
             localStorage.setItem("user", JSON.stringify(userDetails)); // Save user details
-  
+
             console.log("Auth Token:", backendResponse.data.token);
             console.log("User Details Saved:", userDetails);
-  
+
             setShow(false);
             navigate("/");
-  
+
             // Reload the page to reflect the updated navbar
             window.location.reload();
           }
@@ -96,13 +96,13 @@ const SigninModal = () => {
       }
     },
   });
-  
+
   useGoogleOneTapLogin({
     onSuccess: (credentialResponse) => {
       const decoded = jwtDecode(credentialResponse.credential);
       setUser(decoded); // Set the user data
       console.log(decoded);
-      window.location.reload(); 
+      window.location.reload();
     },
     onError: () => {
       console.log('Login Failed');
@@ -163,45 +163,47 @@ const SigninModal = () => {
     <>
       <div className="d-flex justify-content-center">
         {localStorage.getItem('auth-token') ? (
- 
-          <Button 
-          variant="outline-light" 
-          className="signin-btn" 
-          onClick={() => {
-            localStorage.removeItem('auth-token');
-            localStorage.removeItem('user');
-            window.location.reload(); // Refresh the page after logout
-          }}
-          style={{
+
+          <Button
+            variant="outline-light"
+            className="signin-btn"
+            onClick={() => {
+              localStorage.removeItem('auth-token');
+              localStorage.removeItem('user');
+              navigate("/");
+
+              window.location.reload(); // Refresh the page after logout
+            }}
+            style={{
               marginLeft: "20px",
               padding: "5px 15px",
               fontWeight: "600",
               border: "2px solid #3b82f6",
               transition: "background-color 0.3s ease, color 0.3s ease",
-          }}
-      >
-          Log out
-      </Button>
-      
+            }}
+          >
+            Log out
+          </Button>
+
         ) : (
           // <a className="nav-signin" onClick={handleShow}>
           //   SignUp
           // </a>
-          <Button 
-          variant="outline-light" 
-          className="signin-btn" 
-          onClick={handleShow}
-          style={{
+          <Button
+            variant="outline-light"
+            className="signin-btn"
+            onClick={handleShow}
+            style={{
               marginLeft: "20px",
               padding: "5px 15px",
               fontWeight: "600",
               border: "2px solid #3b82f6",
               transition: "background-color 0.3s ease, color 0.3s ease",
-          }}
-      >
-          Sign Up
-      </Button>
-      
+            }}
+          >
+            Sign Up
+          </Button>
+
         )}
       </div>
 
