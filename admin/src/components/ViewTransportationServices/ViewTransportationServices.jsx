@@ -1,21 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { InputGroup, Form, Col, Row, Container, Button } from "react-bootstrap";
 import Select from "react-select";
 import AdminLogo from "../../assets/TravelMateAdminLogo.png";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-function AddTransportationService() {
-  const [image, setImage] = useState(null);
-  const [transportationServiceDetails, setTransportationServiceDetails] =
-    useState({
-      transportationServiceName: "",
-      availableVehicles: [],
-      pricePerHour: "",
-      address: "",
-      contactNumber: "",
-      description: "",
-    });
+function ViewTransportationService() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [transportationServiceDetails, setTransportationServiceDetails] = useState({
+    transportationServiceName: "",
+    availableVehicles: [],
+    pricePerHour: "",
+    address: "",
+    contactNumber: "",
+    description: "",
+  });
+
+  useEffect(() => {
+    const fetchTransportationService = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/travelmate/viewTransportationService/${id}`
+        );
+        if (response.data.success) {
+          setTransportationServiceDetails(response.data.data);
+        } else {
+          alert(response.data.message || "Failed to fetch transportation service details.");
+        }
+      } catch (error) {
+        console.error("Error fetching transportation service details:", error);
+      }
+    };
+
+    fetchTransportationService();
+  }, [id]);
 
   const availableVehicleOptions = [
     { value: "Cars", label: "Cars" },
@@ -32,12 +51,6 @@ function AddTransportationService() {
     });
   };
 
-  // Handle file input for the image
-  //   const imageHandler = (e) => {
-  //     setImage(e.target.files[0]);
-  //   };
-
-  // Handle change in text fields
   const changeHandler = (e) => {
     setTransportationServiceDetails({
       ...transportationServiceDetails,
@@ -45,37 +58,27 @@ function AddTransportationService() {
     });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-
+    e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/travelmate/add-transportation-service",
+      const response = await axios.put(
+        `http://localhost:3000/travelmate/updateTransportationService/${id}`,
         transportationServiceDetails
       );
-      console.log("Transportation service added successfully", response.data);
 
       if (response.data.success) {
-        alert("Transportation service added successfully!");
-        setTransportationServiceDetails({
-          transportationServiceName: "",
-          availableVehicles: [],
-          pricePerHour: "",
-          address: "",
-          contactNumber: "",
-          description: "",
-        });
-
-        window.location.reload(); //Reload the page
+        alert("Transportation service updated successfully!");
+        navigate("/transport-mode-data-table");
+      } else {
+        alert(response.data.message || "Failed to update transportation service.");
       }
     } catch (error) {
-      console.log("Error adding transportation service", error);
+      console.error("Error updating transportation service:", error);
     }
   };
 
   return (
-    <div className="AddTransportationService">
+    <div className="ViewTransportationService">
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
@@ -94,13 +97,13 @@ function AddTransportationService() {
             >
               <div className="d-flex justify-content-left align-items-left">
                 <img
-                  src={AdminLogo} // Update the logo path if needed
+                  src={AdminLogo}
                   alt="Icon"
                   style={{ height: "98px", paddingBottom: "33px" }}
                 />
               </div>
               <h2 className="fw-bold" style={{ paddingBottom: "25px" }}>
-                Add Transportation Service
+                Update Transportation Service
               </h2>
 
               <Container style={{ maxWidth: "100%" }}>
@@ -114,11 +117,9 @@ function AddTransportationService() {
                         <Form.Label>Transportation Service Name</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder="Enter the new transportation service"
+                          placeholder="Enter the transportation service"
                           name="transportationServiceName"
-                          value={
-                            transportationServiceDetails.transportationServiceName
-                          }
+                          value={transportationServiceDetails.transportationServiceName}
                           onChange={changeHandler}
                           style={{
                             borderRadius: "10px",
@@ -146,18 +147,6 @@ function AddTransportationService() {
                           )}
                           onChange={handleMultiSelectChange}
                         />
-                        {transportationServiceDetails.availableVehicles.includes(
-                          "Other"
-                        ) && (
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter other vehicles"
-                            name="otherVehicles"
-                            value={transportationServiceDetails.otherVehicles}
-                            onChange={changeHandler}
-                            className="mt-2"
-                          />
-                        )}
                       </Form.Group>
                     </Col>
                   </Row>
@@ -168,7 +157,7 @@ function AddTransportationService() {
                         <Form.Label>Address</Form.Label>
                         <Form.Control
                           as="textarea"
-                          rows={4} // Set fixed height using rows
+                          rows={4}
                           placeholder="Enter the address"
                           name="address"
                           value={transportationServiceDetails.address}
@@ -176,8 +165,8 @@ function AddTransportationService() {
                           style={{
                             borderRadius: "10px",
                             borderWidth: "2px",
-                            resize: "none", // Prevent resizing
-                            height: "100px", // Fixed height for the textarea
+                            resize: "none",
+                            height: "100px",
                           }}
                         />
                       </Form.Group>
@@ -189,7 +178,6 @@ function AddTransportationService() {
                         className="mb-3"
                       >
                         <Form.Label>Contact Number</Form.Label>
-
                         <Form.Control
                           type="text"
                           placeholder="Enter the contact number"
@@ -234,21 +222,6 @@ function AddTransportationService() {
                         </InputGroup>
                       </Form.Group>
                     </Col>
-
-                    {/* <Col md="6">
-                          <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Label>Upload Image</Form.Label>
-                            <Form.Control
-                              type="file"
-                              onChange={imageHandler}
-                              style={{
-                                borderRadius: "10px",
-                                height: "50px",
-                                borderWidth: "2px",
-                              }}
-                            />
-                          </Form.Group>
-                        </Col> */}
                   </Row>
 
                   <Row>
@@ -257,7 +230,7 @@ function AddTransportationService() {
                         <Form.Label>Description</Form.Label>
                         <Form.Control
                           as="textarea"
-                          rows={10} // Set fixed height using rows
+                          rows={10}
                           placeholder="Enter a brief description"
                           name="description"
                           value={transportationServiceDetails.description}
@@ -265,8 +238,8 @@ function AddTransportationService() {
                           style={{
                             borderRadius: "10px",
                             borderWidth: "2px",
-                            resize: "none", // Prevent resizing
-                            height: "100px", // Fixed height for the textarea
+                            resize: "none",
+                            height: "100px",
                           }}
                         />
                       </Form.Group>
@@ -274,7 +247,7 @@ function AddTransportationService() {
                   </Row>
 
                   <Button variant="primary" onClick={handleSubmit}>
-                    Add TransportationService
+                    Update Transportation Service
                   </Button>
                 </Form>
               </Container>
@@ -286,4 +259,4 @@ function AddTransportationService() {
   );
 }
 
-export default AddTransportationService;
+export default ViewTransportationService;

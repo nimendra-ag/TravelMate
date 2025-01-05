@@ -18,6 +18,10 @@ import TranspotationServices from './components/TranspotationServices/Transpotat
 import Restaurants from './components/Restaurants/Restaurants';
 import AddPrePlannedTrips from './components/AddPrePlannedTrips/AddPrePlannedTrips';
 import ViewHotel from './components/ViewHotel/ViewHotel';
+import ViewGuide from './components/ViewGuide/ViewGuide';
+import ViewDestination from './components/ViewDestination/ViewDestination';
+import ViewRestaurant from './components/ViewRestaurant/ViewRestaurant';
+import ViewTransportationService from './components/ViewTransportationServices/ViewTransportationServices';
 
 
 const App = () => {
@@ -30,6 +34,7 @@ const App = () => {
           <Routes>
             <Route path="/guides" element={<Guides />} />
             <Route path="/hotels" element={<Hotels />} />
+            <Route path="/destinations" element={<DestinationsDataTable />} />
             <Route path="/home" element={<Admin />} />
             <Route path='/add-new-guide' element={<AddGuide />} />
             <Route path='/add-restaurant' element={<AddRestaurant />} />
@@ -45,6 +50,11 @@ const App = () => {
             <Route path='/transportmodes' element={<TranspotationServices/>}/>
             <Route path='/restaurants' element={<Restaurants/>}/>
             <Route path="/view-hotel/:id" element={<ViewHotel />} />
+            <Route path="/view-guide/:id" element={<ViewGuide />} />
+            <Route path="/view-destination/:id" element={<ViewDestination />} />
+            <Route path="/view-restaurant/:id" element={<ViewRestaurant />} />
+            <Route path="/view-transportation-service/:id" element={<ViewTransportationService />} />
+
           </Routes>
         </div>
       </BrowserRouter>

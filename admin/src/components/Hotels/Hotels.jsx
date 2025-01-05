@@ -7,23 +7,7 @@ const Hotels = () => {
   console.log(allAccomodations)
   return (
     <div>
-      <h2>Hotels</h2>
-      <p>This is the guide page. Click the button below to go to the form.</p>
-      
-      <Link to="/add-new-hotel">
-        <button className="btn btn-primary">Go to Form</button>
-      </Link>
-
-     {
-      allAccomodations.map((accomodation) => {
-        return (
-          <div key={accomodation.id}>
-            <h1>{accomodation.name}</h1>
-            <h2>{accomodation.address}</h2>
-          </div>
-        )
-      })
-     } 
+      <HotelDataTable/>
     </div>
   );
 };

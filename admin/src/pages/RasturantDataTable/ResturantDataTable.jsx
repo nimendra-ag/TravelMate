@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const ResturantDataTable = () => {
+const RestaurantDataTable = () => {
+  const navigate = useNavigate();
   const columns = [
     {
       name: 'Name',
@@ -12,18 +13,32 @@ const ResturantDataTable = () => {
     {
       name: 'Category',
       selector: row => row.category,
+      cell: row => (
+        <span>
+          {row.description?.length > 20
+            ? `${row.description.substring(0, 20)}...`
+            : row.description}
+        </span>
+      ),
     },
     {
-      name: 'Availability',
-      selector: row => row.availability,
+      name: 'Description',
+      selector: row => row.description,
+      cell: row => (
+        <span>
+          {row.description?.length > 30
+            ? `${row.description.substring(0, 30)}...`
+            : row.description}
+        </span>
+      ),
     },
     {
-      name: 'Rate',
-      selector: row => row.rate,
+      name: 'Email',
+      selector: row => row.email,
     },
     {
-      name: 'Area',
-      selector: row => row.area,
+      name: 'Website',
+      selector: row => row.website,
     },
     {
       name: 'View More',
@@ -48,58 +63,59 @@ const ResturantDataTable = () => {
     },
   ];
 
-  const initialData = [
-    { name: 'Restaurant 1', category: 'Category 1', availability: 'Available', rate: 'Rate 1', area: 'Area 1', },
-    { name: 'Restaurant 2', category: 'Category 2', availability: 'Available', rate: 'Rate 2', area: 'Area 2', },
-    { name: 'Restaurant 3', category: 'Category 3', availability: 'Available', rate: 'Rate 3', area: 'Area 3', },
-    { name: 'Restaurant 4', category: 'Category 4', availability: 'Available', rate: 'Rate 4', area: 'Area 4', },
-    { name: 'Restaurant 5', category: 'Category 5', availability: 'Available', rate: 'Rate 5', area: 'Area 5', },
-    { name: 'Restaurant 6', category: 'Category 6', availability: 'Available', rate: 'Rate 6', area: 'Area 6', },
-    { name: 'Restaurant 7', category: 'Category 7', availability: 'Available', rate: 'Rate 7', area: 'Area 7', },
-    { name: 'Restaurant 8', category: 'Category 8', availability: 'Available', rate: 'Rate 8', area: 'Area 8', },
-    { name: 'Restaurant 9', category: 'Category 9', availability: 'Available', rate: 'Rate 9', area: 'Area 9', },
-    { name: 'Restaurant 10', category: 'Category 10', availability: 'Available', rate: 'Rate 10', area: 'Area 10', },
-    { name: 'Restaurant 11', category: 'Category 11', availability: 'Available', rate: 'Rate 11', area: 'Area 11', },
-    { name: 'Restaurant 12', category: 'Category 12', availability: 'Available', rate: 'Rate 12', area: 'Area 12', },
-    { name: 'Restaurant 13', category: 'Category 13', availability: 'Available', rate: 'Rate 13', area: 'Area 13', },
-
-
-  ];
-
-  const [records, setRecords] = useState(initialData);
+  const [records, setRecords] = useState([]);
+  const [filteredRecords, setFilteredRecords] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  function handleFilter(event) {
-    const newData = initialData.filter(row => {
-      return row.name.toLowerCase().includes(event.target.value.toLowerCase());
-    });
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
 
-    setRecords(newData);
+  const fetchRestaurants = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/travelmate/allRestaurants');
+      const data = await response.json();
+      setRecords(data);
+      setFilteredRecords(data);
+    } catch (error) {
+      console.error('Error fetching restaurant data:', error);
+    }
+  };
+
+  function handleFilter(event) {
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredData = records.filter(row => {
+      return row.name?.toLowerCase().includes(searchTerm);
+    });
+    setFilteredRecords(filteredData);
   }
 
   function handleViewMore(row) {
-    alert(`View more details for ${row.name}`);
-  }
-
-  function handleAddHotel() {
-    const newHotel = {
-      name: `Hotel ${records.length + 1}`,
-      description: `Description ${records.length + 1}`,
-      availability: 'Available', // Default availability
-      rate: `Rate ${records.length + 1}`,
-      area: `Area ${records.length + 1}`,
-    };
-
-    setRecords([...records, newHotel]);
+    navigate(`/view-restaurant/${row.id}`);
   }
 
   function handleRowSelected(state) {
     setSelectedRows(state.selectedRows);
   }
 
-  function handleDeleteSelected() {
-    const updatedRecords = records.filter(row => !selectedRows.includes(row));
-    setRecords(updatedRecords);
+  async function handleDeleteSelected() {
+    try {
+      for (let row of selectedRows) {
+        await fetch("http://localhost:3000/travelmate/deleteRestaurant", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: row.id }),
+        });
+      }
+      const updatedRecords = records.filter(row => !selectedRows.includes(row));
+      setRecords(updatedRecords);
+      setFilteredRecords(updatedRecords);
+      setSelectedRows([]);
+    } catch (error) {
+      console.error("Error deleting Restaurants:", error);
+    }
   }
 
   return (
@@ -119,18 +135,23 @@ const ResturantDataTable = () => {
         justifyContent: 'space-between',
       }}
     >
-      <h1>Resturant Data Table</h1>
+      <h1>Restaurant Data Table</h1>
       <div className="d-flex justify-content-end mb-3">
         <input
           type="text"
           onChange={handleFilter}
           placeholder="Filter by Name"
-          style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginRight: '10px' }}
+          style={{ 
+            padding: '8px', 
+            borderRadius: '5px', 
+            border: '1px solid #ccc', 
+            marginRight: '10px',
+            width: '200px'
+          }}
         />
 
         <Link to="/add-restaurant">
           <button
-            onClick={handleAddHotel}
             style={{
               backgroundColor: '#0A2E41',
               color: 'white',
@@ -140,17 +161,20 @@ const ResturantDataTable = () => {
               cursor: 'pointer',
             }}
           >
-            Add a Resturant
-          </button>      </Link>
+            Add a Restaurant
+          </button>
+        </Link>
       </div>
+
       <DataTable
         columns={columns}
-        data={records}
+        data={filteredRecords}
         fixedHeader
         pagination
         selectableRows
         onSelectedRowsChange={handleRowSelected}
       />
+
       <div className="d-flex justify-content-end mt-3">
         <button
           onClick={handleDeleteSelected}
@@ -163,11 +187,11 @@ const ResturantDataTable = () => {
             cursor: 'pointer',
           }}
         >
-          Delete Selected Resturants
+          Delete Selected Restaurants
         </button>
       </div>
     </div>
   );
 }
 
-export default ResturantDataTable
+export default RestaurantDataTable;

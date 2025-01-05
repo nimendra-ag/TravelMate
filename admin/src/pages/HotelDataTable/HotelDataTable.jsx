@@ -5,32 +5,44 @@ import { Link, useNavigate } from 'react-router-dom';
 const HotelDataTable = () => {
   const navigate = useNavigate(); // Initialize navigate function
 
-  // Columns should match the model fields
+  // Columns with adjusted widths
   const columns = [
     {
       name: 'Name',
-      selector: row => row.name, // Mapping hotel_name from model
+      selector: row => row.name,
       sortable: true,
+      width: '15%', 
     },
     {
       name: 'Description',
-      selector: row => row.description, // Mapping description from model
+      selector: row => row.description,
+      cell: row => (
+        <span>
+          {row.description.length > 30
+            ? `${row.description.substring(0, 30)}...`
+            : row.description}
+        </span>
+      ),
+      width: '25%', 
     },
     {
       name: 'Availability',
-      selector: row => row.available ? 'Available' : 'Not Available', // Mapping available field from model
+      selector: row => (row.available ? 'Available' : 'Not Available'),
+      width: '15%', 
     },
     {
       name: 'Rate',
-      selector: row => row.rating, // Mapping rating from model
+      selector: row => row.rating,
+      width: '10%', 
     },
     {
       name: 'Area',
-      selector: row => row.address, // Mapping address from model
+      selector: row => row.address,
+      width: '15%', 
     },
     {
       name: 'View More',
-      cell: (row) => (
+      cell: row => (
         <button
           style={{
             backgroundColor: '#0A2E41',
@@ -45,6 +57,7 @@ const HotelDataTable = () => {
           View More
         </button>
       ),
+      width: '12%', 
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,
@@ -53,18 +66,18 @@ const HotelDataTable = () => {
 
   const [records, setRecords] = useState([]); // Stores all the hotel records
   const [filteredRecords, setFilteredRecords] = useState([]); // Stores filtered hotel records
-  const [selectedRows, setSelectedRows] = useState([]); 
+  const [selectedRows, setSelectedRows] = useState([]);
 
-  // Fetch accommodations data from the API
+  
   useEffect(() => {
     const fetchAccommodations = async () => {
       try {
-        const response = await fetch('http://localhost:3000/travelmate/allAccomodations'); 
+        const response = await fetch('http://localhost:3000/travelmate/allAccomodations');
         const data = await response.json();
         setRecords(data); // Set the fetched data to records state
         setFilteredRecords(data); // Initially set filtered records to all fetched data
       } catch (error) {
-        console.error("Error fetching accommodations data:", error);
+        console.error('Error fetching accommodations data:', error);
       }
     };
 
@@ -73,10 +86,9 @@ const HotelDataTable = () => {
 
   // Handle filter input
   function handleFilter(event) {
-    const filteredData = records.filter(row => {
-      return row.name.toLowerCase().includes(event.target.value.toLowerCase());
-    });
-
+    const filteredData = records.filter(row =>
+      row.name.toLowerCase().includes(event.target.value.toLowerCase())
+    );
     setFilteredRecords(filteredData); // Set the filtered data to filteredRecords state
   }
 
@@ -108,10 +120,10 @@ const HotelDataTable = () => {
   async function handleDeleteSelected() {
     try {
       for (let row of selectedRows) {
-        await fetch("http://localhost:3000/travelmate/deleteAccommodation", {
-          method: "DELETE",
+        await fetch('http://localhost:3000/travelmate/deleteAccommodation', {
+          method: 'DELETE',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ id: row.id }),
         });
@@ -120,9 +132,9 @@ const HotelDataTable = () => {
       const updatedRecords = records.filter(row => !selectedRows.includes(row));
       setRecords(updatedRecords);
       setFilteredRecords(updatedRecords); // Update filtered records
-      setSelectedRows([]); 
+      setSelectedRows([]);
     } catch (error) {
-      console.error("Error deleting hotels:", error);
+      console.error('Error deleting hotels:', error);
     }
   }
 
@@ -179,6 +191,14 @@ const HotelDataTable = () => {
         pagination
         selectableRows
         onSelectedRowsChange={handleRowSelected}
+        responsive
+        customStyles={{
+          table: {
+            style: {
+              width: '100%', // Ensures the table fits the container width
+            },
+          },
+        }}
       />
       <div className="d-flex justify-content-end mt-3">
         <button

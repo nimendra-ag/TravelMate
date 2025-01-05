@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 const GuidesDataTable = () => {
   const navigate = useNavigate();
+  const [records, setRecords] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [filteredRecords, setFilteredRecords] = useState([]);
 
-  // Columns adjusted to match the API response structure
   const columns = [
     {
       name: "Name",
@@ -27,6 +29,13 @@ const GuidesDataTable = () => {
     {
       name: "Description",
       selector: (row) => row.description || "N/A",
+      cell: row => (
+        <span>
+          {row.description && row.description.length > 20
+            ? `${row.description.substring(0, 20)}...`
+            : row.description}
+        </span>
+      ),
     },
     {
       name: "View More",
@@ -51,49 +60,68 @@ const GuidesDataTable = () => {
     },
   ];
 
-  const [records, setRecords] = useState([]);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [filteredRecords, setFilteredRecords] = useState([]);
-
   useEffect(() => {
-    const fetchGuides = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/travelmate/allGuides");
-        const result = await response.json();
-
-        if (result.success) {
-          setRecords(result.guides); // Use guides array from the API response
-          setFilteredRecords(result.guides);
-        } else {
-          console.error("Failed to fetch guides:", result.error);
-        }
-      } catch (error) {
-        console.error("Error fetching Guides data:", error);
-      }
-    };
-
     fetchGuides();
   }, []);
 
-  const handleFilter = (event) => {
-    const newData = filteredRecords.filter((row) =>
-      row.name.toLowerCase().includes(event.target.value.toLowerCase())
-    );
-    setRecords(newData);
+  const fetchGuides = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/travelmate/allGuides");
+      const result = await response.json();
+
+      if (result.success) {
+        setRecords(result.guides);
+        setFilteredRecords(result.guides);
+      } else {
+        console.error("Failed to fetch guides:", result.error);
+      }
+    } catch (error) {
+      console.error("Error fetching Guides data:", error);
+    }
   };
 
+  function handleFilter(event) {
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredData = records.filter(row => {
+      const nameMatch = row.name?.toLowerCase().includes(searchTerm);
+      const areaMatch = row.area?.some(area => 
+        area.toLowerCase().includes(searchTerm)
+      );
+      const languageMatch = row.languages?.some(language => 
+        language.toLowerCase().includes(searchTerm)
+      );
+      return nameMatch || areaMatch || languageMatch;
+    });
+    setFilteredRecords(filteredData);
+  }
+
   const handleViewMore = (row) => {
-    navigate(`/guide-details/${row._id}`);
+    navigate(`/view-guide/${row.id}`);
   };
 
   const handleRowSelected = (state) => {
     setSelectedRows(state.selectedRows);
   };
 
-  const handleDeleteSelected = () => {
-    const updatedRecords = records.filter((row) => !selectedRows.includes(row));
-    setRecords(updatedRecords);
-  };
+  async function handleDeleteSelected() {
+    try {
+      for (let row of selectedRows) {
+        await fetch("http://localhost:3000/travelmate/deleteGuide", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: row.id }),
+        });
+      }
+      const updatedRecords = records.filter(row => !selectedRows.includes(row));
+      setRecords(updatedRecords);
+      setFilteredRecords(updatedRecords);
+      setSelectedRows([]);
+    } catch (error) {
+      console.error("Error deleting guides:", error);
+    }
+  }
 
   return (
     <div
@@ -117,12 +145,13 @@ const GuidesDataTable = () => {
         <input
           type="text"
           onChange={handleFilter}
-          placeholder="Filter by Name"
+          placeholder="Search by Name, Area, or Language"
           style={{
             padding: "8px",
             borderRadius: "5px",
             border: "1px solid #ccc",
             marginRight: "10px",
+            width: "250px"
           }}
         />
 
@@ -143,7 +172,7 @@ const GuidesDataTable = () => {
       </div>
       <DataTable
         columns={columns}
-        data={records}
+        data={filteredRecords}
         fixedHeader
         pagination
         selectableRows

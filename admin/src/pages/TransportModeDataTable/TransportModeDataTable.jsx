@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const TransportModeDataTable = () => {
+  const navigate = useNavigate();
   const columns = [
     {
       name: 'Name',
-      selector: row => row.name,
+      selector: row => row.transportationServiceName,
       sortable: true,
     },
     {
@@ -14,16 +16,20 @@ const TransportModeDataTable = () => {
       selector: row => row.description,
     },
     {
-      name: 'Vehicle Type',
-      selector: row => row.vehicle_type,
+      name: 'Vehicle Types',
+      selector: row => row.availableVehicles.join(', '),
     },
     {
-      name: 'Charges per Hour(LKR)',
-      selector: row => row.charges_per_hour,
+      name: 'Price per Hour(LKR)',
+      selector: row => row.pricePerHour,
     },
     {
-      name: 'Number of Passengers',
-      selector: row => row.no_of_passangers,
+      name: 'Contact Number',
+      selector: row => row.contactNumber,
+    },
+    {
+      name: 'Rating',
+      selector: row => row.rating,
     },
     {
       name: 'View More',
@@ -48,50 +54,57 @@ const TransportModeDataTable = () => {
     },
   ];
 
-  const initialData = [
-    { name: 'Bus', description: 'Description 1', vehicle_type: 'Bus', charges_per_hour: '1000', no_of_passangers: '4' },
-    { name: 'Car', description: 'Description 2', vehicle_type: 'Car', charges_per_hour: '2000', no_of_passangers: '2' },
-    { name: 'Train', description: 'Description 3', vehicle_type: 'Train', charges_per_hour: '3000', no_of_passangers: '3' },
-    { name: 'Flight', description: 'Description 4', vehicle_type: 'Flight', charges_per_hour: '4000', no_of_passangers: '1' },
-    { name: 'Ship', description: 'Description 5', vehicle_type: 'Ship', charges_per_hour: '5000', no_of_passangers: '5' },
-    { name: 'Airplane', description: 'Description 6', vehicle_type: 'Airplane', charges_per_hour: '6000', no_of_passangers: '6' },
-    { name: 'Bike', description: 'Description 7', vehicle_type: 'Bike', charges_per_hour: '7000', no_of_passangers: '7' },
-  ];
-
-  const [records, setRecords] = useState(initialData);
+  const [records, setRecords] = useState([]);
+  const [filteredRecords, setFilteredRecords] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  function handleFilter(event) {
-    const newData = initialData.filter(row => {
-      return row.name.toLowerCase().includes(event.target.value.toLowerCase());
-    });
+  useEffect(() => {
+    fetchTransportationServices();
+  }, []);
 
-    setRecords(newData);
+  const fetchTransportationServices = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/travelmate/allTransportationServices');
+      setRecords(response.data);
+      setFilteredRecords(response.data);
+    } catch (error) {
+      console.error('Error fetching transportation services:', error);
+    }
+  };
+
+  function handleFilter(event) {
+    const searchTerm = event.target.value.toLowerCase();
+    const newData = records.filter(row => {
+      return row.transportationServiceName.toLowerCase().includes(searchTerm);
+    });
+    setFilteredRecords(newData);
   }
 
   function handleViewMore(row) {
-    alert(`View more details for ${row.name}`);
-  }
-
-  function handleAddHotel() {
-    const newTransportMode = {
-      name: `Transport Mode ${records.length + 1}`,
-      description: `Description ${records.length + 1}`,
-      vehicle_type: `Vehicle Type ${records.length + 1}`,
-      charges_per_hour: `${1000 * (records.length + 1)}`,
-      no_of_passangers: `${records.length + 1}`,
-    };
-
-    setRecords([...records, newTransportMode]);
+    navigate(`/view-transportation-service/${row.id}`);
   }
 
   function handleRowSelected(state) {
     setSelectedRows(state.selectedRows);
   }
 
-  function handleDeleteSelected() {
+  async function handleDeleteSelected() {try {
+    for (let row of selectedRows) {
+      await fetch("http://localhost:3000/travelmate/deleteTransportationService", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: row.id }), 
+      });
+    }
     const updatedRecords = records.filter(row => !selectedRows.includes(row));
     setRecords(updatedRecords);
+    setFilteredRecords(updatedRecords); 
+    setSelectedRows([]); 
+  } catch (error) {
+    console.error("Error deleting Transportation Service:", error);
+  }
   }
 
   return (
@@ -120,10 +133,8 @@ const TransportModeDataTable = () => {
           style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginRight: '10px' }}
         />
 
-
         <Link to="/add-transportation-service">
           <button
-            onClick={handleAddHotel}
             style={{
               backgroundColor: '#0A2E41',
               color: 'white',
@@ -136,16 +147,17 @@ const TransportModeDataTable = () => {
             Add a Transport Mode
           </button>
         </Link>
-
       </div>
+
       <DataTable
         columns={columns}
-        data={records}
+        data={filteredRecords}
         fixedHeader
         pagination
         selectableRows
         onSelectedRowsChange={handleRowSelected}
       />
+
       <div className="d-flex justify-content-end mt-3">
         <button
           onClick={handleDeleteSelected}

@@ -7,44 +7,43 @@ import { GuideModel } from "../models/Guide.js";
 
 dotenv.config({ path: "../.env" });
 
-const AddOrUpdateAccommodation = async (req, res) => {
+// Add Accommodation API
+const addAccommodation = async (req, res) => {
     try {
-        const { id } = req.body;
+        let hotels = await AccommodationModel.find({});
+        let newId = hotels.length > 0 ? hotels[hotels.length - 1].id + 1 : 1;
 
-        if (id) {
-            // Update existing hotel
-            const updatedHotel = await AccommodationModel.findOneAndUpdate(
-                { id: id },
-                {
-                    name: req.body.name,
-                    address: req.body.address,
-                    description: req.body.description,
-                    image: req.body.cardImage,
-                    category: req.body.category,
-                    distance_from_city: req.body.distance_from_city,
-                    perPerson_price: req.body.perPerson_price,
-                    contactNumber: req.body.contactNumber,
-                },
-                { new: true } // Return the updated document
-            );
+        const hotel = new AccommodationModel({
+            id: newId,
+            name: req.body.name,
+            address: req.body.address,
+            description: req.body.description,
+            image: req.body.cardImage,
+            category: req.body.category,
+            distance_from_city: req.body.distance_from_city,
+            perPerson_price: req.body.perPerson_price,
+            contactNumber: req.body.contactNumber,
+        });
 
-            if (updatedHotel) {
-                return res.json({
-                    success: true,
-                    message: 'Hotel updated successfully',
-                    data: updatedHotel,
-                });
-            } else {
-                return res.status(404).json({ success: false, message: 'Hotel not found' });
-            }
-        } else {
-            // Add new hotel
-            let hotels = await AccommodationModel.find({});
-            let newId = hotels.length > 0 ? hotels[hotels.length - 1].id + 1 : 1;
+        await hotel.save();
+        return res.json({
+            success: true,
+            message: 'Hotel added successfully',
+            data: hotel,
+        });
+    } catch (error) {
+        console.error("Error saving hotel:", error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+};
 
-            console.log(req.body.cardImage);
-            const hotel = new AccommodationModel({
-                id: newId,
+// Update Accommodation API
+const updateAccommodation = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedHotel = await AccommodationModel.findOneAndUpdate(
+            { id: id },
+            {
                 name: req.body.name,
                 address: req.body.address,
                 description: req.body.description,
@@ -53,20 +52,25 @@ const AddOrUpdateAccommodation = async (req, res) => {
                 distance_from_city: req.body.distance_from_city,
                 perPerson_price: req.body.perPerson_price,
                 contactNumber: req.body.contactNumber,
-            });
+            },
+            { new: true }
+        );
 
-            await hotel.save();
+        if (updatedHotel) {
             return res.json({
                 success: true,
-                message: 'Hotel added successfully',
-                data: hotel,
+                message: 'Hotel updated successfully',
+                data: updatedHotel,
             });
+        } else {
+            return res.status(404).json({ success: false, message: 'Hotel not found' });
         }
     } catch (error) {
-        console.error("Error saving/updating hotel:", error);
+        console.error("Error updating hotel:", error);
         res.status(500).json({ success: false, error: 'Server Error' });
     }
 };
+
 
 const getAllAccomodations = async (req, res) => {
     try {
@@ -159,7 +163,7 @@ const viewAccommodation = async (req, res) => {
     }
 };  
 
-export { AddOrUpdateAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation }
+export { updateAccommodation,addAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation }
 
 
 
