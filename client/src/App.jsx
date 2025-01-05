@@ -31,6 +31,7 @@ import AvailableBookings from './pages/bookHotel/AvailableBookings'
 import CancledBookings from './pages/bookHotel/CancledBookings'
 import CompletedBookings from './pages/bookHotel/CompletedBookings'
 import ClientLayout from './components/ClientLayout/ClientLayout'
+import GuidPage from './pages/GuidBooking/GuidPage/GuidPage'
 
 
 function App() {
@@ -76,6 +77,10 @@ function App() {
             <Route path="cancelled" element={<CancledBookings />} />
             <Route path="completed" element={<CompletedBookings />} />
           </Route>
+
+
+          <Route path="/guide/:id" element={<GuidPage />} />
+
 
           <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />
         </Route>

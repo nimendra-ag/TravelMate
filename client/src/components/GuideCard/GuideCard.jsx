@@ -1,19 +1,21 @@
 import React from 'react';
 import { Card, Button, Row, Col, Image } from 'react-bootstrap';
 import contactIcon from '../../assets/phone-call.png';
+import { useNavigate } from 'react-router-dom';
 
-const GuideCard = ({ name, description, area, languages, chargesPerDay, profileImg }) => {
+const GuideCard = ({ id, name, description, area, languages, chargesPerDay, profileImg }) => {
+  const navigate = useNavigate(); // Changed from navigator = useNavigate()
+
   return (
     <Card style={{ width: '22rem', borderRadius: '10px', overflow: 'hidden', boxShadow: '1px 1px 0px 1px rgba(0, 0, 0, .2)' }}>
       <Card.Body className="text-center">
         <Image 
-          src={profileImg || "https://picsum.photos/150"} // Replace with actual profile image URL
+          src={profileImg || "https://picsum.photos/150"}
           roundedCircle 
           style={{ width: '100px', height: '100px', objectFit: 'cover', marginBottom: '15px' }} 
         />
 
         <Card.Title style={{ fontWeight: 'bold' }}>{name}</Card.Title>
-        {/* <div style={{ fontSize: '0.9rem', color: '#666' }}>Age-{age}</div> */}
         
         <Card.Text style={{ marginTop: '5px', fontSize: '0.85rem', color: '#666' }}>
           {description}
@@ -33,6 +35,8 @@ const GuideCard = ({ name, description, area, languages, chargesPerDay, profileI
         <Button
           variant="info"
           className="mt-5 mb-3"
+          onClick={() => {navigate(`/guide/${id}`);
+          }} // Fixed syntax error in template literal
           style={{
             backgroundColor: '#C1EAF8',
             border: 'none',

@@ -48,6 +48,10 @@ const GuideModel = model("Guides", {
     min: 0,
     max: 5,
   },
+  bookings: {
+    type: [Object],
+    default: [],
+  },
 });
 
 export { GuideModel };
