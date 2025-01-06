@@ -1,20 +1,25 @@
 import React, { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ClientContext } from '../../../context/ClientContext';
 import { DatePicker } from 'antd';
 import { FaPhone, FaWhatsapp, FaLanguage, FaMapMarkedAlt, FaStar, FaCalendarAlt, FaMoneyBillWave, FaBirthdayCake, FaPhoneAlt, FaIdCard } from 'react-icons/fa';
 import './GuidPage.css';
-const { RangePicker } = DatePicker;
 import moment from 'moment';
+import axios from 'axios';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+
+const { RangePicker } = DatePicker;
 
 const GuidPage = () => {
-
-    const [data,setData] = useState();
+    const [data, setData] = useState();
     const [fromDate, setFromDate] = useState();
     const [toDate, setToDate] = useState();
     const { id } = useParams();
     const { allGuides } = useContext(ClientContext);
     const guid = allGuides.find((e) => e.id === parseInt(id));
+    const [isAvailable, setIsAvailable] = useState();
+    const navigator = useNavigate();
 
     function filterByDate(dates) {
         if (dates) {
@@ -39,26 +44,76 @@ const GuidPage = () => {
 
     const readable = moment(guid?.birthDate).format('MMMM Do YYYY');
 
+    const checkAvailability = (newFromDate, newToDate, existingBookings) => {
+        for (const booking of existingBookings) {
+            const existingFromDate = new Date(booking.fromDate);
+            const existingToDate = new Date(booking.toDate);
+            const checkFromDate = new Date(newFromDate);
+            const checkToDate = new Date(newToDate);
 
-    const bookingHandler = () => {
-
-       const user = JSON.parse(localStorage.getItem("user"));
-
-        const data = {
-            fromDate,
-            toDate,
-            guid,
-            user,
-            totaldays: moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1,
-            totalprice: guid?.chargesPerDay * (moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1),
-
-            
-
-        };
-
-        setData(data);
+            if (
+                (checkFromDate >= existingFromDate && checkFromDate <= existingToDate) ||
+                (checkToDate >= existingFromDate && checkToDate <= existingToDate) ||
+                (checkFromDate <= existingFromDate && checkToDate >= existingToDate)
+            ) {
+                return false;
+            }
+        }
+        return true;
     };
 
+    const handleAvailabilityCheck = () => {
+        const available = checkAvailability(fromDate, toDate, guid.bookings);
+        setIsAvailable(available);
+    }
+
+    const bookingHandler = () => {
+        const mySwal = withReactContent(Swal);
+        mySwal.fire({
+            title: "Confirm Your Booking",
+            text: "Are you ready to proceed with your reservation?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Book Now!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const user = JSON.parse(localStorage.getItem("user"));
+                const bookingData = {
+                    fromDate,
+                    toDate,
+                    guid,
+                    user,
+                    totaldays: moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1,
+                    totalprice: guid?.chargesPerDay * (moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1),
+                };
+
+                setData(bookingData);
+
+                try {
+                    axios.post("http://localhost:3000/booking/bookguide", bookingData)
+                        .then((res) => {
+                            mySwal.fire("Success", "Booking confirmed successfully!", "success")  .then(() => {
+                                setTimeout(() => {
+                                    navigator("/")
+                                    window.location.reload();
+                                }, 1000);
+                            });
+                        })
+                        .catch((err) => { 
+                            console.log(err);
+                            mySwal.fire("Error", "Failed to confirm booking", "error");
+                        });
+                } catch (error) {
+                    console.log("error");
+                    mySwal.fire("Error", "Something went wrong", "error");
+                }
+            } else {
+                mySwal.fire("Booking Cancelled", "Your booking request was cancelled.", "info");
+            }
+        });
+    };
 
     return (
         <div className='container py-5'>
@@ -66,9 +121,9 @@ const GuidPage = () => {
             <div className="card border-0 shadow-lg mb-5">
                 <div className="row g-0">
                     <div className="col-md-6">
-                        <img 
-                            src={guid?.imageUrl || "https://picsum.photos/800/600"} 
-                            className="img-fluid rounded-start h-100 object-fit-cover" 
+                        <img
+                            src={guid?.imageUrl || "https://picsum.photos/800/600"}
+                            className="img-fluid rounded-start h-100 object-fit-cover"
                             alt={guid?.name}
                         />
                     </div>
@@ -95,7 +150,7 @@ const GuidPage = () => {
                     <div className="card shadow-sm">
                         <div className="card-body">
                             <h4 className="card-title mb-4">
-                                <FaCalendarAlt className="me-2 text-primary"/>
+                                <FaCalendarAlt className="me-2 text-primary" />
                                 Check Availability
                             </h4>
                             <RangePicker
@@ -108,10 +163,45 @@ const GuidPage = () => {
                                     Please select dates to proceed
                                 </div>
                             ) : (
-                                <button onClick={()=>bookingHandler()} className="btn btn-primary w-100 py-3 mt-3">
-                                    Book Now
-                                </button>
-                            )}
+
+                                <div>
+                                    <button onClick={handleAvailabilityCheck} className="btn btn-primary w-100 py-3 mt-3">
+                                        Check Availability
+                                    </button>
+                                    {isAvailable &&
+
+                                        <div>
+
+                                            <div className="text-success mt-2 text-center">These Dates are Available ! </div>
+
+
+
+                                            <button onClick={bookingHandler} className="btn btn-primary w-100 py-3 mt-3">
+                                                Book Now
+                                            </button>
+
+
+                                        </div>
+                                    }
+
+
+
+
+
+
+                                    {isAvailable === false && <div className="text-danger mt-2 text-center">These dates are not available</div>}
+
+
+                                </div>
+
+                            )
+
+
+
+                            }
+
+
+
                         </div>
                     </div>
                 </div>
@@ -121,11 +211,11 @@ const GuidPage = () => {
                     <div className="card shadow-sm">
                         <div className="card-body">
                             <h2 className="card-title mb-4">About {guid?.name}</h2>
-                            
+
                             <div className="row g-4">
                                 <div className="col-md-6">
                                     <div className="d-flex align-items-center mb-3">
-                                        <FaLanguage className="text-primary me-2" size={24}/>
+                                        <FaLanguage className="text-primary me-2" size={24} />
                                         <h5 className="mb-0">Languages</h5>
                                     </div>
                                     <ul className="list-group">
@@ -137,7 +227,7 @@ const GuidPage = () => {
 
                                 <div className="col-md-6">
                                     <div className="d-flex align-items-center mb-3">
-                                        <FaMapMarkedAlt className="text-primary me-2" size={24}/>
+                                        <FaMapMarkedAlt className="text-primary me-2" size={24} />
                                         <h5 className="mb-0">Expert Areas</h5>
                                     </div>
                                     <ul className="list-group">
@@ -148,29 +238,29 @@ const GuidPage = () => {
                                 </div>
 
                                 <div className="col-12">
-                                    <hr/>
+                                    <hr />
                                     <div className="row g-4">
                                         <div className="col-md-6">
                                             <div className="d-flex align-items-center">
-                                                <FaMoneyBillWave className="text-primary me-2" size={20}/>
+                                                <FaMoneyBillWave className="text-primary me-2" size={20} />
                                                 <h5 className="mb-0">Charges per day: ${guid?.chargesPerDay}</h5>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="d-flex align-items-center">
-                                                <FaBirthdayCake className="text-primary me-2" size={20}/>
+                                                <FaBirthdayCake className="text-primary me-2" size={20} />
                                                 <h5 className="mb-0">Birth date: {readable}</h5>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="d-flex align-items-center">
-                                                <FaPhoneAlt className="text-primary me-2" size={20}/>
+                                                <FaPhoneAlt className="text-primary me-2" size={20} />
                                                 <h5 className="mb-0">Contact: {guid?.contactNumber}</h5>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="d-flex align-items-center">
-                                                <FaIdCard className="text-primary me-2" size={20}/>
+                                                <FaIdCard className="text-primary me-2" size={20} />
                                                 <h5 className="mb-0">NIC: {guid?.nic}</h5>
                                             </div>
                                         </div>
@@ -189,6 +279,6 @@ const GuidPage = () => {
             </div>
         </div>
     );
-}
 
+}
 export default GuidPage;

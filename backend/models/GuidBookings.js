@@ -1,6 +1,6 @@
 import { model } from "mongoose";
 
-const Guidooking = model("GuidBookings", {
+const GuidBooking = model("GuidBookings", {
 
 
     user: {
@@ -40,3 +40,5 @@ const Guidooking = model("GuidBookings", {
 
 
 });
+
+export default GuidBooking;

@@ -1,6 +1,62 @@
 import { AccommodationModel } from "../models/Accommodation.js";
 import { BookingsModel } from "../models/Bookings.js";
+import GuidBooking from "../models/GuidBookings.js";
+import { GuideModel } from "../models/Guide.js";
 
+
+
+
+export async function BookGuide(req, res) {
+
+
+
+
+
+    const data = req.body;
+
+    try {
+        const newBooking = new GuidBooking({
+            user: data.user,
+            guide: data.guid,
+            fromDate: data.fromDate,
+            toDate: data.toDate,
+            totaldays: data.totaldays,
+            totalprice: data.totalprice
+        });
+        
+        const savedBooking = await newBooking.save();
+        
+        await GuideModel.findOneAndUpdate(
+            { id: data.guid.id },
+            {
+                $push: {
+                    bookings: {
+                        id: savedBooking._id,  // Using the MongoDB generated _id
+                        fromDate: data.fromDate,
+                        toDate: data.toDate,
+                        totaldays: data.totaldays,
+                        totalprice: data.totalprice
+                    }
+                }
+            },
+            { new: true }
+        );
+        
+        res.status(200).json({
+            message: "Booking Saved Successfully",
+        });
+        
+
+
+
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({
+            message: "Booking Failed",
+        });
+    }
+
+}
 export async function AddBooking(req, res) {
     try {
 
@@ -24,27 +80,29 @@ export async function AddBooking(req, res) {
         await newBooking.save();
 
         // After booking is saved, update room availability
-        let acc = await AccommodationModel.findOneAndUpdate({"id":
-            data.accommodation.id,}, // Find the accommodation by id
+        let acc = await AccommodationModel.findOneAndUpdate({
+            "id":
+                data.accommodation.id,
+        }, // Find the accommodation by id
             {
                 $inc: { [`rooms.${[data?.room?.id]}.available`]: -data.roomcount } // Use bracket notation for dynamic key access
             },
             { new: true } // Return the updated document
         );
-        
+
         if (!acc) {
             console.error("Accommodation not found or update failed.");
             return res.status(400).json({ error: "Accommodation update failed" }); // Send error response if accommodation is not found
         }
-        
-        
+
+
 
         // Send a success response after both operations succeed
         res.status(200).json({
             message: "Booking Saved Successfully",
         });
 
-   
+
     } catch (error) {
         console.error("Error:", error);
         res.status(500).json({ error: "Booking Failed" }); // Handle any errors
@@ -57,27 +115,29 @@ export function getBookings(req, res) {
     // console.log(userEmail);
 
 
-    
 
 
-    
-    BookingsModel.find( 
-        { "user.email": userEmail ,
-        status: "Booked"
-        } 
+
+
+    BookingsModel.find(
+        {
+            "user.email": userEmail,
+            status: "Booked"
+        }
     ).then((data) => {
-        
+
         res.status(200).json(data)
 
 
 
 
-    
+
     }).catch((err) => {
-        
-        
-        
-        console.log(err); })
+
+
+
+        console.log(err);
+    })
 }
 
 
@@ -87,27 +147,29 @@ export function getCBookings(req, res) {
     // console.log(userEmail);
 
 
-    
 
 
-    
-    BookingsModel.find( 
-        { "user.email": userEmail ,
-        status: "Cancelled"
-        } 
+
+
+    BookingsModel.find(
+        {
+            "user.email": userEmail,
+            status: "Cancelled"
+        }
     ).then((data) => {
-        
+
         res.status(200).json(data)
 
 
 
 
-    
+
     }).catch((err) => {
-        
-        
-        
-        console.log(err); })
+
+
+
+        console.log(err);
+    })
 }
 
 export function getComBookings(req, res) {
@@ -116,27 +178,29 @@ export function getComBookings(req, res) {
     // console.log(userEmail);
 
 
-    
 
 
-    
-    BookingsModel.find( 
-        { "user.email": userEmail ,
-        status: "Completed"
-        } 
+
+
+    BookingsModel.find(
+        {
+            "user.email": userEmail,
+            status: "Completed"
+        }
     ).then((data) => {
-        
+
         res.status(200).json(data)
 
 
 
 
-    
+
     }).catch((err) => {
-        
-        
-        
-        console.log(err); })
+
+
+
+        console.log(err);
+    })
 }
 
 
@@ -147,8 +211,8 @@ export async function deleteBooking(req, res) {
 
 
     // console.log("Delete Booking");
-    
-    
+
+
     const bookingId = req.query.id;
     // console.log(bookingId);
 
@@ -158,7 +222,7 @@ export async function deleteBooking(req, res) {
 
 
     await BookingsModel.findByIdAndUpdate(
-        bookingId, 
+        bookingId,
         {
             $set: {
                 status: "Cancelled"
@@ -176,16 +240,16 @@ export async function deleteBooking(req, res) {
 
     )
 
-    
-    
-    
 
 
 
- 
-    
-    
-    
+
+
+
+
+
+
+
 
     // BookingsModel.findByIdAndDelete(bookingId).then((data) => {
     //     res.status(200).json(data);
@@ -213,12 +277,12 @@ export async function deleteBooking(req, res) {
 
 
 
-        
+
     // )
-    
-    
-    
-    
+
+
+
+
     // .catch((err) => {
     //     console.log(err);
     // })
