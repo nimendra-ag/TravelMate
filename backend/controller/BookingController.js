@@ -6,6 +6,8 @@ import { GuideModel } from "../models/Guide.js";
 
 
 
+
+
 export async function BookGuide(req, res) {
 
 
@@ -23,9 +25,9 @@ export async function BookGuide(req, res) {
             totaldays: data.totaldays,
             totalprice: data.totalprice
         });
-        
+
         const savedBooking = await newBooking.save();
-        
+
         await GuideModel.findOneAndUpdate(
             { id: data.guid.id },
             {
@@ -41,11 +43,11 @@ export async function BookGuide(req, res) {
             },
             { new: true }
         );
-        
+
         res.status(200).json({
             message: "Booking Saved Successfully",
         });
-        
+
 
 
 
@@ -77,23 +79,50 @@ export async function AddBooking(req, res) {
         });
 
         // Save the new booking
-        await newBooking.save();
+        const savedBooking = await newBooking.save();
 
-        // After booking is saved, update room availability
-        let acc = await AccommodationModel.findOneAndUpdate({
-            "id":
-                data.accommodation.id,
-        }, // Find the accommodation by id
+        await AccommodationModel.findOneAndUpdate(
+            { id: data.accommodation.id },
             {
-                $inc: { [`rooms.${[data?.room?.id]}.available`]: -data.roomcount } // Use bracket notation for dynamic key access
+                $push: {
+                    [`rooms.${data.room.id}.bookings`]: {
+                        $each: Array(data.roomcount).fill({
+                            id: savedBooking._id.toString(),
+                            fromDate: data.from,
+                            toDate: data.to,
+                            totaldays: data.totaldays,
+                            totalprice: data.totalprice
+                        })
+                    }
+                }
             },
-            { new: true } // Return the updated document
+            { new: true }
         );
 
-        if (!acc) {
-            console.error("Accommodation not found or update failed.");
-            return res.status(400).json({ error: "Accommodation update failed" }); // Send error response if accommodation is not found
-        }
+
+        // res.status(200).json({
+        //     message: "Booking Saved Successfully",
+        // });
+
+
+
+
+
+        // // After booking is saved, update room availability
+        // let acc = await AccommodationModel.findOneAndUpdate({
+        //     "id":
+        //         data.accommodation.id,
+        // }, // Find the accommodation by id
+        //     {
+        //         $inc: { [`rooms.${[data?.room?.id]}.available`]: -data.roomcount } // Use bracket notation for dynamic key access
+        //     },
+        //     { new: true } // Return the updated document
+        // );
+
+        // if (!acc) {
+        //     console.error("Accommodation not found or update failed.");
+        //     return res.status(400).json({ error: "Accommodation update failed" }); // Send error response if accommodation is not found
+        // }
 
 
 
@@ -210,6 +239,8 @@ export function getComBookings(req, res) {
 export async function deleteBooking(req, res) {
 
 
+
+
     // console.log("Delete Booking");
 
 
@@ -234,11 +265,32 @@ export async function deleteBooking(req, res) {
     await AccommodationModel.findOneAndUpdate(
         { id: bookingData.accommodation.id },
         {
-            $inc: { [`rooms.${[bookingData.room.id]}.available`]: bookingData.roomcount }
+          $pull: {
+            [`rooms.${bookingData.room.id}.bookings`]: {
+              id: bookingId
+            }
+          }
         },
         { new: true }
+      )
 
-    )
+      console.log(`rooms.${bookingData.room.id}.bookings`);
+      
+
+      await AccommodationModel.findOneAndUpdate(
+  { id: bookingData.accommodation.id },
+  {
+    $pull: {
+      [`rooms.${bookingData.room.id}.bookings`]: {
+        id: bookingId
+      }
+    }
+  },
+  { new: true }
+);
+
+      
+      
 
 
 

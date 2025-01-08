@@ -45,22 +45,37 @@ const GuidPage = () => {
     const readable = moment(guid?.birthDate).format('MMMM Do YYYY');
 
     const checkAvailability = (newFromDate, newToDate, existingBookings) => {
+        console.log(newFromDate, newToDate, existingBookings);
+        
+        // Convert input dates to moment objects for better comparison
+        const checkStart = moment(newFromDate, "DD-MM-YYYY");
+        const checkEnd = moment(newToDate, "DD-MM-YYYY");
+    
         for (const booking of existingBookings) {
-            const existingFromDate = new Date(booking.fromDate);
-            const existingToDate = new Date(booking.toDate);
-            const checkFromDate = new Date(newFromDate);
-            const checkToDate = new Date(newToDate);
-
-            if (
-                (checkFromDate >= existingFromDate && checkFromDate <= existingToDate) ||
-                (checkToDate >= existingFromDate && checkToDate <= existingToDate) ||
-                (checkFromDate <= existingFromDate && checkToDate >= existingToDate)
-            ) {
+            const existingStart = moment(booking.fromDate, "DD-MM-YYYY");
+            const existingEnd = moment(booking.toDate, "DD-MM-YYYY");
+    
+            // All possible overlap scenarios:
+            const isOverlapping = (
+                // New booking starts during existing booking
+                (checkStart.isSameOrAfter(existingStart) && checkStart.isSameOrBefore(existingEnd)) ||
+                // New booking ends during existing booking
+                (checkEnd.isSameOrAfter(existingStart) && checkEnd.isSameOrBefore(existingEnd)) ||
+                // New booking contains existing booking
+                (checkStart.isSameOrBefore(existingStart) && checkEnd.isSameOrAfter(existingEnd)) ||
+                // Existing booking contains new booking
+                (existingStart.isSameOrBefore(checkStart) && existingEnd.isSameOrAfter(checkEnd)) ||
+                // Same day bookings
+                checkStart.isSame(existingStart) || checkEnd.isSame(existingEnd)
+            );
+    
+            if (isOverlapping) {
                 return false;
             }
         }
         return true;
     };
+    
 
     const handleAvailabilityCheck = () => {
         const available = checkAvailability(fromDate, toDate, guid.bookings);
@@ -98,6 +113,7 @@ const GuidPage = () => {
                                 setTimeout(() => {
                                     navigator("/")
                                     window.location.reload();
+                                   
                                 }, 1000);
                             });
                         })
@@ -154,9 +170,12 @@ const GuidPage = () => {
                                 Check Availability
                             </h4>
                             <RangePicker
+
                                 format={"DD-MM-YYYY"}
                                 onChange={filterByDate}
                                 className="w-100 mb-3"
+                                disabledDate={(current) => current && current < moment().startOf('day')}
+
                             />
                             {!fromDate || !toDate ? (
                                 <div className="alert alert-warning mt-3">

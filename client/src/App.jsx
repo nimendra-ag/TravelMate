@@ -70,7 +70,7 @@ function App() {
           <Route path="/pre-planned-trip-booking/:tripId" element={<PrePlannedTripBookingForm />} />
           <Route path="/bookHotel/:id" element={<BookHotel />} />
           <Route path="/room" element={<HotelRoom />} />
-          <Route path="/conhotelbook/:from/:to/:id/:hid" element={<ConBookHotel />} />
+          <Route path="/conhotelbook/:from/:to/:id/:hid/:available" element={<ConBookHotel />} />
 
           <Route path="/mybookings" element={<MyBookings />}>
             <Route path="available" element={<AvailableBookings />} />
