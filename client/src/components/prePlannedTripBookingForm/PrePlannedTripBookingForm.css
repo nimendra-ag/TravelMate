@@ -130,4 +130,27 @@
     object-fit: cover;
     border-radius: 10px;
   }
+  .error-input {
+    border-color: #dc3545 !important;
+    background-color: #fff8f8;
+  }
+  
+  .error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+  }
+  
+  .form-group label::after {
+    content: " *";
+    color: #dc3545;
+  }
+  
+  .submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  /* Add these styles to your existing CSS */
   
