@@ -29,7 +29,7 @@ const SearchBar = () => {
         if (type === "city") {
             navigate(`/city/${dataId}`)
         }
-        else if (type === "accommodation") {
+        else if (type === "Accommodations") {
             navigate(`/accommodations/${dataId}`)
         }
         else if (type === "Destinations") {
