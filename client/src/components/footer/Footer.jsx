@@ -80,7 +80,7 @@ const Footer = () => {
                     </div>
 
                     <div className="d-flex flex-column flex-sm-row justify-content-between py-4 mt-4 border-top border-light border-opacity-25">
-                        <p className="text-light opacity-75">&copy; 2024 CineBase, Inc. All rights reserved.</p>
+                        <p className="text-light opacity-75">&copy; 2024 TravelMate, Inc. All rights reserved.</p>
                         <ul className="list-unstyled d-flex gap-3 mb-0">
                             <li>
                                 <a className="text-light opacity-75 fs-5 hover-effect" href="#">
