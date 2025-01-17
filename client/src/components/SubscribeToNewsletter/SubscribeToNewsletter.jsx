@@ -66,8 +66,8 @@ const SubscribeToNewsletter = () => {
 
     return (
         <>
-            <h5>Subscribe to our newsletter</h5>
-            <p>Monthly digest of what's new and exciting from us.</p>
+            <h5 className='text-light opacity-75'>Subscribe to our newsletter</h5>
+            <p className='text-light opacity-75'>Monthly digest of what's new and exciting from us.</p>
             <div className="d-flex flex-column flex-sm-row w-100 gap-2">
                 <label htmlFor="newsletter1" className="visually-hidden">Email address</label>
                 <input 

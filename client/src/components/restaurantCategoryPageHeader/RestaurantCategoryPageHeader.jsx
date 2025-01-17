@@ -8,7 +8,6 @@ let categories = ["DateNight", "Fine Dining", "Casual Dining", "Vegan & Veg", "O
 const RestaurantCategoryPageHeader = ({ category, headerText }) => {
   return (
     <>
-    <NavbarComponent/>
     <div className="bg-light">
       <div
         className="d-flex align-items-center justify-content-center text-white"

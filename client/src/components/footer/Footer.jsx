@@ -73,7 +73,7 @@ const Footer = () => {
                         </div>
 
                         <div className="col-md-5 mb-4">
-                            <div className="bg-white bg-opacity-10 p-4 rounded-4">
+                            <div className="p-4">
                                 <SubscribeToNewsletter />
                             </div>
                         </div>
