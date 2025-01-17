@@ -7,7 +7,7 @@ const Hotels = () => {
   console.log(allAccomodations)
   return (
     <div>
-      <HotelDataTable />
+      <HotelDataTable/>
     </div>
   );
 };

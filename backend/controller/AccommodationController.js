@@ -7,41 +7,70 @@ import { GuideModel } from "../models/Guide.js";
 
 dotenv.config({ path: "../.env" });
 
-
-
-const AddAccommodation = async (req, res) => {
-
-    
-
-
-    
+// Add Accommodation API
+const addAccommodation = async (req, res) => {
     try {
-
         let hotels = await AccommodationModel.find({});
-        let id = hotels.length > 0 ? hotels[hotels.length - 1].id + 1 : 1;
+        let newId = hotels.length > 0 ? hotels[hotels.length - 1].id + 1 : 1;
+
         const hotel = new AccommodationModel({
-            id: id,
-            name: req.body.accommodationName,
+            id: newId,
+            name: req.body.name,
             address: req.body.address,
             description: req.body.description,
-            cardImage: req.body.cardImage,
+            image: req.body.cardImage,
             category: req.body.category,
-            distance_from_city: req.body.distanceFromMainCity,
-            perPerson_price: req.body.price,
+            distance_from_city: req.body.distance_from_city,
+            perPerson_price: req.body.perPerson_price,
             contactNumber: req.body.contactNumber,
         });
 
-            await hotel.save();
-            return res.json({
-                success: true,
-                message: 'Hotel added successfully',
-                data: hotel,
-            });
+        await hotel.save();
+        return res.json({
+            success: true,
+            message: 'Hotel added successfully',
+            data: hotel,
+        });
     } catch (error) {
-        console.error("Error saving/updating hotel:", error);
+        console.error("Error saving hotel:", error);
         res.status(500).json({ success: false, error: 'Server Error' });
     }
 };
+
+// Update Accommodation API
+const updateAccommodation = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedHotel = await AccommodationModel.findOneAndUpdate(
+            { id: id },
+            {
+                name: req.body.name,
+                address: req.body.address,
+                description: req.body.description,
+                image: req.body.cardImage,
+                category: req.body.category,
+                distance_from_city: req.body.distance_from_city,
+                perPerson_price: req.body.perPerson_price,
+                contactNumber: req.body.contactNumber,
+            },
+            { new: true }
+        );
+
+        if (updatedHotel) {
+            return res.json({
+                success: true,
+                message: 'Hotel updated successfully',
+                data: updatedHotel,
+            });
+        } else {
+            return res.status(404).json({ success: false, message: 'Hotel not found' });
+        }
+    } catch (error) {
+        console.error("Error updating hotel:", error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+};
+
 
 const getAllAccomodations = async (req, res) => {
     try {
@@ -131,7 +160,7 @@ const viewAccommodation = async (req, res) => {
     }
 };  
 
-export {  GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation, AddAccommodation }
+export { updateAccommodation,addAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation }
 
 
 
