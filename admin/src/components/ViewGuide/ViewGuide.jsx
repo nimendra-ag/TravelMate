@@ -84,7 +84,7 @@ const ViewGuide = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ marginTop: '70px' }}>
       <h2 className="fw-bold mb-4">Edit Guide</h2>
       <Form>
         <Row>

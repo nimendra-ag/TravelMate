@@ -97,7 +97,7 @@ const ViewDestination = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ marginTop: "60px" }}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
@@ -122,7 +122,7 @@ const ViewDestination = () => {
                 />
               </div>
               <h2 className="fw-bold" style={{ paddingBottom: "25px" }}>
-                Edit Destination
+                Update Destination
               </h2>
 
               <Form>

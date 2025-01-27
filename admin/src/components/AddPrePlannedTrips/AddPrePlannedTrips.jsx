@@ -7,7 +7,6 @@ const AddPrePlannedTrips = () => {
     name: "",
     mainDestinations: [""],
     guides: [""],
-    mainActivities: [""],
     price: "",
     duration: "",
     noOfTravelers: "",
@@ -18,11 +17,6 @@ const AddPrePlannedTrips = () => {
     description: "",
     availableDates: "",
     contactNumber: "",
-    whatsExpected: "",
-    whatsIncluded: "",
-    additionalInfo: "",
-    cancellationPolicy: "",
-    help: "",
   });
 
   // Handle single input field change
@@ -76,7 +70,6 @@ const AddPrePlannedTrips = () => {
         name: "",
         mainDestinations: "",
         guides: "",
-        mainActivities:"",
         price: "",
         duration: "",
         noOfTravelers: "",
@@ -100,7 +93,7 @@ const AddPrePlannedTrips = () => {
   };
 
   return (
-    <div className="AddPrePlannedTrips" style={{ marginTop: "1000px" }}>
+    <div className="AddPrePlannedTrips" style={{ marginTop: "330px" }}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
@@ -427,7 +420,6 @@ const AddPrePlannedTrips = () => {
                           </Row>
                         )
                       )}
-                     
                       <Button
                         variant="secondary"
                         onClick={() => addArrayField("mainDestinations")}
@@ -436,134 +428,7 @@ const AddPrePlannedTrips = () => {
                       </Button>
                     </Col>
                   </Row>
-                  <Row>
-                  <Col md="12">
-                      <Form.Group controlId="formWhatsExpected" className="mb-3">
-                        <Form.Label>What's Expected</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          rows={5}
-                          placeholder="Enter what's Expected"
-                          name="whatsExpected"
-                          value={prePlannedTripDetails.whatsExpected}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            borderWidth: "2px",
-                            resize: "none",
-                            whiteSpace: "pre-line",
-                          }}
-                        />
-                         <Row>
-                    <Col md="12">
-                      <Form.Label>Things to do</Form.Label>
-                      {prePlannedTripDetails.mainActivities.map((mainActivity, index) => (
-                        <Row key={index} className="mb-2">
-                          <Col md="10">
-                            <Form.Control
-                              type="text"
-                              placeholder={`Enter 3 things to do during the trip ${index + 1}`}
-                              value={mainActivity}
-                              onChange={(e) =>
-                                handleArrayChange(index, e, "mainActivities")
-                              }
-                            />
-                          </Col>
-                          <Col md="2">
-                            <Button
-                              variant="danger"
-                              onClick={() => removeArrayField(index, "mainActivities")}
-                            >
-                              Remove
-                            </Button>
-                          </Col>
-                        </Row>
-                      ))}
-                      <Button
-                        variant="secondary"
-                        onClick={() => addArrayField("mainActivities")}
-                      >
-                        Add Activity
-                      </Button>
-                    </Col>
-                  </Row>
-                      </Form.Group>
-                    </Col>
-                    <Col md="12">
-                      <Form.Group controlId="formWhatsIncluded" className="mb-3">
-                        <Form.Label>What's Included</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          rows={5}
-                          placeholder="Enter what's included"
-                          name="whatsIncluded"
-                          value={prePlannedTripDetails.whatsIncluded}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            borderWidth: "2px",
-                            resize: "none",
-                          }}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md="12">
-                      <Form.Group controlId="formAdditionalInfo" className="mb-3">
-                        <Form.Label>Additional Infomation</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          rows={5}
-                          placeholder="Enter additional info"
-                          name="additionalInfo"
-                          value={prePlannedTripDetails.additionalInfo}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            borderWidth: "2px",
-                            resize: "none",
-                          }}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                  <Col md="12">
-                      <Form.Group controlId="formCancellationPolicy" className="mb-3">
-                        <Form.Label>Cancellation Policy</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          rows={5}
-                          placeholder="Enter cancellation policy"
-                          name="cancellationPolicy"
-                          value={prePlannedTripDetails.cancellationPolicy}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            borderWidth: "2px",
-                            resize: "none",
-                          }}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md="12">
-                      <Form.Group controlId="formHelp" className="mb-3">
-                        <Form.Label>Help</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          rows={5}
-                          placeholder="Enter Help Infomation"
-                          name="help"
-                          value={prePlannedTripDetails.help}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            borderWidth: "2px",
-                            resize: "none",
-                          }}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
+
                   {successMessage && (
                     <div style={{ color: "green", marginTop: "20px" }}>
                       {successMessage}

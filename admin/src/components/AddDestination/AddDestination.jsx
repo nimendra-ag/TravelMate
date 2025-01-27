@@ -12,10 +12,11 @@ import {
   Tooltip,
   OverlayTrigger,
 } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
+import { useNavigate } from "react-router-dom";
 
 const AddDestination = () => {
   const [image, setImage] = useState(null);
+  const [errors, setErrors] = useState({});
   const [destinationDetails, setDestinationDetails] = useState({
     name: "",
     city: "",
@@ -32,41 +33,108 @@ const AddDestination = () => {
     ],
     description: "",
   });
+
   const categoryOptions = [
     { value: "Nature and Outdoors", label: "Nature and Outdoors" },
     { value: "Cultural and Historical", label: "Cultural and Historical" },
     { value: "Adventure and Activities", label: "Adventure and Activities" },
     { value: "Urban and Entertainment", label: "Urban and Entertainment" },
     { value: "Relaxation and Wellness", label: "Relaxation and Wellness" },
-    {
-      value: "Food and Drink Experiences",
-      label: "Food and Drink Experiences",
-    },
+    { value: "Food and Drink Experiences", label: "Food and Drink Experiences" },
     { value: "Other", label: "Other" },
   ];
-  const navigate = useNavigate(); 
+
+  const navigate = useNavigate();
+
+  const validateForm = () => {
+    let tempErrors = {};
+    let isValid = true;
+
+    if (!destinationDetails.name.trim()) {
+      tempErrors.name = "Destination name is required";
+      isValid = false;
+    }
+
+    if (!destinationDetails.city.trim()) {
+      tempErrors.city = "City is required";
+      isValid = false;
+    }
+
+    if (!destinationDetails.distanceFromColombo.trim()) {
+      tempErrors.distanceFromColombo = "Distance is required";
+      isValid = false;
+    }
+
+    if (destinationDetails.category.length === 0) {
+      tempErrors.category = "Please select at least one category";
+      isValid = false;
+    }
+
+    if (!destinationDetails.bestTimeToVisit.trim()) {
+      tempErrors.bestTimeToVisit = "Best time to visit is required";
+      isValid = false;
+    }
+
+    if (!destinationDetails.website.trim()) {
+      tempErrors.website = "Website URL is required";
+      isValid = false;
+    } else if (!/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/.test(destinationDetails.website)) {
+      tempErrors.website = "Please enter a valid URL";
+      isValid = false;
+    }
+
+    if (!destinationDetails.contactNumber.trim()) {
+      tempErrors.contactNumber = "Contact number is required";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(destinationDetails.contactNumber)) {
+      tempErrors.contactNumber = "Contact number must be 10 digits";
+      isValid = false;
+    }
+
+    if (!destinationDetails.openingHours[0].startTime || !destinationDetails.openingHours[0].endTime) {
+      tempErrors.openingHours = "Opening hours are required";
+      isValid = false;
+    }
+
+    if (!destinationDetails.description.trim()) {
+      tempErrors.description = "Description is required";
+      isValid = false;
+    }
+
+    setErrors(tempErrors);
+    return isValid;
+  };
 
   const handleMultiSelectChange = (selectedOptions, action) => {
     setDestinationDetails({
       ...destinationDetails,
       [action.name]: selectedOptions.map((option) => option.value),
     });
+    if (errors.category) {
+      setErrors({
+        ...errors,
+        category: "",
+      });
+    }
   };
 
-  // Handle file input for the image
   const imageHandler = (e) => {
     setImage(e.target.files[0]);
   };
 
-  // Handle change in text fields
   const changeHandler = (e) => {
     setDestinationDetails({
       ...destinationDetails,
       [e.target.name]: e.target.value,
     });
+    if (errors[e.target.name]) {
+      setErrors({
+        ...errors,
+        [e.target.name]: "",
+      });
+    }
   };
 
-  // Handle time change
   const handleTimeChange = (e, index, timeType) => {
     const updatedOpeningHours = [...destinationDetails.openingHours];
     updatedOpeningHours[index][timeType] = e.target.value;
@@ -74,19 +142,26 @@ const AddDestination = () => {
       ...destinationDetails,
       openingHours: updatedOpeningHours,
     });
+    if (errors.openingHours) {
+      setErrors({
+        ...errors,
+        openingHours: "",
+      });
+    }
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    console.log("Form submitted");
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
 
     try {
       const response = await axios.post(
         "http://localhost:3000/travelmate/addDestination",
         destinationDetails
       );
-      console.log("Destination added successfully", response.data);
 
       if (response.data.success) {
         alert("Destination added successfully!");
@@ -99,51 +174,39 @@ const AddDestination = () => {
           website: "",
           contactNumber: "",
           openingHours: [
-        {
-          startTime: "",
-          endTime: "",
-        },
-        ],
+            {
+              startTime: "",
+              endTime: "",
+            },
+          ],
           description: "",
         });
-        window.location.reload(); //Reload the page
+        window.location.reload();
       }
     } catch (error) {
       console.log("Error adding destination", error);
     }
   };
-
   return (
-    <div className="AddDestination">
+    <div className="AddDestination" style={{ marginTop: "60px" }}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
-          <div
-            className="d-flex justify-content-center align-items-center"
-            style={{ width: "100%" }}
-          >
-            <div
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.8)",
-                padding: "30px",
-                borderRadius: "15px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                maxWidth: "1200px",
-                width: "100%",
-              }}
-            >
+          <div className="d-flex justify-content-center align-items-center" style={{ width: "100%" }}>
+            <div style={{
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              padding: "30px",
+              borderRadius: "15px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              maxWidth: "1200px",
+              width: "100%",
+            }}>
               <div className="d-flex justify-content-left align-items-left">
-                <img
-                  src={AdminLogo}
-                  alt="Icon"
-                  style={{ height: "98px", paddingBottom: "33px" }}
-                />
+                <img src={AdminLogo} alt="Icon" style={{ height: "98px", paddingBottom: "33px" }} />
               </div>
-              <h2 className="fw-bold" style={{ paddingBottom: "25px" }}>
-                Add Destination
-              </h2>
+              <h2 className="fw-bold" style={{ paddingBottom: "25px" }}>Add Destination</h2>
 
               <Container style={{ maxWidth: "100%" }}>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col md="6">
                       <Form.Group controlId="formName" className="mb-3">
@@ -154,12 +217,16 @@ const AddDestination = () => {
                           name="name"
                           value={destinationDetails.name}
                           onChange={changeHandler}
+                          isInvalid={!!errors.name}
                           style={{
                             borderRadius: "10px",
                             height: "50px",
                             borderWidth: "2px",
                           }}
                         />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.name}
+                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
 
@@ -172,52 +239,53 @@ const AddDestination = () => {
                           name="website"
                           value={destinationDetails.website}
                           onChange={changeHandler}
+                          isInvalid={!!errors.website}
                           style={{
                             borderRadius: "10px",
                             height: "50px",
                             borderWidth: "2px",
                           }}
                         />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.website}
+                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                   </Row>
+
                   <Row>
                     {destinationDetails.openingHours.map((day, index) => (
                       <Col md="6" key={index} className="mb-3">
                         <Form.Group controlId={`formOpeningHours-${index}`}>
                           <Form.Label>Opening Hours</Form.Label>
                           <div style={{ display: "flex", gap: "10px" }}>
-                            <OverlayTrigger
-                              placement="top"
-                              overlay={<Tooltip>Opening time</Tooltip>}
-                            >
+                            <OverlayTrigger placement="top" overlay={<Tooltip>Opening time</Tooltip>}>
                               <Form.Control
                                 type="time"
                                 name="startTime"
                                 value={day.startTime}
-                                onChange={(e) =>
-                                  handleTimeChange(e, index, "startTime")
-                                }
+                                onChange={(e) => handleTimeChange(e, index, "startTime")}
+                                isInvalid={!!errors.openingHours}
                               />
                             </OverlayTrigger>
-                            <OverlayTrigger
-                              placement="top"
-                              overlay={<Tooltip>Closing time</Tooltip>}
-                            >
+                            <OverlayTrigger placement="top" overlay={<Tooltip>Closing time</Tooltip>}>
                               <Form.Control
                                 type="time"
                                 name="endTime"
                                 value={day.endTime}
-                                onChange={(e) =>
-                                  handleTimeChange(e, index, "endTime")
-                                }
+                                onChange={(e) => handleTimeChange(e, index, "endTime")}
+                                isInvalid={!!errors.openingHours}
                               />
                             </OverlayTrigger>
                           </div>
+                          {errors.openingHours && (
+                            <div className="invalid-feedback d-block">{errors.openingHours}</div>
+                          )}
                         </Form.Group>
                       </Col>
                     ))}
                   </Row>
+
                   <Row>
                     <Col md="6">
                       <Form.Group controlId="formCategory" className="mb-3">
@@ -230,15 +298,16 @@ const AddDestination = () => {
                             destinationDetails.category.includes(option.value)
                           )}
                           onChange={handleMultiSelectChange}
+                          className={errors.category ? 'is-invalid' : ''}
                         />
+                        {errors.category && (
+                          <div className="invalid-feedback d-block">{errors.category}</div>
+                        )}
                       </Form.Group>
                     </Col>
 
                     <Col md="6">
-                      <Form.Group
-                        controlId="formDistanceFromMainColombo"
-                        className="mb-3"
-                      >
+                      <Form.Group controlId="formDistanceFromMainColombo" className="mb-3">
                         <Form.Label>Distance from Colombo</Form.Label>
                         <Form.Control
                           type="text"
@@ -246,19 +315,22 @@ const AddDestination = () => {
                           name="distanceFromColombo"
                           value={destinationDetails.distanceFromColombo}
                           onChange={changeHandler}
+                          isInvalid={!!errors.distanceFromColombo}
                           style={{
                             borderRadius: "10px",
                             height: "50px",
                             borderWidth: "2px",
                           }}
                         />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.distanceFromColombo}
+                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
 
                     <Col md="6">
                       <Form.Group controlId="formContactNumber" className="mb-3">
                         <Form.Label>Contact Number</Form.Label>
-
                         <Form.Control
                           type="text"
                           placeholder="Enter the contact number"
@@ -266,14 +338,19 @@ const AddDestination = () => {
                           name="contactNumber"
                           value={destinationDetails.contactNumber}
                           onChange={changeHandler}
+                          isInvalid={!!errors.contactNumber}
                           style={{
                             borderRadius: "10px",
                             height: "50px",
                             borderWidth: "2px",
                           }}
                         />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.contactNumber}
+                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
+
                     <Col md="6">
                       <Form.Group controlId="city" className="mb-3">
                         <Form.Label>City</Form.Label>
@@ -283,14 +360,19 @@ const AddDestination = () => {
                           name="city"
                           value={destinationDetails.city}
                           onChange={changeHandler}
+                          isInvalid={!!errors.city}
                           style={{
                             borderRadius: "10px",
                             height: "50px",
                             borderWidth: "2px",
                           }}
                         />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.city}
+                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
+
                     <Col md="6">
                       <Form.Group controlId="bestTimeToVisit" className="mb-3">
                         <Form.Label>Best Time to Visit</Form.Label>
@@ -300,12 +382,16 @@ const AddDestination = () => {
                           name="bestTimeToVisit"
                           value={destinationDetails.bestTimeToVisit}
                           onChange={changeHandler}
+                          isInvalid={!!errors.bestTimeToVisit}
                           style={{
                             borderRadius: "10px",
                             height: "50px",
                             borderWidth: "2px",
                           }}
                         />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.bestTimeToVisit}
+                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                   </Row>
@@ -321,6 +407,7 @@ const AddDestination = () => {
                           name="description"
                           value={destinationDetails.description}
                           onChange={changeHandler}
+                          isInvalid={!!errors.description}
                           style={{
                             borderRadius: "10px",
                             borderWidth: "2px",
@@ -328,11 +415,14 @@ const AddDestination = () => {
                             height: "100px",
                           }}
                         />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.description}
+                        </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
                   </Row>
 
-                  <Button variant="primary" onClick={handleSubmit}>
+                  <Button variant="primary" type="submit">
                     Add Destination
                   </Button>
                 </Form>

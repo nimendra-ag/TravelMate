@@ -22,7 +22,7 @@ import ViewGuide from './components/ViewGuide/ViewGuide';
 import ViewDestination from './components/ViewDestination/ViewDestination';
 import ViewRestaurant from './components/ViewRestaurant/ViewRestaurant';
 import ViewTransportationService from './components/ViewTransportationServices/ViewTransportationServices';
-
+import PaymentDetailsForm from './components/CardPaymentDetailsForm/PaymentDetailsForm';
 
 const App = () => {
   
@@ -54,6 +54,7 @@ const App = () => {
             <Route path="/view-destination/:id" element={<ViewDestination />} />
             <Route path="/view-restaurant/:id" element={<ViewRestaurant />} />
             <Route path="/view-transportation-service/:id" element={<ViewTransportationService />} />
+            <Route path="/payment-details" element={<PaymentDetailsForm />} />
 
           </Routes>
         </div>
