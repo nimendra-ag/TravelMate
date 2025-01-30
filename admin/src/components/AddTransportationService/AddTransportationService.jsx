@@ -38,12 +38,6 @@ function AddTransportationService() {
     };
   }, []);
 
-  const handleMultiSelectChange = (selectedOptions, action) => {
-    setTransportationServiceDetails({
-      ...transportationServiceDetails,
-      [action.name]: selectedOptions.map((option) => option.value),
-    });
-  };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -69,14 +63,6 @@ function AddTransportationService() {
     if (indexToRemove !== -1) {
       setImagesToUpload(prev => prev.filter((_, index) => index !== indexToRemove));
     }
-  };
-
-
-  const changeHandler = (e) => {
-    setTransportationServiceDetails({
-      ...transportationServiceDetails,
-      [e.target.name]: e.target.value,
-    });
   };
 
   const handleSubmit = async (e) => {
@@ -133,7 +119,6 @@ function AddTransportationService() {
       formData.append("upload_preset", "preset-for-file-upload");
       formData.append("cloud_name", "dz4wm9iug");
 
-      
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/dqbkxghlh/image/upload",
         formData
@@ -147,7 +132,6 @@ function AddTransportationService() {
         });
       }
     }
-
     return uploadedUrls;
   };
 
@@ -174,118 +158,6 @@ function AddTransportationService() {
               <Container style={{ maxWidth: "100%" }}>
                 <Form>
                   <Row>
-                    <Col md="6">
-                      <Form.Group controlId="formTransportationServiceName" className="mb-3">
-                        <Form.Label>Transportation Service Name</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter the new transportation service"
-                          name="transportationServiceName"
-                          value={transportationServiceDetails.transportationServiceName}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            height: "50px",
-                            borderWidth: "2px",
-                          }}
-                        />
-                      </Form.Group>
-                    </Col>
-
-                    <Col md="6">
-                      <Form.Group controlId="formAvailableVehicles" className="mb-3">
-                        <Form.Label>Available Vehicles</Form.Label>
-                        <Select
-                          isMulti
-                          name="availableVehicles"
-                          options={availableVehicleOptions}
-                          value={availableVehicleOptions.filter((option) =>
-                            transportationServiceDetails.availableVehicles.includes(option.value)
-                          )}
-                          onChange={handleMultiSelectChange}
-                        />
-                        {transportationServiceDetails.availableVehicles.includes("Other") && (
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter other vehicles"
-                            name="otherVehicles"
-                            value={transportationServiceDetails.otherVehicles}
-                            onChange={changeHandler}
-                            className="mt-2"
-                          />
-                        )}
-                      </Form.Group>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col md="6">
-                      <Form.Group controlId="formAddress" className="mb-3">
-                        <Form.Label>Address</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          placeholder="Enter the address"
-                          name="address"
-                          value={transportationServiceDetails.address}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            borderWidth: "2px",
-                            resize: "none",
-                            height: "100px",
-                          }}
-                        />
-                      </Form.Group>
-                    </Col>
-
-                    <Col md="6">
-                      <Form.Group controlId="formContactNumber" className="mb-3">
-                        <Form.Label>Contact Number</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter the contact number"
-                          maxLength="10"
-                          name="contactNumber"
-                          value={transportationServiceDetails.contactNumber}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            height: "50px",
-                            borderWidth: "2px",
-                          }}
-                        />
-                      </Form.Group>
-                    </Col>
-
-                    <Col md="6">
-                      <Form.Group controlId="formPricePerHour" className="mb-3">
-                        <Form.Label>Price</Form.Label>
-                        <InputGroup>
-                          <Form.Control
-                            type="number"
-                            placeholder="Enter Price per Hour"
-                            name="pricePerHour"
-                            value={transportationServiceDetails.pricePerHour}
-                            onChange={changeHandler}
-                            style={{
-                              borderRadius: "10px 0 0 10px",
-                              height: "50px",
-                              borderWidth: "2px",
-                            }}
-                          />
-                          <InputGroup.Text
-                            style={{
-                              borderRadius: "0 10px 10px 0",
-                              height: "50px",
-                              borderWidth: "2px",
-                            }}
-                          >
-                            $ per hour
-                          </InputGroup.Text>
-                        </InputGroup>
-                      </Form.Group>
-                    </Col>
-
                     <Col md="12">
                       <Form.Group controlId="formFile" className="mb-3">
                         <Form.Label>Upload Images</Form.Label>
@@ -367,36 +239,16 @@ function AddTransportationService() {
                                 </button>
                               </div>
                             ))}
-
-
                           </div>
                         </div>
                       )}
-                    </Col>
-
-                    <Col md="12">
-                      <Form.Group controlId="formDescription" className="mb-3">
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control
-                          as="textarea"
-                          placeholder="Enter a brief description"
-                          name="description"
-                          value={transportationServiceDetails.description}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            borderWidth: "2px",
-                            resize: "none",
-                            height: "100px",
-                          }}
-                        />
-                      </Form.Group>
                     </Col>
                   </Row>
 
                   <Button variant="primary" onClick={handleSubmit}>
                     Add Transportation Service
                   </Button>
+                  
                 </Form>
               </Container>
             </div>
