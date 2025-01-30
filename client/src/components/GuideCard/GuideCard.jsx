@@ -13,7 +13,7 @@ const GuideCard = ({ id, name, description, area, languages, chargesPerDay, prof
       <div className="guide-card-header">
         <div className="profile-image-container">
           <Image 
-            src={profileImg || "https://picsum.photos/150"}
+            src={profileImg || "https://picsum.photos/550"}
             roundedCircle 
             className="profile-image"
           />

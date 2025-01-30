@@ -79,7 +79,7 @@ function App() {
           </Route>
 
 
-          <Route path="/guide/:id" element={<GuidPage />} />
+          <Route path="/guide/:id" element={<GuidPage/>} />
 
 
           <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ClientContext } from '../../../context/ClientContext';
 import { DatePicker } from 'antd';
-import { FaPhone, FaWhatsapp, FaLanguage, FaMapMarkedAlt, FaStar, FaCalendarAlt, FaMoneyBillWave, FaBirthdayCake, FaPhoneAlt, FaIdCard } from 'react-icons/fa';
+import { FaPhone, FaWhatsapp, FaLanguage, FaMapMarkedAlt, FaStar, FaCalendarAlt, FaMoneyBillWave, FaBirthdayCake, FaPhoneAlt, FaIdCard, FaMapMarkerAlt } from 'react-icons/fa';
 import './GuidPage.css';
 import moment from 'moment';
 import axios from 'axios';
@@ -46,15 +46,15 @@ const GuidPage = () => {
 
     const checkAvailability = (newFromDate, newToDate, existingBookings) => {
         console.log(newFromDate, newToDate, existingBookings);
-        
+
         // Convert input dates to moment objects for better comparison
         const checkStart = moment(newFromDate, "DD-MM-YYYY");
         const checkEnd = moment(newToDate, "DD-MM-YYYY");
-    
+
         for (const booking of existingBookings) {
             const existingStart = moment(booking.fromDate, "DD-MM-YYYY");
             const existingEnd = moment(booking.toDate, "DD-MM-YYYY");
-    
+
             // All possible overlap scenarios:
             const isOverlapping = (
                 // New booking starts during existing booking
@@ -68,14 +68,14 @@ const GuidPage = () => {
                 // Same day bookings
                 checkStart.isSame(existingStart) || checkEnd.isSame(existingEnd)
             );
-    
+
             if (isOverlapping) {
                 return false;
             }
         }
         return true;
     };
-    
+
 
     const handleAvailabilityCheck = () => {
         const available = checkAvailability(fromDate, toDate, guid.bookings);
@@ -103,21 +103,19 @@ const GuidPage = () => {
                     totaldays: moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1,
                     totalprice: guid?.chargesPerDay * (moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1),
                 };
-
                 setData(bookingData);
-
                 try {
                     axios.post("http://localhost:3000/booking/bookguide", bookingData)
                         .then((res) => {
-                            mySwal.fire("Success", "Booking confirmed successfully!", "success")  .then(() => {
+                            mySwal.fire("Success", "Booking confirmed successfully!", "success").then(() => {
                                 setTimeout(() => {
                                     navigator("/")
                                     window.location.reload();
-                                   
+
                                 }, 1000);
                             });
                         })
-                        .catch((err) => { 
+                        .catch((err) => {
                             console.log(err);
                             mySwal.fire("Error", "Failed to confirm booking", "error");
                         });
@@ -134,24 +132,156 @@ const GuidPage = () => {
     return (
         <div className='container py-5'>
             {/* Hero Section */}
-            <div className="card border-0 shadow-lg mb-5">
+
+            <div style={{
+                maxWidth: '1000px',
+                margin: '0 auto',
+                backgroundColor: '#ffffff',
+                borderRadius: '10px',
+                overflow: 'hidden',
+                // boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+            }}>
                 <div className="row g-0">
-                    <div className="col-md-6">
-                        <img
-                            src={guid?.imageUrl || "https://picsum.photos/800/600"}
-                            className="img-fluid rounded-start h-100 object-fit-cover"
-                            alt={guid?.name}
-                        />
+                    <div className="col-md-4" style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '30px',
+                        // backgroundColor: '#f8f9fa'
+                    }}>
+                        <div style={{
+                            width: '250px',
+                            height: '250px',
+                            borderRadius: '50%',
+                            overflow: 'hidden',
+                            // border: '5px solid white',
+                            // boxShadow: '0 5px 15px rgba(0,0,0,0.2)',
+                            // margin: '20px 0'
+                        }}>
+                            <img
+                                src={guid?.imageUrl || "https://picsum.photos/500"}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    objectPosition: 'center'
+                                }}
+                                alt={guid?.name}
+                            />
+                        </div>
+                        {/* <div style={{
+                            backgroundColor: '#2196f3',
+                            color: 'white',
+                            padding: '8px 16px',
+                            borderRadius: '20px',
+                            fontSize: '0.9rem',
+                            marginTop: '15px'
+                        }}>
+                            Professional Guide
+                        </div> */}
                     </div>
-                    <div className="col-md-6">
-                        <div className="card-body p-4 p-md-5">
-                            <h1 className="display-4 fw-bold mb-4">{guid?.name}</h1>
-                            <p className="lead mb-4">{guid?.description}</p>
-                            <div className="d-flex gap-3">
-                                <button className="btn btn-primary btn-lg d-flex align-items-center gap-2">
+
+                    <div className="col-md-8">
+                        <div style={{
+                            padding: '30px',
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between'
+                        }}>
+                            <div>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '12px',
+                                    marginBottom: '15px'
+                                }}>
+                                    <h1 style={{
+                                        fontSize: '1.8rem',
+                                        fontWeight: '700',
+                                        margin: 0,
+                                        color: '#1a1a1a'
+                                    }}>
+                                        {guid?.name}
+                                    </h1>
+                                    {/* <div style={{
+                                        backgroundColor: '#4CAF50',
+                                        width: '10px',
+                                        height: '10px',
+                                        borderRadius: '50%'
+                                    }}></div> */}
+                                </div>
+
+                                <div style={{
+                                    display: 'flex',
+                                    gap: '10px',
+                                    marginBottom: '20px'
+                                }}>
+                                    <span style={{
+                                        backgroundColor: '#f5f5f5',
+                                        padding: '6px 12px',
+                                        borderRadius: '15px',
+                                        fontSize: '0.9rem'
+                                    }}>
+                                        <FaStar style={{ color: '#ffd700', marginRight: '5px' }} /> 4.9
+                                    </span>
+                                    <span style={{
+                                        backgroundColor: '#f5f5f5',
+                                        padding: '6px 12px',
+                                        borderRadius: '15px',
+                                        fontSize: '0.9rem'
+                                    }}>
+                                        <FaMapMarkerAlt style={{ color: '#ff4444', marginRight: '5px' }} /> Local Expert
+                                    </span>
+                                </div>
+
+                                <p style={{
+                                    fontSize: '0.95rem',
+                                    lineHeight: '1.6',
+                                    color: '#666',
+                                    marginBottom: '25px'
+                                }}>
+                                    {guid?.description} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta, ratione nam fugit laborum velit rem, nulla in sunt consequatur tempora dolor quia itaque amet magnam blanditiis. Quam quisquam quas optio?
+                                </p>
+                            </div>
+
+                            <div style={{
+                                display: 'flex',
+                                gap: '12px',
+                                marginTop: 'auto'
+                            }}>
+                                <button style={{
+                                    flex: 1,
+                                    padding: '12px 20px',
+                                    borderRadius: '10px',
+                                    border: 'none',
+                                    backgroundColor: '#0d6efd',
+                                    color: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '8px',
+                                    fontSize: '0.95rem',
+                                    cursor: 'pointer',
+                                    transition: 'transform 0.2s',
+                                }}>
                                     <FaPhone /> Call Now
                                 </button>
-                                <button className="btn btn-success btn-lg d-flex align-items-center gap-2">
+                                <button style={{
+                                    flex: 1,
+                                    padding: '12px 20px',
+                                    borderRadius: '10px',
+                                    border: 'none',
+                                    backgroundColor: '#25D366',
+                                    color: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '8px',
+                                    fontSize: '0.95rem',
+                                    cursor: 'pointer',
+                                    transition: 'transform 0.2s',
+                                }}>
                                     <FaWhatsapp /> WhatsApp
                                 </button>
                             </div>
@@ -160,10 +290,12 @@ const GuidPage = () => {
                 </div>
             </div>
 
-            <div className="row">
+
+
+            <div className="row mt-5">
                 {/* Booking Section */}
                 <div className="col-md-4 mb-4">
-                    <div className="card shadow-sm">
+                    <div className="card">
                         <div className="card-body">
                             <h4 className="card-title mb-4">
                                 <FaCalendarAlt className="me-2 text-primary" />
@@ -182,52 +314,31 @@ const GuidPage = () => {
                                     Please select dates to proceed
                                 </div>
                             ) : (
-
                                 <div>
                                     <button onClick={handleAvailabilityCheck} className="btn btn-primary w-100 py-3 mt-3">
                                         Check Availability
                                     </button>
                                     {isAvailable &&
-
                                         <div>
-
                                             <div className="text-success mt-2 text-center">These Dates are Available ! </div>
-
-
-
                                             <button onClick={bookingHandler} className="btn btn-primary w-100 py-3 mt-3">
                                                 Book Now
                                             </button>
-
-
                                         </div>
                                     }
 
-
-
-
-
-
                                     {isAvailable === false && <div className="text-danger mt-2 text-center">These dates are not available</div>}
 
-
                                 </div>
-
                             )
-
-
-
                             }
-
-
-
                         </div>
                     </div>
                 </div>
 
                 {/* Guide Details Section */}
                 <div className="col-md-8">
-                    <div className="card shadow-sm">
+                    <div className="card">
                         <div className="card-body">
                             <h2 className="card-title mb-4">About {guid?.name}</h2>
 
