@@ -2,16 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import AdminLogo from "../../assets/TravelMateAdminLogo.png";
 import Select from "react-select";
-import {
-  InputGroup,
-  Form,
-  Col,
-  Row,
-  Container,
-  Button,
-  Tooltip,
-  OverlayTrigger,
-} from "react-bootstrap";
+import { InputGroup, Form, Col, Row, Container, Button, Tooltip, OverlayTrigger} from "react-bootstrap";
 import { useNavigate } from "react-router-dom"; 
 
 const AddRestaurant = () => {
