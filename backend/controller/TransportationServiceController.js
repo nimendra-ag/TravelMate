@@ -4,7 +4,7 @@ import { TransportationServiceModel } from "../models/Transportation.js"
 
 const AddTransportationService = async (req, res) => {
 
-    // console.log(req.body.transportationServiceName);
+    console.log(req.body);
     
     try {
 
@@ -15,7 +15,7 @@ const AddTransportationService = async (req, res) => {
             transportationServiceName: req.body.transportationServiceName,
             availableVehicles: req.body.availableVehicles,
             pricePerHour: req.body.pricePerHour,
-            // image: req.file.path || req.file.secure_url,
+            images: req.body.images,
             address: req.body.address,
             contactNumber: req.body.contactNumber,
             description: req.body.description,

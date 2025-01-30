@@ -101,16 +101,17 @@ function AddTransportationService() {
 
     console.log("form data with images", transportationServiceDetails);
     try {
+      console.log("Before axios", transportationServiceDetails);
       const response = await axios.post(
         "http://localhost:3000/travelmate/add-transportation-service",
         transportationServiceDetails,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
       );
-      navigate("/");
+      if(response.data.success){
+        alert("Transportation Service added successfully");
+      }
+      else{
+        alert("Failed to add Transportation Service");
+      }
     } catch (error) {
       console.log("Error updating profile", error);
     }
