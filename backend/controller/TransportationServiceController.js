@@ -23,11 +23,11 @@ const AddTransportationService = async (req, res) => {
         });
 
         // Save the transportation service to the database
-        await transportMode.save();
+        await transportationService.save();
         return res.json({
             success: true,
             message: 'Transportation service added successfully',
-            data: transportMode,
+            data: transportationService,
         });
     } catch (error) {
         console.error('Error adding transportation service:', error);
@@ -131,4 +131,4 @@ const viewTransportationService = async (req, res) => {
 };
 
 
-export { addTransportationServices, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService}
+export { AddTransportationService, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService}

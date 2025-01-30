@@ -1,6 +1,6 @@
 import express from 'express';
 import { UpdateGuide,AddGuide, getAllGuides,deleteGuide,viewGuide } from '../controller/GuideController.js';
-import { addTransportationServices, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService } from '../controller/TransportationServiceController.js';
+import { AddTransportationService, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService } from '../controller/TransportationServiceController.js';
 import { AddRestaurant, getAllRestaurants ,UpdateRestaurant,deleteRestaurant,viewRestaurant, addRestaurantReview, getAllRestaurantReviews} from '../controller/RestaurantController.js';
 import { AddDestination,UpdateDestination,getAllDestinations,DeleteDestination,viewDestination } from '../controller/DestinationController.js';
 
@@ -50,7 +50,7 @@ router.get('/viewGuide/:id', viewGuide)
 
 router.get("/allTransportationServices", getAllTransportationServices)
 
-router.post("/add-transportation-service", addTransportationServices)
+router.post("/add-transportation-service", AddTransportationService)
 
 router.put("/updateTransportationService/:id",UpdateTransportationService )
 

@@ -210,7 +210,6 @@ function AddTransportationService() {
 
     } catch (error) {
       console.log("Error adding transportation service", error);
-      console.log("Error adding transportation service", error);
     }
   };
 
