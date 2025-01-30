@@ -6,9 +6,12 @@ const HotelRoom = ({ name, type, price, capacity, available, id, fromDate, toDat
     const navigate = useNavigate();
 
     const handleBook = (from, to, id, hid) => {
-        navigate(`/conhotelbook/${from}/${to}/${id}/${hid}`);
+        navigate(`/conhotelbook/${from}/${to}/${id}/${hid}/${available}`);
         console.log(toDate);
     };
+
+
+    
 
     return (
         <div className="container my-4">
@@ -43,7 +46,10 @@ const HotelRoom = ({ name, type, price, capacity, available, id, fromDate, toDat
                                     <div className="mb-3">
                                         <i className="fas fa-dollar-sign text-primary me-2"></i>
                                         <span className="fw-bold">Price per Night:</span>
+
                                         <span className="ms-2">${price}</span>
+                                        
+
                                     </div>
                                     <div className="mb-3">
                                         <i className="fas fa-users text-primary me-2"></i>

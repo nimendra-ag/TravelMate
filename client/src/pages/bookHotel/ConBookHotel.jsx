@@ -8,11 +8,13 @@ import withReactContent from 'sweetalert2-react-content';
 import './bookHotel.css';
 
 const ConBookHotel = () => {
-    const { from, to, id, hid } = useParams();
+    const { from, to, id, hid} = useParams();
+    const { available } = useParams();
     const { allAccommodations } = useContext(ClientContext);
     const accommodation = allAccommodations?.find((e) => e.id === parseInt(hid));
     const room = accommodation?.rooms[id];
-    const ar = room?.available;
+
+    
     const [selectedValue, setSelectedValue] = useState(1);
     const navigator = useNavigate();
 
@@ -65,6 +67,14 @@ const ConBookHotel = () => {
             }
         });
     };
+
+    console.log("==========================");
+    console.log(available);
+    
+    
+
+
+    
 
     return (
         <div className="container-fluid py-5" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)' }}>
@@ -119,7 +129,7 @@ const ConBookHotel = () => {
                                             className="form-select form-select-lg mb-3" 
                                             onChange={handleChange}
                                         >
-                                            {Array.from({ length: ar }, (_, i) => (
+                                            {Array.from({ length: available }, (_, i) => (
                                                 <option key={i + 1} value={i + 1}>{i + 1} Room(s)</option>
                                             ))}
                                         </select>

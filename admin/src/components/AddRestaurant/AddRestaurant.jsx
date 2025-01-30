@@ -12,8 +12,10 @@ import {
   Tooltip,
   OverlayTrigger,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; 
 
 const AddRestaurant = () => {
+  const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [restaurantDetails, setRestaurantDetails] = useState({
     name: "",
@@ -88,9 +90,26 @@ const AddRestaurant = () => {
         "http://localhost:3000/travelmate/add-restaurant",
         restaurantDetails
       );
-      // console.log("Profile updated successfully", response.data);
+      console.log("Resturant added successfully", response.data);
 
-      navigate("/");
+      if (response.data.success) {
+        alert("Restaurant added successfully!");
+        setRestaurantDetails({
+          name: "",
+         category: [],
+         mainCategory: "",
+          address: "",
+        contactNumber: "",
+        email: "",
+        website: "",
+        openingHours: [{ startTime: "", endTime: "" }],
+        priceRange: [],
+        description: "",
+        });
+
+      
+        window.location.reload(); //Reload the page
+      }
     } catch (error) {
       console.log("Error updating profile", error);
     }

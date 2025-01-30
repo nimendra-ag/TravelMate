@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { ClientContext } from "../../context/ClientContext";
 import { useParams } from "react-router-dom";
 import PrePlannedTripsInLandingPage from "../../components/prePlannedTripsInLandingPage/PrePlannedTripsInLandingPage.jsx";
-import Footer from "../../components/footer/Footer.jsx";
 import PrePlannedTripsMainSection from "../../components/prePlannedTripsMainSection/PrePlannedTripsMainSection.jsx";
 import PrePlannedTripsInfo from "../../components/prePlannedTripsInfo/PrePlannedTripsInfo.jsx";
 import PrePlannedTripBookingForm from "../../components/prePlannedTripBookingForm/PrePlannedTripBookingForm.jsx";
@@ -69,7 +68,6 @@ const PrePlannedTripsMainPage = () => {
           <PrePlannedTripsInLandingPage
           header="Similar Experiences"
           />
-          <Footer />
         </>
       ) : (
         <></>

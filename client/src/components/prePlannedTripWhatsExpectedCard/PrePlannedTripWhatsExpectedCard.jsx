@@ -8,7 +8,7 @@ const PrePlannedTripWhatsExpectedCard = ({ images, mainActivities }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 10000); // 10000ms = 10 seconds
+    }, 5000); // 5000ms = 5 seconds
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [images]);

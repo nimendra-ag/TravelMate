@@ -1,78 +1,102 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./PrePlannedTripBookingForm.css";
 import { Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const PrePlannedTripBookingForm = () => {
   const navigate = useNavigate();
   const { tripId } = useParams();
 
-  const [prePlannedTripBookingDetails, setPrePlannedTripBookingDetails] =
-    useState({
-      prePlannedTripId: tripId,
-      date: "",
-      travelerName: "",
-      email: "",
-      phone: "",
-      adults: 1,
-      kids: 0,
-    });
+  const [prePlannedTripBookingDetails, setPrePlannedTripBookingDetails] = useState({
+    prePlannedTripId: tripId,
+    date: "",
+    travelerName: "",
+    email: "",
+    phone: "",
+    adults: 1,
+    kids: 0,
+  });
 
   const [errors, setErrors] = useState({});
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [touched, setTouched] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Validation logic
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!prePlannedTripBookingDetails.date) {
-      newErrors.date = "Date is required.";
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'date':
+        return !value ? 'Date is required' : '';
+      case 'travelerName':
+        return !value.trim() ? 'Traveler name is required' : 
+               value.length < 3 ? 'Name must be at least 3 characters' : '';
+      case 'email':
+        return !value ? 'Email is required' : 
+               !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? 'Invalid email format' : '';
+      case 'phone':
+        return !value ? 'Phone number is required' : 
+               !/^\d{10}$/.test(value) ? 'Phone number must be 10 digits' : '';
+      case 'adults':
+        return value < 1 ? 'At least 1 adult is required' : '';
+      case 'kids':
+        return value < 0 ? 'Kids count cannot be negative' : '';
+      default:
+        return '';
     }
-    if (!prePlannedTripBookingDetails.travelerName.trim()) {
-      newErrors.travelerName = "Traveler name is required.";
-    }
-    if (!prePlannedTripBookingDetails.email) {
-      newErrors.email = "Email is required.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(prePlannedTripBookingDetails.email)) {
-      newErrors.email = "Invalid email format.";
-    }
-    if (!prePlannedTripBookingDetails.phone) {
-      newErrors.phone = "Phone number is required.";
-    } else if (!/^\d{10}$/.test(prePlannedTripBookingDetails.phone)) {
-      newErrors.phone = "Phone number must be 10 digits.";
-    }
-    if (prePlannedTripBookingDetails.adults <= 0) {
-      newErrors.adults = "There must be at least 1 adult.";
-    }
-    if (prePlannedTripBookingDetails.kids < 0) {
-      newErrors.kids = "Kids count cannot be negative.";
-    }
-
-    setErrors(newErrors);
-
-    // Check if there are no errors
-    setIsFormValid(Object.keys(newErrors).length === 0);
   };
 
-  useEffect(() => {
-    validateForm(); // Validate form on initial render and whenever state changes
-  }, [prePlannedTripBookingDetails]);
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    Object.keys(prePlannedTripBookingDetails).forEach(key => {
+      const error = validateField(key, prePlannedTripBookingDetails[key]);
+      if (error) {
+        newErrors[key] = error;
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    setPrePlannedTripBookingDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
+    setPrePlannedTripBookingDetails(prev => ({
+      ...prev,
+      [name]: value
     }));
+    
+    if (touched[name]) {
+      const error = validateField(name, value);
+      setErrors(prev => ({
+        ...prev,
+        [name]: error
+      }));
+    }
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const touchedFields = {};
+    Object.keys(prePlannedTripBookingDetails).forEach(key => {
+      touchedFields[key] = true;
+    });
+    setTouched(touchedFields);
 
-    if (!isFormValid) {
-      return; // Prevent submission if the form is invalid
+    if (!validateForm()) {
+      setIsSubmitting(false);
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'Validation Error',
+      //   text: 'Please fill all required fields correctly',
+      //   timer: 2000
+      // });
+      return;
     }
 
     try {
@@ -81,31 +105,40 @@ const PrePlannedTripBookingForm = () => {
         prePlannedTripBookingDetails
       );
 
-      console.log("Booking saved successfully:", response.data);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Registered Successfully!",
+        showConfirmButton: false,
+        timer: 1500
+      });
 
-      // Show success notification
-      window.alert("Booking successfully completed!");
-
-      // Navigate to the trip details page
-      navigate(`/pre-planned-trips/${tripId}`);
+      setTimeout(() => {
+        navigate(`/pre-planned-trips/${tripId}`);
+      }, 1500);
     } catch (error) {
-      console.error("Error saving booking:", error);
-
-      // Show error notification
-      window.alert("Error saving booking. Please try again later.");
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Registration failed",
+        text: error.response?.data?.message || 'Something went wrong',
+        showConfirmButton: false,
+        timer: 1800
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="booking-container">
-      {/* Form Section */}
       <div className="form-section">
         <h1>Book the Trip</h1>
         <p>
           Amazing stuff waiting for you and your friends / family! <br />
           You're just one step away from a new adventure.
         </p>
-        <form className="booking-form" onSubmit={handleSubmit}>
+        <form className="booking-form" onSubmit={handleSubmit} noValidate>
           <Row>
             <Col>
               <div className="form-group">
@@ -116,12 +149,16 @@ const PrePlannedTripBookingForm = () => {
                   name="date"
                   value={prePlannedTripBookingDetails.date}
                   onChange={changeHandler}
-                  aria-invalid={errors.date ? "true" : "false"}
+                  onBlur={handleBlur}
+                  className={touched.date && errors.date ? 'error-input' : ''}
+                  required
                 />
-                {errors.date && <span className="error">{errors.date}</span>}
+                {touched.date && errors.date && 
+                  <span className="error-message">{errors.date}</span>}
               </div>
             </Col>
           </Row>
+
           <div className="form-group">
             <label htmlFor="travelerName">Your Name</label>
             <input
@@ -130,13 +167,15 @@ const PrePlannedTripBookingForm = () => {
               name="travelerName"
               value={prePlannedTripBookingDetails.travelerName}
               onChange={changeHandler}
+              onBlur={handleBlur}
               placeholder="Enter your full name"
-              aria-invalid={errors.travelerName ? "true" : "false"}
+              className={touched.travelerName && errors.travelerName ? 'error-input' : ''}
+              required
             />
-            {errors.travelerName && (
-              <span className="error">{errors.travelerName}</span>
-            )}
+            {touched.travelerName && errors.travelerName && 
+              <span className="error-message">{errors.travelerName}</span>}
           </div>
+
           <div className="form-group">
             <label htmlFor="email">E-Mail Address</label>
             <input
@@ -145,11 +184,15 @@ const PrePlannedTripBookingForm = () => {
               name="email"
               value={prePlannedTripBookingDetails.email}
               onChange={changeHandler}
+              onBlur={handleBlur}
               placeholder="Enter your e-mail address"
-              aria-invalid={errors.email ? "true" : "false"}
+              className={touched.email && errors.email ? 'error-input' : ''}
+              required
             />
-            {errors.email && <span className="error">{errors.email}</span>}
+            {touched.email && errors.email && 
+              <span className="error-message">{errors.email}</span>}
           </div>
+
           <div className="form-group">
             <label htmlFor="phone">Phone Number</label>
             <input
@@ -158,11 +201,15 @@ const PrePlannedTripBookingForm = () => {
               name="phone"
               value={prePlannedTripBookingDetails.phone}
               onChange={changeHandler}
+              onBlur={handleBlur}
               placeholder="Enter your phone number"
-              aria-invalid={errors.phone ? "true" : "false"}
+              className={touched.phone && errors.phone ? 'error-input' : ''}
+              required
             />
-            {errors.phone && <span className="error">{errors.phone}</span>}
+            {touched.phone && errors.phone && 
+              <span className="error-message">{errors.phone}</span>}
           </div>
+
           <Row>
             <Col>
               <div className="form-group small-inputs">
@@ -173,10 +220,14 @@ const PrePlannedTripBookingForm = () => {
                   name="adults"
                   value={prePlannedTripBookingDetails.adults}
                   onChange={changeHandler}
+                  onBlur={handleBlur}
                   min="1"
-                  aria-invalid={errors.adults ? "true" : "false"}
+                  className={touched.adults && errors.adults ? 'error-input' : ''}
+                  required
                 />
-                {errors.adults && <span className="error">{errors.adults}</span>}
+                {touched.adults && errors.adults && 
+                  <span className="error-message">{errors.adults}</span>}
+
                 <label htmlFor="kids">Kids</label>
                 <input
                   type="number"
@@ -184,23 +235,25 @@ const PrePlannedTripBookingForm = () => {
                   name="kids"
                   value={prePlannedTripBookingDetails.kids}
                   onChange={changeHandler}
+                  onBlur={handleBlur}
                   min="0"
-                  aria-invalid={errors.kids ? "true" : "false"}
+                  className={touched.kids && errors.kids ? 'error-input' : ''}
                 />
-                {errors.kids && <span className="error">{errors.kids}</span>}
+                {touched.kids && errors.kids && 
+                  <span className="error-message">{errors.kids}</span>}
               </div>
             </Col>
           </Row>
+
           <button
             type="submit"
             className="submit-btn"
-            disabled={!isFormValid}
+            disabled={isSubmitting}
           >
-            Complete your booking
+            {isSubmitting ? 'Processing...' : 'Complete your booking'}
           </button>
         </form>
       </div>
-      {/* Image Section */}
       <div className="image-section">
         <img src="https://picsum.photos/500/700" alt="Travel Background" />
       </div>

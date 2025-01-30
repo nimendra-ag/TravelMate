@@ -8,7 +8,7 @@ import SigninModal from '../signinModal/SigninModal';
 const Hero = () => {
     return (
         <>
-            <NavbarComponent />
+            {/* <NavbarComponent /> */}
             <header className="hero-section">
                 <div className="banner-text">
                     <p className="hero-tagline">

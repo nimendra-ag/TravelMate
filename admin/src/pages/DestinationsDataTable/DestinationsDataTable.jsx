@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
+import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 
 const DestinationsDataTable = () => {
+  const navigate = useNavigate();
   const columns = [
     {
       name: 'Name',
@@ -11,18 +14,25 @@ const DestinationsDataTable = () => {
     {
       name: 'Description',
       selector: row => row.description,
+      cell: row => (
+        <span>
+          {row.description.length > 20
+            ? `${row.description.substring(0, 20)}...`
+            : row.description}
+        </span>
+      ),
     },
     {
-      name: 'Availability',
-      selector: row => row.availability,
+      name: 'City',
+      selector: row => row.city,
     },
     {
-      name: 'Rate',
-      selector: row => row.rate,
+      name: 'Category',
+      selector: row => row.category,
     },
     {
-      name: 'Area',
-      selector: row => row.area,
+      name: 'Website',
+      selector: row => row.website,
     },
     {
       name: 'View More',
@@ -47,67 +57,76 @@ const DestinationsDataTable = () => {
     },
   ];
 
-  const initialData = [
-    { name: 'Destination 1', description: 'Description 1', availability: 'Available', rate: 'Rate 1', area: 'Area 1' },
-    { name: 'Destination 2', description: 'Description 2', availability: 'Full', rate: 'Rate 2', area: 'Area 2' },
-    { name: 'Destination 3', description: 'Description 3', availability: 'Available', rate: 'Rate 3', area: 'Area 3' },
-    { name: 'Destination 4', description: 'Description 4', availability: 'Full', rate: 'Rate 4', area: 'Area 4' },
-    { name: 'Destination 5', description: 'Description 5', availability: 'Available', rate: 'Rate 5', area: 'Area 5' },
-    { name: 'Destination 6', description: 'Description 6', availability: 'Full', rate: 'Rate 6', area: 'Area 6' },
-    { name: 'Destination 7', description: 'Description 7', availability: 'Available', rate: 'Rate 7', area: 'Area 7' },
-    { name: 'Destination 8', description: 'Description 8', availability: 'Full', rate: 'Rate 8', area: 'Area 8' },
-    { name: 'Destination 9', description: 'Description 9', availability: 'Available', rate: 'Rate 9', area: 'Area 9' },
-    { name: 'Destination 10', description: 'Description 10', availability: 'Full', rate: 'Rate 10', area: 'Area 10' },
-    { name: 'Destination 11', description: 'Description 11', availability: 'Available', rate: 'Rate 11', area: 'Area 11' },
-    { name: 'Destination 12', description: 'Description 12', availability: 'Full', rate: 'Rate 12', area: 'Area 12' },
-    { name: 'Destination 13', description: 'Description 13', availability: 'Available', rate: 'Rate 13', area: 'Area 13' }
-    
-  ];
-
-  const [records, setRecords] = useState(initialData);
+  const [records, setRecords] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [filteredRecords, setFilteredRecords] = useState([]);
+
+  // Fetch data from API
+  useEffect(() => {
+    axios.get('http://localhost:3000/travelmate/allDestinations')
+      .then(response => {
+        setRecords(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
   function handleFilter(event) {
-    const newData = initialData.filter(row => {
-      return row.name.toLowerCase().includes(event.target.value.toLowerCase());
-    });
-
-    setRecords(newData);
+    const query = event.target.value.toLowerCase();
+    const filteredData = records.filter(row => row.name.toLowerCase().includes(query));
+    setRecords(filteredData);
   }
 
   function handleViewMore(row) {
-    alert(`View more details for ${row.name}`);
+    navigate(`/view-destination/${row.id}`);
   }
 
-  function handleAddHotel() {
-    const newHotel = {
-      name: `Hotel ${records.length + 1}`,
+  function handleAddDestination() {
+    const newDestination = {
+      name: `Destination ${records.length + 1}`,
       description: `Description ${records.length + 1}`,
-      availability: 'Available', // Default availability
+      availability: 'Available',
       rate: `Rate ${records.length + 1}`,
       area: `Area ${records.length + 1}`,
     };
 
-    setRecords([...records, newHotel]);
+    setRecords([...records, newDestination]);
   }
 
   function handleRowSelected(state) {
     setSelectedRows(state.selectedRows);
   }
 
-  function handleDeleteSelected() {
-    const updatedRecords = records.filter(row => !selectedRows.includes(row));
-    setRecords(updatedRecords);
+  async function handleDeleteSelected() {
+    try {
+      for (let row of selectedRows) {
+        await fetch("http://localhost:3000/travelmate/deleteDestination", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: row.id }), // Ensure `row.id` contains the correct guide ID
+        });
+      }
+      // Update local state after successful deletion
+      const updatedRecords = records.filter(row => !selectedRows.includes(row));
+      setRecords(updatedRecords);
+      setFilteredRecords(updatedRecords); // Update filtered records
+      setSelectedRows([]); // Clear selected rows
+    } catch (error) {
+      console.error("Error deleting guides:", error);
+    }
   }
 
   return (
     <div
       style={{
         position: 'absolute',
-        width: '920px',
+        width: '1120px',
         height: '640px',
         top: '110px',
-        left: '585px',
+        left: '365px',
         border: '1px solid #ccc',
         padding: '20px',
         backgroundColor: '#f9f9f9',
@@ -125,19 +144,20 @@ const DestinationsDataTable = () => {
           placeholder="Filter by Name"
           style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ccc', marginRight: '10px' }}
         />
-        <button
-          onClick={handleAddHotel}
-          style={{
-            backgroundColor: '#0A2E41',
-            color: 'white',
-            border: 'none',
-            padding: '8px 15px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-          }}
-        >
-          Add a Destination
-        </button>
+         <Link to="/add-destination">
+                  <button
+                    style={{
+                      backgroundColor: "#0A2E41",
+                      color: "white",
+                      border: "none",
+                      padding: "8px 15px",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Add a Destination
+                  </button>
+                </Link>
       </div>
       <DataTable
         columns={columns}
@@ -159,11 +179,11 @@ const DestinationsDataTable = () => {
             cursor: 'pointer',
           }}
         >
-          Delete Selected Hotels
+          Delete Selected Destinations
         </button>
       </div>
     </div>
   );
-}
+};
 
-export default DestinationsDataTable
+export default DestinationsDataTable;

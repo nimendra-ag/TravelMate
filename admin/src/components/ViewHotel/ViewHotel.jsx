@@ -71,7 +71,7 @@ const ViewHotel = () => {
   };
 
   return (
-    <div style={{ marginTop: "40px" }}>
+    <div style={{ marginTop: "250px" }}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div

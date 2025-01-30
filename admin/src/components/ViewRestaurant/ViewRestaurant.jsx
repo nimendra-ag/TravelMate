@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminLogo from "../../assets/TravelMateAdminLogo.png";
 import Select from "react-select";
@@ -12,109 +12,110 @@ import {
   Tooltip,
   OverlayTrigger,
 } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddDestination = () => {
+const UpdateRestaurant = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [image, setImage] = useState(null);
-  const [destinationDetails, setDestinationDetails] = useState({
+  const [restaurantDetails, setRestaurantDetails] = useState({
     name: "",
-    city: "",
-    distanceFromColombo: "",
     category: [],
-    bestTimeToVisit: "",
-    website: "",
+    mainCategory: "",
+    address: "",
     contactNumber: "",
-    openingHours: [
-      {
-        startTime: "",
-        endTime: "",
-      },
-    ],
+    email: "",
+    website: "",
+    openingHours: [{ startTime: "", endTime: "" }],
+    priceRange: [],
     description: "",
   });
+
+  useEffect(() => {
+    const fetchRestaurantDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/travelmate/viewRestaurant/${id}`
+        );
+        if (response.data.success) {
+          setRestaurantDetails(response.data.data);
+        } else {
+          alert(response.data.message || "Failed to fetch restaurant details.");
+        }
+      } catch (error) {
+        console.error("Error fetching restaurant details:", error);
+      }
+    };
+
+    fetchRestaurantDetails();
+  }, [id]);
+
   const categoryOptions = [
-    { value: "Nature and Outdoors", label: "Nature and Outdoors" },
-    { value: "Cultural and Historical", label: "Cultural and Historical" },
-    { value: "Adventure and Activities", label: "Adventure and Activities" },
-    { value: "Urban and Entertainment", label: "Urban and Entertainment" },
-    { value: "Relaxation and Wellness", label: "Relaxation and Wellness" },
-    {
-      value: "Food and Drink Experiences",
-      label: "Food and Drink Experiences",
-    },
-    { value: "Other", label: "Other" },
+    { value: "Seafood", label: "Seafood" },
+    { value: "Spicy", label: "Spicy" },
+    { value: "vegetarian and vegan ", label: "vegetarian and vegan " },
+    { value: "Village Flavor", label: "Village Flavor" },
+    { value: "Sweet", label: "Sweet" },
+    { value: "Street Food", label: "Street Food" },
+    { value: "tea culture ", label: "tea culture " },
   ];
-  const navigate = useNavigate(); 
+
+  const priceRangeOptions = [
+    { value: "Low", label: "Low" },
+    { value: "Medium", label: "Medium" },
+    { value: "High", label: "High" },
+  ];
+
+  const mainCategoryOptions = [
+    { value: "DateNight", label: "DateNight" },
+    { value: "Fine Dining", label: "Fine Dining" },
+    { value: "Vegan & Veg", label: "Vegan & Veg" },
+    { value: "Casual Dining", label: "Casual Dining" },
+    { value: "Outside", label: "Outside" },
+  ];
 
   const handleMultiSelectChange = (selectedOptions, action) => {
-    setDestinationDetails({
-      ...destinationDetails,
+    setRestaurantDetails({
+      ...restaurantDetails,
       [action.name]: selectedOptions.map((option) => option.value),
     });
   };
 
-  // Handle file input for the image
-  const imageHandler = (e) => {
-    setImage(e.target.files[0]);
-  };
-
-  // Handle change in text fields
   const changeHandler = (e) => {
-    setDestinationDetails({
-      ...destinationDetails,
+    setRestaurantDetails({
+      ...restaurantDetails,
       [e.target.name]: e.target.value,
     });
   };
 
-  // Handle time change
   const handleTimeChange = (e, index, timeType) => {
-    const updatedOpeningHours = [...destinationDetails.openingHours];
+    const updatedOpeningHours = [...restaurantDetails.openingHours];
     updatedOpeningHours[index][timeType] = e.target.value;
-    setDestinationDetails({
-      ...destinationDetails,
+    setRestaurantDetails({
+      ...restaurantDetails,
       openingHours: updatedOpeningHours,
     });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    console.log("Form submitted");
-
+    e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/travelmate/addDestination",
-        destinationDetails
+      const response = await axios.put(
+        `http://localhost:3000/travelmate/updateRestaurant/${id}`,
+        restaurantDetails
       );
-      console.log("Destination added successfully", response.data);
 
       if (response.data.success) {
-        alert("Destination added successfully!");
-        setDestinationDetails({
-          name: "",
-          city: "",
-          distanceFromColombo: "",
-          category: [],
-          bestTimeToVisit: "",
-          website: "",
-          contactNumber: "",
-          openingHours: [
-        {
-          startTime: "",
-          endTime: "",
-        },
-        ],
-          description: "",
-        });
-        window.location.reload(); //Reload the page
+        alert("Restaurant updated successfully!");
+        navigate("/restaurants");
       }
     } catch (error) {
-      console.log("Error adding destination", error);
+      console.error("Error updating restaurant:", error);
     }
   };
 
   return (
-    <div className="AddDestination">
+    <div className="UpdateRestaurant" style={{ marginTop: '200px' }}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
@@ -131,15 +132,8 @@ const AddDestination = () => {
                 width: "100%",
               }}
             >
-              <div className="d-flex justify-content-left align-items-left">
-                <img
-                  src={AdminLogo}
-                  alt="Icon"
-                  style={{ height: "98px", paddingBottom: "33px" }}
-                />
-              </div>
               <h2 className="fw-bold" style={{ paddingBottom: "25px" }}>
-                Add Destination
+                Update Restaurant
               </h2>
 
               <Container style={{ maxWidth: "100%" }}>
@@ -147,12 +141,12 @@ const AddDestination = () => {
                   <Row>
                     <Col md="6">
                       <Form.Group controlId="formName" className="mb-3">
-                        <Form.Label>Destination Name</Form.Label>
+                        <Form.Label>Restaurant Name</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder="Enter the new destination"
+                          placeholder="Enter the restaurant name"
                           name="name"
-                          value={destinationDetails.name}
+                          value={restaurantDetails.name}
                           onChange={changeHandler}
                           style={{
                             borderRadius: "10px",
@@ -165,12 +159,12 @@ const AddDestination = () => {
 
                     <Col md="6">
                       <Form.Group controlId="formWebsite" className="mb-3">
-                        <Form.Label>Website URL</Form.Label>
+                        <Form.Label>Website url</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder="Enter website URL"
+                          placeholder="Enter website url"
                           name="website"
-                          value={destinationDetails.website}
+                          value={restaurantDetails.website}
                           onChange={changeHandler}
                           style={{
                             borderRadius: "10px",
@@ -181,11 +175,12 @@ const AddDestination = () => {
                       </Form.Group>
                     </Col>
                   </Row>
+
                   <Row>
-                    {destinationDetails.openingHours.map((day, index) => (
+                    {restaurantDetails.openingHours.map((day, index) => (
                       <Col md="6" key={index} className="mb-3">
                         <Form.Group controlId={`formOpeningHours-${index}`}>
-                          <Form.Label>Opening Hours</Form.Label>
+                          <Form.Label>Opening hours</Form.Label>
                           <div style={{ display: "flex", gap: "10px" }}>
                             <OverlayTrigger
                               placement="top"
@@ -218,6 +213,7 @@ const AddDestination = () => {
                       </Col>
                     ))}
                   </Row>
+
                   <Row>
                     <Col md="6">
                       <Form.Group controlId="formCategory" className="mb-3">
@@ -227,7 +223,7 @@ const AddDestination = () => {
                           name="category"
                           options={categoryOptions}
                           value={categoryOptions.filter((option) =>
-                            destinationDetails.category.includes(option.value)
+                            restaurantDetails.category.includes(option.value)
                           )}
                           onChange={handleMultiSelectChange}
                         />
@@ -235,22 +231,37 @@ const AddDestination = () => {
                     </Col>
 
                     <Col md="6">
-                      <Form.Group
-                        controlId="formDistanceFromMainColombo"
-                        className="mb-3"
-                      >
-                        <Form.Label>Distance from Colombo</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter in kms"
-                          name="distanceFromColombo"
-                          value={destinationDetails.distanceFromColombo}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            height: "50px",
-                            borderWidth: "2px",
-                          }}
+                      <Form.Group controlId="formPriceRange" className="mb-3">
+                        <Form.Label>Price Range</Form.Label>
+                        <Select
+                          isMulti
+                          name="priceRange"
+                          options={priceRangeOptions}
+                          value={priceRangeOptions.filter((option) =>
+                            restaurantDetails.priceRange.includes(option.value)
+                          )}
+                          onChange={handleMultiSelectChange}
+                        />
+                      </Form.Group>
+                    </Col>
+
+                    <Col md="6">
+                      <Form.Group controlId="formMainCategory" className="mb-3">
+                        <Form.Label>Main Category</Form.Label>
+                        <Select
+                          name="mainCategory"
+                          options={mainCategoryOptions}
+                          value={mainCategoryOptions.find(
+                            (option) =>
+                              option.value === restaurantDetails.mainCategory
+                          )}
+                          onChange={(selectedOption) =>
+                            setRestaurantDetails({
+                              ...restaurantDetails,
+                              mainCategory: selectedOption.value,
+                            })
+                          }
+                          isClearable
                         />
                       </Form.Group>
                     </Col>
@@ -258,13 +269,12 @@ const AddDestination = () => {
                     <Col md="6">
                       <Form.Group controlId="formContactNumber" className="mb-3">
                         <Form.Label>Contact Number</Form.Label>
-
                         <Form.Control
                           type="text"
                           placeholder="Enter the contact number"
                           maxLength="10"
                           name="contactNumber"
-                          value={destinationDetails.contactNumber}
+                          value={restaurantDetails.contactNumber}
                           onChange={changeHandler}
                           style={{
                             borderRadius: "10px",
@@ -274,31 +284,15 @@ const AddDestination = () => {
                         />
                       </Form.Group>
                     </Col>
+
                     <Col md="6">
-                      <Form.Group controlId="city" className="mb-3">
-                        <Form.Label>City</Form.Label>
+                      <Form.Group controlId="email" className="mb-3">
+                        <Form.Label>E-mail</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder="Enter the city"
-                          name="city"
-                          value={destinationDetails.city}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            height: "50px",
-                            borderWidth: "2px",
-                          }}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col md="6">
-                      <Form.Group controlId="bestTimeToVisit" className="mb-3">
-                        <Form.Label>Best Time to Visit</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Eg:- March to April"
-                          name="bestTimeToVisit"
-                          value={destinationDetails.bestTimeToVisit}
+                          placeholder="Enter email address"
+                          name="email"
+                          value={restaurantDetails.email}
                           onChange={changeHandler}
                           style={{
                             borderRadius: "10px",
@@ -312,14 +306,34 @@ const AddDestination = () => {
 
                   <Row>
                     <Col md="12">
+                      <Form.Group controlId="formAddress" className="mb-3">
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={5}
+                          placeholder="Enter address"
+                          name="address"
+                          value={restaurantDetails.address}
+                          onChange={changeHandler}
+                          style={{
+                            borderRadius: "10px",
+                            borderWidth: "2px",
+                            resize: "none",
+                            height: "100px",
+                          }}
+                        />
+                      </Form.Group>
+                    </Col>
+
+                    <Col md="12">
                       <Form.Group controlId="formDescription" className="mb-3">
                         <Form.Label>Description</Form.Label>
                         <Form.Control
                           as="textarea"
                           rows={10}
-                          placeholder="Enter a brief description about the destination"
+                          placeholder="Enter a brief description about the restaurant"
                           name="description"
-                          value={destinationDetails.description}
+                          value={restaurantDetails.description}
                           onChange={changeHandler}
                           style={{
                             borderRadius: "10px",
@@ -333,7 +347,7 @@ const AddDestination = () => {
                   </Row>
 
                   <Button variant="primary" onClick={handleSubmit}>
-                    Add Destination
+                    Update Restaurant
                   </Button>
                 </Form>
               </Container>
@@ -345,4 +359,4 @@ const AddDestination = () => {
   );
 };
 
-export default AddDestination;
+export default UpdateRestaurant;

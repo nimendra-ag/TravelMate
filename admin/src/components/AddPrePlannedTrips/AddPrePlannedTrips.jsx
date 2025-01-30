@@ -451,6 +451,7 @@ const AddPrePlannedTrips = () => {
                             borderRadius: "10px",
                             borderWidth: "2px",
                             resize: "none",
+                            whiteSpace: "pre-line",
                           }}
                         />
                          <Row>

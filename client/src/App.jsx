@@ -31,6 +31,7 @@ import AvailableBookings from './pages/bookHotel/AvailableBookings'
 import CancledBookings from './pages/bookHotel/CancledBookings'
 import CompletedBookings from './pages/bookHotel/CompletedBookings'
 import ClientLayout from './components/ClientLayout/ClientLayout'
+import GuidPage from './pages/GuidBooking/GuidPage/GuidPage'
 
 
 function App() {
@@ -69,13 +70,17 @@ function App() {
           <Route path="/pre-planned-trip-booking/:tripId" element={<PrePlannedTripBookingForm />} />
           <Route path="/bookHotel/:id" element={<BookHotel />} />
           <Route path="/room" element={<HotelRoom />} />
-          <Route path="/conhotelbook/:from/:to/:id/:hid" element={<ConBookHotel />} />
+          <Route path="/conhotelbook/:from/:to/:id/:hid/:available" element={<ConBookHotel />} />
 
           <Route path="/mybookings" element={<MyBookings />}>
             <Route path="available" element={<AvailableBookings />} />
             <Route path="cancelled" element={<CancledBookings />} />
             <Route path="completed" element={<CompletedBookings />} />
           </Route>
+
+
+          <Route path="/guide/:id" element={<GuidPage />} />
+
 
           <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />
         </Route>

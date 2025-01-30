@@ -74,9 +74,7 @@ const SigninModal = () => {
           if (!backendResponse.data.registered) {
             // Navigate to details page if user is not registered
             navigate(`/details/${backendResponse.data.id}`);
-          }
-
-          if (backendResponse.data.registered) {
+          } else {
             // Save the token and user details to localStorage
             localStorage.setItem("auth-token", backendResponse.data.token);
             localStorage.setItem("user", JSON.stringify(userDetails)); // Save user details
@@ -86,6 +84,9 @@ const SigninModal = () => {
 
             setShow(false);
             navigate("/");
+
+            // Reload the page to reflect the updated navbar
+            window.location.reload();
           }
         } catch (backendError) {
           console.error("Error during backend request:", backendError);
@@ -96,12 +97,12 @@ const SigninModal = () => {
     },
   });
 
-
   useGoogleOneTapLogin({
     onSuccess: (credentialResponse) => {
       const decoded = jwtDecode(credentialResponse.credential);
       setUser(decoded); // Set the user data
       console.log(decoded);
+      window.location.reload();
     },
     onError: () => {
       console.log('Login Failed');
@@ -162,45 +163,47 @@ const SigninModal = () => {
     <>
       <div className="d-flex justify-content-center">
         {localStorage.getItem('auth-token') ? (
- 
-          <Button 
-          variant="outline-light" 
-          className="signin-btn" 
-          onClick={() => {
-            localStorage.removeItem('auth-token');
-            localStorage.removeItem('user');
-            window.location.reload(); // Refresh the page after logout
-          }}
-          style={{
+
+          <Button
+            variant="outline-light"
+            className="signin-btn"
+            onClick={() => {
+              localStorage.removeItem('auth-token');
+              localStorage.removeItem('user');
+              navigate("/");
+
+              window.location.reload(); // Refresh the page after logout
+            }}
+            style={{
               marginLeft: "20px",
               padding: "5px 15px",
               fontWeight: "600",
               border: "2px solid #3b82f6",
               transition: "background-color 0.3s ease, color 0.3s ease",
-          }}
-      >
-          Log out
-      </Button>
-      
+            }}
+          >
+            Log out
+          </Button>
+
         ) : (
           // <a className="nav-signin" onClick={handleShow}>
           //   SignUp
           // </a>
-          <Button 
-          variant="outline-light" 
-          className="signin-btn" 
-          onClick={handleShow}
-          style={{
+          <Button
+            variant="outline-light"
+            className="signin-btn"
+            onClick={handleShow}
+            style={{
               marginLeft: "20px",
               padding: "5px 15px",
               fontWeight: "600",
               border: "2px solid #3b82f6",
               transition: "background-color 0.3s ease, color 0.3s ease",
-          }}
-      >
-          Sign Up
-      </Button>
-      
+            }}
+          >
+            Sign Up
+          </Button>
+
         )}
       </div>
 

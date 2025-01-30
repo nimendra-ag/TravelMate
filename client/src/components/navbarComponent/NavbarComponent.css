@@ -1,78 +1,93 @@
-/* NavbarComponent.css */
-
-/* Background with gradient and rounded borders */
 .custom-navbar {
-    background: linear-gradient(90deg, #C1EAF8, #C1EAF8);
-    border-radius: 0px 0px 10px 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    padding: 10px 20px;
-    font-family: 'Poppins', sans-serif;
+    background: rgba(13, 96, 171, 0.95);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.custom-navbar.scrolled {
+    background: rgba(13, 96, 171, 0.98);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    padding: 0.7rem 0;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-image {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.brand-logo:hover .brand-image {
+    transform: scale(1.05);
+}
+
+.brand-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFF;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links {
+    gap: 10px;
+}
+
+.nav-item {
+    position: relative;
+    color: #FFF !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
     transition: all 0.3s ease;
 }
 
-/* Add a sticky shadow effect on scroll */
-.custom-navbar.scrolled {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    transform: translateY(-5px);
-}
-
-/* Adjust brand styles */
-.brand-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white !important;
-    display: flex;
-    align-items: center;
-}
-
-/* Navigation links styling */
-.nav-item {
-    margin: 0 10px;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #f0f4ff !important;
-    transition: color 0.3s ease;
-}
-
 .nav-item:hover {
-    color: #60a5fa !important;
-    
+    color: #FFD700 !important;
+    transform: translateY(-2px);
 }
 
-/* Add hover effect to buttons */
-.cta-btn:hover {
-    background-color: #2563eb;
-    transform: scale(1.1);
-}
-.custom-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background-color: transparent;
-    transition: background-color 0.3s ease;
+.navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.custom-navbar.scrolled {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.navbar-toggler:focus {
+    box-shadow: none;
 }
 
-/* Add padding to the body or main content container */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Add this to create space below navbar */
 body {
-    padding-top: 70px; /* Adjust this value based on your navbar height */
+    padding-top: 76px;
 }
 
-.nav-item {
-    color: #333;
-    font-weight: 500;
-    margin: 0 10px;
-}
-
-.brand-logo {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    color: #333;
+@media (max-width: 991px) {
+    .nav-links {
+        background: rgba(13, 96, 171, 0.98);
+        border-radius: 0 0 15px 15px;
+        padding: 1rem;
+        margin-top: 0.5rem;
+    }
+    
+    .nav-item {
+        padding: 0.7rem 1rem;
+        border-radius: 8px;
+    }
+    
+    .nav-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
 }
