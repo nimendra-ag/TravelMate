@@ -17,7 +17,6 @@ function AddTransportationService() {
       address: "",
       contactNumber: "",
       description: "",
-      otherVehicles: "",
     });
 
   const availableVehicleOptions = [
@@ -84,32 +83,37 @@ function AddTransportationService() {
     e.preventDefault();
 
     const uploadedImages = await uploadImagesToCloudinary(imagesToUpload);
-    console.log(uploadedImages);
+    console.log("images", uploadedImages);
 
-    // const formData = new FormData();
+    const formData = new FormData();
 
-    // Object.keys(transportationServiceDetails).forEach(key => {
-    //   formData.append(key, transportationServiceDetails[key]);
-    // });
+    Object.keys(transportationServiceDetails).forEach(key => {
+      formData.append(key, transportationServiceDetails[key]);
+    });
 
-    // imagesToUpload.forEach((image) => {
-    //   formData.append('images', image);
-    // });
+    imagesToUpload.forEach((image) => {
+      formData.append('images', image);
+    });
 
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:3000/travelmate/add-transportation-service",
-    //     formData,
-    //     {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data'
-    //       }
-    //     }
-    //   );
-    //   navigate("/");
-    // } catch (error) {
-    //   console.log("Error updating profile", error);
-    // }
+    console.log("form data", transportationServiceDetails);
+    
+    transportationServiceDetails.images = uploadedImages.map(image => image.imageUrl);
+
+    console.log("form data with images", transportationServiceDetails);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/travelmate/add-transportation-service",
+        transportationServiceDetails,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+      navigate("/");
+    } catch (error) {
+      console.log("Error updating profile", error);
+    }
 
 
   };
