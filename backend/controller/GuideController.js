@@ -21,6 +21,7 @@ const AddGuide = async (req, res) => {
             contactNumber: req.body.contactNumber,
             nic: req.body.nic,
             rating: req.body.rating || 0, // Default rating to 0 if not provided
+            images : req.body.images
         });
 
         // Save the guide to the database

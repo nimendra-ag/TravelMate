@@ -173,12 +173,12 @@ function AddTransportationService() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const uploadedImages = await uploadImagesToCloudinary(imagesToUpload);
-    console.log("images", uploadedImages);
-
     if (!validateForm()) {
       return;
     }
+
+    const uploadedImages = await uploadImagesToCloudinary(imagesToUpload);
+    console.log("images", uploadedImages);
 
     console.log("form data", transportationServiceDetails);
 

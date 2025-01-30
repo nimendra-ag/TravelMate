@@ -105,6 +105,7 @@ const GuideList = () => {
                 chargesPerDay={guide.chargesPerDay}
                 profileImg='https://picsum.photos/150'
                 id = {guide.id}
+                image = {guide.images[0]}
               />
             </SwiperSlide>
           ))}

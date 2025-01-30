@@ -13,7 +13,6 @@ const GuideModel = model("Guides", {
     type: String,
     required: true,
   },
-
   area: {
     type: [String],
     required: true,
@@ -51,6 +50,11 @@ const GuideModel = model("Guides", {
   bookings: {
     type: [Object],
     default: [],
+  },
+  images: {
+    type: [String],
+    default: [],
+    required: true,
   },
 });
 

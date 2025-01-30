@@ -17,7 +17,7 @@ const GuidPage = () => {
     const [toDate, setToDate] = useState();
     const { id } = useParams();
     const { allGuides } = useContext(ClientContext);
-    const guid = allGuides.find((e) => e.id === parseInt(id));
+    const guide = allGuides.find((e) => e.id === parseInt(id));
     const [isAvailable, setIsAvailable] = useState();
     const navigator = useNavigate();
 
@@ -42,7 +42,7 @@ const GuidPage = () => {
         );
     };
 
-    const readable = moment(guid?.birthDate).format('MMMM Do YYYY');
+    const readable = moment(guide?.birthDate).format('MMMM Do YYYY');
 
     const checkAvailability = (newFromDate, newToDate, existingBookings) => {
         console.log(newFromDate, newToDate, existingBookings);
@@ -78,7 +78,7 @@ const GuidPage = () => {
 
 
     const handleAvailabilityCheck = () => {
-        const available = checkAvailability(fromDate, toDate, guid.bookings);
+        const available = checkAvailability(fromDate, toDate, guide.bookings);
         setIsAvailable(available);
     }
 
@@ -98,10 +98,10 @@ const GuidPage = () => {
                 const bookingData = {
                     fromDate,
                     toDate,
-                    guid,
+                    guide,
                     user,
                     totaldays: moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1,
-                    totalprice: guid?.chargesPerDay * (moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1),
+                    totalprice: guide?.chargesPerDay * (moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1),
                 };
                 setData(bookingData);
                 try {
@@ -159,14 +159,14 @@ const GuidPage = () => {
                             // margin: '20px 0'
                         }}>
                             <img
-                                src={guid?.imageUrl || "https://picsum.photos/500"}
+                                src={guide?.images[0] || "https://picsum.photos/500"}
                                 style={{
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'cover',
                                     objectPosition: 'center'
                                 }}
-                                alt={guid?.name}
+                                alt={guide?.name}
                             />
                         </div>
                         {/* <div style={{
@@ -202,7 +202,7 @@ const GuidPage = () => {
                                         margin: 0,
                                         color: '#1a1a1a'
                                     }}>
-                                        {guid?.name}
+                                        {guide?.name}
                                     </h1>
                                     {/* <div style={{
                                         backgroundColor: '#4CAF50',
@@ -241,7 +241,7 @@ const GuidPage = () => {
                                     color: '#666',
                                     marginBottom: '25px'
                                 }}>
-                                    {guid?.description} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta, ratione nam fugit laborum velit rem, nulla in sunt consequatur tempora dolor quia itaque amet magnam blanditiis. Quam quisquam quas optio?
+                                    {guide?.description} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta, ratione nam fugit laborum velit rem, nulla in sunt consequatur tempora dolor quia itaque amet magnam blanditiis. Quam quisquam quas optio?
                                 </p>
                             </div>
 
@@ -340,7 +340,7 @@ const GuidPage = () => {
                 <div className="col-md-8">
                     <div className="card">
                         <div className="card-body">
-                            <h2 className="card-title mb-4">About {guid?.name}</h2>
+                            <h2 className="card-title mb-4">About {guide?.name}</h2>
 
                             <div className="row g-4">
                                 <div className="col-md-6">
@@ -349,7 +349,7 @@ const GuidPage = () => {
                                         <h5 className="mb-0">Languages</h5>
                                     </div>
                                     <ul className="list-group">
-                                        {guid?.languages.map((language, index) => (
+                                        {guide?.languages.map((language, index) => (
                                             <li key={index} className="list-group-item">{language}</li>
                                         ))}
                                     </ul>
@@ -361,7 +361,7 @@ const GuidPage = () => {
                                         <h5 className="mb-0">Expert Areas</h5>
                                     </div>
                                     <ul className="list-group">
-                                        {guid?.area.map((area, index) => (
+                                        {guide?.area.map((area, index) => (
                                             <li key={index} className="list-group-item">{area}</li>
                                         ))}
                                     </ul>
@@ -373,7 +373,7 @@ const GuidPage = () => {
                                         <div className="col-md-6">
                                             <div className="d-flex align-items-center">
                                                 <FaMoneyBillWave className="text-primary me-2" size={20} />
-                                                <h5 className="mb-0">Charges per day: ${guid?.chargesPerDay}</h5>
+                                                <h5 className="mb-0">Charges per day: ${guide?.chargesPerDay}</h5>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
@@ -385,19 +385,19 @@ const GuidPage = () => {
                                         <div className="col-md-6">
                                             <div className="d-flex align-items-center">
                                                 <FaPhoneAlt className="text-primary me-2" size={20} />
-                                                <h5 className="mb-0">Contact: {guid?.contactNumber}</h5>
+                                                <h5 className="mb-0">Contact: {guide?.contactNumber}</h5>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="d-flex align-items-center">
                                                 <FaIdCard className="text-primary me-2" size={20} />
-                                                <h5 className="mb-0">NIC: {guid?.nic}</h5>
+                                                <h5 className="mb-0">NIC: {guide?.nic}</h5>
                                             </div>
                                         </div>
                                         <div className="col-12">
                                             <div className="d-flex align-items-center gap-3">
                                                 <h5 className="mb-0">Rating:</h5>
-                                                <StarRating rating={guid?.rating} />
+                                                <StarRating rating={guide?.rating} />
                                             </div>
                                         </div>
                                     </div>
