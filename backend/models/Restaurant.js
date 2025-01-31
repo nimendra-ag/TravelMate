@@ -55,6 +55,23 @@ const RestaurantModel = model("Restaurants", {
     min: 0,
     max: 5,
   },
+  cardImages: {
+    type: [String],
+    default: [],
+    required: true,
+  },
+
+  caroImages: {
+    type: [String],
+    default: [],
+    required: true,
+  },
+
+  mainImages: {
+    type: [String],
+    default: [],
+    required: true,
+  },
 });
 
 export { RestaurantModel };

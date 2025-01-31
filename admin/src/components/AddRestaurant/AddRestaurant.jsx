@@ -309,20 +309,20 @@ const AddRestaurant = () => {
 
     console.log(restaurantDetails);
 
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:3000/travelmate/add-restaurant",
-    //     restaurantDetails
-    //   );
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/travelmate/add-restaurant",
+        restaurantDetails
+      );
 
-    //   if (response.data.success) {
-    //     alert("Restaurant added successfully!");
-    //     // Reset form...
-    //     window.location.reload();
-    //   }
-    // } catch (error) {
-    //   console.log("Error adding restaurant", error);
-    // }
+      if (response.data.success) {
+        alert("Restaurant added successfully!");
+        // Reset form...
+        // window.location.reload();
+      }
+    } catch (error) {
+      console.log("Error adding restaurant", error);
+    }
   };
 
 
