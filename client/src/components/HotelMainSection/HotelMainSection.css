@@ -94,10 +94,10 @@
     transition: transform 0.3s ease;
   }
   
-  .main-image:hover {
+  /* .main-image:hover {
     transform: scale(1.02);
   }
-  
+   */
   .thumbnail-container {
     margin-bottom: 1rem;
   }
@@ -119,9 +119,9 @@
     transition: transform 0.3s ease;
   }
   
-  .thumbnail-image:hover {
+  /* .thumbnail-image:hover {
     transform: scale(1.05);
-  }
+  } */
   
   .view-all-button {
     width: 100%;
