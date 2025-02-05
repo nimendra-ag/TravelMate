@@ -18,21 +18,8 @@ const DestinationCardComponent = ({ images, title, reviewCount, category, year }
             </Carousel.Item>
           ))}
         </Carousel>
-        <Badge
-          pill
-          variant="success"
-          className="position-absolute top-0 start-0 m-2"
-          style={{ fontSize: '0.8em' }}
-        >
-          {year}
-        </Badge>
-        <Button
-          variant="light"
-          className="position-absolute top-0 end-0 m-2 p-2 rounded-circle"
-          style={{ border: 'none' }}
-        >
-          <FaHeart color="black" />
-        </Button>
+
+        
       </div>
       <Card.Body>
         <Card.Title>{title}</Card.Title>

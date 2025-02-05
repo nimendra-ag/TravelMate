@@ -46,21 +46,22 @@ const DestinationsInHomePage = () => {
                             spaceBetween: 20
                         }
                     }}>
-                        
+
                     {/* <Row> */}
                     {/* <div className="d-flex justify-content-center gap-3"> */}
 
-                    <SwiperSlide><DestinationCardComponent
-                        images={[
-                            'https://picsum.photos/288/200?random=1',
-                            'https://picsum.photos/288/200?random=2',
-                            'https://picsum.photos/288/200?random=3'
-                        ]}
-                        title="Sigiriya The Ancient Rock Fortress"
-                        reviewCount="11,738"
-                        category="Ancient Ruins, Points of Interest & Landmarks"
-                        year="2024"
-                    /></SwiperSlide>
+                    <SwiperSlide>
+                        <DestinationCardComponent
+                            images={[
+                                'https://picsum.photos/288/200?random=1',
+                                'https://picsum.photos/288/200?random=2',
+                                'https://picsum.photos/288/200?random=3'
+                            ]}
+                            title="Sigiriya The Ancient Rock Fortress"
+                            reviewCount="11,738"
+                            category="Ancient Ruins, Points of Interest & Landmarks"
+                            year="2024"
+                        /></SwiperSlide>
 
                     <SwiperSlide>
                         <DestinationCardComponent
