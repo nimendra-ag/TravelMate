@@ -4,7 +4,7 @@ import { FaHeart, FaStar } from 'react-icons/fa';
 
 const DestinationCardComponent = ({ images, title, reviewCount, category, year }) => {
   return (
-    <Card style={{ width: '18rem', borderRadius: '10px', overflow: 'hidden' }} className="shadow-sm mb-4">
+    <Card style={{ width: '18rem', borderRadius: '10px', overflow: 'hidden' }} className="shadow-sm mb-4 d-flex">
       <div className="position-relative">
         <Carousel indicators={true} controls={false}>
           {images.map((image, index) => (
