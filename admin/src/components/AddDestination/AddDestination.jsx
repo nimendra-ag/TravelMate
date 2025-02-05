@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminLogo from "../../assets/TravelMateAdminLogo.png";
 import Select from "react-select";
@@ -43,6 +43,100 @@ const AddDestination = () => {
     { value: "Food and Drink Experiences", label: "Food and Drink Experiences" },
     { value: "Other", label: "Other" },
   ];
+
+  const [selectedCardImages, setSelectedCardImages] = useState([]);
+  const [selectedMainImages, setSelectedMainImages] = useState([]);
+
+  const [cardImagesToUpload, setCardImagesToUpload] = useState([]);
+  const [mainImagesToUpload, setMainImagesToUpload] = useState([]);
+
+  // Update the cleanup useEffect
+  useEffect(() => {
+    return () => {
+      [, ...selectedCardImages, ...selectedMainImages].forEach(image => {
+        if (image.url) {
+          URL.revokeObjectURL(image.url);
+        }
+      });
+    };
+  }, [selectedCardImages, selectedMainImages]);
+
+  const handleCardImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newImages = files.map(file => ({
+      id: Math.random().toString(36).substring(7),
+      url: URL.createObjectURL(file),
+      file: file
+    }));
+    setSelectedCardImages(prev => [...prev, ...newImages]);
+    setCardImagesToUpload(prev => [...prev, ...files]);
+  };
+
+  const handleMainImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newImages = files.map(file => ({
+      id: Math.random().toString(36).substring(7),
+      url: URL.createObjectURL(file),
+      file: file
+    }));
+    setSelectedMainImages(prev => [...prev, ...newImages]);
+    setMainImagesToUpload(prev => [...prev, ...files]);
+  };
+
+  const removeCardImage = (id) => {
+    setSelectedCardImages(prevImages => {
+      const imageToRemove = prevImages.find(img => img.id === id);
+      if (imageToRemove?.url) URL.revokeObjectURL(imageToRemove.url);
+      return prevImages.filter(img => img.id !== id);
+    });
+    const indexToRemove = selectedCardImages.findIndex(img => img.id === id);
+    if (indexToRemove !== -1) {
+      setCardImagesToUpload(prev => prev.filter((_, index) => index !== indexToRemove));
+    }
+  };
+
+  const removeMainImage = (id) => {
+    setSelectedMainImages(prevImages => {
+      const imageToRemove = prevImages.find(img => img.id === id);
+      if (imageToRemove?.url) URL.revokeObjectURL(imageToRemove.url);
+      return prevImages.filter(img => img.id !== id);
+    });
+    const indexToRemove = selectedMainImages.findIndex(img => img.id === id);
+    if (indexToRemove !== -1) {
+      setMainImagesToUpload(prev => prev.filter((_, index) => index !== indexToRemove));
+    }
+  };
+
+  const uploadImagesToCloudinary = async (files) => {
+    const uploadedUrls = [];
+
+    console.log('Just outside the loop');
+    console.log(files);
+
+    for (const file of files) {
+      console.log("with in the loop");
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "preset-for-file-upload");
+      formData.append("cloud_name", "dz4wm9iug");
+
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dqbkxghlh/image/upload",
+        formData
+      ).catch((error) => {
+        console.log("Error uploading image", error);
+      });
+
+      if (response.status === 200) {
+        uploadedUrls.push({
+          imageUrl: response.data.secure_url
+        });
+      }
+    }
+    return uploadedUrls;
+  };
+
 
   const navigate = useNavigate();
 
@@ -152,10 +246,16 @@ const AddDestination = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
+
+    const uploadedCardImages = await uploadImagesToCloudinary(cardImagesToUpload);
+    const uploadedMainImages = await uploadImagesToCloudinary(mainImagesToUpload);
+
+    destinationDetails.cardImages = uploadedCardImages.map(image => image.imageUrl);
+    destinationDetails.mainImages = uploadedMainImages.map(image => image.imageUrl);
 
     try {
       const response = await axios.post(
@@ -419,6 +519,178 @@ const AddDestination = () => {
                           {errors.description}
                         </Form.Control.Feedback>
                       </Form.Group>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col md="12">
+                                          {/* Card Images */}
+                                          <Form.Group controlId="formCardImages" className="mb-3">
+                        <Form.Label>Upload Card Images</Form.Label>
+                        <Form.Control
+                          type="file"
+                          multiple
+                          accept="image/*"
+                          onChange={handleCardImageChange}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                            color: "transparent"
+                          }}
+                        />
+                      </Form.Group>
+
+                      {selectedCardImages.length > 0 && (
+                        <div style={{ marginBottom: "2rem" }}>
+                          <div style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                            gap: "1rem",
+                            marginTop: "1rem"
+                          }}>
+                            {selectedCardImages.map((image) => (
+                              <div
+                                key={image.id}
+                                style={{
+                                  position: "relative",
+                                  paddingBottom: "75%",
+                                  height: 0,
+                                  borderRadius: "10px",
+                                  overflow: "hidden",
+                                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                                  transition: "transform 0.2s ease",
+                                  cursor: "pointer",
+                                }}
+                                onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.02)"}
+                                onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+                              >
+                                <img
+                                  src={image.url}
+                                  alt={`Preview ${image.id}`}
+                                  style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                  }}
+                                />
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    removeCardImage(image.id);
+                                  }}
+                                  style={{
+                                    position: "absolute",
+                                    top: "5px",
+                                    right: "5px",
+                                    background: "rgba(255, 255, 255, 0.8)",
+                                    border: "none",
+                                    borderRadius: "50%",
+                                    width: "25px",
+                                    height: "25px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    cursor: "pointer",
+                                    fontSize: "18px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  ×
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Main Images */}
+                      <Form.Group controlId="formMainImages" className="mb-3">
+                        <Form.Label>Upload Main Images</Form.Label>
+                        <Form.Control
+                          type="file"
+                          multiple
+                          accept="image/*"
+                          onChange={handleMainImageChange}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                            color: "transparent"
+                          }}
+                        />
+                      </Form.Group>
+
+                      {selectedMainImages.length > 0 && (
+                        <div style={{ marginBottom: "2rem" }}>
+                          <div style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                            gap: "1rem",
+                            marginTop: "1rem"
+                          }}>
+                            {selectedMainImages.map((image) => (
+                              <div
+                                key={image.id}
+                                style={{
+                                  position: "relative",
+                                  paddingBottom: "75%",
+                                  height: 0,
+                                  borderRadius: "10px",
+                                  overflow: "hidden",
+                                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                                  transition: "transform 0.2s ease",
+                                  cursor: "pointer",
+                                }}
+                                onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.02)"}
+                                onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+                              >
+                                <img
+                                  src={image.url}
+                                  alt={`Preview ${image.id}`}
+                                  style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                  }}
+                                />
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    removeMainImage(image.id);
+                                  }}
+                                  style={{
+                                    position: "absolute",
+                                    top: "5px",
+                                    right: "5px",
+                                    background: "rgba(255, 255, 255, 0.8)",
+                                    border: "none",
+                                    borderRadius: "50%",
+                                    width: "25px",
+                                    height: "25px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    cursor: "pointer",
+                                    fontSize: "18px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  ×
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </Col>
                   </Row>
 
