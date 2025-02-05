@@ -1,10 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import './DestinationComponent.css';
-import sigiriyaImage from '../../assets/sigiriyaImage.jpg'
+import sigiriyaImage from '../../assets/sigiriyaImage.jpg';
 
 const DestinationComponent = () => {
+  // Array of images - add your actual image imports
+  const images = [
+    'https://picsum.photos/1080/720?random=1',
+    'https://picsum.photos/1080/720?random=2',
+    'https://picsum.photos/1080/720?random=3',
+    'https://picsum.photos/1080/720?random=4',
+    
+  ];
 
-  {}
+  const [selectedImage, setSelectedImage] = useState(sigiriyaImage);
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+  };
+
   return (
     <div className='destinationDescription'>
       <div className="content">
@@ -30,11 +43,22 @@ const DestinationComponent = () => {
           </div>
         </div>
         <div className="image-section">
-          <img src={sigiriyaImage} alt="Sigiriya Image" />
+          <img src={selectedImage} alt="Sigiriya Main" className="main-image" />
+          <div className="thumbnail-gallery">
+            {images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Sigiriya ${index + 1}`}
+                className={`thumbnail ${selectedImage === image ? 'active' : ''}`}
+                onClick={() => handleImageClick(image)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default DestinationComponent;
