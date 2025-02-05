@@ -60,7 +60,7 @@ const DestinationsInHomePage = () => {
                             title="Sigiriya The Ancient Rock Fortress"
                             reviewCount="11,738"
                             category="Ancient Ruins, Points of Interest & Landmarks"
-                            year="2024"
+                            city="Sigiriya"
                         /></SwiperSlide>
 
                     <SwiperSlide>
@@ -73,7 +73,7 @@ const DestinationsInHomePage = () => {
                             title="Pidurangala Rock"
                             reviewCount="2,555"
                             category="Points of Interest & Landmarks"
-                            year="2024"
+                            city="Sigiriya"
                         />
                     </SwiperSlide>
 
@@ -87,7 +87,7 @@ const DestinationsInHomePage = () => {
                             title="Kaludiya Pokuna"
                             reviewCount="30"
                             category="Historic Sites, Points of Interest & Landmarks"
-                            year="2024"
+                            city="Sigiriya"
                         />
                     </SwiperSlide>
 
@@ -102,7 +102,7 @@ const DestinationsInHomePage = () => {
                             title="Kaludiya Pokuna"
                             reviewCount="30"
                             category="Historic Sites, Points of Interest & Landmarks"
-                            year="2024"
+                            city="Sigiriya"
                         />
                     </SwiperSlide>
 
@@ -116,7 +116,7 @@ const DestinationsInHomePage = () => {
                             title="Kaludiya Pokuna"
                             reviewCount="30"
                             category="Historic Sites, Points of Interest & Landmarks"
-                            year="2024"
+                            city="Sigiriya"
                         />
                     </SwiperSlide>
 
@@ -130,7 +130,7 @@ const DestinationsInHomePage = () => {
                             title="Kaludiya Pokuna"
                             reviewCount="30"
                             category="Historic Sites, Points of Interest & Landmarks"
-                            year="2024"
+                            city="Sigiriya"
                         />
 
                     </SwiperSlide>
@@ -145,7 +145,7 @@ const DestinationsInHomePage = () => {
                             title="Kaludiya Pokuna"
                             reviewCount="30"
                             category="Historic Sites, Points of Interest & Landmarks"
-                            year="2024"
+                            city="Sigiriya"
                         />
                     </SwiperSlide>
                     {/* </div> */}
