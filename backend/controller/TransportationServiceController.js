@@ -2,18 +2,20 @@ import dotenv from "dotenv"
 dotenv.config({ path: "../.env" })
 import { TransportationServiceModel } from "../models/Transportation.js"
 
-const addTransportationServices = async (req, res) => {
-    try {
-        // Fetch existing transportation services to calculate the new ID
-        const transportModes = await TransportationServiceModel.find({}).sort({ id: 1 }); // Sort by ID in ascending order
-        const newId = transportModes.length > 0 ? transportModes[transportModes.length - 1].id + 1 : 1;
+const AddTransportationService = async (req, res) => {
 
-        // Create a new transportation service document
-        const transportMode = new TransportationServiceModel({
-            id: newId,
+    console.log(req.body);
+    
+    try {
+
+        let transportationServices = await TransportationServiceModel.find({});
+        let id = transportationServices.length > 0 ? transportationServices[transportationServices.length - 1].id + 1 : 1;
+        const transportationService = new TransportationServiceModel({
+            id: id,
             transportationServiceName: req.body.transportationServiceName,
             availableVehicles: req.body.availableVehicles,
             pricePerHour: req.body.pricePerHour,
+            images: req.body.images,
             address: req.body.address,
             contactNumber: req.body.contactNumber,
             description: req.body.description,
@@ -21,11 +23,11 @@ const addTransportationServices = async (req, res) => {
         });
 
         // Save the transportation service to the database
-        await transportMode.save();
+        await transportationService.save();
         return res.json({
             success: true,
             message: 'Transportation service added successfully',
-            data: transportMode,
+            data: transportationService,
         });
     } catch (error) {
         console.error('Error adding transportation service:', error);
@@ -129,4 +131,4 @@ const viewTransportationService = async (req, res) => {
 };
 
 
-export { addTransportationServices, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService}
+export { AddTransportationService, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService}

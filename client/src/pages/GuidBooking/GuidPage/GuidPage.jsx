@@ -107,7 +107,9 @@ const GuidPage = () => {
                 setData(bookingData);
 
                 try {
-                    axios.post("http://localhost:3000/booking/bookguide", bookingData)
+                    console.log(bookingData);
+                    
+                    axios.post("http://13.48.44.77:3000/booking/bookguide", bookingData)
                         .then((res) => {
                             mySwal.fire("Success", "Booking confirmed successfully!", "success")  .then(() => {
                                 setTimeout(() => {
@@ -300,4 +302,4 @@ const GuidPage = () => {
     );
 
 }
-export default GuidPage;
+export default GuidPage;

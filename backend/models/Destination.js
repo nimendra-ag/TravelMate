@@ -53,6 +53,18 @@ const DestinationModel = model("Destinations", {
     min: 0,
     max: 5,
   },
+
+  mainImages: {
+    type: [String],
+    default: [],
+    required: true,
+  },
+
+  cardImages: {
+    type: [String],
+    default: [],
+    required: true,
+  },
 });
 export { DestinationModel };
 

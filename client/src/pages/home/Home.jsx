@@ -10,6 +10,7 @@ import FeedbackSection from "../../components/FeedbackSection/FeedbackSection";
 import RestaurantsInLandingPage from "../../components/RestaurantInLandingPage/RestaurantsInLandingPage";
 import RestaurantCategoriesCards from "../../components/RestaurantCategoriesCards/RestaurantCategoriesCards";
 import PrePlannedTripsInLandingPage from "../../components/prePlannedTripsInLandingPage/PrePlannedTripsInLandingPage";
+import DestinationsInHomePage from "../../components/destinationsInHomePage/DestinationsInHomePage";
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
       <Activities />
       <FeedbackSection />
       <FeedbackForm />
+      <DestinationsInHomePage/>
     </>
   );
 };

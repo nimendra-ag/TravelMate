@@ -1,122 +1,153 @@
 .destinationDescription {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Add this to your existing CSS */
+.text-justify {
+  text-align: justify;
+  text-justify: inter-word;
+  line-height: 1.4;
+  /* font-size: 18px; */
+}
+
+
+.content {
+  display: flex;
+  max-width: 80%;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.text-section {
+  flex: 1;
+  padding: 40px;
+  padding-top: 30px;
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #0A2E41;
+  font-weight: 600;
+}
+
+.info img {
+  width: 24px;
+  height: 24px;
+}
+
+.image-section {
+  margin-top: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 30px;
+}
+
+.main-image {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.thumbnail {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.thumbnail-gallery {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  width: 100%;
+  justify-content: center;
+}
+
+.thumbnail.active {
+  border: 3px solid #0A2E41;
+  box-shadow: 0 2px 8px rgba(10, 46, 65, 0.2);
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
   .content {
-    display: flex;
-    max-width: 80%;
-    border-radius: 10px;
-    overflow: hidden;
-    flex-direction: column; /* Default to column for smaller screens */
+      flex-direction: row;
   }
-  
-  .text-section {
-    flex: 1;
-    padding: 40px;
-    color: #7094A7;
-  }
-  
+
   .text-section h1 {
-    font-size: 64px;
-    margin-bottom: 50px;
-    color: #0A2E41;
-    font-weight: 800;
+      font-size: 48px;
   }
-  
+
   .text-section h2 {
-    font-size: 36px;
-    margin-bottom: 15px;
-    color: #0A2E41;
-    font-weight: 700;
+      font-size: 20px;
   }
-  
+
   .text-section p {
-    font-size: 20px;
-    line-height: 1.6;
-    margin-bottom: 30px;
+      font-size: 20px;
   }
-  
-  .info-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-top: 20px;
+
+  .main-image {
+      height: 400px;
   }
-  
-  .info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #0A2E41;
-    font-weight: 600;
+
+  .thumbnail {
+      width: 80px;
+      height: 60px;
   }
-  
-  .info img {
-    width: 24px;
-    height: 24px;
+}
+
+@media (min-width: 1024px) {
+  .text-section h1 {
+      font-size: 64px;
   }
-  
-  .image-section {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  .text-section h2 {
+      font-size: 36px;
   }
-  
-  .image-section img {
-    width: 100%;
-    height: 600px;
-    object-fit: cover;
-    border-radius: 15px;
+
+  .text-section p {
+      font-size: 20px;
   }
-  
-  /* Media Queries */
-  @media (min-width: 768px) {
-    .content {
-      flex-direction: row; /* Change to row for larger screens */
-    }
-  
-    .text-section h1 {
-      font-size: 48px; /* Adjust font size for larger screens */
-    }
-  
-    .text-section h2 {
-      font-size: 20px; /* Adjust font size for larger screens */
-    }
-  
-    .text-section p {
-      font-size: 20px; /* Adjust font size for larger screens */
-    }
-  
-    .image-section img {
-      height: 400px; /* Adjust image height for larger screens */
-    }
+
+  .main-image {
+      height: 500px;
   }
-  
-  @media (min-width: 1024px) {
-    .text-section h1 {
-      font-size: 64px; /* Adjust font size for even larger screens */
-    }
-  
-    .text-section h2 {
-      font-size: 36px; /* Adjust font size for even larger screens */
-    }
-  
-    .text-section p {
-      font-size: 20px; /* Adjust font size for even larger screens */
-    }
-  
-    .image-section img {
-      height: 500px; /* Adjust image height for even larger screens */
-    }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .content {
+      flex-direction: column;
   }
-  
-  /* New Media Query for Half Screen Size */
-  @media (max-width: 1024px) and (min-width: 768px) {
-    .content {
-      flex-direction: column; /* Switch to column for half screen size */
-    }
+}
+
+@media (max-width: 767px) {
+  .thumbnail-gallery {
+      justify-content: flex-start;
+      padding: 0.5rem;
   }
-  
+
+  .thumbnail {
+    width: 50px;
+    height: 35px;
+}
+}

@@ -24,6 +24,9 @@ const AddRestaurant = async (req, res) => {
             openingHours: req.body.openingHours,
             priceRange: req.body.priceRange,
             rating: req.body.rating || 0, // Default rating to 0 if not provided
+            cardImages: req.body.cardImages || [], // Default to empty array if not provided
+            caroImages: req.body.caroImages || [], // Default to empty array if not provided
+            mainImages: req.body.mainImages || [], // Default to empty array if not provided
         });
 
         // Save the restaurant to the database

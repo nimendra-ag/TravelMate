@@ -15,7 +15,6 @@ const TopRatedRestaurant = ({restaurantType}) => {
     const restaurantReviews = allRestaurantReviews.filter(review => review.restaurantId === randomRestaurantId);
     console.log("random restaurant reviews", restaurantReviews);
 
-
     const calculateAverageRating = (reviews) => {
         if (reviews.length === 0) return 0; // Avoid division by zero
         const totalOverallRating = reviews.reduce((sum, review) => sum + review.overallRating, 0);
