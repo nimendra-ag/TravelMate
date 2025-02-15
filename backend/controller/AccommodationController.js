@@ -4,8 +4,9 @@ import { AccommodationModel } from "../models/Accommodation.js";
 import { CityModel } from "../models/Citiy.js";
 import { DestinationModel } from "../models/Destination.js";
 import { GuideModel } from "../models/Guide.js";
+import { HotelReviewModel } from "../models/HotelReview.js";
 
-dotenv.config({ path: "../.env" });
+// dotenv.config({ path: "../.env" });
 
 // Add Accommodation API
 const addAccommodation = async (req, res) => {
@@ -160,7 +161,55 @@ const viewAccommodation = async (req, res) => {
     }
 };  
 
-export { updateAccommodation,addAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation }
+const addHotelReview = async (req, res) =>{
+    try{
+    
+        let hotelReviews = await HotelReviewModel.find({});
+        let id = hotelReviews.length > 0 ? hotelReviews[hotelReviews.length - 1].id + 1 : 1;
+        let hotelReview = new HotelReviewModel({
+            id: id,
+            userName: req.body.userName,
+            hotelId: req.body.hotelId,
+            overallRating: req.body.overallRating,
+            roomRating: req.body.roomRating,
+            serviceRating: req.body.serviceRating,
+            valueRating: req.body.valueRating,
+            locationRating: req.body.locationRating,
+            visitDate: req.body.visitDate,
+            travelType: req.body.travelType,
+            stayDuration: req.body.stayDuration,
+            reviewBody: req.body.body,
+            reviewTitle: req.body.title
+        })
+
+        // console.log(hotelReview);
+        await hotelReview.save();
+        res.json({
+            success: true,
+            message: 'Hotel review added successfully'
+        });
+
+    } catch (error){
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+}
+
+
+const getAllHotelReviews = async (req, res) => {
+    try{
+        let allHotelReviews = await HotelReviewModel.find({});
+        console.log("All Hotel Reviews Fetched");
+        // console.log(allHotelReviews);
+        res.send(allHotelReviews);
+
+    } catch(error){
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+}
+
+export { updateAccommodation,addAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation, getAllHotelReviews , addHotelReview}
 
 
 

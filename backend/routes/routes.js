@@ -5,7 +5,7 @@ import { AddRestaurant, getAllRestaurants ,UpdateRestaurant,deleteRestaurant,vie
 import { AddDestination,UpdateDestination,getAllDestinations,DeleteDestination,viewDestination } from '../controller/DestinationController.js';
 
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
-import { updateAccommodation,addAccommodation, getAllAccomodations, GetData, GetCity, deleteAccommodation , viewAccommodation} from '../controller/AccommodationController.js';
+import { updateAccommodation,addAccommodation, getAllAccomodations, GetData, GetCity, deleteAccommodation , viewAccommodation, getAllHotelReviews, addHotelReview} from '../controller/AccommodationController.js';
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
 import { AddPrePlannedTrips, getAllPrePlannedTrips } from '../controller/PrePlannedTripController.js';
 import { AddPrePlannedTripBooking, getAllPrePlannedTripBookings } from '../controller/PrePlannedTripBookingController.js';
@@ -99,6 +99,10 @@ router.get("/gettravelmatefeedback", GetTravelMateFeedback)
 router.post("/addRestaurantReview", addRestaurantReview)
 
 router.get("/getAllRestaurantReviews", getAllRestaurantReviews)
+
+router.post("/addHotelReview", addHotelReview)
+
+router.get("/getAllHotelReviews", getAllHotelReviews)
 
 router.post("/subscribetonewsletter", AddNewsletterMail)
 export default router;

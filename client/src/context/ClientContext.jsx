@@ -12,6 +12,8 @@ const ClientContextProvider = (props) => {
     const [allDetails, setAllDetails] = useState([]);
     const [allCities, setAllCities] = useState([]);
     const [allRestaurantReviews, setAllRestaurantReviews] = useState([]);
+    const [allHotelReviews, setAllHotelReviews] = useState([]);
+
 
     useEffect(() => {
         axios.get("http://localhost:3000/cities/getCities")
@@ -83,6 +85,15 @@ const ClientContextProvider = (props) => {
             .catch((error) => {
                 console.log('Restaurant Review fetch error:', error);
             });
+
+            // axios.get('http://localhost:3000/travelmate/getAllHotelReviews')
+            // .then((response) => {
+            //     console.log('Hotel Reviews:', response.data);
+            //     setAllHotelReviews(response.data);
+            // })
+            // .catch((error) => {
+            //     console.log('Hotel Review fetch error:', error);
+            // });
     }, []);
 
     const contextValue = {
@@ -93,7 +104,8 @@ const ClientContextProvider = (props) => {
         allPrePlannedTrips,
         allDetails,
         allCities,
-        allRestaurantReviews
+        allRestaurantReviews,
+        allHotelReviews
     };
 
     return (
