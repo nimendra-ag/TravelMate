@@ -12,11 +12,10 @@ const DestinationComponent = () => {
     'https://picsum.photos/1080/720?random=4',
     'https://picsum.photos/1080/720?random=5',
     'https://picsum.photos/1080/720?random=6',
-
   ];
 
   const [selectedImage, setSelectedImage] = useState(sigiriyaImage);
-
+  
   const handleImageClick = (image) => {
     setSelectedImage(image);
   };

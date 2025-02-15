@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import DestinationCardComponent from '../destinationCardComponent/DestinationCardComponent';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import './DestinationsInHomePage.css'
+import { ClientContext } from '../../context/ClientContext';
 
 const DestinationsInHomePage = () => {
+    const {allDestinations} = useContext(ClientContext);
     return (
         <>
             <Container>
@@ -18,7 +20,7 @@ const DestinationsInHomePage = () => {
                             Explore breathtaking locations and hidden gems, curated to make your travels unforgettable.                    </h6>
                     </Col>
                 </Row>
-
+            
                 <Swiper
                     spaceBetween={20}
                     slidesPerView={4}
@@ -47,10 +49,27 @@ const DestinationsInHomePage = () => {
                         }
                     }}>
 
+                    {allDestinations.map((destinaion) => (
+                        <SwiperSlide key={destinaion.id}>
+                            <DestinationCardComponent
+                             images={[
+                                'https://picsum.photos/288/200?random=1',
+                                'https://picsum.photos/288/200?random=2',
+                                'https://picsum.photos/288/200?random=3'
+                            ]}
+                            title={destinaion.name}
+                            reviewCount="11,738"
+                            category={destinaion.category.slice(0, 2).join(", ")}
+                            city={destinaion.city}
+                            >
+
+                            </DestinationCardComponent>
+                        </SwiperSlide>
+                    ))}
                     {/* <Row> */}
                     {/* <div className="d-flex justify-content-center gap-3"> */}
 
-                    <SwiperSlide>
+                    {/* <SwiperSlide>
                         <DestinationCardComponent
                             images={[
                                 'https://picsum.photos/288/200?random=1',
@@ -61,7 +80,7 @@ const DestinationsInHomePage = () => {
                             reviewCount="11,738"
                             category="Ancient Ruins, Points of Interest & Landmarks"
                             city="Sigiriya"
-                        /></SwiperSlide>
+                    /></SwiperSlide>
 
                     <SwiperSlide>
                         <DestinationCardComponent
@@ -147,16 +166,9 @@ const DestinationsInHomePage = () => {
                             category="Historic Sites, Points of Interest & Landmarks"
                             city="Sigiriya"
                         />
-                    </SwiperSlide>
-                    {/* </div> */}
-                    {/* </Row> */}
-
+                    </SwiperSlide> */}
                 </Swiper>
-                {/* <Row>
-                    <div className="d-flex justify-content-center gap-3">
-                        
-                    </div>
-                </Row> */}
+                
             </Container>
 
         </>
