@@ -6,7 +6,7 @@ import React from 'react';
 import { Card, Badge, Button } from 'react-bootstrap';
 import { FaHeart, FaStar } from 'react-icons/fa';
 
-const RestaurantCard = ({ id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating }) => {
+const RestaurantCard = ({ id, type, name, address, category, contactNumber, description, email, website, mainCategory, priceRange, rating }) => {
   return (
     <Link to={`/restaurants/${id}`} style={{ textDecoration: 'none' }}>
       <Card style={{ width: '18rem', border: 'none' }} className="my-3">
@@ -19,19 +19,7 @@ const RestaurantCard = ({ id, type, name, address, category, contactNumber, desc
               boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)',
               borderRadius: '5px',
             }}
-          />        <Button
-            variant="light"
-            style={{
-              position: 'absolute',
-              top: '10px',
-              right: '10px',
-              borderRadius: '20%',
-              padding: '4px',
-
-            }}
-          >
-            <FaHeart style={{ color: 'black' }} />
-          </Button>
+          />        
         </div>
         <Card.Body>
           <Card.Title>{name}</Card.Title>
@@ -45,7 +33,7 @@ const RestaurantCard = ({ id, type, name, address, category, contactNumber, desc
               {rating}
             </Badge>
           </div>
-          <Card.Text>{address}</Card.Text>
+          <Card.Text>{mainCategory}</Card.Text>
         </Card.Body>
       </Card>
     </Link>

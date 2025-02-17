@@ -50,6 +50,7 @@ const RestaurantsInLandingPage = () => {
                 priceRange={restaurant.priceRange}
                 // imageSrc={restaurant.cardImage}
                 id={restaurant.id}
+                mainCategory={restaurant.mainCategory}
               />
             </SwiperSlide>
           ))}
