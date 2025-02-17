@@ -3,8 +3,7 @@ import './DestinationComponent.css';
 import sigiriyaImage from '../../assets/sigiriyaImage.jpg';
 import { Col, Row } from 'react-bootstrap';
 
-const DestinationComponent = ({name, description, image1, image2, image3, image4, image5, city, category, bestTimeToVisit, website, distanceFromColombo, entranceFee, openingHours, duration}) => {
-  // Array of images - add your actual image imports
+const DestinationComponent = ({name, description, image1, image2, image3, image4, image5, category, bestTimeToVisit, website, distanceFromColombo}) => {
   const images = [
     'https://picsum.photos/1080/720?random=1',
     'https://picsum.photos/1080/720?random=2',
@@ -12,7 +11,6 @@ const DestinationComponent = ({name, description, image1, image2, image3, image4
     'https://picsum.photos/1080/720?random=4',
     'https://picsum.photos/1080/720?random=5',
     'https://picsum.photos/1080/720?random=6',
-
   ];
 
   const [selectedImage, setSelectedImage] = useState(sigiriyaImage);
@@ -25,14 +23,14 @@ const DestinationComponent = ({name, description, image1, image2, image3, image4
     <div className='destinationDescription'>
       <div className="content">
         <div className="text-section">
-          <Row className="mb-4">
-            <h1 className="display-6">{name}</h1>
-          </Row>
-          <Col xs={12} className="text-md-start">
-            <p className="text-justify" style={{ textAlign: 'justify' }}>
-              {description}
-            </p>
-          </Col>
+          <div className="destination-header">
+            <h1 className="destination-title">{name}</h1>
+            <span className="destination-category">{category}</span>
+          </div>
+          
+          <div className="destination-description">
+            <p>{description}</p>
+          </div>
 
           <div className="info-section">
             <h3 className="info-title">Essential Information</h3>
@@ -57,7 +55,7 @@ const DestinationComponent = ({name, description, image1, image2, image3, image4
                 <i className="fas fa-globe"></i>
                 <div className="info-content">
                   <h3>More Information</h3>
-                  <p>Webslite: <a href={website} target="_blank" rel="noopener noreferrer">Official Website</a></p>
+                  <p>Website: <a href={website} target="_blank" rel="noopener noreferrer">Official Website</a></p>
                 </div>
               </div>
             </div>
@@ -65,13 +63,13 @@ const DestinationComponent = ({name, description, image1, image2, image3, image4
         </div>
 
         <div className="image-section">
-          <img src={selectedImage} alt="Sigiriya Main" className="main-image" />
+          <img src={selectedImage} alt="Main" className="main-image" />
           <div className="thumbnail-gallery">
             {images.map((image, index) => (
               <img
                 key={index}
                 src={image}
-                alt={`Sigiriya ${index + 1}`}
+                alt={`Thumbnail ${index + 1}`}
                 className={`thumbnail ${selectedImage === image ? 'active' : ''}`}
                 onClick={() => handleImageClick(image)}
               />
