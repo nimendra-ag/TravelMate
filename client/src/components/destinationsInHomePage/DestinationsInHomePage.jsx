@@ -57,6 +57,7 @@ const DestinationsInHomePage = () => {
                                 'https://picsum.photos/288/200?random=2',
                                 'https://picsum.photos/288/200?random=3'
                             ]}
+                            id={destinaion.id}
                             title={destinaion.name}
                             reviewCount="11,738"
                             category={destinaion.category.slice(0, 2).join(", ")}
