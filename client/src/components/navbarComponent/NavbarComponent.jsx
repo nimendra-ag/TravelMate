@@ -17,9 +17,9 @@ const NavbarComponent = () => {
     }, []);
 
     return (
-        <Navbar 
-            expand="lg" 
-            className={`custom-navbar ${scrolled ? 'scrolled' : ''}`} 
+        <Navbar
+            expand="lg"
+            className={`custom-navbar ${scrolled ? 'scrolled' : ''}`}
             fixed="top"
         >
             <Container>
@@ -29,13 +29,20 @@ const NavbarComponent = () => {
                     transition={{ duration: 0.5 }}
                 >
                     <Navbar.Brand href="/" className="brand-logo">
-                        <img
-                            src={logo}
-                            alt="Travel Mate Logo"
-                            className="brand-image"
-                        />
+                        <div style={{
+                            backgroundColor: '#DDE8EE',
+                            padding: '0px',
+                            borderRadius: '20px 0px 20px 0px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            marginRight: '10px'
+                        }}>
+                            <img src={logo} alt="Logo" style={{ width: '50px' }} />
+                        </div>
                         <span className="brand-text">Travel Mate</span>
                     </Navbar.Brand>
+
+
                 </motion.div>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
