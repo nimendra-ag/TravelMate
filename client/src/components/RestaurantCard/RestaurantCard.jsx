@@ -6,7 +6,7 @@ import React from 'react';
 import { Card, Badge, Button } from 'react-bootstrap';
 import { FaHeart, FaStar } from 'react-icons/fa';
 
-const RestaurantCard = ({ id, type, name, address, category, contactNumber, description, email, website, mainCategory, priceRange, rating }) => {
+const RestaurantCard = ({ id, type, name, mainCategory, priceRange, rating }) => {
   return (
     <Link to={`/restaurants/${id}`} style={{ textDecoration: 'none' }}>
       <Card style={{ width: '18rem', border: 'none' }} className="my-3">
