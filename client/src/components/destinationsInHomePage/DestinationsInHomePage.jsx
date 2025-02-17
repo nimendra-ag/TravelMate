@@ -16,7 +16,7 @@ const DestinationsInHomePage = () => {
                         <h2 className="destinationsinhome-heading text-start" style={{ marginBottom: '1.5rem' }}>
                             Discover Destinations for Every Adventure
                         </h2>
-                        <h6 style={{ marginBottom: '1.5rem' }}>
+                        <h6 style={{ marginBottom: '1.5rem', color: '#6c757d' }}>
                             Explore breathtaking locations and hidden gems, curated to make your travels unforgettable.                    </h6>
                     </Col>
                 </Row>
