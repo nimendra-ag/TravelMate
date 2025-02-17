@@ -168,6 +168,7 @@ const BookHotel = () => {
                                 fromDate={fromDate}
                                 toDate={toDate}
                                 hid={accommodation.id}
+                               images={room.images?.length > 0 ? room.images : undefined}
                             />
                         ))}
                     </div>

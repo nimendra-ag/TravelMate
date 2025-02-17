@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const AvailableBookings = () => {
     const [bookings, setBookings] = useState([]);
+    const [loading, setLoading] = useState(true);
     const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
@@ -17,13 +18,24 @@ const AvailableBookings = () => {
             })
             .catch((err) => {
                 console.log("Error is", err);
+            })
+            .finally(() => {
+                setLoading(false);
             });
+        } else {
+            setLoading(false);
         }
     }, []);
 
     return (
-        <div className='container'>
-            {bookings.length > 0 ? (
+        <div className="container">
+            {loading ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ height: '60vh' }}>
+                    <div className="spinner-border text-primary" style={{ width: '5rem', height: '5rem' }} role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            ) : bookings.length > 0 ? (
                 <div>
                     {bookings.map((booking) => (
                         <Booking

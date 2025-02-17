@@ -48,6 +48,8 @@ const BookingsModel = model('Bookings', {
         type: Number,
         required: true
     }
+ 
+
 
 
 

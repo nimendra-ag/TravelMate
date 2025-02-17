@@ -49,7 +49,7 @@ const HotelsInLandingPage = () => {
       </Swiper>
 
 
-      <button className="view-all-button view-btn  " onClick={()=>{navigator("/allhotels")}}>View All</button>
+      <button className="view-all-button view-btn  " onClick={()=>{navigator("/allhotels")}}>Book a Hotel</button>
 
     </Container>
     </div>

@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const CompletedBookings = () => {
     const [bookings, setBookings] = useState([]);
+    const [loading, setLoading] = useState(true);
     const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
@@ -17,13 +18,24 @@ const CompletedBookings = () => {
             })
             .catch((err) => {
                 console.log("Error is", err);
+            })
+            .finally(() => {
+                setLoading(false);
             });
+        } else {
+            setLoading(false);
         }
     }, []);
 
     return (
-        <div className='container'>
-            {bookings.length > 0 ? (
+        <div className="container">
+            {loading ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ height: '60vh' }}>
+                    <div className="spinner-border text-success" style={{ width: '5rem', height: '5rem' }} role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            ) : bookings.length > 0 ? (
                 <div>
                     {bookings.map((booking) => (
                         <Booking
@@ -44,12 +56,9 @@ const CompletedBookings = () => {
                 <div className="text-center py-5">
                     <div className="card shadow-sm border-0 py-5" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)' }}>
                         <div className="card-body">
-                            <i className="fas fa-calendar-times text-primary mb-4" style={{ fontSize: '4rem' }}></i>
-                            <h3 className="text-primary mb-3">No Completed Bookings</h3>
+                            <i className="fas fa-check-circle text-success mb-4" style={{ fontSize: '4rem' }}></i>
+                            <h3 className="text-success mb-3">No Completed Bookings</h3>
                             <p className="text-muted">You haven't completed any bookings yet.</p>
-
-                            
-
                         </div>
                     </div>
                 </div>

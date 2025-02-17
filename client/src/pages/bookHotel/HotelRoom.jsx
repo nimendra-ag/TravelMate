@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './bookHotel.css';
 
-const HotelRoom = ({ name, type, price, capacity, available, id, fromDate, toDate, hid }) => {
+const HotelRoom = ({ name, type, price, capacity, available, id, fromDate, toDate, hid , images }) => {
     const navigate = useNavigate();
 
     const handleBook = (from, to, id, hid) => {
-        navigate(`/conhotelbook/${from}/${to}/${id}/${hid}/${available}`);
+        navigate("/conhotelbook", { state: { from, to, id, hid , images, available } });
         console.log(toDate);
     };
 
@@ -20,7 +20,7 @@ const HotelRoom = ({ name, type, price, capacity, available, id, fromDate, toDat
                     <div className="col-md-4">
                         <div className="position-relative h-100">
                             <img
-                                src="https://picsum.photos/300/200"
+                                src={images?.length>0 ? images[0] : "https://picsum.photos/300/200"}
                                 className="img-fluid rounded-start h-100 w-100 object-fit-cover"
                                 alt="room"
                                 style={{ minHeight: '300px' }}

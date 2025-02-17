@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Booking from './Booking';
+// import Booking from './Booking';
 import axios from 'axios';
+import GuideBookingC from './GuideBookingCard';
 
-const CancelledBookings = () => {
+const CompletedGuidBookings = () => {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const user = JSON.parse(localStorage.getItem("user"));
+    console.log("User is", user);
 
     useEffect(() => {
+        
         if (user) {
-            axios.get("http://localhost:3000/booking/getcbookings", {
+            axios.get("http://localhost:3000/booking/getguidecombookings", {
                 params: { email: user.email }
             })
             .then((res) => {
@@ -31,34 +34,31 @@ const CancelledBookings = () => {
         <div className="container">
             {loading ? (
                 <div className="d-flex justify-content-center align-items-center" style={{ height: '60vh' }}>
-                    <div className="spinner-border text-danger" style={{ width: '5rem', height: '5rem' }} role="status">
+                    <div className="spinner-border text-primary" style={{ width: '5rem', height: '5rem' }} role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             ) : bookings.length > 0 ? (
                 <div>
                     {bookings.map((booking) => (
-                        <Booking
-                            key={booking._id}
-                            roomName={booking.room.name}
-                            accName={booking.accommodation.name}
-                            roomCount={booking.roomcount}
-                            price={booking.totalprice}
-                            toDate={booking.to}
-                            fromDate={booking.from}
-                            daysCount={booking.totaldays}
-                            id={booking._id}
-                            status={booking.status}
-                        />
+                        <GuideBookingC
+                        guide={booking.guide}
+                        fromDate={booking.fromDate}
+                        toDate={booking.toDate}
+                        totaldays={booking.totaldays}
+                        totalprice={booking.totalprice}
+                        status={booking.status}
+                        id={booking._id}
+                    />
                     ))}
                 </div>
             ) : (
                 <div className="text-center py-5">
                     <div className="card shadow-sm border-0 py-5" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)' }}>
                         <div className="card-body">
-                            <i className="fas fa-ban text-danger mb-4" style={{ fontSize: '4rem' }}></i>
-                            <h3 className="text-danger mb-3">No Cancelled Bookings</h3>
-                            <p className="text-muted">You don't have any cancelled bookings in your history.</p>
+                            <i className="fas fa-calendar-times text-primary mb-4" style={{ fontSize: '4rem' }}></i>
+                            <h3 className="text-primary mb-3">No Available Bookings</h3>
+                            <p className="text-muted">You don't have any Cancled bookings at the moment.</p>
                         </div>
                     </div>
                 </div>
@@ -67,4 +67,4 @@ const CancelledBookings = () => {
     );
 };
 
-export default CancelledBookings;
+export default CompletedGuidBookings;

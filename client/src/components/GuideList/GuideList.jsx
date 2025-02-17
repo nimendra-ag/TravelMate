@@ -8,9 +8,15 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './GuideList.css';
 import { ClientContext } from '../../context/ClientContext';
+import { useNavigate } from 'react-router-dom';
 
 const GuideList = () => {
+
+
+
   const {allGuides} = useContext(ClientContext);
+
+  const navigator = useNavigate();
 
   const guides = [
     {
@@ -106,9 +112,18 @@ const GuideList = () => {
                 profileImg='https://picsum.photos/150'
                 id = {guide.id}
               />
+
+              
+
+
             </SwiperSlide>
+
+            
           ))}
         </Swiper>
+
+        <button className="view-all-button view-btn  " onClick={()=>{navigator("/allguides")}}>Book a Guide</button>
+
 
       </Container>
     </div>

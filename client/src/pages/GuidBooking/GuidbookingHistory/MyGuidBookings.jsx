@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-const MyBookings = () => {
+const MyGuidBookings = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ const MyBookings = () => {
                         <i className="fas fa-calendar-check me-3"></i>
                         Welcome, {user.firstName}!
                     </h1>
-                    <p className="lead text-muted">Here is Your Hotel Bookings !</p>
+                    <p className="lead text-muted">Here is Your Guide Bookings !</p>
                     <div className="w-25 mx-auto">
                         <hr className="text-primary" style={{ height: '3px', opacity: '0.5' }} />
                     </div>
@@ -24,7 +25,7 @@ const MyBookings = () => {
                 <div className="row g-4 justify-content-center mb-5">
                     <div className="col-md-4">
                         <div className="card h-100 shadow-sm hover-card" 
-                             onClick={() => navigate("/mybookings/available")}
+                             onClick={() => navigate("/myguidbookings/available")}
                              style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
                             <div className="card-body text-center p-4">
                                 <i className="fas fa-calendar text-primary mb-3" style={{ fontSize: '2rem' }}></i>
@@ -39,7 +40,7 @@ const MyBookings = () => {
 
                     <div className="col-md-4">
                         <div className="card h-100 shadow-sm hover-card" 
-                             onClick={() => navigate("/mybookings/cancelled")}
+                             onClick={() => navigate("/myguidbookings/canclled")}
                              style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
                             <div className="card-body text-center p-4">
                                 <i className="fas fa-ban text-primary mb-3" style={{ fontSize: '2rem' }}></i>
@@ -54,7 +55,7 @@ const MyBookings = () => {
 
                     <div className="col-md-4">
                         <div className="card h-100 shadow-sm hover-card" 
-                             onClick={() => navigate("/mybookings/completed")}
+                             onClick={() => navigate("/myguidbookings/completed")}
                              style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
                             <div className="card-body text-center p-4">
                                 <i className="fas fa-check-circle text-primary mb-3" style={{ fontSize: '2rem' }}></i>
@@ -75,6 +76,6 @@ const MyBookings = () => {
             </div>
         </div>
     );
-};
+}
 
-export default MyBookings;
+export default MyGuidBookings
