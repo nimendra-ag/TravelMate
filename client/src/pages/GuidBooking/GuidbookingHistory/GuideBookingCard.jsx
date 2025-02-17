@@ -45,7 +45,7 @@ const GuideBookingC = ({ guide, fromDate, toDate, totaldays, totalprice, status,
                             </div>
                             <div className="detail-item mb-3">
                                 <i className="fas fa-calendar-alt text-primary me-2"></i>
-                                <span className="fw-bold">From Date:</span> {moment(fromDate).format('MMMM Do YYYY')}
+                                <span className="fw-bold">From Date:</span> {fromDate}
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@ const GuideBookingC = ({ guide, fromDate, toDate, totaldays, totalprice, status,
                         <div className="booking-details">
                             <div className="detail-item mb-3">
                                 <i className="fas fa-calendar-check text-primary me-2"></i>
-                                <span className="fw-bold">To Date:</span> {moment(toDate).format('MMMM Do YYYY')}
+                                <span className="fw-bold">To Date:</span> {toDate}
                             </div>
                             <div className="detail-item mb-3">
                                 <i className="fas fa-clock text-primary me-2"></i>

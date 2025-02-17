@@ -37,6 +37,8 @@ import MyGuidBookings from './pages/GuidBooking/GuidbookingHistory/MyGuidBooking
 import AvailableGuidBookings from './pages/GuidBooking/GuidbookingHistory/AvailableGuidBookings'
 import CancledGuidBookings from './pages/GuidBooking/GuidbookingHistory/CancledGuideBookings'
 import CompletedGuidBookings from './pages/GuidBooking/GuidbookingHistory/CompletedGuidBookings'
+import AllGuides from './pages/GuidBooking/AllGuides'
+import ConGuidPage from './pages/GuidBooking/GuidPage/ConGuideBook'
 
 
 function App() {
@@ -98,6 +100,12 @@ function App() {
 
           
           </Route>
+
+          <Route path="/allguides" element={<AllGuides />} />
+
+          <Route path="/conguidebook" element={<ConGuidPage />} />
+
+
 
         </Route>
       </Routes>

@@ -3,6 +3,9 @@ import { FaMapMarkerAlt, FaPhoneAlt, FaLanguage, FaCalendarAlt, FaDollarSign, Fa
 import moment from 'moment';
 
 const GuideBookingCard = ({ booking, onMarkComplete, onMarkCancle }) => {
+
+  console.log("booking is",booking);
+  
   return (
     <div className="card shadow-lg mb-4">
       <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
@@ -72,7 +75,7 @@ const GuideBookingCard = ({ booking, onMarkComplete, onMarkCancle }) => {
           <div className="col-md-6">
             <p className="mb-1">
               <FaCalendarAlt className="me-2 text-muted" />
-              <strong>{moment(booking.fromDate).format('MMMM Do YYYY')}</strong> → <strong>{moment(booking.toDate).format('MMMM Do YYYY')}</strong>
+              <strong>{booking.fromDate}</strong> → <strong>{booking.toDate}</strong>
             </p>
             <p className="mb-1">
               <FaDollarSign className="me-2 text-muted" />

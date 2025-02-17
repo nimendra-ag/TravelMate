@@ -17,6 +17,9 @@ export async function BookGuide(req, res) {
 
     const data = req.body;
 
+    console.log(data);
+    
+
     try {
         const newBooking = new GuidBooking({
             user: data.user,
