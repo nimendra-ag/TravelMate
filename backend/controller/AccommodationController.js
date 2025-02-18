@@ -209,7 +209,6 @@ const getAllHotelReviews = async (req, res) => {
     }
 }
 
-export { updateAccommodation,addAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation, getAllHotelReviews , addHotelReview}
 
 const addRoom  = async(req,res)=>{
 
@@ -359,7 +358,8 @@ const editRoom = async(req,res) => {
 
 
 
-export { deleteRoomImage , updateAccommodation,addAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation,addRoom, editRoom}
+export { deleteRoomImage , updateAccommodation,addAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation,addRoom, editRoom, addHotelReview, getAllHotelReviews };
+
 
 
 
