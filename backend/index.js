@@ -1,16 +1,25 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const multer = require('multer');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('cloudinary').v2;
-const dotenv = require('dotenv');
-const cors = require("cors");
+import express from 'express';
+import mongoose from 'mongoose';
+import multer from 'multer';
+import pkg from 'cloudinary';
+import path from 'path';
+const { v2: cloudinary } = pkg;
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import {Router} from './routes/routes.js'
+import cityRouter from './routes/cityRouter.js';
+import bookingRouter from './routes/bookingRote.js';
+import hotelRouter from './routes/hotelRoute.js';
+// import bookingScheduler from './schedulers/bookingScheduler.js';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.use(cors());
+app.use(express.json());
+
 
 // Cloudinary configuration
 cloudinary.config({
@@ -30,12 +39,29 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
+//image uploading api
+app.post('/upload',upload.single('image'), (req, res)=>{  
+  // console.log(req.file)
+  res.json({
+      success:true,
+      image_url: req.file.path
+  })
+})
+
 // MongoDB configuration
-mongoose.connect();
+mongoose.connect("mongodb+srv://travelmate:hy6QuIubRgLzBPjm@cluster0.1pbng.mongodb.net/TravelMate");
+
+//router
+app.use("/travelmate",Router)
+app.use("/cities",cityRouter);
+
+app.use("/booking",bookingRouter);
+
+app.use("/hotels",hotelRouter)
 
 
 
-
+// bookingScheduler.updateExpiredBookings();
 
 // Start the server
 app.listen(PORT, () => {
