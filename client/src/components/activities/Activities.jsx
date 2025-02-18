@@ -36,7 +36,7 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                <Link to={'/beach-activities'} style={{ textDecoration: 'none' }}>
                                     <Button
                                         className=" px-4 py-1 border-0 rounded-pill"
                                         style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
@@ -69,7 +69,7 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                <Link to={'/surfing'} style={{ textDecoration: 'none' }}>
 
                                     <Button
                                         className="px-4 py-1 border-0 rounded-pill"
@@ -100,7 +100,7 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                <Link to={'/trekking'} style={{ textDecoration: 'none' }}>
                                     <Button
                                         className="px-4 py-1 border-0 rounded-pill"
                                         style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
@@ -230,7 +230,7 @@ const Activities = () => {
                     </div>
 
                     <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                        <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                        <Link to={'/hiking'} style={{ textDecoration: 'none' }}>
                             <Button
                                 className="px-4 py-1 border-0 rounded-pill"
                                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
@@ -296,7 +296,7 @@ const Activities = () => {
                             </div>
 
                             <div style={{ marginTop: 'auto', marginLeft: "auto" }}>
-                                <Link to={'/activities'} style={{ textDecoration: 'none' }}>
+                                <Link to={'/food'} style={{ textDecoration: 'none' }}>
                                     <Button
                                         className="px-4 py-1 border-0 rounded-pill"
                                         style={{ backgroundColor: 'rgba(255, 255, 255, 0.71)', color: '#0A2E41', fontWeight: 'bold', fontSize: "25px" }}
