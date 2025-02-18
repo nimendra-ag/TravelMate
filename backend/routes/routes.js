@@ -1,6 +1,6 @@
 import express from 'express';
 import { UpdateGuide,AddGuide, getAllGuides,deleteGuide,viewGuide, addGuideReview, getAllGuideReviews } from '../controller/GuideController.js';
-import { addTransportationServices, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService } from '../controller/TransportationServiceController.js';
+import { AddTransportationService, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService } from '../controller/TransportationServiceController.js';
 import { AddRestaurant, getAllRestaurants ,UpdateRestaurant,deleteRestaurant,viewRestaurant, addRestaurantReview, getAllRestaurantReviews} from '../controller/RestaurantController.js';
 import { AddDestination,UpdateDestination,getAllDestinations,DeleteDestination,viewDestination } from '../controller/DestinationController.js';
 
