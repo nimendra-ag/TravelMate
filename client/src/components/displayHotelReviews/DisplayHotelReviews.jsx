@@ -10,20 +10,14 @@ const ReviewCard = ({ userName, title, body, travelType, visitDate }) => {
       <Card className="mb-4 shadow-sm">
         <Card.Body>
           <div className="d-flex align-items-center mb-3">
-            <img
-              src="https://via.placeholder.com/50"
-              alt="User Avatar"
-              className="rounded-circle me-3"
-            />
+            
             <div>
               <h6 className="mb-0">{userName}</h6>
               <small className="text-muted">from Australia</small>
             </div>
           </div>
           <div className="d-flex align-items-center mb-3">
-            {Array.from({ length: 5 }).map((_, index) => (
-              <span key={index} className="text-success">&#9733;</span> // Star icons
-            ))}
+            
           </div>
           <h5>{title}</h5>
           <small className="text-muted">{visitDate} • {travelType}</small>

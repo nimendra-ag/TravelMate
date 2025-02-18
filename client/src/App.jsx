@@ -33,6 +33,7 @@ import CompletedBookings from './pages/bookHotel/CompletedBookings'
 import ClientLayout from './components/ClientLayout/ClientLayout'
 import GuidPage from './pages/GuidBooking/GuidPage/GuidPage'
 import ReviewHotel from './pages/reviewHotel/ReviewHotel'
+import ReviewGuide from './pages/reviewGuide/ReviewGuide'
 
 
 function App() {
@@ -85,6 +86,8 @@ function App() {
 
           <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />
           <Route path="/review/hotels/:id" element={<ReviewHotel />} />
+
+          <Route path="/review/guides/:id" element={<ReviewGuide />} />
         </Route>
       </Routes>
     </Router>

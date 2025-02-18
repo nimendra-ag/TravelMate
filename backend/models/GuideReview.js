@@ -1,5 +1,5 @@
 import { model } from "mongoose";
-const HotelReviewModel = model('hotelReviews',{
+const GuideReviewModel = model('guideReviews',{
     id:{
         type:Number,
         required:true
@@ -8,7 +8,7 @@ const HotelReviewModel = model('hotelReviews',{
         type:String,
         required:true
     },
-    hotelId:{
+    guideId:{
         type:Number,
         required:true
     },
@@ -16,10 +16,7 @@ const HotelReviewModel = model('hotelReviews',{
         type: Number,
         required:true
     },
-    roomRating:{
-        type:Number,
-        required:true
-    },
+    
     serviceRating:{
         type:Number,
         required:true
@@ -28,29 +25,21 @@ const HotelReviewModel = model('hotelReviews',{
         type:Number,
         required:true
     },
-    locationRating:{
-        type:Number,
-        required:true
-    },
-    visitDate:{
-        type:String,
-        required:true
-    },
-    travelType:{
-        type:String,
-        required:true
-    },
-    stayDuration:{
-        type:String,
-        required: true
-    },
-    reviewTitle:{
+     reviewTitle:{
         type:String,
         required: true
     },
     reviewBody:{
         type:String,
         required: true
+    },
+    recommendation: {
+        type: String,
+        required: true 
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now  
     }
 })
-export{HotelReviewModel}
+export{GuideReviewModel}

@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { GuideModel } from "../models/Guide.js";
+import { GuideReviewModel } from "../models/GuideReview.js";
 
 dotenv.config({ path: "../.env" });
 
@@ -136,5 +137,50 @@ const viewGuide = async (req, res) => {
     }
 };  
 
+const addGuideReview = async (req, res) =>{
+    try{
+    
+        let guideReviews = await GuideReviewModel.find({});
+        let id = guideReviews.length > 0 ? guideReviews[guideReviews.length - 1].id + 1 : 1;
+        let guideReview = new GuideReviewModel({
+            id: id,
+            userName: req.body.userName,
+            guideId: req.body.guideId,
+            overallRating: req.body.overallRating,
+            serviceRating: req.body.serviceRating,
+            valueRating: req.body.valueRating,
+            reviewBody: req.body.body,
+            reviewTitle: req.body.title,
+            recommendation: req.body.recommendation,
+            createdAt: req.body.createdAt
+        })
 
-export { AddGuide,UpdateGuide, getAllGuides,deleteGuide,viewGuide };
+        // console.log(guideReview);
+        await guideReview.save();
+        res.json({
+            success: true,
+            message: 'Guide review added successfully'
+        });
+
+    } catch (error){
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+}
+
+
+const getAllGuideReviews = async (req, res) => {
+    try{
+        let allGuideReviews = await GuideReviewModel.find({});
+        console.log("All Guide Reviews Fetched");
+        // console.log(allGuideReviews);
+        res.send(allGuideReviews);
+
+    } catch(error){
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+}
+
+
+export { AddGuide,UpdateGuide, getAllGuides,deleteGuide,viewGuide,getAllGuideReviews,addGuideReview };

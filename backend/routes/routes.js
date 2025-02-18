@@ -1,5 +1,5 @@
 import express from 'express';
-import { UpdateGuide,AddGuide, getAllGuides,deleteGuide,viewGuide } from '../controller/GuideController.js';
+import { UpdateGuide,AddGuide, getAllGuides,deleteGuide,viewGuide, addGuideReview, getAllGuideReviews } from '../controller/GuideController.js';
 import { addTransportationServices, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService } from '../controller/TransportationServiceController.js';
 import { AddRestaurant, getAllRestaurants ,UpdateRestaurant,deleteRestaurant,viewRestaurant, addRestaurantReview, getAllRestaurantReviews} from '../controller/RestaurantController.js';
 import { AddDestination,UpdateDestination,getAllDestinations,DeleteDestination,viewDestination } from '../controller/DestinationController.js';
@@ -103,6 +103,11 @@ router.get("/getAllRestaurantReviews", getAllRestaurantReviews)
 router.post("/addHotelReview", addHotelReview)
 
 router.get("/getAllHotelReviews", getAllHotelReviews)
+
+router.post("/addGuideReview", addGuideReview)
+
+router.get("/getAllGuideReviews", getAllGuideReviews)
+
 
 router.post("/subscribetonewsletter", AddNewsletterMail)
 export default router;
