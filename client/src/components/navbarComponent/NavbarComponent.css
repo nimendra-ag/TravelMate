@@ -27,9 +27,9 @@
     transition: transform 0.3s ease;
 }
 
-.brand-logo:hover .brand-image {
+/* .brand-logo:hover .brand-image {
     transform: scale(1.05);
-}
+} */
 
 .brand-text {
     font-size: 1.5rem;

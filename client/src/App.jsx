@@ -50,7 +50,7 @@ function App() {
           <Route path="/details/:id" element={<GetDetails />} />
           <Route path="/footer" element={<Footer />} />
           <Route path="/destinations/:id" element={<Destination />} />
-          <Route path="/destination" element={<Destination />} />
+          {/* <Route path="/destination" element={<Destination />} /> */}
           <Route path="/ex" element={<Exist />} />
           <Route path="/sr" element={<SearchResult />} />
           <Route path="/city/:id" element={<CityResults />} />
@@ -86,7 +86,7 @@ function App() {
           </Route>
 
 
-          <Route path="/guide/:id" element={<GuidPage />} />
+          <Route path="/guide/:id" element={<GuidPage/>} />
 
 
           <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />

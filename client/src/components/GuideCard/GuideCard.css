@@ -7,9 +7,9 @@
     transition: transform 0.3s ease;
 }
 
-.guide-card:hover {
+/* .guide-card:hover {
     transform: translateY(-5px);
-}
+} */
 
 .guide-card-header {
     position: relative;

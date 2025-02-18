@@ -36,6 +36,11 @@ const TransportationServiceModel = model("TransportationServices", {
     min: 0,
     max: 5,
   },
+  images: {
+    type: [String],
+    default: [],
+    required: true,
+  },
 });
 
 export { TransportationServiceModel };
