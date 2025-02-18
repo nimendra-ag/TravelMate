@@ -32,6 +32,13 @@ import CancledBookings from './pages/bookHotel/CancledBookings'
 import CompletedBookings from './pages/bookHotel/CompletedBookings'
 import ClientLayout from './components/ClientLayout/ClientLayout'
 import GuidPage from './pages/GuidBooking/GuidPage/GuidPage'
+import ReviewHotel from './pages/reviewHotel/ReviewHotel'
+import ReviewGuide from './pages/reviewGuide/ReviewGuide'
+import BeachActivitiesPage from './pages/beachActivitiesPage/BeachActivitiesPage'
+import SurfingPage from './pages/surfingPage/SurfingPage'
+import TrekkingPage from './pages/trekkingPage/TrekkingPage'
+import HikingPage from './pages/hikingPage/HikingPage'
+import FoodPage from './pages/foodPage/FoodPage'
 
 
 function App() {
@@ -57,6 +64,13 @@ function App() {
           </Route>
 
           <Route path="/activities" element={<ActivitiesPage />} />
+          <Route path="/beach-activities" element={<BeachActivitiesPage />} />
+          <Route path="/surfing" element={<SurfingPage />} />
+          <Route path="/trekking" element={<TrekkingPage />} />
+          <Route path="/hiking" element={<HikingPage />} />
+          <Route path="/food" element={<FoodPage />} />
+
+
           <Route path="/restaurants/DateNight" element={<DateNightCategoryRestaurants />} />
           <Route path="/restaurants/Casual Dining" element={<CasualDiningCategoryRestaurants />} />
           <Route path="/restaurants/Fine Dining" element={<FineDiningCategoryRestaurants />} />
@@ -83,6 +97,9 @@ function App() {
 
 
           <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />
+          <Route path="/review/hotels/:id" element={<ReviewHotel />} />
+
+          <Route path="/review/guides/:id" element={<ReviewGuide />} />
         </Route>
       </Routes>
     </Router>
