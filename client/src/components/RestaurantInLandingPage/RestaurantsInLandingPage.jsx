@@ -39,6 +39,7 @@ const RestaurantsInLandingPage = () => {
             <SwiperSlide key={restaurant.id}>
               <RestaurantCard
                 name={restaurant.name}
+                restaurantName={restaurant.restaurantName}
                 address={restaurant.address}
                 category={restaurant.category}
                 contactNumber={restaurant.contactNumber}
@@ -50,6 +51,7 @@ const RestaurantsInLandingPage = () => {
                 priceRange={restaurant.priceRange}
                 // imageSrc={restaurant.cardImage}
                 id={restaurant.id}
+                mainCategory={restaurant.mainCategory}
               />
             </SwiperSlide>
           ))}
