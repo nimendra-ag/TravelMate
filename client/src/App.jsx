@@ -32,6 +32,9 @@ import CancledBookings from './pages/bookHotel/CancledBookings'
 import CompletedBookings from './pages/bookHotel/CompletedBookings'
 import ClientLayout from './components/ClientLayout/ClientLayout'
 import GuidPage from './pages/GuidBooking/GuidPage/GuidPage'
+import PaymentPage from './pages/Payement/PaymentPage';
+import PaymentSuccess from './pages/Payement/PaymentSuccess';
+import PaymentFailed from './pages/Payement/PaymentFailed';
 
 
 function App() {
@@ -83,6 +86,10 @@ function App() {
 
 
           <Route path="/review/restaurants/:id" element={<ReviewRestaurant />} />
+
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-failed" element={<PaymentFailed />} />
         </Route>
       </Routes>
     </Router>

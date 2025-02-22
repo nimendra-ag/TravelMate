@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'; // Change this line
+import mongoose from 'mongoose'; 
 
 const AccommodationModel = mongoose.model("Accommodations", {
   id: {

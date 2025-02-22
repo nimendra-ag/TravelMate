@@ -10,6 +10,8 @@ import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import {Router} from './routes/routes.js'
 import cityRouter from './routes/cityRouter.js';
 import bookingRouter from './routes/bookingRote.js';
+
+//import paymentRouter from './routes/paymentRoutes.js';
 // import bookingScheduler from './schedulers/bookingScheduler.js';
 
 dotenv.config();
@@ -55,6 +57,9 @@ app.use("/travelmate",Router)
 app.use("/cities",cityRouter);
 
 app.use("/booking",bookingRouter);
+// Analytics routes
+
+//app.use('/api/payment', paymentRouter);
 
 // bookingScheduler.updateExpiredBookings();
 
