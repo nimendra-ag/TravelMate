@@ -3,8 +3,7 @@ import './DestinationComponent.css';
 import sigiriyaImage from '../../assets/sigiriyaImage.jpg';
 import { Col, Row } from 'react-bootstrap';
 
-const DestinationComponent = () => {
-  // Array of images - add your actual image imports
+const DestinationComponent = ({name, description, image1, image2, image3, image4, image5, category, bestTimeToVisit, website, distanceFromColombo}) => {
   const images = [
     'https://picsum.photos/1080/720?random=1',
     'https://picsum.photos/1080/720?random=2',
@@ -12,7 +11,6 @@ const DestinationComponent = () => {
     'https://picsum.photos/1080/720?random=4',
     'https://picsum.photos/1080/720?random=5',
     'https://picsum.photos/1080/720?random=6',
-
   ];
 
   const [selectedImage, setSelectedImage] = useState(sigiriyaImage);
@@ -25,37 +23,53 @@ const DestinationComponent = () => {
     <div className='destinationDescription'>
       <div className="content">
         <div className="text-section">
-          <Row className="mb-4">
-            <h1 className="display-6">Sigiriya</h1>
-          </Row>
-          <Col xs={12} className="text-md-start">
-            <p className="text-justify" style={{ textAlign: 'justify' }}>
-              Our city is home to a rich tapestry of cultural attractions that highlight the deep-rooted history and traditions of the local community. From grand historical monuments and ancient temples to bustling markets and local art exhibitions, every corner tells a story. The cultural heritage sites not only offer a glimpse into the past but also connect visitors to the essence of the community,
-              creating an immersive experience. As you explore these sites, you'll witness a blend of architectural marvels and serene landscapes, each narrating a unique chapter of our city's journey. Local guides are available to provide insights into the folklore, rituals, and architectural significance of each attraction, allowing you to truly connect with the heart of our culture. Be sure to savor
-              the flavors of traditional cuisine along the way, as many attractions are located near famous local eateries.
-            </p>
-          </Col>
+          <div className="destination-header">
+            <h1 className="destination-title">{name}</h1>
+            <span className="destination-category">{category}</span>
+          </div>
+          
+          <div className="destination-description">
+            <p>{description}</p>
+          </div>
 
           <div className="info-section">
-            <div className="info">
-              <img src="" alt="Duration Icon" />
-              <p>Duration: More than 3 hours</p>
-            </div>
-            <div className="info">
-              <img src="" alt="Distance Icon" />
-              <p>Distance from Colombo: About 175 km</p>
+            <h3 className="info-title">Essential Information</h3>
+            <div className="info-grid">
+              <div className="info-card">
+                <i className="fas fa-route"></i>
+                <div className="info-content">
+                  <h3>Distance</h3>
+                  <p>{distanceFromColombo} km from Colombo</p>
+                </div>
+              </div>
+
+              <div className="info-card">
+                <i className="fas fa-clock"></i>
+                <div className="info-content">
+                  <h3>Best Time to Visit</h3>
+                  <p>{bestTimeToVisit}</p>
+                </div>
+              </div>
+
+              <div className="info-card">
+                <i className="fas fa-globe"></i>
+                <div className="info-content">
+                  <h3>More Information</h3>
+                  <p>Website: <a href={website} target="_blank" rel="noopener noreferrer">Official Website</a></p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="image-section">
-          <img src={selectedImage} alt="Sigiriya Main" className="main-image" />
+          <img src={selectedImage} alt="Main" className="main-image" />
           <div className="thumbnail-gallery">
             {images.map((image, index) => (
               <img
                 key={index}
                 src={image}
-                alt={`Sigiriya ${index + 1}`}
+                alt={`Thumbnail ${index + 1}`}
                 className={`thumbnail ${selectedImage === image ? 'active' : ''}`}
                 onClick={() => handleImageClick(image)}
               />

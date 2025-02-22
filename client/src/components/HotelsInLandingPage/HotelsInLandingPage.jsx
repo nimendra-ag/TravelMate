@@ -8,8 +8,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './HotelsInLandingPage.css';
+import { useNavigate } from 'react-router-dom';
 
 const HotelsInLandingPage = () => {
+  const navigator = useNavigate();
   const { allAccommodations } = useContext(ClientContext);
 
 
@@ -45,6 +47,9 @@ const HotelsInLandingPage = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+
+      <button className="view-all-button view-btn  " onClick={()=>{navigator("/allhotels")}}>Book a Hotel</button>
 
     </Container>
     </div>

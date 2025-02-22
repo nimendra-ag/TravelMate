@@ -3,7 +3,7 @@ import { Card, Badge, Button, Carousel } from 'react-bootstrap';
 import { FaHeart, FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const DestinationCardComponent = ({ id=1, images, title, reviewCount, category, city }) => {
+const DestinationCardComponent = ({ id, images, title, reviewCount, category, city }) => {
   return (
     <Link to={`/destinations/${id}`} style={{ textDecoration: 'none' }}>
       <Card style={{ width: '18rem', borderRadius: '10px', overflow: 'hidden' }} className="shadow-sm mb-4 d-flex">

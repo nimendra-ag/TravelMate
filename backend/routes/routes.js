@@ -1,11 +1,11 @@
 import express from 'express';
-import { UpdateGuide,AddGuide, getAllGuides,deleteGuide,viewGuide } from '../controller/GuideController.js';
+import { UpdateGuide,AddGuide, getAllGuides,deleteGuide,viewGuide, addGuideReview, getAllGuideReviews } from '../controller/GuideController.js';
 import { AddTransportationService, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService } from '../controller/TransportationServiceController.js';
 import { AddRestaurant, getAllRestaurants ,UpdateRestaurant,deleteRestaurant,viewRestaurant, addRestaurantReview, getAllRestaurantReviews} from '../controller/RestaurantController.js';
 import { AddDestination,UpdateDestination,getAllDestinations,DeleteDestination,viewDestination } from '../controller/DestinationController.js';
 
 import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
-import { updateAccommodation,addAccommodation, getAllAccomodations, GetData, GetCity, deleteAccommodation , viewAccommodation} from '../controller/AccommodationController.js';
+import { updateAccommodation,addAccommodation, getAllAccomodations, GetData, GetCity, deleteAccommodation , viewAccommodation, getAllHotelReviews, addHotelReview} from '../controller/AccommodationController.js';
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
 import { AddPrePlannedTrips, getAllPrePlannedTrips } from '../controller/PrePlannedTripController.js';
 import { AddPrePlannedTripBooking, getAllPrePlannedTripBookings } from '../controller/PrePlannedTripBookingController.js';
@@ -101,6 +101,15 @@ router.get("/gettravelmatefeedback", GetTravelMateFeedback)
 router.post("/addRestaurantReview", addRestaurantReview)
 
 router.get("/getAllRestaurantReviews", getAllRestaurantReviews)
+
+router.post("/addHotelReview", addHotelReview)
+
+router.get("/getAllHotelReviews", getAllHotelReviews)
+
+router.post("/addGuideReview", addGuideReview)
+
+router.get("/getAllGuideReviews", getAllGuideReviews)
+
 
 router.post("/subscribetonewsletter", AddNewsletterMail)
 

@@ -1,26 +1,43 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';
 import moment from 'moment';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './bookHotel.css';
 
 const ConBookHotel = () => {
-    const { from, to, id, hid} = useParams();
-    const { available } = useParams();
-    const { allAccommodations } = useContext(ClientContext);
-    const accommodation = allAccommodations?.find((e) => e.id === parseInt(hid));
-    const room = accommodation?.rooms[id];
-
+    const location = useLocation();
+    const data = location.state;
+    console.log("data",data);
     
+    const { allAccommodations } = useContext(ClientContext);
+    const accommodation = allAccommodations?.find((e) => e.id === parseInt(data.hid));
+    const room = accommodation?.rooms[data.id];
     const [selectedValue, setSelectedValue] = useState(1);
     const navigator = useNavigate();
+    const carouselRef = useRef(null); 
+    console.log("room",room);
+    console.log("accommodation",accommodation);
+    
+    console.log(room);
+    // Ref for the carousel
 
-    const fromDate = moment(from, "DD-MM-YYYY");
-    const toDate = moment(to, "DD-MM-YYYY");
-    const totaldays = moment.duration((toDate).diff(fromDate)).asDays() + 1;
+    useEffect(() => {
+        if (window.bootstrap && carouselRef.current) {
+            new window.bootstrap.Carousel(carouselRef.current, {
+                interval: 3000,
+                ride: "carousel"
+            });
+        }
+    }, []);
+
+    const fromDate = moment(data.from, "DD-MM-YYYY");
+    const toDate = moment(data.to, "DD-MM-YYYY");
+    const totaldays = moment.duration(toDate.diff(fromDate)).asDays() + 1;
     const price = selectedValue * room?.price * totaldays;
 
     const handleChange = (event) => {
@@ -40,18 +57,18 @@ const ConBookHotel = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 const user = JSON.parse(localStorage.getItem("user"));
-                const data = {
+                const bookingData = {
                     user,
                     room,
                     accommodation,
-                    from,
-                    to,
+                    from : data.from,
+                    to: data.to,
                     totaldays,
                     totalprice: price,
                     roomcount: parseInt(selectedValue)
                 };
 
-                axios.post("http://localhost:3000/booking/bookhotel", data)
+                axios.post("http://localhost:3000/booking/bookhotel", bookingData)
                     .then(() => {
                         mySwal.fire("Booking Confirmed!", "Your stay has been successfully booked.", "success")
                             .then(() => {
@@ -68,26 +85,67 @@ const ConBookHotel = () => {
         });
     };
 
-    console.log("==========================");
-    console.log(available);
-    
-    
-
-
-    
-
     return (
         <div className="container-fluid py-5" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)' }}>
             <div className="container">
                 <div className="card shadow-lg">
                     <div className="card-body p-0">
                         <div className="row g-0">
-                            <div className="col-lg-6">
-                                <img 
-                                    src="https://picsum.photos/800/600" 
-                                    className="img-fluid rounded-start h-100 object-fit-cover"
-                                    alt="room"
-                                />
+                            <div className="col-lg-6" style={{ height: '500px' }}>
+                                {room?.images && room.images.length > 0 ? (
+                                    <div
+                                        id="roomImageCarousel"
+                                        className="carousel slide h-100"
+                                        data-bs-ride="carousel"
+                                        data-bs-interval="3000"
+                                        ref={carouselRef}
+                                    >
+                                        <div className="carousel-inner h-100">
+                                            {room.images.map((image, index) => (
+                                                <div key={index} className={`carousel-item h-100 ${index === 0 ? 'active' : ''}`}>
+                                                    <img
+                                                        src={image}
+                                                        className="d-block w-100 h-100 rounded-start"
+                                                        style={{ objectFit: 'cover', objectPosition: 'center' }}
+                                                        alt={`Room view ${index + 1}`}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        {room.images.length > 1 && (
+                                            <>
+                                                <div className="carousel-indicators">
+                                                    {room.images.map((_, index) => (
+                                                        <button
+                                                            key={index}
+                                                            type="button"
+                                                            data-bs-target="#roomImageCarousel"
+                                                            data-bs-slide-to={index}
+                                                            className={index === 0 ? 'active' : ''}
+                                                            aria-current={index === 0 ? 'true' : 'false'}
+                                                            aria-label={`Slide ${index + 1}`}
+                                                        ></button>
+                                                    ))}
+                                                </div>
+                                                <button className="carousel-control-prev" type="button" data-bs-target="#roomImageCarousel" data-bs-slide="prev">
+                                                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span className="visually-hidden">Previous</span>
+                                                </button>
+                                                <button className="carousel-control-next" type="button" data-bs-target="#roomImageCarousel" data-bs-slide="next">
+                                                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span className="visually-hidden">Next</span>
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <img
+                                        src="https://picsum.photos/800/600"
+                                        className="img-fluid rounded-start w-100 h-100"
+                                        style={{ objectFit: 'cover' }}
+                                        alt="room"
+                                    />
+                                )}
                             </div>
                             <div className="col-lg-6">
                                 <div className="p-5">
@@ -95,41 +153,13 @@ const ConBookHotel = () => {
                                         {room?.name}
                                         <small className="d-block text-muted fs-5 mt-2">{accommodation?.name}</small>
                                     </h2>
-                                    
-                                    <p className="lead mb-4">{room?.description}</p>
 
-                                    <div className="card bg-light mb-4">
-                                        <div className="card-body">
-                                            <div className="row g-3">
-                                                <div className="col-md-6">
-                                                    <div className="d-flex align-items-center">
-                                                        <i className="fas fa-calendar-check text-primary fs-4 me-3"></i>
-                                                        <div>
-                                                            <small className="text-muted d-block">Check-in</small>
-                                                            <strong>{from}</strong>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <div className="d-flex align-items-center">
-                                                        <i className="fas fa-calendar-times text-primary fs-4 me-3"></i>
-                                                        <div>
-                                                            <small className="text-muted d-block">Check-out</small>
-                                                            <strong>{to}</strong>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <p className="lead mb-4">{room?.description}</p>
 
                                     <div className="mb-4">
                                         <label className="form-label fw-bold">Select Number of Rooms</label>
-                                        <select 
-                                            className="form-select form-select-lg mb-3" 
-                                            onChange={handleChange}
-                                        >
-                                            {Array.from({ length: available }, (_, i) => (
+                                        <select className="form-select form-select-lg mb-3" onChange={handleChange}>
+                                            {Array.from({ length: data.available }, (_, i) => (
                                                 <option key={i + 1} value={i + 1}>{i + 1} Room(s)</option>
                                             ))}
                                         </select>
@@ -157,12 +187,8 @@ const ConBookHotel = () => {
                                         </div>
                                     </div>
 
-                                    <button 
-                                        className="btn btn-primary btn-lg w-100" 
-                                        onClick={handleBook}
-                                    >
-                                        <i className="fas fa-credit-card me-2"></i>
-                                        Proceed to Payment
+                                    <button className="btn btn-primary btn-lg w-100" onClick={handleBook}>
+                                        <i className="fas fa-credit-card me-2"></i> Proceed to Payment
                                     </button>
                                 </div>
                             </div>

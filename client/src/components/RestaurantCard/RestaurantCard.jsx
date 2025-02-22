@@ -1,12 +1,29 @@
 
-import logo from '../../assets/TravalMateLogo2.png';
 import { Link } from 'react-router-dom';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card, Badge, Button } from 'react-bootstrap';
-import { FaHeart, FaStar } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
+import { ClientContext } from '../../context/ClientContext';
 
-const RestaurantCard = ({ id, type, name, address, category, contactNumber, description, email, website, openingHours, priceRange, rating }) => {
+const RestaurantCard = ({ id, type, name, restaurantName, mainCategory, priceRange, rating }) => {
+
+  const { allRestaurants } = useContext(ClientContext);
+  const { allRestaurantReviews } = useContext(ClientContext);
+  const restaurant = allRestaurants.find((e) => e.id === parseInt(id));
+  const restaurantReviews = allRestaurantReviews.filter((review) => review.restaurantId === restaurant.id);
+
+  const calculateAverageRating = (reviews) => {
+    if (reviews.length === 0) return 0;
+
+    const totalOverallRating = reviews.reduce((sum, review) => sum + review.overallRating, 0);
+    return parseInt((totalOverallRating / reviews.length).toFixed(2));
+  };
+
+  const averageOverrallRatings = calculateAverageRating(restaurantReviews);
+  console.log("Average Rating:", averageOverrallRatings);
+
+
   return (
     <Link to={`/restaurants/${id}`} style={{ textDecoration: 'none' }}>
       <Card style={{ width: '18rem', border: 'none' }} className="my-3">
@@ -19,33 +36,25 @@ const RestaurantCard = ({ id, type, name, address, category, contactNumber, desc
               boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.15)',
               borderRadius: '5px',
             }}
-          />        <Button
-            variant="light"
-            style={{
-              position: 'absolute',
-              top: '10px',
-              right: '10px',
-              borderRadius: '20%',
-              padding: '4px',
-
-            }}
-          >
-            <FaHeart style={{ color: 'black' }} />
-          </Button>
+          />
         </div>
         <Card.Body>
-          <Card.Title>{name}</Card.Title>
+          <Card.Title>{name || restaurantName}</Card.Title>
           <div className="d-flex align-items-center mb-2">
-            <FaStar style={{ color: 'green' }} />
-            <FaStar style={{ color: 'green' }} />
-            <FaStar style={{ color: 'green' }} />
-            <FaStar style={{ color: 'green' }} />
-            <FaStar style={{ color: 'green' }} />
+            {[...Array(5)].map((_, index) => (
+              <FaStar
+                key={index}
+                style={{
+                  color: index < averageOverrallRatings ? 'green' : 'gray'
+                }}
+              />
+            ))}
             <Badge bg="light" text="dark" className="ms-2">
-              {rating}
+              {averageOverrallRatings}
             </Badge>
           </div>
-          <Card.Text>{address}</Card.Text>
+
+          <Card.Text>{mainCategory}</Card.Text>
         </Card.Body>
       </Card>
     </Link>

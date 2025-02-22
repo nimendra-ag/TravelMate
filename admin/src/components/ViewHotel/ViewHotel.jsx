@@ -5,6 +5,7 @@ import axios from "axios";
 import AdminLogo from "../../assets/TravelMateAdminLogo.png";
 
 const ViewHotel = () => {
+  
   const { id } = useParams(); // Extract the id from the URL
   const navigate = useNavigate();
   const [cardImage, setCardImage] = useState(null);
@@ -28,6 +29,12 @@ const ViewHotel = () => {
         );
 
         if (response.data.success) {
+          console.log("======================================");
+          
+          console.log(response.data.data);
+          console.log("======================================");
+
+          
           setAccommodationDetails(response.data.data);
           setCardImage(response.data.data.cardImage);
         } else {
@@ -270,6 +277,23 @@ const ViewHotel = () => {
                   >
                     Save Changes
                   </Button>
+
+
+
+
+                  <Button className="mx-4"
+                    variant="primary"
+                    onClick={() => navigate("/manage-rooms", {state : {accommodationDetails}})}
+                    style={{
+                      borderRadius: "10px",
+                      padding: "10px 20px",
+                      fontSize: "16px",
+                    }}
+                  >
+                    Manage Rooms
+                  </Button>
+
+
                 </Form>
               </Container>
             </div>

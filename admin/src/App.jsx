@@ -1,4 +1,6 @@
 import Sidebar from './components/Sidebar/Sidebar'
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Guides from './components/Guides/Guides';
@@ -22,6 +24,12 @@ import ViewGuide from './components/ViewGuide/ViewGuide';
 import ViewDestination from './components/ViewDestination/ViewDestination';
 import ViewRestaurant from './components/ViewRestaurant/ViewRestaurant';
 import ViewTransportationService from './components/ViewTransportationServices/ViewTransportationServices';
+import ManageRooms from './components/ViewHotel/ManageRooms';
+import AddRoom from './components/ViewHotel/AddNewRoom';
+import HotelBookings from './pages/HotelBookings/HotelBookings';
+import GuidBooking from '../../backend/models/GuidBookings';
+import GuideBookingsAdmin from './pages/GuideBooking/GuideBookingsAdmin';
+
 import PaymentDetailsForm from './components/CardPaymentDetailsForm/PaymentDetailsForm';
 import Dashboard from './components/Dashboard/Dashboard';
 
@@ -55,6 +63,14 @@ const App = () => {
             <Route path="/view-destination/:id" element={<ViewDestination />} />
             <Route path="/view-restaurant/:id" element={<ViewRestaurant />} />
             <Route path="/view-transportation-service/:id" element={<ViewTransportationService />} />
+            <Route path="/manage-rooms"    element={<ManageRooms/>} />
+            <Route path="/add-room" element={<AddRoom/>} />
+            <Route path="/add-room" element={<AddRoom/>} />
+            <Route path="/manage-hotel-bookings" element={<HotelBookings/>} />
+
+            <Route path="/manage-guide-bookings" element={<GuideBookingsAdmin/>} />
+
+
             <Route path="/payment-details" element={<PaymentDetailsForm />} />
             <Route path="/dashboard" element={<Dashboard />} />
 

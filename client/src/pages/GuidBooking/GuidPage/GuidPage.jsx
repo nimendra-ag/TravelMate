@@ -8,14 +8,19 @@ import moment from 'moment';
 import axios from 'axios';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
+import DisplayGuideReview from '../../../components/displayGuideReview/DisplayGuideReview';
 
 const { RangePicker } = DatePicker;
 
 const GuidPage = () => {
+
+
+    
     const [data, setData] = useState();
     const [fromDate, setFromDate] = useState();
     const [toDate, setToDate] = useState();
     const { id } = useParams();
+    console.log("guide review!!", id)
     const { allGuides } = useContext(ClientContext);
     const guid = allGuides.find((e) => e.id === parseInt(id));
     const [isAvailable, setIsAvailable] = useState();
@@ -297,8 +302,13 @@ const GuidPage = () => {
                         </div>
                     </div>
                 </div>
+
+                <DisplayGuideReview
+                    guidId={id}
+                />
             </div>
         </div>
+        
     );
 
 }

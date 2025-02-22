@@ -2,8 +2,9 @@ import axios from 'axios';
 import React from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import moment from 'moment';
 
-const Booking = ({ accName, roomName, roomCount, price, toDate, fromDate, daysCount, id, status }) => {
+const Booking = ({ accName, roomName, roomCount, price, toDate, fromDate, daysCount, id, status, date }) => {
     const cancleBooking = async (id) => {
         const mySwal = withReactContent(Swal);
         mySwal.fire({
@@ -28,60 +29,65 @@ const Booking = ({ accName, roomName, roomCount, price, toDate, fromDate, daysCo
     };
 
     return (
-        <div className="container my-4">
-            <div className="card shadow-lg" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)' }}>
-                <div className="card-header bg-primary text-white py-3">
-                    <h3 className="mb-0">{roomName} at {accName}</h3>
+        <div className="card shadow-lg mb-4">
+            <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 className="mb-0">Booking ID: {id}</h5>
+                    <small>
+                        {moment(date).format('MMMM Do YYYY, h:mm:ss a')}
+                    </small>
                 </div>
-                <div className="card-body p-4">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="booking-details">
-                                <div className="detail-item mb-3">
-                                    <i className="fas fa-bed text-primary me-2"></i>
-                                    <span className="fw-bold">Rooms:</span> {roomCount}
-                                </div>
-                                <div className="detail-item mb-3">
-                                    <i className="fas fa-dollar-sign text-primary me-2"></i>
-                                    <span className="fw-bold">Price:</span> ${price}
-                                </div>
-                                <div className="detail-item mb-3">
-                                    <i className="fas fa-calendar-alt text-primary me-2"></i>
-                                    <span className="fw-bold">Check-in:</span> {fromDate}
-                                </div>
+                <div className="d-flex align-items-center">
+                    {status === "Booked" && (
+                        <button
+                            className="btn btn-danger btn-sm me-3"
+                            onClick={() => cancleBooking(id)}
+                        >
+                            <i className="fas fa-times-circle me-2"></i>
+                            Cancel Booking
+                        </button>
+                    )}
+                    <span className={`badge ${status === 'Booked' ? 'bg-success' : 'bg-secondary'}`}>
+                        {status}
+                    </span>
+                </div>
+            </div>
+
+            <div className="card-body">
+                <h4 className="text-primary mb-3">{roomName} at {accName}</h4>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="booking-details">
+                            <div className="detail-item mb-3">
+                                <i className="fas fa-bed text-primary me-2"></i>
+                                <span className="fw-bold">Rooms:</span> {roomCount}
                             </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="booking-details">
-                                <div className="detail-item mb-3">
-                                    <i className="fas fa-calendar-check text-primary me-2"></i>
-                                    <span className="fw-bold">Check-out:</span> {toDate}
-                                </div>
-                                <div className="detail-item mb-3">
-                                    <i className="fas fa-clock text-primary me-2"></i>
-                                    <span className="fw-bold">Duration:</span> {daysCount} days
-                                </div>
-                                <div className="detail-item mb-3">
-                                    <i className="fas fa-info-circle text-primary me-2"></i>
-                                    <span className="fw-bold">Status:</span> 
-                                    <span className={`badge ${status === 'Booked' ? 'bg-success' : 'bg-secondary'} ms-2`}>
-                                        {status}
-                                    </span>
-                                </div>
+                            <div className="detail-item mb-3">
+                                <i className="fas fa-dollar-sign text-primary me-2"></i>
+                                <span className="fw-bold">Price:</span> ${price}
+                            </div>
+                            <div className="detail-item mb-3">
+                                <i className="fas fa-calendar-alt text-primary me-2"></i>
+                                <span className="fw-bold">Check-in:</span> {moment(fromDate).format('MMMM Do YYYY')}
                             </div>
                         </div>
                     </div>
-                    {status === "Booked" && (
-                        <div className="text-end mt-3">
-                            <button
-                                className="btn btn-danger px-4 py-2"
-                                onClick={() => cancleBooking(id)}
-                            >
-                                <i className="fas fa-times-circle me-2"></i>
-                                Cancel Booking
-                            </button>
+                    <div className="col-md-6">
+                        <div className="booking-details">
+                            <div className="detail-item mb-3">
+                                <i className="fas fa-calendar-check text-primary me-2"></i>
+                                <span className="fw-bold">Check-out:</span> {moment(toDate).format('MMMM Do YYYY')}
+                            </div>
+                            <div className="detail-item mb-3">
+                                <i className="fas fa-clock text-primary me-2"></i>
+                                <span className="fw-bold">Duration:</span> {daysCount} days
+                            </div>
+                            <div className="detail-item mb-3">
+                                <i className="fas fa-info-circle text-primary me-2"></i>
+                                <span className="fw-bold">Total Amount:</span> ${price * roomCount * daysCount}
+                            </div>
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
         </div>

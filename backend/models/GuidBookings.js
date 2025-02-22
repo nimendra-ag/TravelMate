@@ -34,7 +34,9 @@ const GuidBooking = model("GuidBookings", {
     status: {
         type: String,
         default: "Booked"
-    }
+    },
+
+
 
 
 

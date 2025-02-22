@@ -1,9 +1,10 @@
+import { isObjectIdOrHexString } from "mongoose";
 import { AccommodationModel } from "../models/Accommodation.js";
 import { BookingsModel } from "../models/Bookings.js";
 import GuidBooking from "../models/GuidBookings.js";
 import { GuideModel } from "../models/Guide.js";
 
-
+import mongoose from "mongoose";
 
 
 
@@ -15,6 +16,9 @@ export async function BookGuide(req, res) {
 
 
     const data = req.body;
+
+    console.log(data);
+    
 
     try {
         const newBooking = new GuidBooking({
@@ -237,60 +241,76 @@ export function getComBookings(req, res) {
 
 
 export async function deleteBooking(req, res) {
-
-
-
-
-    // console.log("Delete Booking");
-
-
     const bookingId = req.query.id;
-    // console.log(bookingId);
 
     const booking = await BookingsModel.findById(bookingId);
     const bookingData = booking.toJSON();
-    // console.log(bookingData);
 
 
-    await BookingsModel.findByIdAndUpdate(
-        bookingId,
-        {
-            $set: {
-                status: "Cancelled"
-            }
-        },
-        { new: true }
-    );
+    try {
 
-    await AccommodationModel.findOneAndUpdate(
-        { id: bookingData.accommodation.id },
-        {
-          $pull: {
-            [`rooms.${bookingData.room.id}.bookings`]: {
-              id: bookingId
-            }
-          }
-        },
-        { new: true }
-      )
 
-      console.log(`rooms.${bookingData.room.id}.bookings`);
-      
+        await BookingsModel.findByIdAndUpdate(
+            bookingId,
+            {
+                $set: {
+                    status: "Cancelled"
+                }
+            },
+            { new: true }
+        );
 
-      await AccommodationModel.findOneAndUpdate(
-  { id: bookingData.accommodation.id },
-  {
-    $pull: {
-      [`rooms.${bookingData.room.id}.bookings`]: {
-        id: bookingId
-      }
+        await AccommodationModel.findOneAndUpdate(
+            { id: bookingData.accommodation.id },
+            {
+                $pull: {
+                    [`rooms.${bookingData.room.id}.bookings`]: {
+                        id: bookingId
+                    }
+                }
+            },
+            { new: true }
+        )
+
+        console.log(`rooms.${bookingData.room.id}.bookings`);
+
+
+        await AccommodationModel.findOneAndUpdate(
+            { id: bookingData.accommodation.id },
+            {
+                $pull: {
+                    [`rooms.${bookingData.room.id}.bookings`]: {
+                        id: bookingId
+                    }
+                }
+            },
+            { new: true }
+        );
+
+        console.log("okay");
+
+
+
+
+
+        res.status(200).json({ success: true });
+
+
+        console.log("okay     2");
+
+
+
+
+    } catch (error) {
+
+        console.log("case");
+
+        console.log(error);
+        res.status(400).json({
+            success: false
+        });
+
     }
-  },
-  { new: true }
-);
-
-      
-      
 
 
 
@@ -303,26 +323,6 @@ export async function deleteBooking(req, res) {
 
 
 
-    // BookingsModel.findByIdAndDelete(bookingId).then((data) => {
-    //     res.status(200).json(data);
-    // }).then(
-
-
-
-
-    //     // BookingsModel.findByIdAndUpdate(bookingId,
-
-
-    //     //     $set{
-
-
-
-    //     //     }
-
-
-
-
-    //     // )
 
 
 
@@ -330,17 +330,462 @@ export async function deleteBooking(req, res) {
 
 
 
-    // )
-
-
-
-
-    // .catch((err) => {
-    //     console.log(err);
-    // })
 
 
 
 
 
+
+
+
+
+
+
+
+}
+
+
+
+export function getAllBookings(req, res) {
+
+    // const userEmail = req.query.email;
+    // console.log(userEmail);
+
+
+
+
+
+
+    BookingsModel.find(
+
+    ).then((data) => {
+
+        res.status(200).json(data)
+
+
+
+
+
+    }).catch((err) => {
+
+
+
+        console.log(err);
+    })
+}
+
+
+
+export async function completeBooking(req, res) {
+
+
+
+
+
+
+
+
+
+    const bookingId = req.query.id;
+
+
+
+    try {
+
+        const booking = await BookingsModel.findById(bookingId);
+        const bookingData = booking.toJSON();
+
+
+        await BookingsModel.findByIdAndUpdate(
+            bookingId,
+            {
+                $set: {
+                    status: "Completed"
+                }
+            },
+            { new: true }
+        );
+
+        await AccommodationModel.findOneAndUpdate(
+            { id: bookingData.accommodation.id },
+            {
+                $pull: {
+                    [`rooms.${bookingData.room.id}.bookings`]: {
+                        id: bookingId
+                    }
+                }
+            },
+            { new: true }
+        )
+
+        console.log(`rooms.${bookingData.room.id}.bookings`);
+
+
+        await AccommodationModel.findOneAndUpdate(
+            { id: bookingData.accommodation.id },
+            {
+                $pull: {
+                    [`rooms.${bookingData.room.id}.bookings`]: {
+                        id: bookingId
+                    }
+                }
+            },
+            { new: true }
+
+
+        );
+
+
+        res.status(200).json({
+            success: true
+        });
+
+
+
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            success: false
+        });
+
+    }
+
+
+
+
+
+
+
+
+}
+
+
+
+
+export function getAllGuidBookings(req, res) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+    GuidBooking.find(
+
+    ).then((data) => {
+
+        res.status(200).json(data)
+
+
+
+
+
+    }).catch((err) => {
+
+
+
+        console.log(err);
+        res.status(400).json({
+            success: false
+        });
+    })
+}
+
+
+
+export async function completeGuidBooking(req, res) {
+
+    console.log("innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+
+
+
+
+
+
+
+
+
+
+    const bookingId = req.query.id;
+
+    // console.log(bookingId);
+
+
+
+
+    try {
+
+        const booking = await GuidBooking.findById(bookingId);
+        const bookingData = booking.toJSON();
+
+        // console.log(bookingData);
+
+
+        await GuidBooking.findByIdAndUpdate(
+            bookingId,
+            {
+                $set: {
+                    status: "Completed"
+                }
+            },
+            { new: true }
+        );
+
+
+
+
+
+        await GuideModel.findOneAndUpdate(
+            { _id: bookingData.guide._id }, // Use _id for MongoDB documents
+            {
+                $pull: {
+                    bookings: {
+                        id: new mongoose.Types.ObjectId(bookingId) // Ensure ObjectId conversion
+                    }
+                }
+            },
+            { new: true }
+        );
+
+
+
+
+
+
+        res.status(200).json({
+            success: true
+        });
+
+
+
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            success: false
+        });
+
+    }
+
+
+
+
+
+
+
+
+}
+
+
+
+export async function cancleGuidBooking(req, res) {
+
+    console.log("innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+
+
+
+
+
+
+
+
+
+
+    const bookingId = req.query.id;
+
+    // console.log(bookingId);
+
+
+
+
+    try {
+
+        const booking = await GuidBooking.findById(bookingId);
+        const bookingData = booking.toJSON();
+
+        // console.log(bookingData);
+
+
+        await GuidBooking.findByIdAndUpdate(
+            bookingId,
+            {
+                $set: {
+                    status: "Cancelled"
+                }
+            },
+            { new: true }
+        );
+
+
+
+
+
+        await GuideModel.findOneAndUpdate(
+            { _id: bookingData.guide._id }, // Use _id for MongoDB documents
+            {
+                $pull: {
+                    bookings: {
+                        id: new mongoose.Types.ObjectId(bookingId) // Ensure ObjectId conversion
+                    }
+                }
+            },
+            { new: true }
+        );
+
+
+
+
+
+
+        res.status(200).json({
+            success: true
+        });
+
+
+
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            success: false
+        });
+
+    }
+
+
+
+    
+
+
+
+
+
+
+
+
+}
+
+
+
+
+export function getGuideBookings(req, res) {
+
+    const userEmail = req.query.email;
+    // console.log(userEmail);
+
+
+    console.log(userEmail);
+    
+
+
+
+
+
+
+    GuidBooking.find(
+        {
+            "user.email": userEmail,
+            status: "Booked"
+        }
+    ).then((data) => {
+
+        res.status(200).json(data)
+
+
+
+
+
+    }).catch((err) => {
+
+
+
+        console.log(err);
+    })
+}
+
+
+
+export function getCancledGuideBookings(req, res) {
+
+    const userEmail = req.query.email;
+    console.log(userEmail);
+
+
+    console.log("========================");
+    
+
+
+
+
+
+
+    GuidBooking.find(
+        {
+            "user.email": userEmail,
+            status: "Cancelled"
+        }
+    ).then((data) => {
+        console.log(data);
+        
+
+        res.status(200).json(data)
+
+
+
+
+
+    }).catch((err) => {
+
+
+
+        console.log(err);
+    })
+}
+
+
+export function getComGuideBookings(req, res) {
+
+    const userEmail = req.query.email;
+    console.log(userEmail);
+
+
+    console.log("========================");
+    
+
+
+
+
+
+
+    GuidBooking.find(
+        {
+            "user.email": userEmail,
+            status: "Completed"
+        }
+    ).then((data) => {
+        console.log(data);
+        
+
+        res.status(200).json(data)
+
+
+
+
+
+    }).catch((err) => {
+
+
+
+        console.log(err);
+    })
 }

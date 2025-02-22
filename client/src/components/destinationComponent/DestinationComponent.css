@@ -4,15 +4,6 @@
   padding: 20px;
 }
 
-/* Add this to your existing CSS */
-.text-justify {
-  text-align: justify;
-  text-justify: inter-word;
-  line-height: 1.4;
-  /* font-size: 18px; */
-}
-
-
 .content {
   display: flex;
   max-width: 80%;
@@ -23,37 +14,122 @@
 
 .text-section {
   flex: 1;
-  padding: 40px;
+  padding: 20px;
   padding-top: 30px;
 }
 
-.info-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-top: 20px;
+/* New styles for the header section */
+.destination-header {
+  margin-bottom: 24px;
 }
 
-.info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.destination-title {
+  font-size: 32px;
   color: #0A2E41;
+  margin-bottom: 8px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.destination-category {
+  display: inline-block;
+  background-color: #f0f2f5;
+  color: #0A2E41;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.destination-description {
+  margin-bottom: 30px;
+}
+
+.destination-description p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4a4a4a;
+  text-align: justify;
+  margin-bottom: 0;
+}
+
+/* Info section styles */
+.info-section {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 30px;
+}
+
+.info-title {
+  color: #0A2E41;
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: 200;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+
+
+.info-card i {
+  font-size: 24px;
+  color: #0A2E41;
+  padding: 12px;
+  background-color: #f0f2f5;
+  border-radius: 50%;
+}
+
+.info-content {
+  flex: 1;
+}
+
+.info-content h3 {
+  color: #0A2E41;
+  font-size: 18px;
+  margin-bottom: 8px;
   font-weight: 600;
 }
 
-.info img {
-  width: 24px;
-  height: 24px;
+.info-content p {
+  color: #4a4a4a;
+  margin-bottom: 4px;
+  font-size: 16px;
 }
 
+.info-content a {
+  color: #0A2E41;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.info-content a:hover {
+  text-decoration: underline;
+}
+
+/* Image section styles */
 .image-section {
   margin-top: 20px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 1rem;
   padding-bottom: 30px;
 }
@@ -65,15 +141,6 @@
   border-radius: 15px;
 }
 
-.thumbnail {
-  width: 60px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
 .thumbnail-gallery {
   display: flex;
   gap: 8px;
@@ -81,6 +148,15 @@
   padding: 0.5rem 0;
   width: 100%;
   justify-content: center;
+}
+
+.thumbnail {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .thumbnail.active {
@@ -91,63 +167,49 @@
 /* Media Queries */
 @media (min-width: 768px) {
   .content {
-      flex-direction: row;
+    flex-direction: row;
   }
 
-  .text-section h1 {
-      font-size: 48px;
-  }
-
-  .text-section h2 {
-      font-size: 20px;
-  }
-
-  .text-section p {
-      font-size: 20px;
+  .destination-title {
+    font-size: 36px;
   }
 
   .main-image {
-      height: 400px;
+    height: 400px;
   }
 
   .thumbnail {
-      width: 80px;
-      height: 60px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .text-section h1 {
-      font-size: 64px;
-  }
-
-  .text-section h2 {
-      font-size: 36px;
-  }
-
-  .text-section p {
-      font-size: 20px;
-  }
-
-  .main-image {
-      height: 500px;
+    width: 80px;
+    height: 60px;
   }
 }
 
 @media (max-width: 1024px) and (min-width: 768px) {
   .content {
-      flex-direction: column;
+    flex-direction: column;
   }
 }
 
 @media (max-width: 767px) {
+  .destination-title {
+    font-size: 28px;
+  }
+
   .thumbnail-gallery {
-      justify-content: flex-start;
-      padding: 0.5rem;
+    justify-content: flex-start;
+    padding: 0.5rem;
   }
 
   .thumbnail {
     width: 50px;
     height: 35px;
-}
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-card {
+    padding: 12px;
+  }
 }

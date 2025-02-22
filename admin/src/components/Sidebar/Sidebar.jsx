@@ -53,6 +53,16 @@ const Sidebar = () => {
                 <p>Manage Transport Modes</p>
               </div>
             </Link>
+            <Link to="/manage-hotel-bookings" style={{ textDecoration: 'none' }} onClick={handleClose}>
+              <div className="sidebar-item">
+                <p>Manage Hotel Bookings</p>
+              </div>
+            </Link>
+            <Link to="/manage-guide-bookings" style={{ textDecoration: 'none' }}>
+            <div className="sidebar-item">
+              <p>Manage Guid Bookings</p>
+            </div>
+          </Link>
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
@@ -87,6 +97,17 @@ const Sidebar = () => {
           <Link to="/transportmodes" style={{ textDecoration: 'none' }}>
             <div className="sidebar-item">
               <p>Manage Transport Modes</p>
+            </div>
+          </Link>
+          <Link to="manage-hotel-bookings" style={{ textDecoration: 'none' }}>
+            <div className="sidebar-item">
+              <p>Manage Hotel Bookings</p>
+            </div>
+          </Link>
+
+          <Link to="/manage-guide-bookings" style={{ textDecoration: 'none' }}>
+            <div className="sidebar-item">
+              <p>Manage Guid Bookings</p>
             </div>
           </Link>
         </Nav>

@@ -4,8 +4,9 @@ import { AccommodationModel } from "../models/Accommodation.js";
 import { CityModel } from "../models/Citiy.js";
 import { DestinationModel } from "../models/Destination.js";
 import { GuideModel } from "../models/Guide.js";
+import { HotelReviewModel } from "../models/HotelReview.js";
 
-dotenv.config({ path: "../.env" });
+// dotenv.config({ path: "../.env" });
 
 // Add Accommodation API
 const addAccommodation = async (req, res) => {
@@ -158,9 +159,207 @@ const viewAccommodation = async (req, res) => {
         console.error('Error fetching accommodation:', error);
         res.status(500).json({ success: false, message: 'Server error' });
     }
-};  
+}; 
 
-export { updateAccommodation,addAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation }
+const addHotelReview = async (req, res) =>{
+    try{
+    
+        let hotelReviews = await HotelReviewModel.find({});
+        let id = hotelReviews.length > 0 ? hotelReviews[hotelReviews.length - 1].id + 1 : 1;
+        let hotelReview = new HotelReviewModel({
+            id: id,
+            userName: req.body.userName,
+            hotelId: req.body.hotelId,
+            overallRating: req.body.overallRating,
+            roomRating: req.body.roomRating,
+            serviceRating: req.body.serviceRating,
+            valueRating: req.body.valueRating,
+            locationRating: req.body.locationRating,
+            visitDate: req.body.visitDate,
+            travelType: req.body.travelType,
+            stayDuration: req.body.stayDuration,
+            reviewBody: req.body.body,
+            reviewTitle: req.body.title
+        })
+
+        // console.log(hotelReview);
+        await hotelReview.save();
+        res.json({
+            success: true,
+            message: 'Hotel review added successfully'
+        });
+
+    } catch (error){
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+}
+
+
+const getAllHotelReviews = async (req, res) => {
+    try{
+        let allHotelReviews = await HotelReviewModel.find({});
+        console.log("All Hotel Reviews Fetched");
+        // console.log(allHotelReviews);
+        res.send(allHotelReviews);
+
+    } catch(error){
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+}
+
+
+const addRoom  = async(req,res)=>{
+
+
+   
+
+
+   
+
+console.log(req.body);
+
+    
+    try{
+
+        const data = req.body;
+
+        let hotell = await AccommodationModel.findOne({id: data.hid});
+        let rooms = hotell.rooms;
+        console.log(rooms);
+
+
+        
+        
+        
+        let newId = rooms?.length>= 1 ? rooms[rooms.length - 1].id + 1 : 0;
+        
+        // console.log(data);
+
+        data.id = newId;
+        data.bookings = [];
+
+        const hotel = await AccommodationModel.findOneAndUpdate({id: data.hid},{ $push: { rooms: data } },{new:true});
+        // console.log(hotel);
+
+        res.status(200).json({ success: true, message: 'Room added successfully', data: hotel });
+
+
+        
+
+        
+
+
+
+    }catch(e){console.log(e)}
+}
+
+
+
+
+const deleteRoomImage = async(req,res) => {
+    try {
+        const { images } = req.body;
+        console.log("Received data:", req.body);
+        console.log("Hotel ID:", images.hotel);
+        console.log("Room ID:", images.room);
+        console.log("Images to remove:", images.imagesToRemove);
+        
+        const updated = await AccommodationModel.findOneAndUpdate(
+            {
+                _id: images.hotel,
+                "rooms.id": images.room
+            },
+            {
+                $pull: {
+                    "rooms.$.images": {
+                        $in: images.imagesToRemove
+                    }
+                }
+            },
+            {new: true}
+        );
+
+        console.log("Updated document:", updated);
+        
+        if (!updated) {
+            console.log("No document found or no update made");
+            return res.status(404).json({message: "Hotel or room not found"});
+        }
+
+        res.status(200).json(updated);
+        
+    } catch(e) {
+        console.log("Error occurred:", e);
+        res.status(500).json({error: e.message});
+    }
+}
+
+
+
+
+const editRoom = async(req,res) => {
+
+    try {
+
+
+        console.log(req.body);
+        const  data  = req.body;
+        
+
+     console.log("data are",data);
+
+     console.log(data.hid);
+     
+     
+        
+        
+    
+    
+        const updated = await AccommodationModel.findOneAndUpdate(  {
+            id: data.hid,
+            "rooms.id": data.id
+        },
+        {
+            $set: {
+                "rooms.$.name": data.name,
+                "rooms.$.description": data.description,
+                "rooms.$.price": data.price,
+                "rooms.$.capacity": data.capacity,
+                "rooms.$.images": data.images  
+
+            }
+
+            
+           
+        })
+
+        res.status(200).json(updated);
+        
+        
+    } catch (error) {
+
+        console.log(
+            "Error in editing room",error
+        );
+
+        res.status(500).json({ success: false, error: "Server Error" });
+        
+        
+    }
+
+   
+    
+};
+
+
+
+
+
+
+export { deleteRoomImage , updateAccommodation,addAccommodation, GetData,GetCity, getAllAccomodations, deleteAccommodation,viewAccommodation,addRoom, editRoom, addHotelReview, getAllHotelReviews };
+
 
 
 

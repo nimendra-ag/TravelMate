@@ -52,7 +52,7 @@ const FeedbackForm = () => {
         <section style={{ backgroundImage: 'url(/path-to-your-background-image.jpg)', backgroundSize: 'cover', padding: '60px 0' }}>
             <div style={{ padding: '40px', backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', margin: '0 auto', width: '50%' }}>
                 <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-                    <h1 style={{ color: '#007bff', fontWeight: 'bold', fontSize: '36px' }}>We Value Your Feedback</h1>
+                    <h1 style={{ color: '#1562AB', fontWeight: 'bold', fontSize: '36px' }}>We Value Your Feedback</h1>
                     <p style={{ color: '#6c757d', fontSize: '18px' }}>Your comment helps us improve your experience</p>
                     <hr style={{ borderColor: '#007bff', borderWidth: '3px', width: '60px', margin: '10px auto' }} />
                 </div>
@@ -104,7 +104,7 @@ const FeedbackForm = () => {
                             borderRadius: '20px',
                             fontWeight: 'bold',
                             fontSize: '14px',
-                            backgroundColor:  '#007bff' , // Disable button visually if form is incomplete
+                            backgroundColor:  '#1562AB' , // Disable button visually if form is incomplete
                             color: '#fff',
                             border: 'none',
                             // cursor: isFormComplete ? 'pointer' : 'not-allowed',

@@ -16,7 +16,7 @@ const RestaurantCategoriesCards = () => {
                     <h2 className="restaurants-heading text-start" style={{ marginBottom: '1.5rem' }}>
                         Restaurant Categories for Every Occasion
                     </h2>
-                    <h6 style={{ marginBottom: '1.5rem' }}>
+                    <h6 style={{ marginBottom: '1.5rem', color: '#6c757d' }}>
                         Explore unique dining experiences across various categories, curated just for you.
                     </h6>
                 </Col>

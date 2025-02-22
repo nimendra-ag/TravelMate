@@ -14,7 +14,7 @@ const MyBookings = () => {
                         <i className="fas fa-calendar-check me-3"></i>
                         Welcome, {user.firstName}!
                     </h1>
-                    <p className="lead text-muted">Manage all your bookings in one place</p>
+                    <p className="lead text-muted">Here is Your Hotel Bookings !</p>
                     <div className="w-25 mx-auto">
                         <hr className="text-primary" style={{ height: '3px', opacity: '0.5' }} />
                     </div>
