@@ -9,7 +9,7 @@ const AddVehicle = () => {
     const tid = location.state;
     const [isLoading, setIsLoading] = useState(false);
     
-    const [VehicalData, setVehicalData] = useState({
+    const [vehicalData, setvehicalData] = useState({
         brand: '',
         model: '',
         year: '',
@@ -25,7 +25,7 @@ const AddVehicle = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setVehicalData(prev => ({
+        setvehicalData(prev => ({
             ...prev,
             [name]: value
         }));
@@ -35,7 +35,7 @@ const AddVehicle = () => {
         setSelectedImages(prevImages =>
             prevImages.filter((_, index) => index !== indexToRemove)
         );
-        setRoomData(prevState => ({
+        setvehicalData(prevState => ({
             ...prevState,
             images: prevState.images.filter((_, index) => index !== indexToRemove)
         }));
@@ -45,7 +45,7 @@ const AddVehicle = () => {
         const newFiles = Array.from(e.target.files);
         const newPreviewUrls = newFiles.map(file => URL.createObjectURL(file));
         setSelectedImages(prevImages => [...prevImages, ...newPreviewUrls]);
-        setRoomData(prev => ({
+        setvehicalData(prev => ({
             ...prev,
             images: [...(prev.images || []), ...newFiles]
         }));
@@ -73,19 +73,22 @@ const AddVehicle = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
+        // setIsLoading(true);
     
         try {
-            const uploadedImages = await uploadImagesToCloudinary(VehicalData.images);
+            const uploadedImages = await uploadImagesToCloudinary(vehicalData.images);
             
             const data = {
-                ...VehicalData,
+                ...vehicalData,
                 images: uploadedImages,
                 tid: tid,
-                price: parseFloat(VehicalData.price),
+                price: parseFloat(vehicalData.price),
                 
                 
             };
+
+            console.log(data);
+            
     
             await axios.post('http://localhost:3000/transportation/addVehical', data);
             
@@ -130,29 +133,29 @@ const AddVehicle = () => {
         <div className="container mt-5">
             <div className="card shadow-lg" style={{ marginTop: '100px' }}>
                 <div className="card-header bg-primary text-white">
-                    <h3 className="mb-0">Add New Room</h3>
+                    <h3 className="mb-0">Add New Vehical</h3>
                 </div>
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-md-6 mb-3">
-                                <label className="form-label">Room Name</label>
+                                <label className="form-label">Vehical Brand</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    name="name"
-                                    value={roomData.name}
+                                    name="brand"
+                                    value={vehicalData.brand}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
                             <div className="col-md-6 mb-3">
-                                <label className="form-label">Price per Night</label>
+                                <label className="form-label">Vehical Model</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     className="form-control"
-                                    name="price"
-                                    value={roomData.price}
+                                    name="model"
+                                    value={vehicalData.model}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -161,12 +164,12 @@ const AddVehicle = () => {
 
                         <div className="row">
                             <div className="col-md-4 mb-3">
-                                <label className="form-label">Capacity</label>
+                                <label className="form-label">Manufacturing Year</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     className="form-control"
-                                    name="capacity"
-                                    value={roomData.capacity}
+                                    name="year"
+                                    value={vehicalData.year}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -177,7 +180,7 @@ const AddVehicle = () => {
                                 <select
                                     className="form-select"
                                     name="grade"
-                                    value={VehicalData.grade}
+                                    value={vehicalData.grade}
                                     onChange={handleInputChange}
                                     required
                                 >
@@ -187,6 +190,47 @@ const AddVehicle = () => {
                                     <option value="C">C</option>
                                 </select>
                             </div>
+
+                            <div className="col-md-4 mb-3">
+                                <label className="form-label">Price Per Day</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    name="price"
+                                    value={vehicalData.price}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+
+
+                        <div className="row">
+                            <div className="col mb-3">
+                                <label className="form-label">Endgine Capacity</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    name="capacity"
+                                    value={vehicalData.capacity}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                        
+                          
+
+                            <div className="col mb-3">
+                                <label className="form-label">Number of Seates</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    name="seates"
+                                    value={vehicalData.seates}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
                         </div>
 
                         <div className="mb-3">
@@ -194,7 +238,7 @@ const AddVehicle = () => {
                             <textarea
                                 className="form-control"
                                 name="description"
-                                value={VehicalData.description}
+                                value={vehicalData.description}
                                 onChange={handleInputChange}
                                 rows="4"
                                 required

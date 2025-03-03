@@ -250,3 +250,14 @@ const ManageVehicals
 }
 
 export default ManageVehicals
+    // const [vehicalData, setvehicalData] = useState({
+    //     brand: '',
+    //     model: '',
+    //     year: '',
+    //     price: '',
+    //     capacity: '',
+    //     seates: '',    
+    //     grade: '',
+    //     description: '',
+    //     images: null
+    // });

@@ -1,7 +1,7 @@
 import express from 'express';
-import AddVehicle from '../../admin/src/components/ViewTransportationServices/AddVehical';
+import { addVehical } from '../controller/TransportationServiceController.js';
 const transportationrouter = express.Router();
 
-transportationrouter.post("/addVehical",AddVehicle)
+transportationrouter.post("/addVehical",addVehical)
 
 export default transportationrouter;

@@ -132,6 +132,8 @@ const viewTransportationService = async (req, res) => {
 
 
 const addVehical = async (req, res) => {
+    console.log("============================");
+    
     console.log(req.body);
 
 
@@ -139,25 +141,26 @@ const addVehical = async (req, res) => {
 
         const data = req.body;
 
-    //     let hotell = await AccommodationModel.findOne({ id: data.hid });
-    //     let rooms = hotell.rooms;
-    //     console.log(rooms);
+        let transportationService = await TransportationServiceModel.findOne({ id: data.tid });
+        let vehicals = transportationService.availableVehicles;
+        console.log(vehicals);
 
 
 
 
 
-    //     let newId = rooms?.length >= 1 ? rooms[rooms.length - 1].id + 1 : 0;
+        let newId = vehicals?.length >= 1 ? vehicals[vehicals.length - 1].id + 1 : 0;
 
-    //     // console.log(data);
 
-    //     data.id = newId;
-    //     data.bookings = [];
+        data.id = newId;
+        data.bookings = [];
 
-    //     const hotel = await AccommodationModel.findOneAndUpdate({ id: data.hid }, { $push: { rooms: data } }, { new: true });
-    //     // console.log(hotel);
+        const hotel = await TransportationServiceModel.findOneAndUpdate({ id: data.tid }, { $push: { availableVehicles: data } }, { new: true });
+        console.log(transportationService);
 
-    //     res.status(200).json({ success: true, message: 'Room added successfully', data: hotel });
+        res.status(200).json({ success: true, message: 'Hotel added successfully', data: hotel });
+
+        
 
 
 
