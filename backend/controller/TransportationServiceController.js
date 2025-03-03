@@ -155,12 +155,11 @@ const addVehical = async (req, res) => {
         data.id = newId;
         data.bookings = [];
 
-        const hotel = await TransportationServiceModel.findOneAndUpdate({ id: data.tid }, { $push: { availableVehicles: data } }, { new: true });
-        console.log(transportationService);
+        const ts = await TransportationServiceModel.findOneAndUpdate({ id: data.tid }, { $push: { availableVehicles: data } }, { new: true });
 
-        res.status(200).json({ success: true, message: 'Hotel added successfully', data: hotel });
+        res.status(200).json({ success: true, message: 'Vehical added successfully', data: ts });
 
-        
+
 
 
 

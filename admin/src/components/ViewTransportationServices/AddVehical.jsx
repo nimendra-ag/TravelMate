@@ -73,7 +73,7 @@ const AddVehicle = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // setIsLoading(true);
+        setIsLoading(true);
     
         try {
             const uploadedImages = await uploadImagesToCloudinary(vehicalData.images);

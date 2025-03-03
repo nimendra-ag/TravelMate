@@ -5,9 +5,141 @@ import { useNavigate, useParams } from 'react-router-dom'
 const ManageVehicals
  = () => {
 
-    const handleEdit = (vehical) => {};
+    const handleEdit = (vehical) => {
 
+        setSelectedVehical(vehical);
+        setEditedVehical(vehical);
+        setShowModal(true);
+        setInitialImages(vehical.images);
+        setSelectedImages(vehical.images);
+        document.body.classList.add('modal-open');
+        console.log("Selected Images", selectedImages);
+        console.log("Selected Images", vehical.images);
+
+        
+    };
+    const [editedVehical, setEditedVehical] = useState({});
+    
     const navigate = useNavigate(); 
+    const [showModal, setShowModal] = useState(false);
+    const [selectedVehical, setSelectedVehical] = useState(null);
+    const [selectedImages, setSelectedImages] = useState([]);
+    const [initialImages, setInitialImages] = useState([]);
+    const [isUpdating, setIsUpdating] = useState(false);
+    const handleImageUpload = (e) => {
+        const files = Array.from(e.target.files);
+        const newImageUrls = files.map(file => URL.createObjectURL(file));
+        setSelectedImages(prev => [...prev, ...newImageUrls]);
+        setEditedVehical(prev => ({
+            ...prev,
+            imagesToUpload: [...(prev.imagesToUpload || []), ...files]
+        }));
+    };
+
+    const deleteImagesFromCloudinary = async (publicIds) => {
+        const deletedResults = [];
+        for (const publicId of publicIds) {
+            const timestamp = Math.round(new Date().getTime() / 1000);
+            const apiKey = "798218248754595";
+            const apiSecret = "8q9WAeXqTlrZkl0wVDJsn6BLAts";
+            const signature = generateSignature(publicId, apiSecret, timestamp);
+
+            const formData = new FormData();
+            formData.append("public_id", publicId);
+            formData.append("api_key", apiKey);
+            formData.append("timestamp", timestamp);
+            formData.append("signature", signature);
+
+            try {
+                const response = await axios.post(
+                    "https://api.cloudinary.com/v1_1/dqbkxghlh/image/destroy",
+                    formData
+                );
+
+                if (response.status === 200) {
+                    deletedResults.push({
+                        publicId,
+                        status: "deleted"
+                    });
+                }
+            } catch (error) {
+                deletedResults.push({
+                    publicId,
+                    status: "failed",
+                    error: error.message
+                });
+            }
+        }
+        return deletedResults;
+    };
+
+    const deleteImagesFromMongo = async (images) => {
+        try {
+            await axios.delete("http://localhost:3000/hotels/deleteroomimage", {
+                data: { images }
+            });
+        } catch (error) {
+            throw new Error('Failed to delete images from MongoDB');
+        }
+    };
+
+    const handleSave = async () => {
+        setIsUpdating(true);
+        try {
+            let publicIdsToDelete = imagesToRemove.map(url => getPublicIdFromUrl(url));
+            await deleteImagesFromCloudinary(publicIdsToDelete);
+
+            const deleteImages = {
+                imagesToRemove,
+                ts: transportationServiceDetails._id,
+                vehical: selectedVehical.id
+            };
+            await deleteImagesFromMongo(deleteImages);
+
+            let tempuploadedImages = [];
+            if (editedVehical.imagesToUpload?.length) {
+                tempuploadedImages = await uploadImagesToCloudinary(editedVehical.imagesToUpload);
+            }
+
+            const uploadedImages = [...initialImages, ...tempuploadedImages];
+            editedVehical.images = uploadedImages;
+
+            const response = await axios.put('http://localhost:3000/hotels/editroom', editedVehical);
+
+            if (response.status === 200 || response.status === 201) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Vehical updated successfully',
+                    confirmButtonColor: '#3085d6'
+                });
+                navigate("/");
+            }
+        } catch (error) {
+            await Swal.fire({
+                icon: 'error',
+                title: 'Update Failed',
+                text: 'Failed to update room details',
+                confirmButtonColor: '#d33'
+            });
+        } finally {
+            setIsUpdating(false);
+            handleClose();
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setEditedVehical(prev => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+    const handleClose = () => {
+        setShowModal(false);
+        setSelectedVehical(null);
+        document.body.classList.remove('modal-open');
+    };
 
     const [transportationServiceDetails, setTransportationServiceDetails] = useState({
         transportationServiceName: "",
@@ -106,7 +238,7 @@ const ManageVehicals
     </div>
 
     {/* Edit Vehical Modal */}
-    {/* <div className={`modal fade ${showModal ? 'show' : ''}`} 
+     <div className={`modal fade ${showModal ? 'show' : ''}`} 
          style={{ display: showModal ? 'block' : 'none' }}
          tabIndex="-1">
         <div className="modal-dialog modal-lg">
@@ -126,7 +258,7 @@ const ManageVehicals
                                 type="text"
                                 className="form-control"
                                 name="name"
-                                value={editedRoom.name || ""}
+                                value={editedVehical.name || ""}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -137,7 +269,7 @@ const ManageVehicals
                                 type="number"
                                 className="form-control"
                                 name="price"
-                                value={editedRoom.price || ""}
+                                value={editedVehical.price || ""}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -148,7 +280,7 @@ const ManageVehicals
                                 type="number"
                                 className="form-control"
                                 name="capacity"
-                                value={editedRoom.capacity || ""}
+                                value={editedVehical.capacity || ""}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -159,7 +291,7 @@ const ManageVehicals
                                 type="number"
                                 className="form-control"
                                 name="total"
-                                value={editedRoom.total || ""}
+                                value={editedVehical.total || ""}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -169,7 +301,7 @@ const ManageVehicals
                             <select 
                                 className="form-select"
                                 name="grade"
-                                value={editedRoom.grade || ""}
+                                value={editedVehical.grade || ""}
                                 onChange={handleInputChange}
                             >
                                 <option value="">Select Grade</option>
@@ -184,14 +316,14 @@ const ManageVehicals
                             <textarea
                                 className="form-control"
                                 name="description"
-                                value={editedRoom.description || ""}
+                                value={editedVehical.description || ""}
                                 onChange={handleInputChange}
                                 rows="3"
                             ></textarea>
                         </div>
 
                         <div className="mb-3">
-                            <label className="form-label">Room Images</label>
+                            <label className="form-label">Vehical Images</label>
                             <div className="d-flex flex-wrap gap-2 mb-2">
                                 {selectedImages?.map((image, index) => (
                                     <div key={index} className="position-relative">
@@ -243,21 +375,10 @@ const ManageVehicals
                 </div>
             </div>
         </div>
-    </div> */}
-    {/* {showModal && <div className="modal-backdrop fade show"></div>} */}
+    </div> 
+     {showModal && <div className="modal-backdrop fade show"></div>} 
 </div>
   )
 }
 
 export default ManageVehicals
-    // const [vehicalData, setvehicalData] = useState({
-    //     brand: '',
-    //     model: '',
-    //     year: '',
-    //     price: '',
-    //     capacity: '',
-    //     seates: '',    
-    //     grade: '',
-    //     description: '',
-    //     images: null
-    // });
