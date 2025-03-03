@@ -5,7 +5,7 @@ import { TransportationServiceModel } from "../models/Transportation.js"
 const AddTransportationService = async (req, res) => {
 
     console.log(req.body);
-    
+
     try {
 
         let transportationServices = await TransportationServiceModel.find({});
@@ -35,7 +35,7 @@ const AddTransportationService = async (req, res) => {
     }
 };
 
-const UpdateTransportationService= async (req, res) => {
+const UpdateTransportationService = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -74,7 +74,7 @@ const getAllTransportationServices = async (req, res) => {
         // console.log("All Transportation Services Fetched");
         // console.log(transportationServices);
         res.send(transportationServices);
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, error: 'Server Error' });
@@ -86,7 +86,7 @@ const deleteTransportationService = async (req, res) => {
     try {
         // Find and delete the transportation service by ID
         const deletedTransportationService = await TransportationServiceModel.findOneAndDelete({ id: req.body.id });
-        
+
         if (deletedTransportationService) {
             return res.json({
                 success: true,
@@ -131,4 +131,42 @@ const viewTransportationService = async (req, res) => {
 };
 
 
-export { AddTransportationService, getAllTransportationServices,UpdateTransportationService,deleteTransportationService,viewTransportationService}
+const addVehical = async (req, res) => {
+    console.log(req.body);
+
+
+    try {
+
+        const data = req.body;
+
+    //     let hotell = await AccommodationModel.findOne({ id: data.hid });
+    //     let rooms = hotell.rooms;
+    //     console.log(rooms);
+
+
+
+
+
+    //     let newId = rooms?.length >= 1 ? rooms[rooms.length - 1].id + 1 : 0;
+
+    //     // console.log(data);
+
+    //     data.id = newId;
+    //     data.bookings = [];
+
+    //     const hotel = await AccommodationModel.findOneAndUpdate({ id: data.hid }, { $push: { rooms: data } }, { new: true });
+    //     // console.log(hotel);
+
+    //     res.status(200).json({ success: true, message: 'Room added successfully', data: hotel });
+
+
+
+
+
+
+
+
+    } catch (e) { console.log(e) }
+}
+
+export { AddTransportationService, getAllTransportationServices, UpdateTransportationService, deleteTransportationService, viewTransportationService, addVehical };

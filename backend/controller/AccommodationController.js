@@ -211,13 +211,6 @@ const getAllHotelReviews = async (req, res) => {
 
 
 const addRoom  = async(req,res)=>{
-
-
-   
-
-
-   
-
 console.log(req.body);
 
     
