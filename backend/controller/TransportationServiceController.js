@@ -156,19 +156,52 @@ const addVehical = async (req, res) => {
         data.bookings = [];
 
         const ts = await TransportationServiceModel.findOneAndUpdate({ id: data.tid }, { $push: { availableVehicles: data } }, { new: true });
-
         res.status(200).json({ success: true, message: 'Vehical added successfully', data: ts });
-
-
-
-
-
-
-
-
-
-
-    } catch (e) { console.log(e) }
+} catch (e) { console.log(e) }
 }
 
-export { AddTransportationService, getAllTransportationServices, UpdateTransportationService, deleteTransportationService, viewTransportationService, addVehical };
+
+
+
+const deleteVehicalImage = async(req,res) => {
+    try {
+
+        console.log("Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+        
+        const { images } = req.body;
+        console.log("Received data:", req.body);
+        console.log("Hotel ID:", images.ts);
+        console.log("Room ID:", images.vehical);
+        console.log("Images to remove:", images.imagesToRemove);
+        
+        const updated = await TransportationServiceModel.findOneAndUpdate(
+            {
+                _id: images.ts,
+                "availableVehicles.id": images.vehical
+            },
+            {
+                $pull: {
+                    "availableVehicles.$.images": {
+                        $in: images.imagesToRemove
+                    }
+                }
+            },
+            {new: true}
+        );
+
+        // console.log("Updated document:", updated);
+        
+        if (!updated) {
+            console.log("No document found or no update made");
+            return res.status(404).json({message: "Vehical or Transportation Service not found"});
+        }
+
+        res.status(200).json(updated);
+        
+    } catch(e) {
+        console.log("Error occurred:", e);
+        res.status(500).json({error: e.message});
+    }
+}
+
+export { AddTransportationService, getAllTransportationServices, UpdateTransportationService, deleteTransportationService, viewTransportationService, addVehical , deleteVehicalImage};
