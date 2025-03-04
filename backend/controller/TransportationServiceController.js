@@ -166,7 +166,6 @@ const addVehical = async (req, res) => {
 const deleteVehicalImage = async(req,res) => {
     try {
 
-        console.log("Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
         
         const { images } = req.body;
         console.log("Received data:", req.body);
@@ -204,4 +203,83 @@ const deleteVehicalImage = async(req,res) => {
     }
 }
 
-export { AddTransportationService, getAllTransportationServices, UpdateTransportationService, deleteTransportationService, viewTransportationService, addVehical , deleteVehicalImage};
+
+
+
+
+const editVehical = async(req,res) => {
+
+    try {
+
+
+        // console.log(req.body);
+        const  data  = req.body;
+        
+
+     console.log("data are",data);
+     console.log(data.brand);
+     
+
+     console.log("============================================",data.tid);
+     
+
+     
+     
+        
+        
+    
+    
+        const updated = await TransportationServiceModel.findOneAndUpdate(  {
+            id: data.tid,
+            "availableVehicles.id": data.id
+        },
+        {
+            $set: {
+                "availableVehicles.$.brand": data.brand,
+                "availableVehicles.$.model": data.model,
+                
+                "availableVehicles.$.year": data.year,
+                "availableVehicles.$.seates": data.seates,
+
+                "availableVehicles.$.description": data.description,
+                "availableVehicles.$.price": data.price,
+                "availableVehicles.$.capacity": data.capacity,
+                "availableVehicles.$.images": data.images  
+
+            }
+
+
+
+            
+           
+        },{new: true});
+
+        if(!updated) {
+            console.log("No document found or no update made");
+            return res.status(404).json({message: "Vehical or Transportation Service not found"});
+        }
+
+
+
+        console.log("Updated document:", updated);
+        
+
+        res.status(200).json(updated);
+        
+        
+    } catch (error) {
+
+        console.log(
+            "Error in editing vehicle",error
+        );
+
+        res.status(500).json({ success: false, error: "Server Error" });
+        
+        
+    }
+
+   
+    
+};
+
+export { AddTransportationService, getAllTransportationServices, UpdateTransportationService, deleteTransportationService, viewTransportationService, addVehical , deleteVehicalImage , editVehical};

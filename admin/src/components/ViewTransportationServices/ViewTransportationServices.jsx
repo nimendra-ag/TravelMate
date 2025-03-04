@@ -251,7 +251,7 @@ function ViewTransportationService() {
                   </Button>
                   <Button className="mx-3" variant="primary" onClick={()=>navigate("/manage-vehicals/"+id)}>
 
-                    Add Vehicals
+                    Manage Vehicals
                   </Button>
                 </Form>
               </Container>
