@@ -4,6 +4,7 @@ import logo from '../../assets/TravalMate Logo.png';
 import './NavbarComponent.css';
 import SigninModal from '../signinModal/SigninModal';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const NavbarComponent = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -74,7 +75,7 @@ const NavbarComponent = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
                         >
-                            <Nav.Link href="/details" className="nav-item">More</Nav.Link>
+                            <Nav.Link href="/details" className="nav-item"><Link to={'/profile'} className='nav-item' style={{ textDecoration: "none" }}>Profile</Link></Nav.Link>
                         </motion.div>
                         {localStorage.getItem("user") && (
                             <motion.div

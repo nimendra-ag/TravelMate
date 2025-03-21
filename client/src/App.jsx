@@ -39,6 +39,7 @@ import SurfingPage from './pages/surfingPage/SurfingPage'
 import TrekkingPage from './pages/trekkingPage/TrekkingPage'
 import HikingPage from './pages/hikingPage/HikingPage'
 import FoodPage from './pages/foodPage/FoodPage'
+import UserProfile from './pages/UserProfile/UserProfile'
 
 
 function App() {
@@ -100,6 +101,8 @@ function App() {
           <Route path="/review/hotels/:id" element={<ReviewHotel />} />
 
           <Route path="/review/guides/:id" element={<ReviewGuide />} />
+          <Route path="/profile" element={<UserProfile/>} />
+          
         </Route>
       </Routes>
     </Router>
