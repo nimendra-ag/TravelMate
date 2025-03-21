@@ -19,11 +19,11 @@ const ReviewCard = ({ userName, title, body, familyType, visitDate }) => {
             <small className="text-muted">from Australia</small>
           </div>
         </div>
-        <div className="d-flex align-items-center mb-3">
+        {/* <div className="d-flex align-items-center mb-3">
           {Array.from({ length: 5 }).map((_, index) => (
             <span key={index} className="text-success">&#9733;</span> // Star icons
           ))}
-        </div>
+        </div> */}
         <h5>{title}</h5>
         <small className="text-muted">{visitDate} • {familyType}</small>
         <p className="mt-3">
@@ -109,7 +109,7 @@ const DisplayRestaurantReviews = ({ id }) => {
                   {renderRatingDots(averageOverllRating)}
                 </div>
                 <span className="ms-3 text-muted fw-medium" style={{ fontSize: '1rem' }}>
-                  9,301 reviews
+                 {restaurantReviews.length} reviews
                 </span>
               </div>
             </div>
