@@ -32,6 +32,7 @@ import GuideBookingsAdmin from './pages/GuideBooking/GuideBookingsAdmin';
 
 import PaymentDetailsForm from './components/CardPaymentDetailsForm/PaymentDetailsForm';
 import Dashboard from './components/Dashboard/Dashboard';
+import AdminDashboard from './components/Admin Dashboard/Admindasboard';
 
 const App = () => {
   
@@ -72,7 +73,8 @@ const App = () => {
 
 
             <Route path="/payment-details" element={<PaymentDetailsForm />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<AdminDashboard />} />
 
           </Routes>
         </div>

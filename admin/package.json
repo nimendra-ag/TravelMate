@@ -6,14 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "react-scripts build",
-    "build": "react-scripts build",
+    
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
     
-    "eject": "react-scripts eject"
+    
   },
   "dependencies": {
     "@nivo/bar": "^0.88.0",
@@ -21,7 +21,7 @@
     "@nivo/scatterplot": "^0.88.0",
     "axios": "^1.7.9",
     "@fortawesome/fontawesome-free": "^6.7.2",
-    "axios": "^1.7.7",
+    
     "bootstrap": "^5.3.3",
     "leaflet": "^1.9.4",
     "crypto-js": "^4.2.0",
@@ -34,8 +34,8 @@
     "react-leaflet": "^4.2.1",
     "react-icons": "^5.4.0",
     "react-router-dom": "^6.26.2",
-    "react-select": "^5.8.1",
-    "recharts": "^2.15.1"
+    
+    "recharts": "^2.15.1",
     "react-select": "^5.8.1",
     "sweetalert2": "^11.6.13"
   },
