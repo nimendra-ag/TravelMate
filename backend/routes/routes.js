@@ -10,6 +10,7 @@ import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/Feed
 import { AddPrePlannedTrips, getAllPrePlannedTrips } from '../controller/PrePlannedTripController.js';
 import { AddPrePlannedTripBooking, getAllPrePlannedTripBookings } from '../controller/PrePlannedTripBookingController.js';
 import { AddNewsletterMail } from '../controller/NewsLetterController.js';
+import { AddHospital } from '../controller/HospitalController.js';
 const router = express.Router()
 
 router.post('/signinwithgoogle',RegWithGoogle)
@@ -108,6 +109,7 @@ router.post("/addGuideReview", addGuideReview)
 
 router.get("/getAllGuideReviews", getAllGuideReviews)
 
+router.post("/add-hospital",AddHospital)
 
 router.post("/subscribetonewsletter", AddNewsletterMail)
 export default router;
