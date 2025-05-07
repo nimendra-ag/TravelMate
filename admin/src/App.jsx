@@ -24,6 +24,8 @@ import ViewGuide from './components/ViewGuide/ViewGuide';
 import ViewDestination from './components/ViewDestination/ViewDestination';
 import ViewRestaurant from './components/ViewRestaurant/ViewRestaurant';
 import ViewTransportationService from './components/ViewTransportationServices/ViewTransportationServices';
+import AddHospital from './components/AddHospital/AddHospital';
+
 import ManageRooms from './components/ViewHotel/ManageRooms';
 import AddRoom from './components/ViewHotel/AddNewRoom';
 import HotelBookings from './pages/HotelBookings/HotelBookings';
@@ -55,6 +57,7 @@ const App = () => {
             <Route path='/add-new-hotel' element={<AddHotel />} />
             <Route path='/add-transportation-service' element={<AddTransportationService />} />
             <Route path='/add-pre-planned-trips' element={<AddPrePlannedTrips />} />
+            <Route path='/add-hospital' element={<AddHospital />} />
             <Route path="/hotel-data-table" element={<HotelDataTable />} />
             <Route path="/transport-mode-data-table" element={<TransportModeDataTable />} />
             <Route path="/resturant-data-table" element={<ResturantDataTable />} />
