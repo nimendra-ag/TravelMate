@@ -46,6 +46,9 @@ import CancledGuidBookings from './pages/GuidBooking/GuidbookingHistory/CancledG
 import CompletedGuidBookings from './pages/GuidBooking/GuidbookingHistory/CompletedGuidBookings'
 import AllGuides from './pages/GuidBooking/AllGuides'
 import ConGuidPage from './pages/GuidBooking/GuidPage/ConGuideBook'
+import PaymentPage from './pages/Payement/PaymentPage';
+import PaymentSuccess from './pages/Payement/PaymentSuccess';
+import PaymentFailed from './pages/Payement/PaymentFailed';
 import TransportPage from './components/transportServicersInLandingPage/TransportPage'
 
 import AvailableVehicleBookings from './pages/vehicalBooking/AvailableVehicleBookings'
@@ -138,6 +141,10 @@ function App() {
 
 
 
+
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-failed" element={<PaymentFailed />} />
         </Route>
       </Routes>
     </Router>

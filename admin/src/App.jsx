@@ -33,6 +33,9 @@ import ManageVehicals from './components/ViewTransportationServices/ManageVehica
 import AddVehicle from './components/ViewTransportationServices/AddVehical';
 import TransportBookingsAdmin from './pages/TransportBooking/TransportBookingAdmin';
 
+import PaymentDetailsForm from './components/CardPaymentDetailsForm/PaymentDetailsForm';
+import Dashboard from './components/Dashboard/Dashboard';
+import AdminDashboard from './components/Admin Dashboard/Admindasboard';
 
 const App = () => {
   
@@ -80,6 +83,9 @@ const App = () => {
             <Route path="/manage-transport-bookings" element={<TransportBookingsAdmin/>} />
 
 
+            <Route path="/payment-details" element={<PaymentDetailsForm />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<AdminDashboard />} />
 
           </Routes>
         </div>
