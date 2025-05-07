@@ -5,7 +5,7 @@ import './TopRatedRestaurant.css';
 import { ClientContext } from '../../context/ClientContext';
 import { Link } from 'react-router-dom';
 
-const TopRatedRestaurant = ({restaurantType}) => {
+const TopRatedRestaurant = ({ restaurantType }) => {
     const { allRestaurants } = useContext(ClientContext);
     const allRestaurantsInCategory = allRestaurants.filter(restaurant => restaurant.mainCategory === restaurantType);
     const { allRestaurantReviews } = useContext(ClientContext);
@@ -172,29 +172,22 @@ const TopRatedRestaurant = ({restaurantType}) => {
                                 <p>
                                     <strong>Atmosphere:</strong>
                                     <ProgressBar
-  now={averageRatings["food"] * (100 / 5)}
-  label={`${averageRatings["food"]}/5`} // This sets the visible label
-  style={{
-    margin: "0.5rem 0",
-    height: "20px", // Adjust the height if needed
-    backgroundColor: "#E9F7FB", // Optional: lighter background for the track
-  }}
->
-  <div
-    style={{
-      backgroundColor: "#C1EAF8", // Custom bar color
-      width: `${averageRatings["food"] * (100 / 5)}%`,
-      height: "100%",
-      display: "flex", // Ensure label alignment
-      alignItems: "center",
-      justifyContent: "center",
-      color: "#000", // Label text color
-      fontWeight: "bold", // Label font style
-    }}
-  >
-    {`${averageRatings["food"]}/5`} {/* Ensure label is rendered here */}
-  </div>
-</ProgressBar>
+                                        now={averageRatings["food"] * (100 / 5)}
+                                        label={`${averageRatings["food"]}/5`} // This sets the visible label
+                                        style={{
+                                            margin: "0.5rem 0",
+                                            height: "20px", // Adjust the height if needed
+                                            backgroundColor: "#E9F7FB", // Optional: lighter background for the track
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                backgroundColor: "#03A0FE",
+                                                width: `${averageRatings["value"] * (100 / 5)}%`,
+                                                height: "100%",
+                                            }}
+                                        />
+                                    </ProgressBar>
 
                                 </p>
                             </div>
