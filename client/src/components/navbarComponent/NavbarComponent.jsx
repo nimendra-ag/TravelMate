@@ -6,6 +6,7 @@ import './NavbarComponent.css';
 import SigninModal from '../signinModal/SigninModal';
 import { motion } from 'framer-motion';
 
+
 const BookingsModal = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
@@ -128,6 +129,7 @@ const NavbarComponent = () => {
             >
               <Nav.Link href="/details" className="nav-item">More</Nav.Link>
             </motion.div>
+            <Nav.Link href="/details" className="nav-item"><Link to={'/profile'} className='nav-item' style={{ textDecoration: "none" }}>Profile</Link></Nav.Link>
             {localStorage.getItem("user") && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
