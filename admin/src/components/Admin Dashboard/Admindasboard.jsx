@@ -44,7 +44,7 @@ const AdminDashboard = () => {
       title: 'Hotel Booking Analysis',
       description: 'Analyze booking patterns, occupancy rates, and revenue from hotel bookings.',
       icon: <FaCalendarCheck size={48} />,
-      path: '/admin/hotel-booking-analysis', 
+      path: '/admin/booking-analytics', 
       stats: '2,845 Bookings'
     },
     {

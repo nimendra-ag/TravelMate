@@ -33,6 +33,8 @@ import GuideBookingsAdmin from './pages/GuideBooking/GuideBookingsAdmin';
 import PaymentDetailsForm from './components/CardPaymentDetailsForm/PaymentDetailsForm';
 import Dashboard from './components/Dashboard/Dashboard';
 import AdminDashboard from './components/Admin Dashboard/Admindasboard';
+import BookingAnalytics from './components/Dashboard/BookingAnalytics';
+import UserAnalytics from './components/Dashboard/UserAnalytics';
 
 const App = () => {
   
@@ -75,6 +77,8 @@ const App = () => {
             <Route path="/payment-details" element={<PaymentDetailsForm />} />
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/" element={<AdminDashboard />} />
+            <Route path="/admin/booking-analytics" element={<BookingAnalytics />} />
+            <Route path="/admin/user-analysis" element={<UserAnalytics />} />
 
           </Routes>
         </div>
