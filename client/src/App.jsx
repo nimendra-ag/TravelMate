@@ -46,6 +46,15 @@ import CancledGuidBookings from './pages/GuidBooking/GuidbookingHistory/CancledG
 import CompletedGuidBookings from './pages/GuidBooking/GuidbookingHistory/CompletedGuidBookings'
 import AllGuides from './pages/GuidBooking/AllGuides'
 import ConGuidPage from './pages/GuidBooking/GuidPage/ConGuideBook'
+import PaymentPage from './pages/Payement/PaymentPage';
+import PaymentSuccess from './pages/Payement/PaymentSuccess';
+import PaymentFailed from './pages/Payement/PaymentFailed';
+import TransportPage from './components/transportServicersInLandingPage/TransportPage'
+
+import AvailableVehicleBookings from './pages/vehicalBooking/AvailableVehicleBookings'
+import CompletedVehicleBookings from './pages/vehicalBooking/CompletedVehicleBookings'
+import VehicleBookings from './pages/vehicalBooking/MyVehicleBookings'
+import CancledVehicleBookings from './pages/vehicalBooking/CancledVehicleBookings'
 
 
 function App() {
@@ -121,9 +130,21 @@ function App() {
           <Route path="/allguides" element={<AllGuides />} />
 
           <Route path="/conguidebook" element={<ConGuidPage />} />
+          <Route path="/transportation/:transportationID" element={<TransportPage/>} />
+
+
+          <Route path="/myVehicleBooking" element={<VehicleBookings/>}>
+            <Route path="available" element={<AvailableVehicleBookings />} />
+            <Route path="cancelled" element={<CancledVehicleBookings />} />
+            <Route path="completed" element={<CompletedVehicleBookings />} />
+          </Route>
 
 
 
+
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-failed" element={<PaymentFailed />} />
         </Route>
       </Routes>
     </Router>
