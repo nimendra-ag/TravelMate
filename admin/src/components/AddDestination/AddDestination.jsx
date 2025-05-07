@@ -13,6 +13,7 @@ import {
   OverlayTrigger,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const AddDestination = () => {
   const [image, setImage] = useState(null);
@@ -265,6 +266,13 @@ const AddDestination = () => {
 
       if (response.data.success) {
         alert("Destination added successfully!");
+        // Swal.fire({
+        //   position: "center",
+        //   icon: "success",
+        //   title: "Successfully subscribed to newsletter!",
+        //   showConfirmButton: true,
+        //   timer: 7500
+        // })
         setDestinationDetails({
           name: "",
           city: "",
@@ -288,7 +296,7 @@ const AddDestination = () => {
     }
   };
   return (
-    <div className="AddDestination" style={{ marginTop: "60px" }}>
+    <div className="AddDestination" style={{ marginTop: "160px" }}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="d-flex justify-content-center align-items-center" style={{ width: "100%" }}>
@@ -524,8 +532,8 @@ const AddDestination = () => {
 
                   <Row>
                     <Col md="12">
-                                          {/* Card Images */}
-                                          <Form.Group controlId="formCardImages" className="mb-3">
+                      {/* Card Images */}
+                      <Form.Group controlId="formCardImages" className="mb-3">
                         <Form.Label>Upload Card Images</Form.Label>
                         <Form.Control
                           type="file"

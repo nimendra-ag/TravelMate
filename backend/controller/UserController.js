@@ -49,7 +49,6 @@ const RegWithGoogle = async (req, res) => {
 };
 
 
-
 const SignUpWithEmailAndPassword = async (req, res) => {
   const { email, password } = req.body;
   // console.log(email, password);
@@ -144,5 +143,31 @@ const UpdateProfile = async (req, res) => {
   }
 
 }
+
+const fetchUserDetails = async(req, res) => {
+
+    const token = req.header('auth-token');
+    console.log("-----------------------------------------------------------------------------------------------------------------")
+    console.log(token)
+    if(!token){
+      console.log("No token found***********************************************************************************************************")
+      res.status(401).send({errors:"Please authenticate using valid token"})
+  }
+  else{
+      try{
+          console.log(`-----------------------------------------${console.log(process.env.JWT_SECRET_KEY)}----------------------------------`)
+          const data = jwt.verify(token, "1234");
+          console.log("User Fetched")
+          console.log(data);
+          // req.user = data.user;
+          
+      }
+      catch(error){
+          console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+          res.status(401).send({errors:"Please authenticate using a valid token"})
+      }
+  }
+
+}
   
-export { RegWithGoogle, GetProfile, UpdateProfile, SignUpWithEmailAndPassword, SignInWithEmailAndPassword } 
+export { RegWithGoogle, GetProfile, UpdateProfile, SignUpWithEmailAndPassword, SignInWithEmailAndPassword, fetchUserDetails } 
