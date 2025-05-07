@@ -39,6 +39,7 @@ import SurfingPage from './pages/surfingPage/SurfingPage'
 import TrekkingPage from './pages/trekkingPage/TrekkingPage'
 import HikingPage from './pages/hikingPage/HikingPage'
 import FoodPage from './pages/foodPage/FoodPage'
+import UserProfile from './pages/UserProfile/UserProfile'
 import AllHotels from './pages/allHotelsPage/AllHotels'
 import MyGuidBookings from './pages/GuidBooking/GuidbookingHistory/MyGuidBookings'
 import AvailableGuidBookings from './pages/GuidBooking/GuidbookingHistory/AvailableGuidBookings'
@@ -116,6 +117,8 @@ function App() {
           <Route path="/review/hotels/:id" element={<ReviewHotel />} />
 
           <Route path="/review/guides/:id" element={<ReviewGuide />} />
+          <Route path="/profile" element={<UserProfile/>} />
+          
           <Route path="/allHotels" element={<AllHotels />} />
           <Route path="/myguidbookings" element={<MyGuidBookings />} >
           <Route path="available" element={<AvailableGuidBookings />} />

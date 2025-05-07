@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, Modal, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../assets/TravalMate Logo.png';
 import './NavbarComponent.css';
 import SigninModal from '../signinModal/SigninModal';
 import { motion } from 'framer-motion';
 
+
 const BookingsModal = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
-
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  
   const handleNavigation = (path) => {
     handleClose();
     navigate(path);
   };
-
+  
   return (
     <>
       <Nav.Link onClick={handleShow} className="nav-item">My Bookings</Nav.Link>
-
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>My Bookings</Modal.Title>
@@ -29,28 +29,28 @@ const BookingsModal = () => {
         <Modal.Body>
           <div className="booking-buttons">
             <Button 
-              variant="primary" 
+              variant="primary"
               className="booking-btn"
               onClick={() => handleNavigation('/mybookings/available')}
             >
               Hotel Bookings
             </Button>
             <Button 
-              variant="primary" 
+              variant="primary"
               className="booking-btn"
               onClick={() => handleNavigation('/myguidbookings/available')}
             >
               Guide Bookings
             </Button>
             <Button 
-              variant="primary" 
+              variant="primary"
               className="booking-btn"
               onClick={() => handleNavigation('/myVehicleBooking/available')}
             >
               Transportation Bookings
             </Button>
             <Button 
-              variant="primary" 
+              variant="primary"
               className="booking-btn"
               onClick={() => handleNavigation('/package-bookings')}
             >
@@ -65,15 +65,16 @@ const BookingsModal = () => {
 
 const NavbarComponent = () => {
   const [scrolled, setScrolled] = useState(false);
-
+  
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+  
   return (
     <Navbar expand="lg" className={`custom-navbar ${scrolled ? 'scrolled' : ''}`} fixed="top">
       <Container>
@@ -96,7 +97,7 @@ const NavbarComponent = () => {
             <span className="brand-text">Travel Mate</span>
           </Navbar.Brand>
         </motion.div>
-
+        
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto nav-links">
@@ -128,6 +129,7 @@ const NavbarComponent = () => {
             >
               <Nav.Link href="/details" className="nav-item">More</Nav.Link>
             </motion.div>
+            <Nav.Link href="/details" className="nav-item"><Link to={'/profile'} className='nav-item' style={{ textDecoration: "none" }}>Profile</Link></Nav.Link>
             {localStorage.getItem("user") && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
