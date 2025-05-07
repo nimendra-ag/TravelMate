@@ -129,7 +129,9 @@ const NavbarComponent = () => {
             >
               <Nav.Link href="/details" className="nav-item">More</Nav.Link>
             </motion.div>
+            {localStorage.getItem("user") && (
             <Nav.Link href="/details" className="nav-item"><Link to={'/profile'} className='nav-item' style={{ textDecoration: "none" }}>Profile</Link></Nav.Link>
+)}
             {localStorage.getItem("user") && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}

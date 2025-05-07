@@ -80,8 +80,8 @@ const UpdateDestination = async (req, res) => {
 const getAllDestinations = async (req, res) => {
   try {
     let destinations = await DestinationModel.find({});
-    console.log("All Destinations Fetched");
-    console.log(destinations);
+    // console.log("All Destinations Fetched");
+    // console.log(destinations);
     res.send(destinations);
   } catch (error) {
     console.log(error);

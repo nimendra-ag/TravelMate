@@ -8,7 +8,7 @@ const TransportModeDataTable = () => {
   const columns = [
     {
       name: 'Name',
-      selector: row => row.transportationServiceName,
+      selector: row => row.name,
       sortable: true,
     },
     {

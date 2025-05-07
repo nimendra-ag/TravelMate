@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaMapMarkerAlt, FaLanguage } from 'react-icons/fa';
 import './GuideCard.css';
 
-const GuideCard = ({ id, name, description, area, languages, chargesPerDay, image }) => {
+const GuideCard = ({ id, name, description, area, languages, chargesPerDay, cardImage }) => {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +13,7 @@ const GuideCard = ({ id, name, description, area, languages, chargesPerDay, imag
       <div className="guide-card-header">
         <div className="profile-image-container">
           <Image 
-            src={image || "https://picsum.photos/50"}
+            src={cardImage || "https://picsum.photos/50"}
             roundedCircle 
             className="profile-image"
           />

@@ -117,10 +117,25 @@ const SigninModal = () => {
     setLoading(true);
     try {
       const response = await axios.post('http://localhost:3000/travelmate/signinwithemailandpassword', { email, password });
+      console.log(response.data);
+
+      
 
       if (response.data.success) {
         localStorage.setItem('auth-token', response.data.token);
+        const user = await axios.get('http://localhost:3000/user/get-user', {
+          headers: {
+            'Authorization': `Bearer ${response.data.token}`
+          }
+
+
+        })
+        console.log("user.data.user=============================================================");
+        console.log(user.data.user);
+        localStorage.setItem('user', JSON.stringify(user.data.user));
+        
         navigate('/');
+        window.location.reload();
       }
       else {
         setLoading(false);

@@ -13,11 +13,14 @@ const SearchBar = () => {
 
     useEffect(() => {
         if (allDetails) {
+            const transport = allDetails.transport || [];
+            console.log("tra",transport);
+            
             const acc = allDetails.accommodations || [];
             const des = allDetails.destinations || [];
             const guids = allDetails.guids || [];
             const cities = allDetails.cities || [];
-            setData([...cities, ...acc, ...des, ...guids]);
+            setData([...cities, ...acc, ...des, ...guids, ...transport]);
         }
     }, [allDetails]);
 
@@ -26,6 +29,9 @@ const SearchBar = () => {
         .slice(0, 6);
 
     const handleClick = (dataId, type) => {
+        console.log("dataId", dataId);
+        console.log("type", type);
+        
         if (type === "city") {
             navigate(`/city/${dataId}`)
         }
@@ -34,7 +40,12 @@ const SearchBar = () => {
         }
         else if (type === "Destinations") {
             navigate(`/destinations/${dataId}`)
+        }else if (type === "Guides") {
+            navigate(`/guide/${dataId}`)
+        }else if (type === "TransportationServices") {
+            navigate(`/transportation/${dataId}`)
         }
+
     };
 
     return (
@@ -73,7 +84,7 @@ const SearchBar = () => {
                                         fontSize: '1rem',
                                         color: '#333333',
                                         fontWeight: 400
-                                    }}>{data.minidescription}</p>
+                                    }}>{data.miniDescription}</p>
                                 </div>
                             </div>
                         </div>

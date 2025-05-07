@@ -6,7 +6,7 @@ const TransportationServiceModel = model("TransportationServices", {
     type: String,
     default: "TransportationServices",
   },
-  transportationServiceName: {
+  name: {
     type: String,
     required: true,
   },
@@ -30,6 +30,10 @@ const TransportationServiceModel = model("TransportationServices", {
     type: String,
     required: true,
   },
+  miniDescription: {
+    type: String,
+    required: true,
+  },
   rating: {
     type: Number,
     default: 0,
@@ -41,6 +45,10 @@ const TransportationServiceModel = model("TransportationServices", {
     default: [],
     required: true,
   },
+  cardImage: {
+    type: String,
+    required: true,
+  }
 });
 
 export { TransportationServiceModel };
