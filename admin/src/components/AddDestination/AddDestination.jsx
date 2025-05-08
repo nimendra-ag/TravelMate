@@ -119,9 +119,9 @@ const AddDestination = () => {
     }
   };
 
-  const imageHandler = (e) => {
-    setImage(e.target.files[0]);
-  };
+  const handleImageChange = (e) => {
+
+  }
 
   const changeHandler = (e) => {
     setDestinationDetails({
@@ -432,98 +432,18 @@ const AddDestination = () => {
 
                   <Row>
                     <Col md="12">
-                      {/* Card Images */}
-                      <Form.Group controlId="formCardImages" className="mb-3">
-                        <Form.Label>Upload Card Images</Form.Label>
-                        <Form.Control
-                          type="file"
-                          multiple
-                          accept="image/*"
-                          onChange={handleCardImageChange}
-                          style={{
-                            borderRadius: "10px",
-                            height: "50px",
-                            borderWidth: "2px",
-                            color: "transparent"
-                          }}
-                        />
-                      </Form.Group>
+              
+                 
 
-                      {selectedCardImages.length > 0 && (
-                        <div style={{ marginBottom: "2rem" }}>
-                          <div style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                            gap: "1rem",
-                            marginTop: "1rem"
-                          }}>
-                            {selectedCardImages.map((image) => (
-                              <div
-                                key={image.id}
-                                style={{
-                                  position: "relative",
-                                  paddingBottom: "75%",
-                                  height: 0,
-                                  borderRadius: "10px",
-                                  overflow: "hidden",
-                                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                                  transition: "transform 0.2s ease",
-                                  cursor: "pointer",
-                                }}
-                                onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.02)"}
-                                onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
-                              >
-                                <img
-                                  src={image.url}
-                                  alt={`Preview ${image.id}`}
-                                  style={{
-                                    position: "absolute",
-                                    top: 0,
-                                    left: 0,
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
-                                    borderRadius: "10px",
-                                  }}
-                                />
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    removeCardImage(image.id);
-                                  }}
-                                  style={{
-                                    position: "absolute",
-                                    top: "5px",
-                                    right: "5px",
-                                    background: "rgba(255, 255, 255, 0.8)",
-                                    border: "none",
-                                    borderRadius: "50%",
-                                    width: "25px",
-                                    height: "25px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    cursor: "pointer",
-                                    fontSize: "18px",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  ×
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+{/*                      
 
-                      {/* Main Images */}
                       <Form.Group controlId="formMainImages" className="mb-3">
-                        <Form.Label>Upload Main Images</Form.Label>
+                        <Form.Label>Main Images</Form.Label>
                         <Form.Control
                           type="file"
                           multiple
                           accept="image/*"
-                          onChange={handleMainImageChange}
+                          onChange={handleImageChange}
                           style={{
                             borderRadius: "10px",
                             height: "50px",
@@ -531,74 +451,9 @@ const AddDestination = () => {
                             color: "transparent"
                           }}
                         />
-                      </Form.Group>
+                      </Form.Group> */}
 
-                      {selectedMainImages.length > 0 && (
-                        <div style={{ marginBottom: "2rem" }}>
-                          <div style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                            gap: "1rem",
-                            marginTop: "1rem"
-                          }}>
-                            {selectedMainImages.map((image) => (
-                              <div
-                                key={image.id}
-                                style={{
-                                  position: "relative",
-                                  paddingBottom: "75%",
-                                  height: 0,
-                                  borderRadius: "10px",
-                                  overflow: "hidden",
-                                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                                  transition: "transform 0.2s ease",
-                                  cursor: "pointer",
-                                }}
-                                onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.02)"}
-                                onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
-                              >
-                                <img
-                                  src={image.url}
-                                  alt={`Preview ${image.id}`}
-                                  style={{
-                                    position: "absolute",
-                                    top: 0,
-                                    left: 0,
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
-                                    borderRadius: "10px",
-                                  }}
-                                />
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    removeMainImage(image.id);
-                                  }}
-                                  style={{
-                                    position: "absolute",
-                                    top: "5px",
-                                    right: "5px",
-                                    background: "rgba(255, 255, 255, 0.8)",
-                                    border: "none",
-                                    borderRadius: "50%",
-                                    width: "25px",
-                                    height: "25px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    cursor: "pointer",
-                                    fontSize: "18px",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  ×
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                    
                     </Col>
                   </Row>
 

@@ -162,12 +162,7 @@ const GuidPage = () => {
                             <h1 className="display-4 fw-bold mb-4">{guid?.name}</h1>
                             <p className="lead mb-4">{guid?.description}</p>
                             <div className="d-flex gap-3">
-                                <button className="btn btn-primary btn-lg d-flex align-items-center gap-2">
-                                    <FaPhone /> Call Now
-                                </button>
-                                <button className="btn btn-success btn-lg d-flex align-items-center gap-2">
-                                    <FaWhatsapp /> WhatsApp
-                                </button>
+                               
                             </div>
                         </div>
                     </div>
@@ -268,10 +263,7 @@ const GuidPage = () => {
                                             </div>
                                         </div>
                                         <div className="col-12">
-                                            <div className="d-flex align-items-center gap-3">
-                                                <h5 className="mb-0">Rating:</h5>
-                                                <StarRating rating={guid?.rating} />
-                                            </div>
+                                          
                                         </div>
                                     </div>
                                 </div>

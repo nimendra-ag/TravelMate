@@ -65,6 +65,11 @@ const DestinationModel = model("Destinations", {
     default: [],
     required: true,
   },
+  images: {
+    type: [String],
+    default: [],
+   
+  },
 });
 export { DestinationModel };
 

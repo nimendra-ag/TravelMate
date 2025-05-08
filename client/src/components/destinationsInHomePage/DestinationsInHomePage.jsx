@@ -52,11 +52,7 @@ const DestinationsInHomePage = () => {
                     {allDestinations.map((destinaion) => (
                         <SwiperSlide key={destinaion.id}>
                             <DestinationCardComponent
-                             images={[
-                                'https://picsum.photos/288/200?random=1',
-                                'https://picsum.photos/288/200?random=2',
-                                'https://picsum.photos/288/200?random=3'
-                            ]}
+                             images={destinaion.images}
                             id={destinaion.id}
                             title={destinaion.name}
                             reviewCount= {Math.floor(Math.random() * 10) + 1}

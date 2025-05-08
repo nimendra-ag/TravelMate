@@ -57,7 +57,8 @@ const UpdateDestination = async (req, res) => {
             contactNumber: req.body.contactNumber,
             openingHours: req.body.openingHours,
             website: req.body.website,
-            rating: req.body.rating
+            rating: req.body.rating,
+            images: req.body.images,
           },
           { new: true } // Return the updated document
       );

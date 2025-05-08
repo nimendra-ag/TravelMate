@@ -20,11 +20,11 @@ const Destination = () => {
         id={id}
         name={destination.name}
         description={destination.description}
-        image1={destination.mainImages[0]}
-        image2={destination.mainImages[1]}
-        image3={destination.mainImages[2]}
-        image4={destination.mainImages[3]}
-        image5={destination.mainImages[0]}
+        image1={destination.images[0]}
+        image2={destination.images[1]}
+        image3={destination.images[2]}
+        image4={destination.images[3]}
+      
         city={destination.city}
         category={destination.category[0]}
         bestTimeToVisit={destination.bestTimeToVisit}

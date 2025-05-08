@@ -4,17 +4,15 @@ import { FaClock, FaMapMarkerAlt, FaStar, FaImages, FaBuilding, FaPhone, FaMoney
 import { useNavigate } from 'react-router-dom';
 import './HotelMainSection.css';
 
-const HotelMainSection = ({ name, description, distance_from_city, id, rating = 4.5, address , cardImage , contactNumber,perPerson_price }) => {
+const HotelMainSection = ({ name, description, distance_from_city, id, rating = 4.5, address , image , contactNumber,perPerson_price,images }) => {
   const navigate = useNavigate();
   const [showAllImages, setShowAllImages] = useState(false);
 
   const hotelImages = [
-    "https://picsum.photos/500/350",
-    "https://picsum.photos/501/350",
-    "https://picsum.photos/502/350",
-    "https://picsum.photos/503/350",
-    "https://picsum.photos/504/350",
-    "https://picsum.photos/505/350"
+    images[0] || image,
+    images[1] || image,
+    images[2] || image,
+    image
   ];
 
   return (
@@ -102,14 +100,14 @@ const HotelMainSection = ({ name, description, distance_from_city, id, rating = 
               ))}
             </Row>
 
-            <Button 
+            {/* <Button 
               variant="light" 
               className="view-all-button"
               onClick={() => setShowAllImages(true)}
             >
               <FaImages className="me-2" />
               View All Photos
-            </Button>
+            </Button> */}
           </div>
         </Col>
       </Row>

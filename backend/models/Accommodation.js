@@ -63,6 +63,10 @@ const AccommodationModel = mongoose.model("Accommodations", {
     type: Object,
    
   },
+  images: {
+    type: Array,
+    default: [],
+  },
 });
 
 export { AccommodationModel };

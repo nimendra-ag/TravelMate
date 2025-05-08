@@ -155,7 +155,8 @@ const addGuideReview = async (req, res) =>{
             reviewBody: req.body.body,
             reviewTitle: req.body.title,
             recommendation: req.body.recommendation,
-            createdAt: req.body.createdAt
+            createdAt: req.body.createdAt,
+            country: req.body.country,
         })
 
         // console.log(guideReview);

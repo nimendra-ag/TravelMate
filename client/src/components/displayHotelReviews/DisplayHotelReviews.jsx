@@ -104,9 +104,7 @@ const DisplayHotelReviews = ({id}) => {
                 <div className="d-flex">
                   {renderRatingDots(averageOverllRating)}
                 </div>
-                <span className="ms-3 text-muted fw-medium" style={{ fontSize: '1rem' }}>
-                  9,301 reviews
-                </span>
+      
               </div>
             </div>
             <div className="d-flex">

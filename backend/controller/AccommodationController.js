@@ -55,6 +55,7 @@ const updateAccommodation = async (req, res) => {
                 distance_from_city: req.body.distance_from_city,
                 perPerson_price: req.body.perPerson_price,
                 contactNumber: req.body.contactNumber,
+                images: req.body.images,
             },
             { new: true }
         );

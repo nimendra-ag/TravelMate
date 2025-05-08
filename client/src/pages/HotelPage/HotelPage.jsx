@@ -19,9 +19,10 @@ const HotelPage = () => {
                 distance_from_city = {accommodation.distance_from_city}
                 id = {accommodationID}
                 address = {accommodation.address}
-                image = {accommodation.cardImage}
+                image = {accommodation.image}
                 contactNumber = {accommodation.contactNumber}
                 perPerson_price = {accommodation.perPerson_price}
+                images = {accommodation.images}
             />
              <DisplayHotelReviews
                     id={accommodationID}
