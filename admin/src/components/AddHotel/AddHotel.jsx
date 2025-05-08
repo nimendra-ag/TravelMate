@@ -15,6 +15,8 @@ const AddHotel = () => {
     perPerson_price: "",
     description: "",
     cardImage: "",
+    miniDescription: "",
+
   });
 
   const validateForm = () => {
@@ -56,6 +58,11 @@ const AddHotel = () => {
 
     if (!cardImage) {
       tempErrors.cardImage = "Image is required";
+      isValid = false;
+    }
+
+    if (!accommodationDetails.miniDescription.trim()) {
+      tempErrors.miniDescription = "Mini Description is required";
       isValid = false;
     }
 
@@ -107,6 +114,8 @@ const AddHotel = () => {
       accommodationDetails.cardImage = responseDataCardImage.image_url;
 
       try {
+        console.log("Accommodation Details:", accommodationDetails);
+        
         const response = await axios.post("http://localhost:3000/travelmate/addAccomodation", accommodationDetails);
 
         if (response.data.success) {
@@ -120,6 +129,7 @@ const AddHotel = () => {
             perPerson_price: "",
             description: "",
             cardImage: "",
+            miniDescription: "",
           });
 
           setCardImage(null);
@@ -322,7 +332,33 @@ const AddHotel = () => {
                           {errors.cardImage}
                         </Form.Control.Feedback>
                       </Form.Group>
+
+                      
                     </Col>
+                    <Form.Group controlId="formAccommodationName" className="mb-3">
+                        <Form.Label>Mini Description</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter the mini Description"
+                          name="miniDescription"
+                          value={accommodationDetails.miniDescription}
+                          onChange={changeHandler}
+                     
+                     
+              
+                          isInvalid={!!errors.miniDescription}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                          }}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.miniDescription}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+
+                    
                   </Row>
 
                   <Row>

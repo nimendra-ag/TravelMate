@@ -29,6 +29,10 @@ const GuideModel = model("Guides", {
     type: String,
     required: true,
   },
+  miniDescription: {
+    type: String,
+    required: true,
+  },
   birthDate: {
     type: Date,
     required: true,
@@ -56,6 +60,11 @@ const GuideModel = model("Guides", {
     default: [],
     required: true,
   },
+  cardImage: {
+    type: String,
+    required: true,
+  },
+  
 });
 
 export { GuideModel };

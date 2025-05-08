@@ -12,6 +12,7 @@ import cityRouter from './routes/cityRouter.js';
 import bookingRouter from './routes/bookingRote.js';
 import hotelRouter from './routes/hotelRoute.js';
 import transportationrouter from './routes/transportationRoute.js';
+import userRouter from './routes/userRoute.js';
 // import bookingScheduler from './schedulers/bookingScheduler.js';
 
 dotenv.config();
@@ -60,7 +61,9 @@ app.use("/booking",bookingRouter);
 
 app.use("/hotels",hotelRouter)
 
-app.use("/transportation",transportationrouter)
+app.use("/transportation",transportationrouter);
+
+app.use('/user',userRouter);
 
 
 

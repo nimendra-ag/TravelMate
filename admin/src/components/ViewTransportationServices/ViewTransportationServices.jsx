@@ -9,7 +9,7 @@ function ViewTransportationService() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [transportationServiceDetails, setTransportationServiceDetails] = useState({
-    transportationServiceName: "",
+    name: "",
     availableVehicles: [],
     pricePerHour: "",
     address: "",
@@ -111,15 +111,15 @@ function ViewTransportationService() {
                   <Row>
                     <Col md="6">
                       <Form.Group
-                        controlId="formTransportationServiceName"
+                        controlId="formname"
                         className="mb-3"
                       >
                         <Form.Label>Transportation Service Name</Form.Label>
                         <Form.Control
                           type="text"
                           placeholder="Enter the transportation service"
-                          name="transportationServiceName"
-                          value={transportationServiceDetails.transportationServiceName}
+                          name="name"
+                          value={transportationServiceDetails.name}
                           onChange={changeHandler}
                           style={{
                             borderRadius: "10px",
@@ -131,21 +131,23 @@ function ViewTransportationService() {
                     </Col>
 
                     <Col md="6">
-                      <Form.Group
-                        controlId="formAvailableVehicles"
+                    <Form.Group
+                        controlId="formContactNumber"
                         className="mb-3"
                       >
-                        <Form.Label>Available Vehicles</Form.Label>
-                        <Select
-                          isMulti
-                          name="availableVehicles"
-                          options={availableVehicleOptions}
-                          value={availableVehicleOptions.filter((option) =>
-                            transportationServiceDetails.availableVehicles?.includes(
-                              option.value
-                            )
-                          )}
-                          onChange={handleMultiSelectChange}
+                        <Form.Label>Contact Number</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter the contact number"
+                          maxLength="10"
+                          name="contactNumber"
+                          value={transportationServiceDetails.contactNumber}
+                          onChange={changeHandler}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                          }}
                         />
                       </Form.Group>
                     </Col>
@@ -173,25 +175,7 @@ function ViewTransportationService() {
                     </Col>
 
                     <Col md="6">
-                      <Form.Group
-                        controlId="formContactNumber"
-                        className="mb-3"
-                      >
-                        <Form.Label>Contact Number</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter the contact number"
-                          maxLength="10"
-                          name="contactNumber"
-                          value={transportationServiceDetails.contactNumber}
-                          onChange={changeHandler}
-                          style={{
-                            borderRadius: "10px",
-                            height: "50px",
-                            borderWidth: "2px",
-                          }}
-                        />
-                      </Form.Group>
+                     
                     </Col>
 
                     <Col md="6">

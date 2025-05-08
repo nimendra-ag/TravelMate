@@ -31,7 +31,7 @@ const UserModel = model('Users',{
     gender:{
         type: String,
     },
-    profilePicture:{
+    profilePic:{
         type: String,
     },
 })

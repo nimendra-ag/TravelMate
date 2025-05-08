@@ -13,15 +13,17 @@ const AddTransportationService = async (req, res) => {
         let id = transportationServices.length > 0 ? transportationServices[transportationServices.length - 1].id + 1 : 1;
         const transportationService = new TransportationServiceModel({
             id: id,
-            transportationServiceName: req.body.transportationServiceName,
+            name: req.body.name,
             availableVehicles: req.body.availableVehicles,
             pricePerHour: req.body.pricePerHour,
-            images: req.body.images,
+            cardImage: req.body.cardImage,
             address: req.body.address,
             contactNumber: req.body.contactNumber,
             description: req.body.description,
+            miniDescription: req.body.miniDescription,
             rating: req.body.rating || 0, // Default rating to 0 if not provided
         });
+
 
         // Save the transportation service to the database
         await transportationService.save();
@@ -44,7 +46,7 @@ const UpdateTransportationService = async (req, res) => {
         const updatedTransportMode = await TransportationServiceModel.findOneAndUpdate(
             { id: id }, // Match by ID
             {
-                transportationServiceName: req.body.transportationServiceName,
+                name: req.body.name,
                 availableVehicles: req.body.availableVehicles,
                 pricePerHour: req.body.pricePerHour,
                 address: req.body.address,
@@ -347,7 +349,7 @@ const AddBooking = async (req, res) => {
 
     const data = req.body;
 
-    console.log(data);
+    // console.log(data);
 
 
 

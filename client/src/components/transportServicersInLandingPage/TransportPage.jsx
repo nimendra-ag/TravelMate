@@ -217,15 +217,10 @@ const TransportPage = () => {
                         {/* Service Details - Left Side */}
                         <div className="col-md-7">
                             <h1 className="display-5 fw-bold text-primary mb-3">
-                                {transportationService.transportationServiceName}
+                                {transportationService.name}
                             </h1>
                             <p className="lead mb-4">{transportationService.description}</p>
-                            <div className="d-flex mb-3 align-items-center">
-                                <div className="me-3" aria-label={`Rating: ${transportationService.rating} out of 5`}>
-                                    {renderRatingStars(transportationService.rating)}
-                                </div>
-                                <span className="text-muted">({transportationService.rating}/5)</span>
-                            </div>
+                         
                             <div className="row mb-4">
                                 <div className="col-md-6">
                                     <h6 className="text-muted">PRICE PER DAY</h6>
@@ -293,7 +288,8 @@ const TransportPage = () => {
 
 
                                 <img
-                                    src={transportationService.images[0]}
+                                    src={transportationService.cardImage
+                                    }
                                     alt="Transportation Service"
                                     className='rounded shadow-sm mt-3 mb-3 mx-4 '
                                     style={{ height: "200px", objectFit: "cover", borderRadius: "40px" }}

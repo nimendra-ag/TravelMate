@@ -42,7 +42,9 @@ const HotelsInLandingPage = () => {
               price={accommodation.perPerson_price}
               imageSrc={accommodation.image}
               id={accommodation.id}
-              minidescription={accommodation.minidescription}
+              minidescription={accommodation.miniDescription}
+              description={accommodation.description}
+              style={{ width: '100%', height: '100%' }} // Adjust the width and height as needed
             />
           </SwiperSlide>
         ))}

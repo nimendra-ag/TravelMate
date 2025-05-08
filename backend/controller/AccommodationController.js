@@ -5,6 +5,7 @@ import { CityModel } from "../models/Citiy.js";
 import { DestinationModel } from "../models/Destination.js";
 import { GuideModel } from "../models/Guide.js";
 import { HotelReviewModel } from "../models/HotelReview.js";
+import { TransportationServiceModel } from "../models/Transportation.js";
 
 // dotenv.config({ path: "../.env" });
 
@@ -24,6 +25,7 @@ const addAccommodation = async (req, res) => {
             distance_from_city: req.body.distance_from_city,
             perPerson_price: req.body.perPerson_price,
             contactNumber: req.body.contactNumber,
+            miniDescription: req.body.miniDescription
         });
 
         await hotel.save();
@@ -88,11 +90,12 @@ const GetData = async (req, res) => {
         const accommodations = await AccommodationModel.find();
         const destinations = await DestinationModel.find();
         const guids = await GuideModel.find();
+        const transport = await TransportationServiceModel.find();
 
 
     
     
-        return res.status(200).json({ success: true, cities,accommodations,destinations,guids  });
+        return res.status(200).json({ success: true, cities,accommodations,destinations,guids,transport  });
     } catch (err) {
         console.error(err); // Log the error for debugging purposes
         return res.status(500).json({ success: false, error: err.message });
@@ -301,9 +304,9 @@ const editRoom = async(req,res) => {
         const  data  = req.body;
         
 
-     console.log("data are",data);
+    //  console.log("data are",data);
 
-     console.log(data.hid);
+    //  console.log(data.hid);
      
      
         

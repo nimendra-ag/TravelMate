@@ -2,7 +2,7 @@ import {NewsletterEmailModel} from "../models/NewsletterMail.js";
 
 const AddNewsletterMail = async (req, res) =>{
     try {
-        console.log(req.body);
+        // console.log(req.body);
         const NewsletterEmail = new NewsletterEmailModel({
             email: req.body.email
         })
@@ -11,7 +11,7 @@ const AddNewsletterMail = async (req, res) =>{
     
         res.json({success:true})
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(500).json({ success: false, error: 'Server Error' });
         
     }
