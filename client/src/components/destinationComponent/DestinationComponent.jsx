@@ -12,7 +12,7 @@ const DestinationComponent = ({name, description, image1, image2, image3, image4
    
   ];
 
-  const [selectedImage, setSelectedImage] = useState(sigiriyaImage);
+  const [selectedImage, setSelectedImage] = useState(image1);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);

@@ -33,6 +33,7 @@ const AddDestination = () => {
       },
     ],
     description: "",
+    miniDescription: "",
   });
 
   const categoryOptions = [
@@ -99,6 +100,11 @@ const AddDestination = () => {
 
     if (!destinationDetails.description.trim()) {
       tempErrors.description = "Description is required";
+      isValid = false;
+    }
+
+    if (!destinationDetails.miniDescription.trim()) {
+      tempErrors.miniDescription = "Mini description is required";
       isValid = false;
     }
 
@@ -188,6 +194,7 @@ const AddDestination = () => {
             },
           ],
           description: "",
+          miniDescription: "",
         });
         window.location.reload();
       }
@@ -428,9 +435,30 @@ const AddDestination = () => {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Col>
+                    
                   </Row>
 
                   <Row>
+
+                  <Form.Group controlId="formName" className="mb-3">
+                        <Form.Label>Mini Description</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter the mini Description"
+                          name="miniDescription"
+                          value={destinationDetails.miniDescription}
+                          onChange={changeHandler}
+                          isInvalid={!!errors.miniDescription}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                          }}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.miniDescription}
+                        </Form.Control.Feedback>
+                      </Form.Group>
                     <Col md="12">
               
                  

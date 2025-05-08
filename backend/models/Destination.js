@@ -70,6 +70,11 @@ const DestinationModel = model("Destinations", {
     default: [],
    
   },
+  
+  miniDescription: {
+    type: String,
+    required: true,
+  },
 });
 export { DestinationModel };
 

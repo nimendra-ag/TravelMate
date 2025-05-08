@@ -58,6 +58,7 @@ const DestinationsInHomePage = () => {
                             reviewCount= {Math.floor(Math.random() * 10) + 1}
                             category={destinaion.category.slice(0, 2).join(", ")}
                             city={destinaion.city}
+                            miniDescription={destinaion.miniDescription}
                             >
                             </DestinationCardComponent>
                         </SwiperSlide>
