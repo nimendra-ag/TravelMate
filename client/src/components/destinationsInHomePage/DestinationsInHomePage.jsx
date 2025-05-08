@@ -59,115 +59,14 @@ const DestinationsInHomePage = () => {
                             ]}
                             id={destinaion.id}
                             title={destinaion.name}
-                            reviewCount="11,738"
+                            reviewCount= {Math.floor(Math.random() * 10) + 1}
                             category={destinaion.category.slice(0, 2).join(", ")}
                             city={destinaion.city}
                             >
-
                             </DestinationCardComponent>
                         </SwiperSlide>
                     ))}
-                    {/* <Row> */}
-                    {/* <div className="d-flex justify-content-center gap-3"> */}
-
-                    {/* <SwiperSlide>
-                        <DestinationCardComponent
-                            images={[
-                                'https://picsum.photos/288/200?random=1',
-                                'https://picsum.photos/288/200?random=2',
-                                'https://picsum.photos/288/200?random=3'
-                            ]}
-                            title="Sigiriya The Ancient Rock Fortress"
-                            reviewCount="11,738"
-                            category="Ancient Ruins, Points of Interest & Landmarks"
-                            city="Sigiriya"
-                    /></SwiperSlide>
-
-                    <SwiperSlide>
-                        <DestinationCardComponent
-                            images={[
-                                'https://picsum.photos/288/200?random=4',
-                                'https://picsum.photos/288/200?random=2',
-                                'https://picsum.photos/288/200?random=5'
-                            ]}
-                            title="Pidurangala Rock"
-                            reviewCount="2,555"
-                            category="Points of Interest & Landmarks"
-                            city="Sigiriya"
-                        />
-                    </SwiperSlide>
-
-                    <SwiperSlide>
-                        <DestinationCardComponent
-                            images={[
-                                'https://picsum.photos/288/200?random=2',
-                                'https://picsum.photos/288/200?random=2',
-                                'https://picsum.photos/288/200?random=6'
-                            ]}
-                            title="Kaludiya Pokuna"
-                            reviewCount="30"
-                            category="Historic Sites, Points of Interest & Landmarks"
-                            city="Sigiriya"
-                        />
-                    </SwiperSlide>
-
-
-                    <SwiperSlide>
-                        <DestinationCardComponent
-                            images={[
-                                'https://picsum.photos/288/200?random=6',
-                                'https://picsum.photos/288/200?random=7',
-                                'https://picsum.photos/288/200?random=8'
-                            ]}
-                            title="Kaludiya Pokuna"
-                            reviewCount="30"
-                            category="Historic Sites, Points of Interest & Landmarks"
-                            city="Sigiriya"
-                        />
-                    </SwiperSlide>
-
-                    <SwiperSlide>
-                        <DestinationCardComponent
-                            images={[
-                                'https://picsum.photos/288/200?random=6',
-                                'https://picsum.photos/288/200?random=7',
-                                'https://picsum.photos/288/200?random=8'
-                            ]}
-                            title="Kaludiya Pokuna"
-                            reviewCount="30"
-                            category="Historic Sites, Points of Interest & Landmarks"
-                            city="Sigiriya"
-                        />
-                    </SwiperSlide>
-
-                    <SwiperSlide>
-                        <DestinationCardComponent
-                            images={[
-                                'https://picsum.photos/288/200?random=6',
-                                'https://picsum.photos/288/200?random=7',
-                                'https://picsum.photos/288/200?random=8'
-                            ]}
-                            title="Kaludiya Pokuna"
-                            reviewCount="30"
-                            category="Historic Sites, Points of Interest & Landmarks"
-                            city="Sigiriya"
-                        />
-
-                    </SwiperSlide>
-                    <SwiperSlide>
-
-                        <DestinationCardComponent
-                            images={[
-                                'https://picsum.photos/288/200?random=6',
-                                'https://picsum.photos/288/200?random=7',
-                                'https://picsum.photos/288/200?random=8'
-                            ]}
-                            title="Kaludiya Pokuna"
-                            reviewCount="30"
-                            category="Historic Sites, Points of Interest & Landmarks"
-                            city="Sigiriya"
-                        />
-                    </SwiperSlide> */}
+                   
                 </Swiper>
                 
             </Container>

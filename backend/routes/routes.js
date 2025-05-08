@@ -4,7 +4,7 @@ import { AddTransportationService, getAllTransportationServices,UpdateTransporta
 import { AddRestaurant, getAllRestaurants ,UpdateRestaurant,deleteRestaurant,viewRestaurant, addRestaurantReview, getAllRestaurantReviews} from '../controller/RestaurantController.js';
 import { AddDestination,UpdateDestination,getAllDestinations,DeleteDestination,viewDestination } from '../controller/DestinationController.js';
 
-import { GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
+import { fetchUserDetails, GetProfile, RegWithGoogle, SignInWithEmailAndPassword, SignUpWithEmailAndPassword, UpdateProfile } from '../controller/UserController.js';
 import { updateAccommodation,addAccommodation, getAllAccomodations, GetData, GetCity, deleteAccommodation , viewAccommodation, getAllHotelReviews, addHotelReview} from '../controller/AccommodationController.js';
 import { AddTravelMateFeedback, GetTravelMateFeedback } from '../controller/FeedbackController.js';
 import { AddPrePlannedTrips, getAllPrePlannedTrips } from '../controller/PrePlannedTripController.js';

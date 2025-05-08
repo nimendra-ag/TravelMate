@@ -31,8 +31,8 @@ const Destination = () => {
         website={destination.website}
         distanceFromColombo={destination.distanceFromColombo}
         />
-        <PrePlannedTripsInLandingPage/>
-        <HotelsInLandingPage/>
+        <PrePlannedTripsInLandingPage header="Unforgettable Journeys Begin Here" />
+        {/* <HotelsInLandingPage/> */}
       </div>
     </> : <></>}
     </>
