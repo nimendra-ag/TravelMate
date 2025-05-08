@@ -49,7 +49,6 @@ const RegWithGoogle = async (req, res) => {
 };
 
 
-
 const SignUpWithEmailAndPassword = async (req, res) => {
   const { email, password } = req.body;
   // console.log(email, password);
