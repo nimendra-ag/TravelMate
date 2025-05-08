@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Image, Badge } from 'react-bootstrap';
-import { FaClock, FaMapMarkerAlt, FaStar, FaImages } from 'react-icons/fa';
+import { FaClock, FaMapMarkerAlt, FaStar, FaImages, FaBuilding, FaPhone, FaMoneyBill } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import './HotelMainSection.css';
 
-const HotelMainSection = ({ name, description, distance_from_city, id, rating = 4.5 }) => {
+const HotelMainSection = ({ name, description, distance_from_city, id, rating = 4.5, address , cardImage , contactNumber,perPerson_price }) => {
   const navigate = useNavigate();
   const [showAllImages, setShowAllImages] = useState(false);
 
@@ -23,11 +23,11 @@ const HotelMainSection = ({ name, description, distance_from_city, id, rating = 
         <Col xs={12} md={7}>
           <div className="hotel-info">
             <h1 className="hotel-title">{name}</h1>
-            <div className="rating-badge mb-3">
+            {/* <div className="rating-badge mb-3">
               <FaStar className="star-icon" />
               <span>{rating}</span>
               <Badge bg="success" className="ms-2">Excellent</Badge>
-            </div>
+            </div> */}
 
             <div className="about-section">
               <h5 className="section-title">About</h5>
@@ -36,12 +36,20 @@ const HotelMainSection = ({ name, description, distance_from_city, id, rating = 
 
             <div className="hotel-details">
               <div className="detail-item">
-                <FaClock className="detail-icon" />
-                <span>Duration: More than 3 hours</span>
+                <FaBuilding className="detail-icon" />
+                <span>Address: {address}</span>
               </div>
               <div className="detail-item">
                 <FaMapMarkerAlt className="detail-icon" />
                 <span>Distance from Colombo: About {distance_from_city} km</span>
+              </div>
+              <div className="detail-item">
+                <FaPhone className="detail-icon" />
+                <span>Contact No: {contactNumber} </span>
+              </div>
+              <div className="detail-item">
+                <FaMoneyBill className="detail-icon" />
+                <span>Starting Price: ${perPerson_price} </span>
               </div>
             </div>
 

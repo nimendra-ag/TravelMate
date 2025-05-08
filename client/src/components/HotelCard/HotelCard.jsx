@@ -53,7 +53,7 @@ const HotelCard = ({ name, description, price, imageSrc, id, minidescription }) 
           <div className="mt-auto">
             <Row className="align-items-center mt-2">
               <Col xs={12} className="text-start" style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#007bff' }}>
-                From {price} LKR
+                From ${price}  Upwards
               </Col>
             </Row>
             <Button

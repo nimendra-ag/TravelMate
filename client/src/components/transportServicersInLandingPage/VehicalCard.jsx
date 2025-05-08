@@ -1,5 +1,7 @@
 import React from 'react'
-import { FaChair, FaTruck, FaUserFriends } from 'react-icons/fa'
+import { FaCar, FaChair, FaNutritionix, FaSuperpowers, FaTruck, FaUserFriends } from 'react-icons/fa'
+import { TbEngine } from "react-icons/tb";
+import { PiSeatFill } from "react-icons/pi";
 
 
 const VehicalCard = ({ vehicle, handleBooking, availableVehicals , availabilityChecked}) => {
@@ -53,7 +55,7 @@ const VehicalCard = ({ vehicle, handleBooking, availableVehicals , availabilityC
                             <div className="border rounded p-2">
                                 <small className="d-block text-muted">Capacity</small>
                                 <div className="d-flex align-items-center justify-content-center">
-                                    <FaUserFriends className="me-1" />
+                                    <TbEngine className="me-1" />
                                     <strong>{vehicle.capacity}</strong>
                                 </div>
                             </div>
@@ -62,7 +64,7 @@ const VehicalCard = ({ vehicle, handleBooking, availableVehicals , availabilityC
                             <div className="border rounded p-2">
                                 <small className="d-block text-muted">Seats</small>
                                 <div className="d-flex align-items-center justify-content-center">
-                                    <FaChair className="me-1" />
+                                    <PiSeatFill  className="me-1" />
                                     <strong>{vehicle.seates}</strong>
                                 </div>
                             </div>
@@ -81,7 +83,7 @@ const VehicalCard = ({ vehicle, handleBooking, availableVehicals , availabilityC
                 <div className="card-footer d-flex justify-content-between align-items-center bg-white">
                     <div>
                         <span className="fs-5 fw-bold text-primary">${vehicle.price}</span>
-                        <span className="text-muted ms-1">/ hour</span>
+                        <span className="text-muted ms-1">/ Day</span>
                     </div>
 
 
