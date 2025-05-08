@@ -89,9 +89,9 @@ const Sidebar = () => {
               <p>Manage Transport Modes</p>
             </div>
           </Link>
-          <Link to="/add-hospital" style={{ textDecoration: 'none' }}>
+          <Link to="/hospitals" style={{ textDecoration: 'none' }}>
             <div className="sidebar-item">
-              <p>Add Hospital</p>
+              <p>Manage Hospitals</p>
             </div>
           </Link>
         </Nav>

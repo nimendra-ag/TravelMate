@@ -23,6 +23,9 @@ import ViewDestination from './components/ViewDestination/ViewDestination';
 import ViewRestaurant from './components/ViewRestaurant/ViewRestaurant';
 import ViewTransportationService from './components/ViewTransportationServices/ViewTransportationServices';
 import AddHospital from './components/AddHospital/AddHospital';
+import HospitalDataTable from './pages/HospitalDataTable/HospitalDataTable';
+import Hospitals from './components/Hospitals/Hospitals';
+import ViewHospital from './components/ViewHospital/ViewHospital';
 
 
 const App = () => {
@@ -35,6 +38,7 @@ const App = () => {
           <Routes>
             <Route path="/guides" element={<Guides />} />
             <Route path="/hotels" element={<Hotels />} />
+            <Route path="/hospitals" element={<Hospitals />} />
             <Route path="/destinations" element={<DestinationsDataTable />} />
             <Route path="/home" element={<Admin />} />
             <Route path='/add-new-guide' element={<AddGuide />} />
@@ -45,6 +49,7 @@ const App = () => {
             <Route path='/add-pre-planned-trips' element={<AddPrePlannedTrips />} />
             <Route path='/add-hospital' element={<AddHospital />} />
             <Route path="/hotel-data-table" element={<HotelDataTable />} />
+            <Route path="/hospital-data-table" element={<HospitalDataTable />} />
             <Route path="/transport-mode-data-table" element={<TransportModeDataTable />} />
             <Route path="/resturant-data-table" element={<ResturantDataTable />} />
             <Route path="/guide-data-table" element={<GuideDataTable />} />
@@ -52,6 +57,8 @@ const App = () => {
             <Route path='/transportmodes' element={<TranspotationServices/>}/>
             <Route path='/restaurants' element={<Restaurants/>}/>
             <Route path="/view-hotel/:id" element={<ViewHotel />} />
+            <Route path="/view-hospital/:id" element={<ViewHospital />} />
+
             <Route path="/view-guide/:id" element={<ViewGuide />} />
             <Route path="/view-destination/:id" element={<ViewDestination />} />
             <Route path="/view-restaurant/:id" element={<ViewRestaurant />} />

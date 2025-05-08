@@ -23,6 +23,7 @@ const AddHospital = () => {
     category: "",
     nearestCity: "",
     distanceFromNearestCity: "",
+    description:"",
   });
   
   const [errors, setErrors] = useState({});
@@ -61,6 +62,7 @@ const AddHospital = () => {
     if (!hospitalDetails.category) newErrors.category = "Category is required";
     if (!hospitalDetails.nearestCity.trim()) newErrors.nearestCity = "Nearest city is required";
     if (!hospitalDetails.distanceFromNearestCity.trim()) newErrors.distanceFromNearestCity = "Distance is required";
+    if (!hospitalDetails.description.trim()) newErrors.description = "Description is required";
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -95,6 +97,7 @@ const AddHospital = () => {
           category: "",
           nearestCity: "",
           distanceFromNearestCity: "",
+          description: "",
         });
         
         window.location.reload(); //Reload the page
@@ -187,6 +190,23 @@ const AddHospital = () => {
                           placeholder="Enter the e-mail address"
                           name="email"
                           value={hospitalDetails.email}
+                          onChange={changeHandler}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                          }}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md="6">
+                      <Form.Group controlId="formDescription" className="mb-3">
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter the description"
+                          name="description"
+                          value={hospitalDetails.description}
                           onChange={changeHandler}
                           style={{
                             borderRadius: "10px",
