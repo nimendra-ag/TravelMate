@@ -51,7 +51,8 @@ const RestaurantReviewModel = model('restaurantReviews',{
     reviewBody:{
         type:String,
         required: true
-    }
+    },
+  
 })
 
 

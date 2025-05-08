@@ -15,9 +15,11 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateRestaurant = () => {
+
+  const [selectedImages, setSelectedImages] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [image, setImage] = useState(null);
+  
   const [restaurantDetails, setRestaurantDetails] = useState({
     name: "",
     category: [],
@@ -29,6 +31,8 @@ const UpdateRestaurant = () => {
     openingHours: [{ startTime: "", endTime: "" }],
     priceRange: [],
     description: "",
+    images: [],
+    miniDescription: "",
   });
 
   useEffect(() => {
@@ -98,6 +102,13 @@ const UpdateRestaurant = () => {
   };
 
   const handleSubmit = async (e) => {
+
+
+    const uploadedImages = await uploadImagesToCloudinary(restaurantDetails.images);
+
+      restaurantDetails.images = uploadedImages;
+
+      console.log("resturentDetails", restaurantDetails);
     e.preventDefault();
     try {
       const response = await axios.put(
@@ -112,6 +123,46 @@ const UpdateRestaurant = () => {
     } catch (error) {
       console.error("Error updating restaurant:", error);
     }
+  };
+
+   const handleImageChange = (e) => {
+    const newFiles = Array.from(e.target.files);
+    const newPreviewUrls = newFiles.map(file => URL.createObjectURL(file));
+    setSelectedImages(prevImages => [...prevImages, ...newPreviewUrls]);
+    setRestaurantDetails(prev => ({
+      ...prev,
+      images: [...(prev.images || []), ...newFiles]
+    }));
+  };
+
+  const removeImage = (indexToRemove) => {
+    setSelectedImages(prevImages =>
+      prevImages.filter((_, index) => index !== indexToRemove)
+    );
+    setRestaurantDetails(prevState => ({
+      ...prevState,
+      images: prevState?.images?.filter((_, index) => index !== indexToRemove)
+    }));
+  };
+
+   const uploadImagesToCloudinary = async (files) => {
+      const uploadedUrls = [];
+      for (const file of files) {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", "preset-for-file-upload");
+          formData.append("cloud_name", "dqbkxghlh");
+  
+          const response = await axios.post(
+              "https://api.cloudinary.com/v1_1/dqbkxghlh/image/upload",
+              formData
+          );
+  
+          if (response.status === 200) {
+              uploadedUrls.push(response.data.secure_url);
+          }
+      }
+      return uploadedUrls;
   };
 
   return (
@@ -301,6 +352,22 @@ const UpdateRestaurant = () => {
                           }}
                         />
                       </Form.Group>
+
+                       <Form.Group controlId="formName" className="mb-3">
+                        <Form.Label>Mini Description</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter the mini description"
+                          name="miniDescription"
+                          value={restaurantDetails.miniDescription}
+                          onChange={changeHandler}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                          }}
+                        />
+                      </Form.Group>
                     </Col>
                   </Row>
 
@@ -344,6 +411,48 @@ const UpdateRestaurant = () => {
                         />
                       </Form.Group>
                     </Col>
+
+                    <div className="mb-4">
+                    <label className="form-label">Destination Images</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      required
+                      multiple
+                      style={{ color: 'transparent' }}
+                    />
+                  </div>
+
+                  {selectedImages.length > 0 && (
+                    <div className="mb-4">
+                      <label className="form-label">Image Preview</label>
+                      <div className="d-flex flex-wrap gap-3">
+                        {selectedImages.map((image, index) => (
+                          <div
+                            key={index}
+                            className="position-relative"
+                            style={{ maxWidth: '300px' }}
+                          >
+                            <img
+                              src={image}
+                              alt={`Room preview ${index + 1}`}
+                              className="img-fluid rounded"
+                              style={{ width: '100%', height: 'auto' }}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
+                              onClick={() => removeImage(index)}
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   </Row>
 
                   <Button variant="primary" onClick={handleSubmit}>
