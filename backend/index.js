@@ -14,6 +14,8 @@ import hotelRouter from './routes/hotelRoute.js';
 import transportationrouter from './routes/transportationRoute.js';
 import userRouter from './routes/userRoute.js';
 // import bookingScheduler from './schedulers/bookingScheduler.js';
+import userAnalyticsRoutes from './routes/userAnalyticsRoutes.js';
+import bookingAnalyticsRoutes from './routes/bookingAnalyticsRoutes.js';
 
 dotenv.config();
 
@@ -68,6 +70,9 @@ app.use('/user',userRouter);
 
 
 
+app.use('/api/user-analytics', userAnalyticsRoutes);
+
+app.use('/api/booking-analytics', bookingAnalyticsRoutes);
 
 
 // bookingScheduler.updateExpiredBookings();
