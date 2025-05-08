@@ -16,6 +16,19 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 
 const AddDestination = () => {
+
+  const handleCardImageChange = (e) => {
+
+  }
+
+  const [selectedCardImages, setSelectedCardImages] = useState([]);
+
+  const handleMainImageChange = (e) => {
+
+  }
+
+  const [selectedMainImages, setSelectedMainImages] = useState([]);
+
   const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
   const [destinationDetails, setDestinationDetails] = useState({

@@ -16,6 +16,9 @@ const GuideList = () => {
 
   const {allGuides} = useContext(ClientContext);
 
+  console.log("All Guides:", allGuides.guides);
+  
+
   const navigator = useNavigate();
 
  
@@ -40,7 +43,7 @@ const GuideList = () => {
           style={{ paddingBottom: '5rem' }}
         >
 
-          {allGuides.map((guide) => (
+          {allGuides?.guides?.map((guide) => (
             <SwiperSlide key={guide.id}>
               <GuideCard
                 name={guide.name}

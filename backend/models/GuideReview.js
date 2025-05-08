@@ -40,6 +40,10 @@ const GuideReviewModel = model('guideReviews',{
     createdAt: {
         type: Date,
         default: Date.now  
+    },
+    country: {
+        type: String,
+        required: true 
     }
 })
 export{GuideReviewModel}
