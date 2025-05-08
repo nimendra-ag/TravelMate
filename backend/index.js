@@ -16,14 +16,19 @@ import userRouter from './routes/userRoute.js';
 // import bookingScheduler from './schedulers/bookingScheduler.js';
 import userAnalyticsRoutes from './routes/userAnalyticsRoutes.js';
 import bookingAnalyticsRoutes from './routes/bookingAnalyticsRoutes.js';
+import adminAuthRoutes from './routes/adminAuthRoutes.js'; 
 
 dotenv.config();
+
+// Add JWT secret to environment variables
+if (!process.env.JWT_SECRET) {
+  process.env.JWT_SECRET = 'travelmate-admin-secret-key'; 
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
-
 
 // Cloudinary configuration
 cloudinary.config({
@@ -58,9 +63,7 @@ mongoose.connect("mongodb+srv://travelmate:hy6QuIubRgLzBPjm@cluster0.1pbng.mongo
 //router
 app.use("/travelmate",Router)
 app.use("/cities",cityRouter);
-
 app.use("/booking",bookingRouter);
-
 app.use("/hotels",hotelRouter)
 
 app.use("/transportation",transportationrouter);
@@ -71,9 +74,10 @@ app.use('/user',userRouter);
 
 
 app.use('/api/user-analytics', userAnalyticsRoutes);
-
 app.use('/api/booking-analytics', bookingAnalyticsRoutes);
 
+// Admin authentication routes
+app.use('/api/admin', adminAuthRoutes); 
 
 // bookingScheduler.updateExpiredBookings();
 

@@ -76,23 +76,24 @@ const UpdateGuide = async (req, res) => {
     }
 };
 
-
 // Get all guides
 const getAllGuides = async (req, res) => {
   try {
-      let guides = await GuideModel.find({});
-      // console.log("All Guides Fetched");
-      // console.log(guides);
-      res.send(guides);
+      const guides = await GuideModel.find({});
+      
+      // Return guides with proper structure
+      res.json({
+          success: true,
+          guides: guides
+      });
       
   } catch (error) {
       console.log(error);
       res.status(500).json({ success: false, error: 'Server Error' });
-
   }
 }
 
-// API to delete a Hotel
+// API to delete a Guide
 const deleteGuide = async (req, res) => {
     try {
         const deletedGuide = await GuideModel.findOneAndDelete({ id: req.body.id });
@@ -156,9 +157,8 @@ const addGuideReview = async (req, res) =>{
             reviewTitle: req.body.title,
             recommendation: req.body.recommendation,
             createdAt: req.body.createdAt
-        })
+        });
 
-        // console.log(guideReview);
         await guideReview.save();
         res.json({
             success: true,
@@ -171,13 +171,13 @@ const addGuideReview = async (req, res) =>{
     }
 }
 
-
 const getAllGuideReviews = async (req, res) => {
     try{
         let allGuideReviews = await GuideReviewModel.find({});
-        console.log("All Guide Reviews Fetched");
-        // console.log(allGuideReviews);
-        res.send(allGuideReviews);
+        res.json({
+            success: true,
+            reviews: allGuideReviews
+        });
 
     } catch(error){
         console.log(error);
@@ -185,5 +185,4 @@ const getAllGuideReviews = async (req, res) => {
     }
 }
 
-
-export { AddGuide,UpdateGuide, getAllGuides,deleteGuide,viewGuide,getAllGuideReviews,addGuideReview };
+export { AddGuide, UpdateGuide, getAllGuides, deleteGuide, viewGuide, getAllGuideReviews, addGuideReview };
