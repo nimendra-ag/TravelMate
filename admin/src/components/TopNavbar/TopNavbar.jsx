@@ -1,16 +1,24 @@
-import React from 'react';
-import { Navbar, Container, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import logo from '../../assets/TravelMateAdminLogo.png'
+import React, { useContext } from 'react';
+import { Navbar, Container, Button, NavDropdown } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../assets/TravelMateAdminLogo.png';
+import { AuthContext } from '../../context/AuthContext';
 
 const TopNavbar = () => {
+  const { currentUser, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
+
   return (
-    <Navbar bg="info" variant="dark" className="py-3 fixed-top" >
+    <Navbar bg="info" variant="dark" className="py-3 fixed-top">
       <Container fluid>
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
-          {/* Replace this with your logo image */}
           <img
-            src={logo} // Your logo image path
+            src={logo}
             alt="Travel Mate Logo"
             width="50"
             height="50"
@@ -19,9 +27,24 @@ const TopNavbar = () => {
           <span>TRAVEL MATE</span>
         </Navbar.Brand>
         <Navbar.Text className="mx-auto text-light fw-bold fs-5">ADMIN DASHBOARD</Navbar.Text>
-        <Button as={Link} to="/signin" variant="dark">
-          Sign in
-        </Button>
+        
+        {currentUser ? (
+          <NavDropdown 
+            title={<span className="text-white">{currentUser.fullName}</span>} 
+            id="admin-nav-dropdown"
+            align="end"
+          >
+            <NavDropdown.Item disabled>{currentUser.email}</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={handleLogout}>
+              <i className="fas fa-sign-out-alt me-2"></i>Sign out
+            </NavDropdown.Item>
+          </NavDropdown>
+        ) : (
+          <Button as={Link} to="/login" variant="dark">
+            Sign in
+          </Button>
+        )}
       </Container>
     </Navbar>
   );
