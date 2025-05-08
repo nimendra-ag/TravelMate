@@ -7,6 +7,8 @@ const GuidesDataTable = () => {
   const [records, setRecords] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const columns = [
     {
@@ -65,18 +67,45 @@ const GuidesDataTable = () => {
   }, []);
 
   const fetchGuides = async () => {
+    setLoading(true);
+    setError(null);
     try {
       const response = await fetch("http://localhost:3000/travelmate/allGuides");
-      const result = await response.json();
-
-      if (result.success) {
-        setRecords(result.guides);
-        setFilteredRecords(result.guides);
+      
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      // Check if data is an array directly
+      if (Array.isArray(data)) {
+        setRecords(data);
+        setFilteredRecords(data);
+      } 
+      // Check if data is in the expected structure from the controller
+      else if (data && data.success === true && Array.isArray(data.guides)) {
+        setRecords(data.guides);
+        setFilteredRecords(data.guides);
+      }
+      // If the API returns data but not in the expected format
+      else if (data) {
+        console.log("Received unexpected data structure:", data);
+        // Still try to use the data if it seems like it could be guides
+        if (Array.isArray(data)) {
+          setRecords(data);
+          setFilteredRecords(data);
+        } else {
+          throw new Error("Unexpected data format received from server");
+        }
       } else {
-        console.error("Failed to fetch guides:", result.error);
+        throw new Error("No data received from server");
       }
     } catch (error) {
       console.error("Error fetching Guides data:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,22 +133,35 @@ const GuidesDataTable = () => {
   };
 
   async function handleDeleteSelected() {
+    if (selectedRows.length === 0) {
+      return;
+    }
+
     try {
-      for (let row of selectedRows) {
-        await fetch("http://localhost:3000/travelmate/deleteGuide", {
+      const deletionPromises = selectedRows.map(row => 
+        fetch("http://localhost:3000/travelmate/deleteGuide", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ id: row.id }),
-        });
-      }
-      const updatedRecords = records.filter(row => !selectedRows.includes(row));
+        }).then(response => {
+          if (!response.ok) {
+            throw new Error(`Failed to delete guide with ID ${row.id}`);
+          }
+          return response.json();
+        })
+      );
+      
+      await Promise.all(deletionPromises);
+      
+      const updatedRecords = records.filter(row => !selectedRows.some(selected => selected.id === row.id));
       setRecords(updatedRecords);
       setFilteredRecords(updatedRecords);
       setSelectedRows([]);
     } catch (error) {
       console.error("Error deleting guides:", error);
+      alert("Error deleting one or more guides. Please try again.");
     }
   }
 
@@ -141,6 +183,13 @@ const GuidesDataTable = () => {
       }}
     >
       <h1>Guide Data Table</h1>
+      
+      {error && (
+        <div style={{ color: "red", margin: "10px 0", padding: "10px", backgroundColor: "#ffeeee", borderRadius: "5px" }}>
+          Error: {error}
+        </div>
+      )}
+      
       <div className="d-flex justify-content-end mb-3">
         <input
           type="text"
@@ -170,6 +219,7 @@ const GuidesDataTable = () => {
           </button>
         </Link>
       </div>
+      
       <DataTable
         columns={columns}
         data={filteredRecords}
@@ -177,20 +227,25 @@ const GuidesDataTable = () => {
         pagination
         selectableRows
         onSelectedRowsChange={handleRowSelected}
+        progressPending={loading}
+        progressComponent={<div>Loading guides...</div>}
+        noDataComponent={<div style={{ padding: "20px" }}>No guides found</div>}
       />
+      
       <div className="d-flex justify-content-end mt-3">
         <button
           onClick={handleDeleteSelected}
+          disabled={selectedRows.length === 0}
           style={{
-            backgroundColor: "#0A2E41",
+            backgroundColor: selectedRows.length === 0 ? "#ccc" : "#0A2E41",
             color: "white",
             border: "none",
             padding: "10px 20px",
             borderRadius: "5px",
-            cursor: "pointer",
+            cursor: selectedRows.length === 0 ? "not-allowed" : "pointer",
           }}
         >
-          Delete Selected Guides
+          Delete Selected Guides ({selectedRows.length})
         </button>
       </div>
     </div>
