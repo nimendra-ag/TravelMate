@@ -1,10 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-// Create context
 export const AuthContext = createContext();
 
-// API base URL - adjust according to your backend URL
+// Your backend base URL
 const API_URL = 'http://localhost:3000';
 
 export const AuthProvider = ({ children }) => {
@@ -12,31 +11,36 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Check if user is logged in on mount
+  // Helper to get config with Authorization header
+  const getAuthConfig = () => {
+    const token = localStorage.getItem('adminToken');
+    return token
+      ? {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      : {};
+  };
+
+  // Check login on mount
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
-        const token = localStorage.getItem('adminToken');
-        
-        if (!token) {
+        const config = getAuthConfig();
+        if (!config.headers) {
           setLoading(false);
           return;
         }
 
-        // Set default headers for all axios requests
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
-        // Verify token and get user data
-        const response = await axios.get(`${API_URL}/api/admin/me`);
-        
+        const response = await axios.get(`${API_URL}/api/admin/me`, config);
+
         if (response.data && response.data.user) {
           setCurrentUser(response.data.user);
         }
       } catch (err) {
         console.error('Auth verification error:', err);
-        // Clear invalid token
         localStorage.removeItem('adminToken');
-        axios.defaults.headers.common['Authorization'] = '';
       } finally {
         setLoading(false);
       }
@@ -45,21 +49,15 @@ export const AuthProvider = ({ children }) => {
     checkLoggedIn();
   }, []);
 
-  // Register user
+  // Register
   const register = async (userData) => {
     setError(null);
     try {
       const response = await axios.post(`${API_URL}/api/admin/register`, userData);
-      
-      // Save token to localStorage
+
       localStorage.setItem('adminToken', response.data.token);
-      
-      // Set axios default header
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      
-      // Set user state
       setCurrentUser(response.data.user);
-      
+
       return response.data;
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -67,21 +65,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login user
+  // Login
   const login = async (userData) => {
     setError(null);
     try {
       const response = await axios.post(`${API_URL}/api/admin/login`, userData);
-      
-      // Save token to localStorage
+
       localStorage.setItem('adminToken', response.data.token);
-      
-      // Set axios default header
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      
-      // Set user state
       setCurrentUser(response.data.user);
-      
+
       return response.data;
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
@@ -89,21 +81,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout user
+  // Logout
   const logout = async () => {
     try {
-      // Optional: Call logout endpoint if you need server-side logout handling
-      await axios.post(`${API_URL}/api/admin/logout`);
+      const config = getAuthConfig();
+      await axios.post(`${API_URL}/api/admin/logout`, {}, config);
     } catch (err) {
       console.error('Logout error:', err);
     } finally {
-      // Clear token from localStorage
       localStorage.removeItem('adminToken');
-      
-      // Clear axios default header
-      axios.defaults.headers.common['Authorization'] = '';
-      
-      // Clear user state
       setCurrentUser(null);
     }
   };
@@ -114,7 +100,8 @@ export const AuthProvider = ({ children }) => {
     error,
     register,
     login,
-    logout
+    logout,
+    getAuthConfig, // Exporting helper in case other components need it
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
