@@ -13,6 +13,7 @@ import {
   OverlayTrigger,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const AddDestination = () => {
   const [image, setImage] = useState(null);
@@ -32,6 +33,7 @@ const AddDestination = () => {
       },
     ],
     description: "",
+    miniDescription: "",
   });
 
   const categoryOptions = [
@@ -101,6 +103,11 @@ const AddDestination = () => {
       isValid = false;
     }
 
+    if (!destinationDetails.miniDescription.trim()) {
+      tempErrors.miniDescription = "Mini description is required";
+      isValid = false;
+    }
+
     setErrors(tempErrors);
     return isValid;
   };
@@ -118,9 +125,9 @@ const AddDestination = () => {
     }
   };
 
-  const imageHandler = (e) => {
-    setImage(e.target.files[0]);
-  };
+  const handleImageChange = (e) => {
+
+  }
 
   const changeHandler = (e) => {
     setDestinationDetails({
@@ -165,6 +172,13 @@ const AddDestination = () => {
 
       if (response.data.success) {
         alert("Destination added successfully!");
+        // Swal.fire({
+        //   position: "center",
+        //   icon: "success",
+        //   title: "Successfully subscribed to newsletter!",
+        //   showConfirmButton: true,
+        //   timer: 7500
+        // })
         setDestinationDetails({
           name: "",
           city: "",
@@ -180,6 +194,7 @@ const AddDestination = () => {
             },
           ],
           description: "",
+          miniDescription: "",
         });
         window.location.reload();
       }
@@ -188,7 +203,7 @@ const AddDestination = () => {
     }
   };
   return (
-    <div className="AddDestination" style={{ marginTop: "60px" }}>
+    <div className="AddDestination" style={{ marginTop: "160px" }}>
       <header>
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div className="d-flex justify-content-center align-items-center" style={{ width: "100%" }}>
@@ -419,6 +434,54 @@ const AddDestination = () => {
                           {errors.description}
                         </Form.Control.Feedback>
                       </Form.Group>
+                    </Col>
+                    
+                  </Row>
+
+                  <Row>
+
+                  <Form.Group controlId="formName" className="mb-3">
+                        <Form.Label>Mini Description</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter the mini Description"
+                          name="miniDescription"
+                          value={destinationDetails.miniDescription}
+                          onChange={changeHandler}
+                          isInvalid={!!errors.miniDescription}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                          }}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.miniDescription}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    <Col md="12">
+              
+                 
+
+{/*                      
+
+                      <Form.Group controlId="formMainImages" className="mb-3">
+                        <Form.Label>Main Images</Form.Label>
+                        <Form.Control
+                          type="file"
+                          multiple
+                          accept="image/*"
+                          onChange={handleImageChange}
+                          style={{
+                            borderRadius: "10px",
+                            height: "50px",
+                            borderWidth: "2px",
+                            color: "transparent"
+                          }}
+                        />
+                      </Form.Group> */}
+
+                    
                     </Col>
                   </Row>
 

@@ -18,75 +18,14 @@ const GuideList = () => {
 
   const navigator = useNavigate();
 
-  const guides = [
-    {
-      id: 1,
-      name: 'Nimendra Gunawardana',
-      age: 26,
-      description: 'Short Description about experience',
-      area: 'UHDIJ',
-      languages: 'UHDIJ',
-      chargesPerDay: '5000',
-      profileImg: 'https://picsum.photos/150',
-    },
-    {
-      id: 2,
-      name: 'Nimendra Gunawardana',
-      age: 26,
-      description: 'Short Description about experience',
-      area: 'UHDIJ',
-      languages: 'UHDIJ',
-      chargesPerDay: '5000',
-      profileImg: 'https://picsum.photos/150',
-    },
-    {
-      id: 3,
-      name: 'Nimendra Gunawardana',
-      age: 26,
-      description: 'Short Description about experience',
-      area: 'UHDIJ',
-      languages: 'UHDIJ',
-      chargesPerDay: '5000',
-      profileImg: 'https://picsum.photos/150',
-    },
-    {
-      id: 4,
-      name: 'Nimendra Gunawardana',
-      age: 26,
-      description: 'Short Description about experience',
-      area: 'UHDIJ',
-      languages: 'UHDIJ',
-      chargesPerDay: '5000',
-      profileImg: 'https://picsum.photos/150', 
-    },
-    {
-      id: 5,
-      name: 'Nimendra Gunawardana',
-      age: 26,
-      description: 'Short Description about experience',
-      area: 'UHDIJ',
-      languages: 'UHDIJ',
-      chargesPerDay: '5000',
-      profileImg: 'https://picsum.photos/150',
-    },
-    {
-        id: 6,
-        name: 'Nimendra Gunawardana',
-        age: 26,
-        description: 'Short Description about experience',
-        area: 'UHDIJ',
-        languages: 'UHDIJ',
-        chargesPerDay: '5000',
-        profileImg: 'https://picsum.photos/150', 
-      }
-  ];
+ 
 
   return (
     <div className="guides-section">
-      <Container>
+      <Container style={{ paddingTop: '5rem', paddingBottom: '5rem' , backgroundColor: '#f8f9fa' }}>
         <Row>
           <Col>
-            <h2 className="guides-heading" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+            <h2 className="guides-heading" style={{ textAlign: 'center', marginBottom: '5.5rem' }}>
               Guides
             </h2>
           </Col>
@@ -98,7 +37,7 @@ const GuideList = () => {
           loop={true}
           autoplay={{ delay: 3000 }}
           // pagination={{ clickable: true }}
-          style={{ paddingBottom: '2rem' }}
+          style={{ paddingBottom: '5rem' }}
         >
 
           {allGuides.map((guide) => (
@@ -109,9 +48,10 @@ const GuideList = () => {
                 area={guide.area[0]}
                 languages={guide.languages[0]}
                 chargesPerDay={guide.chargesPerDay}
-                profileImg='https://picsum.photos/150'
+                cardImage={guide.cardImage}
                 id = {guide.id}
                 image = {guide.images[0]}
+                miniDescription = {guide.miniDescription}
               />
 
               

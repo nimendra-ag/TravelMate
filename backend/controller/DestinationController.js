@@ -20,6 +20,7 @@ const AddDestination = async (req, res) => {
           contactNumber: req.body.contactNumber,
           openingHours: req.body.openingHours,
           website: req.body.website,
+          miniDescription: req.body.miniDescription,
 
           rating: req.body.rating || 0, // Default rating to 0 if not provided
           cardImages: req.body.cardImages || [], // Default to empty array if not provided
@@ -57,7 +58,9 @@ const UpdateDestination = async (req, res) => {
             contactNumber: req.body.contactNumber,
             openingHours: req.body.openingHours,
             website: req.body.website,
-            rating: req.body.rating
+            rating: req.body.rating,
+            images: req.body.images,
+            miniDescription: req.body.miniDescription,
           },
           { new: true } // Return the updated document
       );
@@ -80,8 +83,8 @@ const UpdateDestination = async (req, res) => {
 const getAllDestinations = async (req, res) => {
   try {
     let destinations = await DestinationModel.find({});
-    console.log("All Destinations Fetched");
-    console.log(destinations);
+    // console.log("All Destinations Fetched");
+    // console.log(destinations);
     res.send(destinations);
   } catch (error) {
     console.log(error);

@@ -29,6 +29,10 @@ const GuideSchema = {
     type: String,
     required: true,
   },
+  miniDescription: {
+    type: String,
+    required: true,
+  },
   birthDate: {
     type: Date,
     required: true,
@@ -56,6 +60,12 @@ const GuideSchema = {
     default: [],
     required: true,
   },
+  cardImage: {
+    type: String,
+    required: true,
+  },
+  
+});
 };
 
 const GuideModel = model("Guides", GuideSchema);

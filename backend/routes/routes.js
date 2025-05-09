@@ -127,6 +127,8 @@ router.get("/price-rating", getPriceRatingData);
 
 router.get("/area-count", getAreaAccommodations);
 
+
+
 export default router;
 
 export{router as Router}

@@ -26,7 +26,7 @@ const RestaurantModel = model("Restaurants", {
     required: true,
   },
   contactNumber: {
-    type: String, 
+    type: String,
     required: true,
   },
   description: {
@@ -34,19 +34,19 @@ const RestaurantModel = model("Restaurants", {
     required: true,
   },
   email: {
-    type: String, 
-    required: false, 
+    type: String,
+    required: false,
   },
   website: {
     type: String,
-    required: false, 
+    required: false,
   },
   openingHours: {
     type: [Array], // Array of strings for hours
     required: true,
   },
   priceRange: {
-    type: [String], 
+    type: [String],
     required: false,
   },
   rating: {
@@ -71,7 +71,13 @@ const RestaurantModel = model("Restaurants", {
     type: [String],
     default: [],
     required: true,
-  },
+  }, images: {
+    type: Array,
+    default: []
+  }, miniDescription: {
+    type: String,
+    
+  }
 });
 
 export { RestaurantModel };

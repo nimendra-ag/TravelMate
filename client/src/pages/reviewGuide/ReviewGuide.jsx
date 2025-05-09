@@ -13,6 +13,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const ReviewGuide = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+console.log("user", user);
+
     const [modalData, setModalData] = useState({
         show: false,
         title: "",
@@ -24,7 +27,7 @@ const ReviewGuide = () => {
         const guide = allGuides.find((e) => e.id === parseInt(id));
 
          // Add new state for user name
-          const [userName, setUserName] = useState("");
+          const [userName, setUserName] = useState(user.firstName + " " + user.lastName);
           const [reviewTitle, setReviewTitle] = useState("");
           const [reviewBody, setReviewBody] = useState("");
           const [overallRating, setOverallRating] = useState(0);
@@ -71,6 +74,7 @@ const ReviewGuide = () => {
       serviceRating: serviceRating,
       valueRating: valueRating,
       recommendation: selectedRecommendation,
+      country: user.country
     };
 
     try {
@@ -117,7 +121,6 @@ const ReviewGuide = () => {
       selectedRecommendation !== "Select one"
     );
   };
-
   return (
     <>
     <Modal
@@ -159,14 +162,14 @@ const ReviewGuide = () => {
                 <Card.Img
                   className="pt-4 px-4"
                   variant="top"
-                  src="https://picsum.photos/500"
+                  src={guide.cardImage}
                   alt=""
                 />
                 <Card.Body>
                   <Card.Title className="px-2 fw-bold">
                     {guide.name}
                   </Card.Title>
-                  <Card.Text className="px-2">{guide.languages}</Card.Text>
+                  
                 </Card.Body>
               </Card>
             </Col>
@@ -178,10 +181,7 @@ const ReviewGuide = () => {
                   <Form.Group className="mb-4">
                     <Form.Label>
                       Your Name
-                      <span className="text-muted">
-                        {" "}
-                        ({userName.length}/{maxNameLength}){" "}
-                      </span>
+                 
                     </Form.Label>
                     <Form.Control
                       type="text"

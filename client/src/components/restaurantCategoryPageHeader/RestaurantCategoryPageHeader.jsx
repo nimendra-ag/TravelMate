@@ -24,9 +24,7 @@ const RestaurantCategoryPageHeader = ({ category, headerText }) => {
             <Col>
               <h2 className="fw-bold">Travelers’ Choice Awards</h2>
               <h1 className="display-4 fw-bold">Best of the Best Restaurants</h1>
-              <Badge bg="warning" text="dark" className="p-2 my-3">
-                2024 Winner
-              </Badge>
+              
             </Col>
           </Row>
         </Container>

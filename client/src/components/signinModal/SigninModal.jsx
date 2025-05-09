@@ -71,12 +71,19 @@ const SigninModal = () => {
             }
           );
 
+          console.log("Backend response:", backendResponse.data);
+          
           if (!backendResponse.data.registered) {
             // Navigate to details page if user is not registered
             navigate(`/details/${backendResponse.data.id}`);
+            localStorage.setItem('doc_id', backendResponse.data.id);
+            alert(backendResponse.data.id)
+
           } else {
             // Save the token and user details to localStorage
+            alert(backendResponse.data.id)
             localStorage.setItem("auth-token", backendResponse.data.token);
+            localStorage.setItem('doc_id', backendResponse.data.id);
             localStorage.setItem("user", JSON.stringify(userDetails)); // Save user details
 
             console.log("Auth Token:", backendResponse.data.token);
@@ -117,10 +124,25 @@ const SigninModal = () => {
     setLoading(true);
     try {
       const response = await axios.post('http://localhost:3000/travelmate/signinwithemailandpassword', { email, password });
+      console.log(response.data);
+
+      
 
       if (response.data.success) {
         localStorage.setItem('auth-token', response.data.token);
+        const user = await axios.get('http://localhost:3000/user/get-user', {
+          headers: {
+            'Authorization': `Bearer ${response.data.token}`
+          }
+
+
+        })
+        console.log("user.data.user=============================================================");
+        console.log(user.data.user);
+        localStorage.setItem('user', JSON.stringify(user.data.user));
+        
         navigate('/');
+        window.location.reload();
       }
       else {
         setLoading(false);
@@ -170,6 +192,7 @@ const SigninModal = () => {
             onClick={() => {
               localStorage.removeItem('auth-token');
               localStorage.removeItem('user');
+              localStorage.removeItem('doc_id');
               navigate("/");
 
               window.location.reload(); // Refresh the page after logout

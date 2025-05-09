@@ -13,8 +13,6 @@ import DisplayGuideReview from '../../../components/displayGuideReview/DisplayGu
 const { RangePicker } = DatePicker;
 
 const GuidPage = () => {
-
-
     
     const [data, setData] = useState();
     const [fromDate, setFromDate] = useState();
@@ -59,7 +57,7 @@ const GuidPage = () => {
         for (const booking of existingBookings) {
             const existingStart = moment(booking.fromDate, "DD-MM-YYYY");
             const existingEnd = moment(booking.toDate, "DD-MM-YYYY");
-    
+        
             // All possible overlap scenarios:
             const isOverlapping = (
                 // New booking starts during existing booking
@@ -73,7 +71,7 @@ const GuidPage = () => {
                 // Same day bookings
                 checkStart.isSame(existingStart) || checkEnd.isSame(existingEnd)
             );
-    
+        
             if (isOverlapping) {
                 return false;
             }
@@ -81,7 +79,6 @@ const GuidPage = () => {
         return true;
     };
     
-
     const handleAvailabilityCheck = () => {
         const available = checkAvailability(fromDate, toDate, guid.bookings);
         setIsAvailable(available);
@@ -108,24 +105,21 @@ const GuidPage = () => {
                     totaldays: moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1,
                     totalprice: guid?.chargesPerDay * (moment.duration(moment(toDate, "DD-MM-YYYY").diff(moment(fromDate, "DD-MM-YYYY"))).asDays() + 1),
                 };
-
                 setData(bookingData);
-
                 try {
                     console.log(bookingData);
                     
                     axios.post("http://13.48.44.77:3000/booking/bookguide", bookingData)
                         .then((res) => {
-                            mySwal.fire("Success", "Booking confirmed successfully!", "success")  .then(() => {
+                            mySwal.fire("Success", "Booking confirmed successfully!", "success").then(() => {
                                 setTimeout(() => {
                                     navigator("/")
                                     window.location.reload();
-                                   
                                 }, 1000);
                             });
                         })
-                        .catch((err) => { 
-                            console.log(err);
+                        .catch((err) => {
+                             console.log(err);
                             mySwal.fire("Error", "Failed to confirm booking", "error");
                         });
                 } catch (error) {
@@ -143,30 +137,37 @@ const GuidPage = () => {
             {/* Hero Section */}
             <div className="card border-0 shadow-lg mb-5">
                 <div className="row g-0">
-                    <div className="col-md-6">
-                        <img
-                            src={guid?.imageUrl || "https://picsum.photos/800/600"}
-                            className="img-fluid rounded-start h-100 object-fit-cover"
-                            alt={guid?.name}
-                        />
+                    <div className="col-md-4">
+                        <div className="guide-image-container" style={{ 
+                            height: '400px', 
+                            width: '100%', 
+                            overflow: 'hidden',
+                            position: 'relative'
+                        }}>
+                            <img
+                                src={guid?.cardImage || "https://picsum.photos/800/600"}
+                                className="guide-image"
+                                alt={guid?.name}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    objectPosition: 'center'
+                                }}
+                            />
+                        </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-8">
                         <div className="card-body p-4 p-md-5">
                             <h1 className="display-4 fw-bold mb-4">{guid?.name}</h1>
                             <p className="lead mb-4">{guid?.description}</p>
                             <div className="d-flex gap-3">
-                                <button className="btn btn-primary btn-lg d-flex align-items-center gap-2">
-                                    <FaPhone /> Call Now
-                                </button>
-                                <button className="btn btn-success btn-lg d-flex align-items-center gap-2">
-                                    <FaWhatsapp /> WhatsApp
-                                </button>
+                               
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div className="row">
                 {/* Booking Section */}
                 <div className="col-md-4 mb-4">
@@ -177,67 +178,40 @@ const GuidPage = () => {
                                 Check Availability
                             </h4>
                             <RangePicker
-
                                 format={"DD-MM-YYYY"}
                                 onChange={filterByDate}
                                 className="w-100 mb-3"
                                 disabledDate={(current) => current && current < moment().startOf('day')}
-
                             />
                             {!fromDate || !toDate ? (
                                 <div className="alert alert-warning mt-3">
                                     Please select dates to proceed
                                 </div>
                             ) : (
-
                                 <div>
                                     <button onClick={handleAvailabilityCheck} className="btn btn-primary w-100 py-3 mt-3">
                                         Check Availability
                                     </button>
                                     {isAvailable &&
-
                                         <div>
-
                                             <div className="text-success mt-2 text-center">These Dates are Available ! </div>
-
-
-
                                             <button onClick={bookingHandler} className="btn btn-primary w-100 py-3 mt-3">
                                                 Book Now
                                             </button>
-
-
                                         </div>
                                     }
-
-
-
-
-
-
                                     {isAvailable === false && <div className="text-danger mt-2 text-center">These dates are not available</div>}
-
-
                                 </div>
-
                             )
-
-
-
                             }
-
-
-
                         </div>
                     </div>
                 </div>
-
                 {/* Guide Details Section */}
                 <div className="col-md-8">
                     <div className="card shadow-sm">
                         <div className="card-body">
                             <h2 className="card-title mb-4">About {guid?.name}</h2>
-
                             <div className="row g-4">
                                 <div className="col-md-6">
                                     <div className="d-flex align-items-center mb-3">
@@ -250,7 +224,6 @@ const GuidPage = () => {
                                         ))}
                                     </ul>
                                 </div>
-
                                 <div className="col-md-6">
                                     <div className="d-flex align-items-center mb-3">
                                         <FaMapMarkedAlt className="text-primary me-2" size={24} />
@@ -262,7 +235,6 @@ const GuidPage = () => {
                                         ))}
                                     </ul>
                                 </div>
-
                                 <div className="col-12">
                                     <hr />
                                     <div className="row g-4">
@@ -291,10 +263,7 @@ const GuidPage = () => {
                                             </div>
                                         </div>
                                         <div className="col-12">
-                                            <div className="d-flex align-items-center gap-3">
-                                                <h5 className="mb-0">Rating:</h5>
-                                                <StarRating rating={guid?.rating} />
-                                            </div>
+                                          
                                         </div>
                                     </div>
                                 </div>
@@ -302,14 +271,12 @@ const GuidPage = () => {
                         </div>
                     </div>
                 </div>
-
                 <DisplayGuideReview
                     guidId={id}
                 />
             </div>
         </div>
-        
     );
+};
 
-}
-export default GuidPage;
+export default GuidPage;

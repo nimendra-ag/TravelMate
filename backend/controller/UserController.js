@@ -49,7 +49,6 @@ const RegWithGoogle = async (req, res) => {
 };
 
 
-
 const SignUpWithEmailAndPassword = async (req, res) => {
   const { email, password } = req.body;
   // console.log(email, password);
@@ -144,5 +143,72 @@ const UpdateProfile = async (req, res) => {
   }
 
 }
+
+const getDetailsFromToken = async (req, res) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ error: "No token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const user = await UserModel.findById(decoded._id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    return res.status(200).json({ success: true, user });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+const getDetailsFromEmail = async (req, res) => {
+
+ 
   
-export { RegWithGoogle, GetProfile, UpdateProfile, SignUpWithEmailAndPassword, SignInWithEmailAndPassword } 
+  const { email } = req.query;
+
+
+
+  
+  if (!email) {
+    return res.status(401).json({ error: "No email specified" })
+  }
+
+  try {
+    // console.log(email);
+
+    const user = await UserModel.findOne({ email })
+
+ 
+
+    return res.status(200).json({ success: true, user })
+  } catch (err) {
+    return res.status(500).json({ error: err.message })
+  }
+}
+
+
+const updateUser = async (req, res) => {
+
+  const { firstName, lastName, profilePic , birthday , country , state , gender ,  email} = req.body;
+console.log(profilePic);
+
+  try {
+    const updatedUser = await UserModel.findOneAndUpdate({email},
+      
+      { firstName, lastName, email, profilePic , birthday, country ,state , gender},
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.status(200).json({ success: true, user: updatedUser });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+  
+export { RegWithGoogle, GetProfile, UpdateProfile, SignUpWithEmailAndPassword, SignInWithEmailAndPassword, getDetailsFromToken, getDetailsFromEmail , updateUser} 

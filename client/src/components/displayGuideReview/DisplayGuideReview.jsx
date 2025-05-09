@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { ClientContext } from "../../context/ClientContext";
 import "./DisplayGuideReview.css";
 
-const ReviewCard = ({ userName, title, body, createdAt, recommendation }) => {
+const ReviewCard = ({ userName, title, body, createdAt, recommendation, country }) => {
   return (
     <Card className="mb-4 shadow-sm">
       <Card.Body>
         <div className="d-flex align-items-center mb-3">
           <div>
             <h6 className="mb-0">{userName}</h6>
-            <small className="text-muted">from Australia</small>
+            <small className="text-muted">from {country}</small>
           </div>
         </div>
         <div className="d-flex align-items-center mb-3">
@@ -110,12 +110,7 @@ const DisplayGuideReview = ({ guidId }) => {
                 <div className="d-flex">
                   {renderRatingDots(averageOverllRating)}
                 </div>
-                <span
-                  className="ms-3 text-muted fw-medium"
-                  style={{ fontSize: "1rem" }}
-                >
-                  9,301 reviews
-                </span>
+        
               </div>
             </div>
             <div className="d-flex">
@@ -143,6 +138,7 @@ const DisplayGuideReview = ({ guidId }) => {
                 body={review.reviewBody}
                 createdAt={review.createdAt}
                 recommendation={review.recommendation}
+                country ={review.country}
               />
             );
           })}

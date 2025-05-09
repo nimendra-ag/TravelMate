@@ -11,6 +11,9 @@ import { Router } from './routes/routes.js';
 import cityRouter from './routes/cityRouter.js';
 import bookingRouter from './routes/bookingRote.js';
 import hotelRouter from './routes/hotelRoute.js';
+import transportationrouter from './routes/transportationRoute.js';
+import userRouter from './routes/userRoute.js';
+// import bookingScheduler from './schedulers/bookingScheduler.js';
 import transportationrouter from './routes/transportationRoute.js';  // Existing transportation route
 import transportationAnalyticRouter from './routes/transportationAnalyticRoute.js'; // New transportation analytics route
 import userAnalyticsRoutes from './routes/userAnalyticsRoutes.js';
@@ -60,6 +63,24 @@ app.post('/upload', upload.single('image'), (req, res) => {
 // MongoDB configuration
 mongoose.connect("mongodb+srv://travelmate:hy6QuIubRgLzBPjm@cluster0.1pbng.mongodb.net/TravelMate");
 
+//router
+app.use("/travelmate",Router)
+app.use("/cities",cityRouter);
+
+app.use("/booking",bookingRouter);
+
+app.use("/hotels",hotelRouter)
+
+app.use("/transportation",transportationrouter);
+
+app.use('/user',userRouter);
+
+
+
+
+
+
+// bookingScheduler.updateExpiredBookings();
 // Routes
 app.use("/travelmate", Router);
 app.use("/cities", cityRouter);

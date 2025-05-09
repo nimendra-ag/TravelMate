@@ -5,7 +5,7 @@ import axios from "axios";
 import AdminLogo from "../../assets/TravelMateAdminLogo.png";
 
 const ViewHotel = () => {
-  
+
   const { id } = useParams(); // Extract the id from the URL
   const navigate = useNavigate();
   const [cardImage, setCardImage] = useState(null);
@@ -18,6 +18,7 @@ const ViewHotel = () => {
     perPerson_price: "",
     description: "",
     image: "",
+    images: [], // Initialize images as an empty array
   });
 
   // Fetch accommodation details when the component mounts
@@ -29,12 +30,12 @@ const ViewHotel = () => {
         );
 
         if (response.data.success) {
-          console.log("======================================");
-          
-          console.log(response.data.data);
-          console.log("======================================");
+          // console.log("======================================");
 
-          
+          // console.log(response.data.data);
+          // console.log("======================================");
+
+
           setAccommodationDetails(response.data.data);
           setCardImage(response.data.data.cardImage);
         } else {
@@ -60,6 +61,16 @@ const ViewHotel = () => {
   // Handle saving changes
   const handleSaveChanges = async () => {
     try {
+      console.log("accommodationDetails", accommodationDetails);
+      console.log("accommodationDetails", accommodationDetails.images);
+
+
+      const uploadedImages = await uploadImagesToCloudinary(accommodationDetails.images);
+
+      accommodationDetails.images = uploadedImages;
+
+      console.log("accommodationDetails", accommodationDetails);
+
       const response = await axios.put(
         `http://localhost:3000/travelmate/updateAccommodation/${id}`,
         accommodationDetails
@@ -76,6 +87,51 @@ const ViewHotel = () => {
       alert("An error occurred while saving changes.");
     }
   };
+
+  const [selectedImages, setSelectedImages] = useState([]);
+  const handleImageChange = (e) => {
+    const newFiles = Array.from(e.target.files);
+    const newPreviewUrls = newFiles.map(file => URL.createObjectURL(file));
+    setSelectedImages(prevImages => [...prevImages, ...newPreviewUrls]);
+    setAccommodationDetails(prev => ({
+      ...prev,
+      images: [...(prev.images || []), ...newFiles]
+    }));
+  };
+
+  const removeImage = (indexToRemove) => {
+    setSelectedImages(prevImages =>
+      prevImages.filter((_, index) => index !== indexToRemove)
+    );
+    setAccommodationDetails(prevState => ({
+      ...prevState,
+      images: prevState?.images?.filter((_, index) => index !== indexToRemove)
+    }));
+  };
+
+
+  const axiosCloudinary = axios.create();
+
+  const uploadImagesToCloudinary = async (files) => {
+    const uploadedUrls = [];
+    for (const file of files) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "preset-for-file-upload");
+        formData.append("cloud_name", "dqbkxghlh");
+
+        const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/dqbkxghlh/image/upload",
+            formData
+        );
+
+        if (response.status === 200) {
+            uploadedUrls.push(response.data.secure_url);
+        }
+    }
+    return uploadedUrls;
+};
+
 
   return (
     <div style={{ marginTop: "550px" }}>
@@ -264,7 +320,52 @@ const ViewHotel = () => {
                         </div>
                       </Form.Group>
                     </Col>
+
+
                   </Row>
+
+
+                  {selectedImages.length > 0 && (
+                    <div className="mb-4">
+                      <label className="form-label">Image Preview</label>
+                      <div className="d-flex flex-wrap gap-3">
+                        {selectedImages.map((image, index) => (
+                          <div
+                            key={index}
+                            className="position-relative"
+                            style={{ maxWidth: '300px' }}
+                          >
+                            <img
+                              src={image}
+                              alt={`Room preview ${index + 1}`}
+                              className="img-fluid rounded"
+                              style={{ width: '100%', height: 'auto' }}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
+                              onClick={() => removeImage(index)}
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mb-4">
+                    <label className="form-label">Room Images</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      required
+                      multiple
+                      style={{ color: 'transparent' }}
+                    />
+                  </div>
 
                   <Button
                     variant="primary"
@@ -283,7 +384,7 @@ const ViewHotel = () => {
 
                   <Button className="mx-4"
                     variant="primary"
-                    onClick={() => navigate("/manage-rooms", {state : {accommodationDetails}})}
+                    onClick={() => navigate("/manage-rooms", { state: { accommodationDetails } })}
                     style={{
                       borderRadius: "10px",
                       padding: "10px 20px",
@@ -305,3 +406,8 @@ const ViewHotel = () => {
 };
 
 export default ViewHotel;
+
+
+
+
+

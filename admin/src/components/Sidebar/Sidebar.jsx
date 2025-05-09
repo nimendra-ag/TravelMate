@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
-import { Offcanvas, Nav } from 'react-bootstrap';
+import React from 'react';
+import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './Sidebar.css'
+import './Sidebar.css';
 import TopNavbar from '../TopNavbar/TopNavbar';
 
 const Sidebar = () => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   return (
     <>
       <TopNavbar/>
@@ -73,8 +68,20 @@ const Sidebar = () => {
       </Offcanvas>
 
       <div className="d-none d-lg-block" style={{ backgroundColor: '#b0c4de', width: '250px', height: '100vh', position: 'fixed' }}>
+      <TopNavbar />
+      <div 
+        className="d-none d-lg-block h-full" 
+        style={{ 
+          backgroundColor: '#b0c4de', 
+          width: '250px', 
+          height: '100vh', 
+          position: 'fixed',
+          overflowY: 'auto' // Add scrolling capability
+        }}
+      >
         <Nav className="flex-column p-4">
-          <Link to="/hotels" style={{ textDecoration: 'none', marginTop:'80px'}}>
+          <div style={{ marginTop: '80px' }}></div> {/* Spacer for navbar */}
+          <Link to="/hotels" style={{ textDecoration: 'none' }}>
             <div className="sidebar-item">
               <p>Manage Hotels</p>
             </div>
@@ -114,10 +121,9 @@ const Sidebar = () => {
               <p>Manage Hotel Bookings</p>
             </div>
           </Link>
-
           <Link to="/manage-guide-bookings" style={{ textDecoration: 'none' }}>
             <div className="sidebar-item">
-              <p>Manage Guid Bookings</p>
+              <p>Manage Guide Bookings</p>
             </div>
           </Link>
           <Link to="/manage-transport-bookings" style={{ textDecoration: 'none' }}>
@@ -125,6 +131,7 @@ const Sidebar = () => {
               <p>Manage Transport Bookings</p>
             </div>
           </Link>
+          <div style={{ paddingBottom: '20px' }}></div> {/* Bottom padding for scrolling */}
         </Nav>
       </div>
     </>

@@ -6,6 +6,8 @@ import axios from "axios";
 import AdminLogo from "../../assets/TravelMateAdminLogo.png";
 
 const ViewDestination = () => {
+
+  const [selectedImages, setSelectedImages] = useState([]);
   const { id } = useParams(); // Extract the ID from the URL
   const navigate = useNavigate();
 
@@ -24,6 +26,7 @@ const ViewDestination = () => {
       },
     ],
     description: "",
+    images: [],
   });
 
   const categoryOptions = [
@@ -79,6 +82,12 @@ const ViewDestination = () => {
   };
 
   const handleSaveChanges = async () => {
+    const uploadedImages = await uploadImagesToCloudinary(destinationDetails.images);
+
+      destinationDetails.images = uploadedImages;
+
+      console.log("destinationDetails", destinationDetails);
+      
     try {
       const response = await axios.put(
         `http://localhost:3000/travelmate/updateDestination/${id}`,
@@ -95,6 +104,50 @@ const ViewDestination = () => {
       console.error("Error saving changes:", error);
     }
   };
+
+  const handleImageChange = (e) => {
+    const newFiles = Array.from(e.target.files);
+    const newPreviewUrls = newFiles.map(file => URL.createObjectURL(file));
+    setSelectedImages(prevImages => [...prevImages, ...newPreviewUrls]);
+    setDestinationDetails(prev => ({
+      ...prev,
+      images: [...(prev.images || []), ...newFiles]
+    }));
+  };
+
+
+  const removeImage = (indexToRemove) => {
+    setSelectedImages(prevImages =>
+      prevImages.filter((_, index) => index !== indexToRemove)
+    );
+    setDestinationDetails(prevState => ({
+      ...prevState,
+      images: prevState?.images?.filter((_, index) => index !== indexToRemove)
+    }));
+  };
+
+
+
+
+  const uploadImagesToCloudinary = async (files) => {
+    const uploadedUrls = [];
+    for (const file of files) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "preset-for-file-upload");
+        formData.append("cloud_name", "dqbkxghlh");
+
+        const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/dqbkxghlh/image/upload",
+            formData
+        );
+
+        if (response.status === 200) {
+            uploadedUrls.push(response.data.secure_url);
+        }
+    }
+    return uploadedUrls;
+};
 
   return (
     <Container style={{ marginTop: "60px" }}>
@@ -299,6 +352,47 @@ const ViewDestination = () => {
                       />
                     </Form.Group>
                   </Col>
+                  <div className="mb-4">
+                    <label className="form-label">Destination Images</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      required
+                      multiple
+                      style={{ color: 'transparent' }}
+                    />
+                  </div>
+
+                  {selectedImages.length > 0 && (
+                    <div className="mb-4">
+                      <label className="form-label">Image Preview</label>
+                      <div className="d-flex flex-wrap gap-3">
+                        {selectedImages.map((image, index) => (
+                          <div
+                            key={index}
+                            className="position-relative"
+                            style={{ maxWidth: '300px' }}
+                          >
+                            <img
+                              src={image}
+                              alt={`Room preview ${index + 1}`}
+                              className="img-fluid rounded"
+                              style={{ width: '100%', height: 'auto' }}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
+                              onClick={() => removeImage(index)}
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </Row>
 
                 <Button
@@ -314,7 +408,7 @@ const ViewDestination = () => {
         </div>
       </header>
     </Container>
-  );
+    );
 };
 
 export default ViewDestination;

@@ -24,7 +24,7 @@ const PrePlannedTripCard = ({ id, type, name, price, duration, rating }) => {
               borderRadius: "5px",
             }}
           />
-          <Button
+          {/* <Button
             variant="light"
             style={{
               position: "absolute",
@@ -35,7 +35,7 @@ const PrePlannedTripCard = ({ id, type, name, price, duration, rating }) => {
             }}
           >
             <FaHeart style={{ color: "black" }} />
-          </Button>
+          </Button> */}
         </div>
         <Card.Body>
           <Card.Title>{name}</Card.Title>
@@ -46,7 +46,7 @@ const PrePlannedTripCard = ({ id, type, name, price, duration, rating }) => {
             <FaStar style={{ color: "green" }} />
             <FaStar style={{ color: "green" }} />
             <Badge bg="light" text="dark" className="ms-2">
-              {rating}
+            {Math.floor(Math.random() * 10) + 1} Reviews
             </Badge>
           </div>
           <Card.Text>${price} per person</Card.Text>

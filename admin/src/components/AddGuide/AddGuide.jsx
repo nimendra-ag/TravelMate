@@ -7,6 +7,7 @@ import AdminLogo from '../../assets/TravelMateAdminLogo.png';
 import axios from "axios";
 
 const AddGuide = () => {
+  const [cardImage, setCardImage] = useState(null);
   const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
   const [guideDetails, setGuideDetails] = useState({
@@ -18,7 +19,16 @@ const AddGuide = () => {
     birthDate: null,
     contactNumber: "",
     nic: "",
+    miniDescription: "",
+    cardImage: "",
   });
+
+  const cardImageHandler = (e) => {
+    setCardImage(e.target.files[0]);
+    if (errors.cardImage) {
+      setErrors((prev) => ({ ...prev, cardImage: "" }));
+    }
+  };
 
   const areaOptions = [
     { value: "Colombo", label: "Colombo" },
@@ -111,6 +121,16 @@ const AddGuide = () => {
       isValid = false;
     }
 
+    if (!guideDetails.miniDescription.trim()) {
+      tempErrors.miniDescription = "Mini description is required";
+      isValid = false;
+    }
+    
+    if (!cardImage) {
+      tempErrors.cardImage = "Image is required";
+      isValid = false;
+    }
+
     setErrors(tempErrors);
     return isValid;
   };
@@ -149,27 +169,57 @@ const AddGuide = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/travelmate/addGuide", guideDetails);
+      const formDataCardImage = new FormData();
+      formDataCardImage.append("image", cardImage);
       
-      if (response.data.success) {
-        alert("Guide added successfully!");
-        setGuideDetails({
-          name: "",
-          area: [],
-          languages: [],
-          chargesPerDay: "",
-          description: "",
-          birthDate: null,
-          contactNumber: "",
-          nic: "",
-        });
-        setImage(null);
-        window.location.reload();
+      const responseCardImage = await axios.post(
+        "http://localhost:3000/upload",
+        formDataCardImage,
+        {
+          headers: { Accept: "application/json" },
+        }
+      );
+      
+      const responseDataCardImage = responseCardImage.data;
+      
+      if (responseDataCardImage.success) {
+        const updatedGuideDetails = {
+          ...guideDetails,
+          cardImage: responseDataCardImage.image_url,
+        };
+        
+        console.log("Updated Details:", updatedGuideDetails);
+        
+        const response = await axios.post(
+          "http://localhost:3000/travelmate/addGuide", 
+          updatedGuideDetails
+        );
+        
+        if (response.data.success) {
+          alert("Guide added successfully!");
+          setGuideDetails({
+            name: "",
+            area: [],
+            languages: [],
+            chargesPerDay: "",
+            description: "",
+            birthDate: null,
+            contactNumber: "",
+            nic: "",
+            miniDescription: "",
+            cardImage: "",
+          });
+          setCardImage(null);
+          setImage(null);
+          // window.location.reload();
+        }
       }
     } catch (error) {
       console.error("Error adding guide", error);
+      alert("Error adding guide. Please try again.");
     }
   };
+
   return (
     <div className="AddGuide" style={{ marginTop: '45px' }}>
       <header>
@@ -202,7 +252,6 @@ const AddGuide = () => {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-
                   <Col md="6">
                     <Form.Group controlId="formBirthDate" className="mb-3">
                       <Form.Label>Date of Birth</Form.Label>
@@ -224,7 +273,6 @@ const AddGuide = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-
                 <Row>
                   <Col md="6">
                     <Form.Group controlId="formNIC" className="mb-3">
@@ -242,7 +290,6 @@ const AddGuide = () => {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-
                   <Col md="6">
                     <Form.Group controlId="formAreas" className="mb-3">
                       <Form.Label>Areas</Form.Label>
@@ -263,7 +310,6 @@ const AddGuide = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-
                 <Row>
                   <Col md="6">
                     <Form.Group controlId="formLanguages" className="mb-3">
@@ -284,7 +330,6 @@ const AddGuide = () => {
                       )}
                     </Form.Group>
                   </Col>
-
                   <Col md="6">
                     <Form.Group controlId="formCharges" className="mb-3">
                       <Form.Label>Charges Per Day</Form.Label>
@@ -302,7 +347,6 @@ const AddGuide = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-
                 <Row>
                   <Col md="6">
                     <Form.Group controlId="formContactNumber" className="mb-3">
@@ -319,9 +363,35 @@ const AddGuide = () => {
                         {errors.contactNumber}
                       </Form.Control.Feedback>
                     </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Upload Card Image</Form.Label>
+                      <Form.Control
+                        type="file"
+                        onChange={cardImageHandler}
+                        isInvalid={!!errors.cardImage}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.cardImage}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col md="6">
+                    <Form.Group controlId="formMiniDescription" className="mb-3">
+                      <Form.Label>Mini Description</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter mini description"
+                        name="miniDescription"
+                        value={guideDetails.miniDescription}
+                        onChange={changeHandler}
+                        isInvalid={!!errors.miniDescription}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.miniDescription}
+                      </Form.Control.Feedback>
+                    </Form.Group>
                   </Col>
                 </Row>
-
                 <Row>
                   <Col md="12">
                     <Form.Group controlId="formDescription" className="mb-3">
@@ -333,27 +403,24 @@ const AddGuide = () => {
                         placeholder="Enter description"
                         value={guideDetails.description}
                         onChange={changeHandler}
-                        isInvalid={!!errors.description}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.description}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  </Col>
-                </Row>
-
-                <Button variant="primary" type="submit">
-                  Add Guide
-                </Button>
-              </Form>
-            </Container>
+                        i  isInvalid={!!errors.description}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.description}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Button variant="primary" type="submit">
+                    Add Guide
+                  </Button>
+                </Form>
+              </Container>
+            </div>
           </div>
-        </div>
-      </header>
-    </div>
-  );
-};
-
-export default AddGuide;
-
-
+        </header>
+      </div>
+    );
+  };
+  
+  export default AddGuide;

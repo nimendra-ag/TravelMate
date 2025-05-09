@@ -25,6 +25,10 @@ const AccommodationModel = mongoose.model("Accommodations", {
     type: String,
     required: true,
   },
+  miniDescription: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
     required: true,
@@ -58,6 +62,10 @@ const AccommodationModel = mongoose.model("Accommodations", {
   rooms: {
     type: Object,
    
+  },
+  images: {
+    type: Array,
+    default: [],
   },
 });
 

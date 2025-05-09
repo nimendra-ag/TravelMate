@@ -17,7 +17,7 @@ export async function BookGuide(req, res) {
 
     const data = req.body;
 
-    console.log(data);
+    // console.log(data);
     
 
     try {
@@ -287,7 +287,7 @@ export async function deleteBooking(req, res) {
             { new: true }
         );
 
-        console.log("okay");
+        // console.log("okay");
 
 
 
@@ -296,14 +296,14 @@ export async function deleteBooking(req, res) {
         res.status(200).json({ success: true });
 
 
-        console.log("okay     2");
+        // console.log("okay     2");
 
 
 
 
     } catch (error) {
 
-        console.log("case");
+        // console.log("case");
 
         console.log(error);
         res.status(400).json({
@@ -418,7 +418,7 @@ export async function completeBooking(req, res) {
             { new: true }
         )
 
-        console.log(`rooms.${bookingData.room.id}.bookings`);
+        // console.log(`rooms.${bookingData.room.id}.bookings`);
 
 
         await AccommodationModel.findOneAndUpdate(
@@ -503,7 +503,6 @@ export function getAllGuidBookings(req, res) {
 
 export async function completeGuidBooking(req, res) {
 
-    console.log("innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
 
 
 
@@ -589,7 +588,6 @@ export async function completeGuidBooking(req, res) {
 
 export async function cancleGuidBooking(req, res) {
 
-    console.log("innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
 
 
 
@@ -684,7 +682,7 @@ export function getGuideBookings(req, res) {
     // console.log(userEmail);
 
 
-    console.log(userEmail);
+    // console.log(userEmail);
     
 
 
@@ -718,10 +716,8 @@ export function getGuideBookings(req, res) {
 export function getCancledGuideBookings(req, res) {
 
     const userEmail = req.query.email;
-    console.log(userEmail);
 
 
-    console.log("========================");
     
 
 
@@ -735,7 +731,7 @@ export function getCancledGuideBookings(req, res) {
             status: "Cancelled"
         }
     ).then((data) => {
-        console.log(data);
+        // console.log(data);
         
 
         res.status(200).json(data)
@@ -756,10 +752,10 @@ export function getCancledGuideBookings(req, res) {
 export function getComGuideBookings(req, res) {
 
     const userEmail = req.query.email;
-    console.log(userEmail);
+    // console.log(userEmail);
 
 
-    console.log("========================");
+    // console.log("========================");
     
 
 
@@ -773,7 +769,7 @@ export function getComGuideBookings(req, res) {
             status: "Completed"
         }
     ).then((data) => {
-        console.log(data);
+        // console.log(data);
         
 
         res.status(200).json(data)
