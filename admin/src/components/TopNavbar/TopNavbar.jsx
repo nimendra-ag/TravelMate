@@ -16,7 +16,11 @@ const TopNavbar = () => {
   return (
     <Navbar bg="info" variant="dark" className="py-3 fixed-top">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
+        <Navbar.Brand
+          as={Link}
+          to="/admin-pannel"
+          className="d-flex align-items-center group"
+        >
           <img
             src={logo}
             alt="Travel Mate Logo"
@@ -24,13 +28,18 @@ const TopNavbar = () => {
             height="50"
             className="d-inline-block align-top me-2"
           />
-          <span>TRAVEL MATE</span>
+          <span className="text-white fw-bold group-hover:underline">
+            TRAVEL MATE
+          </span>
         </Navbar.Brand>
-        <Navbar.Text className="mx-auto text-light fw-bold fs-5">ADMIN DASHBOARD</Navbar.Text>
-        
+
+        <Navbar.Text className="mx-auto text-light fw-bold fs-5">
+          ADMIN DASHBOARD
+        </Navbar.Text>
+
         {currentUser ? (
-          <NavDropdown 
-            title={<span className="text-white">{currentUser.fullName}</span>} 
+          <NavDropdown
+            title={<span className="text-white">{currentUser.fullName}</span>}
             id="admin-nav-dropdown"
             align="end"
           >

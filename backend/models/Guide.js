@@ -1,6 +1,6 @@
 import { model } from "mongoose";
 
-const GuideModel = model("Guides", {
+const GuideSchema = {
   id: {
     type: Number,
     required: true,
@@ -56,6 +56,10 @@ const GuideModel = model("Guides", {
     default: [],
     required: true,
   },
-});
+};
 
+const GuideModel = model("Guides", GuideSchema);
+
+// Export both as named exports and default export
 export { GuideModel };
+export default GuideModel;
