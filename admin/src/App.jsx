@@ -26,6 +26,7 @@ import AddHospital from './components/AddHospital/AddHospital';
 import HospitalDataTable from './pages/HospitalDataTable/HospitalDataTable';
 import Hospitals from './components/Hospitals/Hospitals';
 import ViewHospital from './components/ViewHospital/ViewHospital';
+import HospitalDetails from '../../client/src/components/hospitalDetails/HospitalDetails';
 
 
 const App = () => {
@@ -63,6 +64,7 @@ const App = () => {
             <Route path="/view-destination/:id" element={<ViewDestination />} />
             <Route path="/view-restaurant/:id" element={<ViewRestaurant />} />
             <Route path="/view-transportation-service/:id" element={<ViewTransportationService />} />
+
 
           </Routes>
         </div>

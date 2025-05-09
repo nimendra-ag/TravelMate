@@ -39,6 +39,8 @@ import SurfingPage from './pages/surfingPage/SurfingPage'
 import TrekkingPage from './pages/trekkingPage/TrekkingPage'
 import HikingPage from './pages/hikingPage/HikingPage'
 import FoodPage from './pages/foodPage/FoodPage'
+import HospitalDetails from './components/hospitalDetails/HospitalDetails'
+import HospitalPage from './pages/hospitalPage/HospitalPage'
 
 
 function App() {
@@ -46,6 +48,12 @@ function App() {
     <Router>
       <Routes>
         <Route element={<ClientLayout/>}>
+        // For testing with dummy data
+<Route path="/hospital" element={<HospitalPage />} />
+
+// For real data with ID parameter
+<Route path="/hospital/:id" element={<HospitalPage />} />
+
           <Route path="/" element={<Home />} />
           <Route path="/details/:id" element={<GetDetails />} />
           <Route path="/footer" element={<Footer />} />
