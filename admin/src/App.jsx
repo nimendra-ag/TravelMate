@@ -48,6 +48,9 @@ import Dashboard from './components/Dashboard/Dashboard';
 import AdminDashboard from './components/Admin Dashboard/Admindasboard';
 import BookingAnalytics from './components/Dashboard/BookingAnalytics';
 import UserAnalytics from './components/Dashboard/UserAnalytics';
+import GuideAnalytics from './components/Dashboard/GuideAnalytics';
+import DestinationAnalytics from './components/Dashboard/DestinationAnalytics';
+import TransportationAnalytics from './components/Dashboard/TransportationAnalytics';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -124,6 +127,9 @@ const App = () => {
                     <Route path="/admin-pannel" element={<AdminDashboard />} />
                     <Route path="/admin/booking-analytics" element={<BookingAnalytics />} />
                     <Route path="/admin/user-analysis" element={<UserAnalytics />} />
+                    <Route path="/admin/guide-analytics" element={<GuideAnalytics />} />
+                    <Route path="/admin/destination-analytics" element={<DestinationAnalytics />} />
+                    <Route path="/admin/transportation-analytics" element={<TransportationAnalytics />} />
                   </Routes>
                 </div>
               </div>
