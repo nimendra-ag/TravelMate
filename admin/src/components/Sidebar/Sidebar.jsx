@@ -43,11 +43,11 @@ const Sidebar = () => {
                 <p>Manage Restaurants</p>
               </div>
             </Link>
-            <Link to="/users" style={{ textDecoration: 'none' }} onClick={handleClose}>
+            {/* <Link to="/users" style={{ textDecoration: 'none' }} onClick={handleClose}>
               <div className="sidebar-item">
                 <p>Manage Users</p>
               </div>
-            </Link>
+            </Link> */}
             <Link to="/transportmodes" style={{ textDecoration: 'none' }} onClick={handleClose}>
               <div className="sidebar-item">
                 <p>Manage Transport Modes</p>
@@ -94,11 +94,11 @@ const Sidebar = () => {
               <p>Manage Restaurants</p>
             </div>
           </Link>
-          <Link to="/users" style={{ textDecoration: 'none' }}>
+          {/* <Link to="/users" style={{ textDecoration: 'none' }}>
             <div className="sidebar-item">
               <p>Manage Users</p>
             </div>
-          </Link>
+          </Link> */}
           <Link to="/transportmodes" style={{ textDecoration: 'none' }}>
             <div className="sidebar-item">
               <p>Manage Transport Modes</p>

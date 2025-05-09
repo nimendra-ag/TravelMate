@@ -7,15 +7,17 @@ const { v2: cloudinary } = pkg;
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import {Router} from './routes/routes.js'
+import { Router } from './routes/routes.js';
 import cityRouter from './routes/cityRouter.js';
 import bookingRouter from './routes/bookingRote.js';
 import hotelRouter from './routes/hotelRoute.js';
-import transportationrouter from './routes/transportationRoute.js';
-// import bookingScheduler from './schedulers/bookingScheduler.js';
+import transportationrouter from './routes/transportationRoute.js';  // Existing transportation route
+import transportationAnalyticRouter from './routes/transportationAnalyticRoute.js'; // New transportation analytics route
 import userAnalyticsRoutes from './routes/userAnalyticsRoutes.js';
 import bookingAnalyticsRoutes from './routes/bookingAnalyticsRoutes.js';
 import adminAuthRoutes from './routes/adminAuthRoutes.js'; 
+import guideAnalyticsRoutes from './routes/guideAnalyticsRoutes.js';
+import destinationAnlyticsRoutes from './routes/destinationAnlyticsRoutes.js';
 
 dotenv.config();
 
@@ -47,31 +49,31 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
-//image uploading api
-app.post('/upload',upload.single('image'), (req, res)=>{  
-  // console.log(req.file)
+// Image uploading API
+app.post('/upload', upload.single('image'), (req, res) => {
   res.json({
-      success:true,
-      image_url: req.file.path
-  })
-})
+    success: true,
+    image_url: req.file.path,
+  });
+});
 
 // MongoDB configuration
 mongoose.connect("mongodb+srv://travelmate:hy6QuIubRgLzBPjm@cluster0.1pbng.mongodb.net/TravelMate");
 
-//router
-app.use("/travelmate",Router)
-app.use("/cities",cityRouter);
-app.use("/booking",bookingRouter);
-app.use("/hotels",hotelRouter)
-app.use("/transportation",transportationrouter)
+// Routes
+app.use("/travelmate", Router);
+app.use("/cities", cityRouter);
+app.use("/booking", bookingRouter);
+app.use("/hotels", hotelRouter);
+app.use("/transportation", transportationrouter);
 app.use('/api/user-analytics', userAnalyticsRoutes);
 app.use('/api/booking-analytics', bookingAnalyticsRoutes);
+app.use('/api/guide-analytics', guideAnalyticsRoutes);
+app.use('/api/destination-analytics', destinationAnlyticsRoutes);
+app.use('/api/transportation-analytics', transportationAnalyticRouter);  // New analytics route
 
 // Admin authentication routes
-app.use('/api/admin', adminAuthRoutes); 
-
-// bookingScheduler.updateExpiredBookings();
+app.use('/api/admin', adminAuthRoutes);
 
 // Start the server
 app.listen(PORT, () => {

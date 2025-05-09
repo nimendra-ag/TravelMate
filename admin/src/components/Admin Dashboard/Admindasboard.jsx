@@ -13,23 +13,23 @@ const AdminDashboard = () => {
       description: 'View detailed analytics about hotel ratings and performance metrics.',
       icon: <FaHotel size={48} />,
       path: '/admin/dashboard', 
-      stats: '124 Hotels'
+      stats: '4 Hotels'
     },
     {
       id: 2,
       title: 'Travel Destination Analysis',
       description: 'Explore popular destinations, booking trends, and seasonal patterns.',
       icon: <FaMapMarkedAlt size={48} />,
-      path: '/admin/destination-analysis', 
-      stats: '86 Destinations'
+      path: '/admin/destination-analytics', 
+      stats: '5 Destinations'
     },
     {
       id: 3,
       title: 'Guide Analysis',
       description: 'Monitor guide performance, availability, and customer satisfaction ratings.',
       icon: <FaUserTie size={48} />,
-      path: '/admin/guide-analysis', 
-      stats: '52 Guides'
+      path: '/admin/guide-analytics', 
+      stats: '4 Guides'
     },
     {
       id: 4,
@@ -37,7 +37,7 @@ const AdminDashboard = () => {
       description: 'Track user registrations, activity patterns, and engagement metrics.',
       icon: <FaUsers size={48} />,
       path: '/admin/user-analysis', 
-      stats: '1,248 Users'
+      stats: '12 Users'
     },
     {
       id: 5,
@@ -45,14 +45,14 @@ const AdminDashboard = () => {
       description: 'Analyze booking patterns, occupancy rates, and revenue from hotel bookings.',
       icon: <FaCalendarCheck size={48} />,
       path: '/admin/booking-analytics', 
-      stats: '2,845 Bookings'
+      stats: '3 Bookings'
     },
     {
       id: 6,
       title: 'Transport Modes Analysis',
       description: 'Evaluate preferred transport options, routes, and customer preferences.',
       icon: <FaBus size={48} />,
-      path: '/admin/transport-analysis', 
+      path: '/admin/transportation-analytics', 
       stats: '6 Transport Types'
     }
   ];
@@ -85,41 +85,6 @@ const AdminDashboard = () => {
         ))}
       </div>
 
-      <div className="dashboard-summary">
-        <h2>Platform Overview</h2>
-        <div className="summary-stats">
-          <div className="stat-item">
-            <h3>Total Bookings</h3>
-            <p className="stat-value">3,542</p>
-            <p className="stat-change positive">+12% from last month</p>
-          </div>
-          <div className="stat-item">
-            <h3>Revenue</h3>
-            <p className="stat-value">$124,850</p>
-            <p className="stat-change positive">+8% from last month</p>
-          </div>
-          <div className="stat-item">
-            <h3>Active Users</h3>
-            <p className="stat-value">856</p>
-            <p className="stat-change positive">+5% from last month</p>
-          </div>
-          <div className="stat-item">
-            <h3>Customer Satisfaction</h3>
-            <p className="stat-value">4.7/5</p>
-            <p className="stat-change positive">+0.2 from last month</p>
-          </div>
-          <div className="stat-item">
-            <h3>Hotel Occupancy</h3>
-            <p className="stat-value">78%</p>
-            <p className="stat-change positive">+3% from last month</p>
-          </div>
-          <div className="stat-item">
-            <h3>Transport Bookings</h3>
-            <p className="stat-value">1,256</p>
-            <p className="stat-change positive">+15% from last month</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
