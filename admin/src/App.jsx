@@ -26,7 +26,6 @@ import AddHospital from './components/AddHospital/AddHospital';
 import HospitalDataTable from './pages/HospitalDataTable/HospitalDataTable';
 import Hospitals from './components/Hospitals/Hospitals';
 import ViewHospital from './components/ViewHospital/ViewHospital';
-import HospitalDetails from '../../client/src/components/hospitalDetails/HospitalDetails';
 
 
 const App = () => {

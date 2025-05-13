@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 
@@ -25,10 +25,79 @@ const AddPrePlannedTrips = () => {
     help: "",
   });
 
+ const [selectedActivityImages, setSelectedActivityImages] = useState([]);
+  const [selectedMainImage, setSelectedMainImage] = useState([]);
+
+  const [activityImagesToUpload, setActivityImagesToUpload] = useState([]);
+  const [mainImageToUpload, setMainImageToUpload] = useState([]);
+
   // Handle single input field change
   const changeHandler = (e) => {
     const { name, value } = e.target;
     setPrePlannedTripDetails({ ...prePlannedTripDetails, [name]: value });
+  };
+
+  // Update the cleanup useEffect
+  useEffect(() => {
+    return () => {
+      [...selectedActivityImages, ...selectedMainImage].forEach((image) => {
+        if (image.url) {
+          URL.revokeObjectURL(image.url);
+        }
+      });
+    };
+  }, [selectedActivityImages, selectedMainImage]);
+
+  // Create separate handlers for each image type
+  const handleActivityImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newImages = files.map((file) => ({
+      id: Math.random().toString(36).substring(7),
+      url: URL.createObjectURL(file),
+      file: file,
+    }));
+    setSelectedActivityImages((prev) => [...prev, ...newImages]);
+    setActivityImagesToUpload((prev) => [...prev, ...files]);
+  };
+
+  const handleMainImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newImages = files.map((file) => ({
+      id: Math.random().toString(36).substring(7),
+      url: URL.createObjectURL(file),
+      file: file,
+    }));
+    setSelectedMainImages((prev) => [...prev, ...newImages]);
+    setMainImageToUpload((prev) => [...prev, ...files]);
+  };
+
+  // Create separate remove handlers
+  const removeActivityImage = (id) => {
+    setSelectedActivityImages((prevImages) => {
+      const imageToRemove = prevImages.find((img) => img.id === id);
+      if (imageToRemove?.url) URL.revokeObjectURL(imageToRemove.url);
+      return prevImages.filter((img) => img.id !== id);
+    });
+    const indexToRemove = selectedCaroImages.findIndex((img) => img.id === id);
+    if (indexToRemove !== -1) {
+      setActivityImagesToUpload((prev) =>
+        prev.filter((_, index) => index !== indexToRemove)
+      );
+    }
+  };
+
+  const removeMainImage = (id) => {
+    setSelectedMainImage((prevImages) => {
+      const imageToRemove = prevImages.find((img) => img.id === id);
+      if (imageToRemove?.url) URL.revokeObjectURL(imageToRemove.url);
+      return prevImages.filter((img) => img.id !== id);
+    });
+    const indexToRemove = selectedMainImages.findIndex((img) => img.id === id);
+    if (indexToRemove !== -1) {
+      setMainImageToUpload((prev) =>
+        prev.filter((_, index) => index !== indexToRemove)
+      );
+    }
   };
 
   // Handle array input change for guides and mainDestinations
@@ -56,9 +125,54 @@ const AddPrePlannedTrips = () => {
 
   const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
+  const uploadImagesToCloudinary = async (files) => {
+    const uploadedUrls = [];
+
+    console.log("Just outside the loop");
+    console.log(files);
+
+    for (const file of files) {
+      console.log("with in the loop");
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "preset-for-file-upload");
+      formData.append("cloud_name", "dz4wm9iug");
+
+      const response = await axios
+        .post(
+          "https://api.cloudinary.com/v1_1/dqbkxghlh/image/upload",
+          formData
+        )
+        .catch((error) => {
+          console.log("Error uploading image", error);
+        });
+
+      if (response.status === 200) {
+        uploadedUrls.push({
+          imageUrl: response.data.secure_url,
+        });
+      }
+    }
+    return uploadedUrls;
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const uploadedActivityImages = await uploadImagesToCloudinary(
+      activityImagesToUpload
+    );
+    const uploadedMainImage = await uploadImagesToCloudinary(mainImageToUpload);
+
+    prePlannedTripDetails.activityImages = uploadedActivityImages.map(
+      (image) => image.imageUrl
+    );
+    prePlannedTripDetails.mainImage = uploadedMainImage.map(
+      (image) => image.imageUrl
+    );
+
     console.log("Form submitted", prePlannedTripDetails);
 
     try {
@@ -76,7 +190,7 @@ const AddPrePlannedTrips = () => {
         name: "",
         mainDestinations: "",
         guides: "",
-        mainActivities:"",
+        mainActivities: "",
         price: "",
         duration: "",
         noOfTravelers: "",
@@ -427,7 +541,7 @@ const AddPrePlannedTrips = () => {
                           </Row>
                         )
                       )}
-                     
+
                       <Button
                         variant="secondary"
                         onClick={() => addArrayField("mainDestinations")}
@@ -437,8 +551,11 @@ const AddPrePlannedTrips = () => {
                     </Col>
                   </Row>
                   <Row>
-                  <Col md="12">
-                      <Form.Group controlId="formWhatsExpected" className="mb-3">
+                    <Col md="12">
+                      <Form.Group
+                        controlId="formWhatsExpected"
+                        className="mb-3"
+                      >
                         <Form.Label>What's Expected</Form.Label>
                         <Form.Control
                           as="textarea"
@@ -454,43 +571,59 @@ const AddPrePlannedTrips = () => {
                             whiteSpace: "pre-line",
                           }}
                         />
-                         <Row>
-                    <Col md="12">
-                      <Form.Label>Things to do</Form.Label>
-                      {prePlannedTripDetails.mainActivities.map((mainActivity, index) => (
-                        <Row key={index} className="mb-2">
-                          <Col md="10">
-                            <Form.Control
-                              type="text"
-                              placeholder={`Enter 3 things to do during the trip ${index + 1}`}
-                              value={mainActivity}
-                              onChange={(e) =>
-                                handleArrayChange(index, e, "mainActivities")
-                              }
-                            />
-                          </Col>
-                          <Col md="2">
+                        <Row>
+                          <Col md="12">
+                            <Form.Label>Things to do</Form.Label>
+                            {prePlannedTripDetails.mainActivities.map(
+                              (mainActivity, index) => (
+                                <Row key={index} className="mb-2">
+                                  <Col md="10">
+                                    <Form.Control
+                                      type="text"
+                                      placeholder={`Enter 3 things to do during the trip ${
+                                        index + 1
+                                      }`}
+                                      value={mainActivity}
+                                      onChange={(e) =>
+                                        handleArrayChange(
+                                          index,
+                                          e,
+                                          "mainActivities"
+                                        )
+                                      }
+                                    />
+                                  </Col>
+                                  <Col md="2">
+                                    <Button
+                                      variant="danger"
+                                      onClick={() =>
+                                        removeArrayField(
+                                          index,
+                                          "mainActivities"
+                                        )
+                                      }
+                                    >
+                                      Remove
+                                    </Button>
+                                  </Col>
+                                </Row>
+                              )
+                            )}
                             <Button
-                              variant="danger"
-                              onClick={() => removeArrayField(index, "mainActivities")}
+                              variant="secondary"
+                              onClick={() => addArrayField("mainActivities")}
                             >
-                              Remove
+                              Add Activity
                             </Button>
                           </Col>
                         </Row>
-                      ))}
-                      <Button
-                        variant="secondary"
-                        onClick={() => addArrayField("mainActivities")}
-                      >
-                        Add Activity
-                      </Button>
-                    </Col>
-                  </Row>
                       </Form.Group>
                     </Col>
                     <Col md="12">
-                      <Form.Group controlId="formWhatsIncluded" className="mb-3">
+                      <Form.Group
+                        controlId="formWhatsIncluded"
+                        className="mb-3"
+                      >
                         <Form.Label>What's Included</Form.Label>
                         <Form.Control
                           as="textarea"
@@ -508,7 +641,10 @@ const AddPrePlannedTrips = () => {
                       </Form.Group>
                     </Col>
                     <Col md="12">
-                      <Form.Group controlId="formAdditionalInfo" className="mb-3">
+                      <Form.Group
+                        controlId="formAdditionalInfo"
+                        className="mb-3"
+                      >
                         <Form.Label>Additional Infomation</Form.Label>
                         <Form.Control
                           as="textarea"
@@ -527,8 +663,11 @@ const AddPrePlannedTrips = () => {
                     </Col>
                   </Row>
                   <Row>
-                  <Col md="12">
-                      <Form.Group controlId="formCancellationPolicy" className="mb-3">
+                    <Col md="12">
+                      <Form.Group
+                        controlId="formCancellationPolicy"
+                        className="mb-3"
+                      >
                         <Form.Label>Cancellation Policy</Form.Label>
                         <Form.Control
                           as="textarea"
@@ -563,6 +702,191 @@ const AddPrePlannedTrips = () => {
                         />
                       </Form.Group>
                     </Col>
+                  </Row>
+                  <Row>
+                    {/* Activity Images */}
+                    <Form.Group controlId="formActivityImages" className="mb-3">
+                      <Form.Label>Upload Activity Images</Form.Label>
+                      <Form.Control
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleActivityImageChange}
+                        style={{
+                          borderRadius: "10px",
+                          height: "50px",
+                          borderWidth: "2px",
+                          color: "transparent",
+                        }}
+                      />
+                    </Form.Group>
+
+                    {selectedActivityImages.length > 0 && (
+                      <div style={{ marginBottom: "2rem" }}>
+                        <div
+                          style={{
+                            display: "grid",
+                            gridTemplateColumns:
+                              "repeat(auto-fill, minmax(200px, 1fr))",
+                            gap: "1rem",
+                            marginTop: "1rem",
+                          }}
+                        >
+                          {selectedActivityImages.map((image) => (
+                            <div
+                              key={image.id}
+                              style={{
+                                position: "relative",
+                                paddingBottom: "75%",
+                                height: 0,
+                                borderRadius: "10px",
+                                overflow: "hidden",
+                                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                                transition: "transform 0.2s ease",
+                                cursor: "pointer",
+                              }}
+                              onMouseOver={(e) =>
+                                (e.currentTarget.style.transform =
+                                  "scale(1.02)")
+                              }
+                              onMouseOut={(e) =>
+                                (e.currentTarget.style.transform = "scale(1)")
+                              }
+                            >
+                              <img
+                                src={image.url}
+                                alt={`Preview ${image.id}`}
+                                style={{
+                                  position: "absolute",
+                                  top: 0,
+                                  left: 0,
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "cover",
+                                  borderRadius: "10px",
+                                }}
+                              />
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  removeActivityImage(image.id);
+                                }}
+                                style={{
+                                  position: "absolute",
+                                  top: "5px",
+                                  right: "5px",
+                                  background: "rgba(255, 255, 255, 0.8)",
+                                  border: "none",
+                                  borderRadius: "50%",
+                                  width: "25px",
+                                  height: "25px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  cursor: "pointer",
+                                  fontSize: "18px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                ×
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Main Image */}
+                    <Form.Group controlId="formMainImage" className="mb-3">
+                      <Form.Label>Upload Main Image</Form.Label>
+                      <Form.Control
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleMainImageChange}
+                        style={{
+                          borderRadius: "10px",
+                          height: "50px",
+                          borderWidth: "2px",
+                          color: "transparent",
+                        }}
+                      />
+                    </Form.Group>
+
+                    {selectedMainImage.length > 0 && (
+                      <div style={{ marginBottom: "2rem" }}>
+                        <div
+                          style={{
+                            display: "grid",
+                            gridTemplateColumns:
+                              "repeat(auto-fill, minmax(200px, 1fr))",
+                            gap: "1rem",
+                            marginTop: "1rem",
+                          }}
+                        >
+                          {selectedMainImage.map((image) => (
+                            <div
+                              key={image.id}
+                              style={{
+                                position: "relative",
+                                paddingBottom: "75%",
+                                height: 0,
+                                borderRadius: "10px",
+                                overflow: "hidden",
+                                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                                transition: "transform 0.2s ease",
+                                cursor: "pointer",
+                              }}
+                              onMouseOver={(e) =>
+                                (e.currentTarget.style.transform =
+                                  "scale(1.02)")
+                              }
+                              onMouseOut={(e) =>
+                                (e.currentTarget.style.transform = "scale(1)")
+                              }
+                            >
+                              <img
+                                src={image.url}
+                                alt={`Preview ${image.id}`}
+                                style={{
+                                  position: "absolute",
+                                  top: 0,
+                                  left: 0,
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "cover",
+                                  borderRadius: "10px",
+                                }}
+                              />
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  removeMainImage(image.id);
+                                }}
+                                style={{
+                                  position: "absolute",
+                                  top: "5px",
+                                  right: "5px",
+                                  background: "rgba(255, 255, 255, 0.8)",
+                                  border: "none",
+                                  borderRadius: "50%",
+                                  width: "25px",
+                                  height: "25px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  cursor: "pointer",
+                                  fontSize: "18px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                ×
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </Row>
                   {successMessage && (
                     <div style={{ color: "green", marginTop: "20px" }}>
