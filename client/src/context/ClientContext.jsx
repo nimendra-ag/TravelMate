@@ -14,6 +14,8 @@ const ClientContextProvider = (props) => {
   const [allRestaurantReviews, setAllRestaurantReviews] = useState([]);
   const [allHotelReviews, setAllHotelReviews] = useState([]);
   const [allGuideReviews, setAllGuideReviews] = useState([]);
+  const [allHospitals, setAllHospitals] = useState([]);
+
 
   useEffect(() => {
     axios
@@ -45,10 +47,21 @@ const ClientContextProvider = (props) => {
         console.log("Accommodations fetch error:", error);
       });
 
+      axios
+      .get("http://localhost:3000/travelmate/allHospitals")
+      .then((response) => {
+        console.log("Hospitals:", response.data);
+        setAllHospitals(response.data);
+      })
+      .catch((error) => {
+        console.log("Hospitals fetch error:", error);
+      });
+
+
     axios
       .get("http://localhost:3000/travelmate/gettravelmatefeedback")
       .then((response) => {
-        console.log("Feedback:", response.data);
+        //console.log("Feedback:", response.data);
         setAllTravelMateFeedback(response.data);
       })
       .catch((error) => {
@@ -58,7 +71,7 @@ const ClientContextProvider = (props) => {
     axios
       .get("http://localhost:3000/travelmate/allGuides")
       .then((response) => {
-        console.log("Guides:", response.data);
+        //console.log("Guides:", response.data);
         setAllGuides(response.data);
       })
       .catch((error) => {
@@ -68,7 +81,7 @@ const ClientContextProvider = (props) => {
     axios
       .get("http://localhost:3000/travelmate/allRestaurants")
       .then((response) => {
-        console.log("Restaurants:", response.data);
+       // console.log("Restaurants:", response.data);
         setAllRestaurants(response.data);
       })
       .catch((error) => {
@@ -78,7 +91,7 @@ const ClientContextProvider = (props) => {
     axios
       .get("http://localhost:3000/travelmate/allPrePlannedTrips")
       .then((response) => {
-        console.log("PrePlannedTrips:", response.data);
+        //console.log("PrePlannedTrips:", response.data);
         setAllPrePlannedTrips(response.data);
       })
       .catch((error) => {
@@ -88,7 +101,7 @@ const ClientContextProvider = (props) => {
     axios
       .get("http://localhost:3000/travelmate/getAllRestaurantReviews")
       .then((response) => {
-        console.log("Restaurant Reviews:", response.data);
+        //console.log("Restaurant Reviews:", response.data);
         setAllRestaurantReviews(response.data);
       })
       .catch((error) => {
@@ -98,7 +111,7 @@ const ClientContextProvider = (props) => {
     axios
       .get("http://localhost:3000/travelmate/getAllHotelReviews")
       .then((response) => {
-        console.log("Hotel Reviews:", response.data);
+        //console.log("Hotel Reviews:", response.data);
         setAllHotelReviews(response.data);
       })
       .catch((error) => {
@@ -108,7 +121,7 @@ const ClientContextProvider = (props) => {
       axios
       .get("http://localhost:3000/travelmate/getAllGuideReviews")
       .then((response) => {
-        console.log("Guide Reviews:", response.data);
+        //console.log("Guide Reviews:", response.data);
         setAllGuideReviews(response.data);
       })
       .catch((error) => {
@@ -127,6 +140,7 @@ const ClientContextProvider = (props) => {
     allRestaurantReviews,
     allHotelReviews,
     allGuideReviews,
+    allHospitals,
   };
 
   return (

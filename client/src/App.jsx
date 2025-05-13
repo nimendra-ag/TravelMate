@@ -39,7 +39,6 @@ import SurfingPage from './pages/surfingPage/SurfingPage'
 import TrekkingPage from './pages/trekkingPage/TrekkingPage'
 import HikingPage from './pages/hikingPage/HikingPage'
 import FoodPage from './pages/foodPage/FoodPage'
-import HospitalDetails from './components/hospitalDetails/HospitalDetails'
 import HospitalPage from './pages/hospitalPage/HospitalPage'
 
 

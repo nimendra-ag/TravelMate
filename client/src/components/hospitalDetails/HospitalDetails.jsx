@@ -150,7 +150,7 @@ const HospitalDetails = (props) => {
                       <FaRoad className="text-secondary mt-1" size={18} />
                     </div>
                     <div className="ms-3">
-                      <h6 className="mb-1">Distance:</h6>
+                      <h6 className="mb-1">Distance from nearest city:</h6>
                       <p className="mb-0">{distanceFromNearestCity}</p>
                     </div>
                   </div>
