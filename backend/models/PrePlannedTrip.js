@@ -91,6 +91,16 @@ const PrePlannedTripModel = model("PrePlannedTrips", {
     type: String,
     required: false,
   },
+  activityImages: {
+    type: [String],
+    default: [],
+    required: true,
+  },
+  mainImages: {
+    type: [String],
+    default: [],
+    required: true,
+  },
 });
 
 export { PrePlannedTripModel };
