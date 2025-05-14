@@ -96,9 +96,8 @@ const PrePlannedTripModel = model("PrePlannedTrips", {
     default: [],
     required: true,
   },
-  mainImages: {
-    type: [String],
-    default: [],
+  mainImage: {  // Changed from mainImages (array) to mainImage (single string)
+    type: String,
     required: true,
   },
 });

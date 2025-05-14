@@ -16,7 +16,7 @@ const AddPrePlannedTrips = () => {
     endTime: "",
     endLocation: "",
     description: "",
-    availableDates: "",
+    // availableDates: "",
     contactNumber: "",
     whatsExpected: "",
     whatsIncluded: "",
@@ -25,11 +25,10 @@ const AddPrePlannedTrips = () => {
     help: "",
   });
 
- const [selectedActivityImages, setSelectedActivityImages] = useState([]);
-  const [selectedMainImage, setSelectedMainImage] = useState([]);
-
+  const [selectedActivityImages, setSelectedActivityImages] = useState([]);
+  const [selectedMainImage, setSelectedMainImage] = useState(null); // Changed to single object
   const [activityImagesToUpload, setActivityImagesToUpload] = useState([]);
-  const [mainImageToUpload, setMainImageToUpload] = useState([]);
+  const [mainImageToUpload, setMainImageToUpload] = useState(null); // Changed to single file
 
   // Handle single input field change
   const changeHandler = (e) => {
@@ -40,11 +39,17 @@ const AddPrePlannedTrips = () => {
   // Update the cleanup useEffect
   useEffect(() => {
     return () => {
-      [...selectedActivityImages, ...selectedMainImage].forEach((image) => {
+      // Clean up activity images
+      selectedActivityImages.forEach((image) => {
         if (image.url) {
           URL.revokeObjectURL(image.url);
         }
       });
+
+      // Clean up main image
+      if (selectedMainImage?.url) {
+        URL.revokeObjectURL(selectedMainImage.url);
+      }
     };
   }, [selectedActivityImages, selectedMainImage]);
 
@@ -61,14 +66,22 @@ const AddPrePlannedTrips = () => {
   };
 
   const handleMainImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    const newImages = files.map((file) => ({
-      id: Math.random().toString(36).substring(7),
-      url: URL.createObjectURL(file),
-      file: file,
-    }));
-    setSelectedMainImages((prev) => [...prev, ...newImages]);
-    setMainImageToUpload((prev) => [...prev, ...files]);
+    // First, clean up any existing main image URL
+    if (selectedMainImage?.url) {
+      URL.revokeObjectURL(selectedMainImage.url);
+    }
+
+    // Only take the first file
+    const file = e.target.files[0];
+    if (file) {
+      const newImage = {
+        id: Math.random().toString(36).substring(7),
+        url: URL.createObjectURL(file),
+        file: file,
+      };
+      setSelectedMainImage(newImage);
+      setMainImageToUpload(file);
+    }
   };
 
   // Create separate remove handlers
@@ -78,7 +91,10 @@ const AddPrePlannedTrips = () => {
       if (imageToRemove?.url) URL.revokeObjectURL(imageToRemove.url);
       return prevImages.filter((img) => img.id !== id);
     });
-    const indexToRemove = selectedCaroImages.findIndex((img) => img.id === id);
+
+    const indexToRemove = selectedActivityImages.findIndex(
+      (img) => img.id === id
+    );
     if (indexToRemove !== -1) {
       setActivityImagesToUpload((prev) =>
         prev.filter((_, index) => index !== indexToRemove)
@@ -86,18 +102,12 @@ const AddPrePlannedTrips = () => {
     }
   };
 
-  const removeMainImage = (id) => {
-    setSelectedMainImage((prevImages) => {
-      const imageToRemove = prevImages.find((img) => img.id === id);
-      if (imageToRemove?.url) URL.revokeObjectURL(imageToRemove.url);
-      return prevImages.filter((img) => img.id !== id);
-    });
-    const indexToRemove = selectedMainImages.findIndex((img) => img.id === id);
-    if (indexToRemove !== -1) {
-      setMainImageToUpload((prev) =>
-        prev.filter((_, index) => index !== indexToRemove)
-      );
+  const removeMainImage = () => {
+    if (selectedMainImage?.url) {
+      URL.revokeObjectURL(selectedMainImage.url);
     }
+    setSelectedMainImage(null);
+    setMainImageToUpload(null);
   };
 
   // Handle array input change for guides and mainDestinations
@@ -127,18 +137,39 @@ const AddPrePlannedTrips = () => {
 
   const uploadImagesToCloudinary = async (files) => {
     const uploadedUrls = [];
-
     console.log("Just outside the loop");
     console.log(files);
 
-    for (const file of files) {
-      console.log("with in the loop");
-
+    // Handle array of files (activity images)
+    if (Array.isArray(files)) {
+      for (const file of files) {
+        console.log("within the loop");
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "preset-for-file-upload");
+        formData.append("cloud_name", "dz4wm9iug");
+        const response = await axios
+          .post(
+            "https://api.cloudinary.com/v1_1/dqbkxghlh/image/upload",
+            formData
+          )
+          .catch((error) => {
+            console.log("Error uploading image", error);
+          });
+        if (response && response.status === 200) {
+          uploadedUrls.push({
+            imageUrl: response.data.secure_url,
+          });
+        }
+      }
+    }
+    // Handle single file (main image)
+    else if (files) {
+      console.log("uploading single file");
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", files);
       formData.append("upload_preset", "preset-for-file-upload");
       formData.append("cloud_name", "dz4wm9iug");
-
       const response = await axios
         .post(
           "https://api.cloudinary.com/v1_1/dqbkxghlh/image/upload",
@@ -147,13 +178,13 @@ const AddPrePlannedTrips = () => {
         .catch((error) => {
           console.log("Error uploading image", error);
         });
-
-      if (response.status === 200) {
+      if (response && response.status === 200) {
         uploadedUrls.push({
           imageUrl: response.data.secure_url,
         });
       }
     }
+
     return uploadedUrls;
   };
 
@@ -164,14 +195,15 @@ const AddPrePlannedTrips = () => {
     const uploadedActivityImages = await uploadImagesToCloudinary(
       activityImagesToUpload
     );
+
     const uploadedMainImage = await uploadImagesToCloudinary(mainImageToUpload);
 
     prePlannedTripDetails.activityImages = uploadedActivityImages.map(
       (image) => image.imageUrl
     );
-    prePlannedTripDetails.mainImage = uploadedMainImage.map(
-      (image) => image.imageUrl
-    );
+
+    prePlannedTripDetails.mainImage =
+      uploadedMainImage.length > 0 ? uploadedMainImage[0].imageUrl : "";
 
     console.log("Form submitted", prePlannedTripDetails);
 
@@ -181,16 +213,14 @@ const AddPrePlannedTrips = () => {
         prePlannedTripDetails
       );
       console.log("Trip added successfully", response.data);
-
       // Show success message
       setSuccessMessage("Form submitted successfully!");
-
       // Clear the form fields
       setPrePlannedTripDetails({
         name: "",
-        mainDestinations: "",
-        guides: "",
-        mainActivities: "",
+        mainDestinations: [""],
+        guides: [""],
+        mainActivities: [""],
         price: "",
         duration: "",
         noOfTravelers: "",
@@ -201,12 +231,23 @@ const AddPrePlannedTrips = () => {
         description: "",
         availableDates: "",
         contactNumber: "",
+        whatsExpected: "",
+        whatsIncluded: "",
+        additionalInfo: "",
+        cancellationPolicy: "",
+        help: "",
       });
+
+      // Clear images
+      setSelectedActivityImages([]);
+      setSelectedMainImage(null);
+      setActivityImagesToUpload([]);
+      setMainImageToUpload(null);
 
       // Optionally refresh the page after 2 seconds
       setTimeout(() => {
         setSuccessMessage(""); // Clear success message after 2 seconds
-        navigate("/"); // Redirect or refresh the page
+        // navigate("/"); // Redirect or refresh the page - uncomment if you have navigate defined
       }, 2000);
     } catch (error) {
       console.log("Error adding trip", error);
@@ -406,7 +447,7 @@ const AddPrePlannedTrips = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Row>
+                  {/* <Row>
                     <Col md="6">
                       <Form.Group
                         controlId="formAvailableDates"
@@ -427,7 +468,7 @@ const AddPrePlannedTrips = () => {
                         />
                       </Form.Group>
                     </Col>
-                  </Row>
+                  </Row> */}
                   <Row>
                     <Col md="12">
                       <Form.Group controlId="formDescription" className="mb-3">
@@ -720,7 +761,6 @@ const AddPrePlannedTrips = () => {
                         }}
                       />
                     </Form.Group>
-
                     {selectedActivityImages.length > 0 && (
                       <div style={{ marginBottom: "2rem" }}>
                         <div
@@ -796,12 +836,11 @@ const AddPrePlannedTrips = () => {
                       </div>
                     )}
 
-                    {/* Main Image */}
+                    {/* Main Image - MODIFIED to only accept one image */}
                     <Form.Group controlId="formMainImage" className="mb-3">
                       <Form.Label>Upload Main Image</Form.Label>
                       <Form.Control
                         type="file"
-                        multiple
                         accept="image/*"
                         onChange={handleMainImageChange}
                         style={{
@@ -813,81 +852,79 @@ const AddPrePlannedTrips = () => {
                       />
                     </Form.Group>
 
-                    {selectedMainImage.length > 0 && (
+                    {/* Main Image Preview - MODIFIED for single image */}
+                    {selectedMainImage && (
                       <div style={{ marginBottom: "2rem" }}>
                         <div
                           style={{
                             display: "grid",
-                            gridTemplateColumns:
-                              "repeat(auto-fill, minmax(200px, 1fr))",
+                            gridTemplateColumns: "minmax(200px, 1fr)",
                             gap: "1rem",
                             marginTop: "1rem",
                           }}
                         >
-                          {selectedMainImage.map((image) => (
-                            <div
-                              key={image.id}
+                          <div
+                            key={selectedMainImage.id}
+                            style={{
+                              position: "relative",
+                              paddingBottom: "75%",
+                              height: 0,
+                              borderRadius: "10px",
+                              overflow: "hidden",
+                              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                              transition: "transform 0.2s ease",
+                              cursor: "pointer",
+                            }}
+                            onMouseOver={(e) =>
+                              (e.currentTarget.style.transform = "scale(1.02)")
+                            }
+                            onMouseOut={(e) =>
+                              (e.currentTarget.style.transform = "scale(1)")
+                            }
+                          >
+                            <img
+                              src={selectedMainImage.url}
+                              alt={`Preview ${selectedMainImage.id}`}
                               style={{
-                                position: "relative",
-                                paddingBottom: "75%",
-                                height: 0,
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
                                 borderRadius: "10px",
-                                overflow: "hidden",
-                                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                                transition: "transform 0.2s ease",
-                                cursor: "pointer",
                               }}
-                              onMouseOver={(e) =>
-                                (e.currentTarget.style.transform =
-                                  "scale(1.02)")
-                              }
-                              onMouseOut={(e) =>
-                                (e.currentTarget.style.transform = "scale(1)")
-                              }
+                            />
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeMainImage();
+                              }}
+                              style={{
+                                position: "absolute",
+                                top: "5px",
+                                right: "5px",
+                                background: "rgba(255, 255, 255, 0.8)",
+                                border: "none",
+                                borderRadius: "50%",
+                                width: "25px",
+                                height: "25px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                cursor: "pointer",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                              }}
                             >
-                              <img
-                                src={image.url}
-                                alt={`Preview ${image.id}`}
-                                style={{
-                                  position: "absolute",
-                                  top: 0,
-                                  left: 0,
-                                  width: "100%",
-                                  height: "100%",
-                                  objectFit: "cover",
-                                  borderRadius: "10px",
-                                }}
-                              />
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  removeMainImage(image.id);
-                                }}
-                                style={{
-                                  position: "absolute",
-                                  top: "5px",
-                                  right: "5px",
-                                  background: "rgba(255, 255, 255, 0.8)",
-                                  border: "none",
-                                  borderRadius: "50%",
-                                  width: "25px",
-                                  height: "25px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  cursor: "pointer",
-                                  fontSize: "18px",
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                ×
-                              </button>
-                            </div>
-                          ))}
+                              ×
+                            </button>
+                          </div>
                         </div>
                       </div>
                     )}
                   </Row>
+
                   {successMessage && (
                     <div style={{ color: "green", marginTop: "20px" }}>
                       {successMessage}

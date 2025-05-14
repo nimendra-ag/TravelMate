@@ -54,6 +54,7 @@ const PrePlannedTripsInLandingPage = ({header}) => {
                 availableDates={prePlannedTrip.availableDates}
                 contactNumber={prePlannedTrip.contactNumber}
                 rating={prePlannedTrip.rating}
+                mainImage={prePlannedTrip.mainImage}
                 // imageSrc={prePlannedTrip.cardImage}
                 id={prePlannedTrip.id}
               />

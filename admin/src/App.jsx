@@ -26,6 +26,9 @@ import AddHospital from './components/AddHospital/AddHospital';
 import HospitalDataTable from './pages/HospitalDataTable/HospitalDataTable';
 import Hospitals from './components/Hospitals/Hospitals';
 import ViewHospital from './components/ViewHospital/ViewHospital';
+import PrePlannedTrips from './components/PrePlannedTrips/PrePlannedTrips';
+import ViewPrePlannedTrip from './components/ViewPrePlannedTrip/ViewPrePlannedTrip';
+import PrePlannedTripsDataTable from './pages/PrePlannedTripsDataTable/PrePlannedTripsDataTable';
 
 
 const App = () => {
@@ -54,10 +57,16 @@ const App = () => {
             <Route path="/resturant-data-table" element={<ResturantDataTable />} />
             <Route path="/guide-data-table" element={<GuideDataTable />} />
             <Route path="/destinations-data-table" element={<DestinationsDataTable />} />
+            <Route path="/pre-planned-trips-data-table" element={<PrePlannedTripsDataTable />} />
+
             <Route path='/transportmodes' element={<TranspotationServices/>}/>
             <Route path='/restaurants' element={<Restaurants/>}/>
             <Route path="/view-hotel/:id" element={<ViewHotel />} />
             <Route path="/view-hospital/:id" element={<ViewHospital />} />
+            <Route path='/prePlannedTrips' element={<PrePlannedTrips/>}/>
+            <Route path="/view-pre-planned-trip/:id" element={<ViewPrePlannedTrip />} />
+
+
 
             <Route path="/view-guide/:id" element={<ViewGuide />} />
             <Route path="/view-destination/:id" element={<ViewDestination />} />
