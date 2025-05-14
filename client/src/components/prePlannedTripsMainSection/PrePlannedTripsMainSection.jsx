@@ -64,9 +64,9 @@ const PrePlannedTripsMainSection = ({
         </div>
         {/* Right section: Details */}
         <div className="trip-details">
-          <p className="trip-available-days">
+          {/* <p className="trip-available-days">
             <FaCalendarAlt className="icon" /> Available Days: {availableDates}
-          </p>
+          </p> */}
           <p className="no-of-travelers">
             <FaUsers className="icon" /> No of Travelers: {noOfTravelers}
           </p>
