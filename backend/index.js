@@ -6,15 +6,45 @@ import path from 'path';
 const { v2: cloudinary } = pkg;
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import CloudinaryStorage from 'multer-storage-cloudinary';
 import {Router} from './routes/routes.js'
 import cityRouter from './routes/cityRouter.js';
 import bookingRouter from './routes/bookingRote.js';
 // import bookingScheduler from './schedulers/bookingScheduler.js';
-
-dotenv.config();
+import client from 'prom-client';
 
 const app = express();
+
+//--------------------------------------------- Prometheus Metrics ----------------------------------------------------------
+client.collectDefaultMetrics();
+
+export const httpRequestCounter = new client.Counter({
+    name: "http_request_total",
+    help: "Total number of HTTP requests",
+    labelNames: ["method", "route", "status_code"],
+});
+
+app.use((req, res, next) => {
+    res.on("finish", () => {
+        httpRequestCounter.inc({
+            method: req.method,
+            route: req.route?.path || req.path,
+            status_code: res.statusCode,
+        });
+    });
+    next();
+});
+
+app.get("/metrics", async (req, res) => {
+    res.set("Content-Type", client.register.contentType);
+    res.end(await client.register.metrics());
+});
+
+
+//------------------------------------------------------------------------------------------------------------------------------------
+dotenv.config();
+
+
 const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
